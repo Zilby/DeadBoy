@@ -8,6 +8,8 @@ using UnityEngine.Sprites;
 /// </summary>
 public class PlayerController : MonoBehaviour {
 
+	public static PlayerController mainPlayer;
+
 	[Header("References")]
 	public SpriteRenderer sprite;
 	public Rigidbody2D rBody;
@@ -39,15 +41,21 @@ public class PlayerController : MonoBehaviour {
 	/// </summary>
 	protected bool grounded;
 
+	/// <summary>
+	/// The time of the start of the jump
+	/// </summary>
+	protected float jumpStart;
+
 
 	protected virtual void Start() {
+		PlayerController.mainPlayer = this;
 		sprite = sprite == null ? GetComponent<SpriteRenderer>() : sprite;
 		rBody = rBody == null ? GetComponent<Rigidbody2D>() : rBody;
 		cCollider = cCollider == null ? GetComponent<CapsuleCollider2D>() : cCollider;
 	}
 
 
-	protected virtual void Update () {
+	protected virtual void FixedUpdate () {
 		InAir();
 		Move();
 		Jump();
@@ -79,7 +87,7 @@ public class PlayerController : MonoBehaviour {
 		//grounded ? rBody.velocity.x + movement * acceleration : rBody.velocity.x + (movement * aerialControl);
 		// Clamp the accelerated move to the maximum speeds. 
 		movement = Mathf.Clamp(acceleratedMove, speed * Time.deltaTime * -1, speed * Time.deltaTime);
-		sprite.flipX = movement == 0 ? sprite.flipX : movement > 0;
+		sprite.flipX = Mathf.Abs(movement) <= 1f ? sprite.flipX : movement > 0;
 		rBody.velocity = new Vector2(movement, rBody.velocity.y);
 	}
 
@@ -88,11 +96,14 @@ public class PlayerController : MonoBehaviour {
 	/// Makes the player jump if given input. 
 	/// </summary>
 	protected virtual void Jump() {
-		if(Input.GetKeyDown(KeyCode.Space) && grounded)
+		if (Input.GetKey(KeyCode.Space) && grounded)
 		{
 			rBody.velocity = new Vector2(rBody.velocity.x, jumpHeight);
-			//rBody.AddForce(new Vector2(0, jumpHeight));
-		}
+			jumpStart = Time.fixedTime;
+		} 
+		else if (Input.GetKey(KeyCode.Space) && (Time.fixedTime - jumpStart < 0.15f) && !grounded) {
+			rBody.AddForce(new Vector2(0, jumpHeight * 3));
+		} 
 	}
 
 
@@ -101,7 +112,7 @@ public class PlayerController : MonoBehaviour {
 	/// Do note: This will only detect ground as objects with layers specified in the layermask. 
 	/// </summary>
 	protected void InAir() {
-		grounded = Physics2D.CapsuleCast(cCollider.bounds.center, new Vector2(cCollider.size.x * transform.localScale.x, cCollider.size.y * transform.localScale.y),
+		grounded = Mathf.Abs(rBody.velocity.y) < 0.01f && Physics2D.CapsuleCast(cCollider.bounds.center, new Vector2(cCollider.size.x * transform.localScale.x, cCollider.size.y * transform.localScale.y),
 									   cCollider.direction, transform.rotation.z, Vector2.down, 0.1f, LayerMask.GetMask(new string[] { "Surface" }));
 	}
 }
