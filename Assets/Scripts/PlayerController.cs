@@ -112,7 +112,8 @@ public class PlayerController : MonoBehaviour {
 	/// Do note: This will only detect ground as objects with layers specified in the layermask. 
 	/// </summary>
 	protected void InAir() {
-		grounded = Mathf.Abs(rBody.velocity.y) < 0.01f && Physics2D.CapsuleCast(cCollider.bounds.center, new Vector2(cCollider.size.x * transform.localScale.x, cCollider.size.y * transform.localScale.y),
-									   cCollider.direction, transform.rotation.z, Vector2.down, 0.1f, LayerMask.GetMask(new string[] { "Surface" }));
+		grounded = Mathf.Abs(rBody.velocity.y) < 0.01f && Physics2D.CapsuleCast(cCollider.bounds.center, 
+					new Vector2(cCollider.size.x * transform.localScale.x, cCollider.size.y * transform.localScale.y),
+					cCollider.direction, transform.rotation.z, Vector2.down, 0.1f, LayerMask.GetMask(new string[] { "Surface" }));
 	}
 }
