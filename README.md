@@ -106,3 +106,24 @@ void OnDestroy()
 
 ## UI and Inspector Conventions
 
+#### Text and TextMeshPRo
+First and foremost, we will not be using default Unity UI text (ie: NEVER create a 'Text' component). Default Unity text is awful and honestly should never be used in a professional, or even hobbyist program. Instead we will be using TextMeshPro (TMPro) text (specifically `TextMeshPro - Text(UI)` when adding a component in the inspector, and `TextMeshProUGUI` in the code). TextMeshPro vastly improves what we can do with text and to what degree we can customize it. 
+
+Since we will be using TMPro text, we will also be using their other UI components when possible, such as their dropdown and inputfield components. 
+
+#### Unity OnClick Events
+We will NOT be assigning ANY OnClick events in the inspector in this project. Having functions called outside of the code makes them difficult to find and debug, and leads to sloppy implementations. Instead all OnClick Events will be assigned in the code, eg:
+
+```
+public Button b;
+public Button b2;
+
+void Function1() {}
+IEnumerator Function2() {}
+
+void Start 
+{
+  b.OnClick.AddListener(Function1); // you don't need to wrap in a delegate if the function is void without params
+  b2.OnClick.AddListener(delegate { StartCoroutine(Function2); });
+}
+```
