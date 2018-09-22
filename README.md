@@ -21,7 +21,8 @@ Functions are spaced one new line apart.
 
 Variables should be defined in the order of public, protected, and then private. (Getters/Setters defined after private in the same order). 
 
-Functions have no space before their parens (ie: `Function()` not `Function ()`). if, for, and while statements do (ie: `if (bool)` not `if(bool)`). 
+Functions have no space before their parens (ie: `Function()` not `Function ()`). if, for, and while statements do 
+(ie: `if (bool)` not `if(bool)`). 
 
 All brackets (ie: {} ) get their own line.
 
