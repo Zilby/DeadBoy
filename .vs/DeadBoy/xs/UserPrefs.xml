@@ -1,10 +1,10 @@
 ﻿<Properties StartupConfiguration="{DEA634DF-7EFC-3DAF-D4E6-7907B2FD3625}|">
   <MonoDevelop.Ide.ItemProperties.DeadBoy PreferredExecutionTarget="Unity.Editor" />
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Editor/EditorTools.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Game/PlayerController.cs">
     <Files>
-      <File FileName="Assets/Scripts/PlayerController.cs" Line="14" Column="24" />
-      <File FileName="Assets/Scripts/Editor/EditorTools.cs" Line="11" Column="113" />
+      <File FileName="Assets/Scripts/Editor/EditorTools.cs" Line="13" Column="2" />
+      <File FileName="Assets/Scripts/Game/PlayerController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
