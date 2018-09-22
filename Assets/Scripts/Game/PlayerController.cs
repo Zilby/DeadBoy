@@ -71,7 +71,6 @@ public class PlayerController : MonoBehaviour
 		jumpStart = Time.fixedTime - 100f;
 	}
 
-
 	protected virtual void FixedUpdate()
 	{
 		Move();
