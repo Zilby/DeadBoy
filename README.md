@@ -37,7 +37,7 @@ All functions and variables need a \<summary\> comment. Summary comments in Unit
 /// </summary>
 ```
 
-Hitting `\\\` above a function/variable in Unity's Visual Studio will auto-generate a summary comment that you can fill in. 
+Hitting `///` above a function/variable in Unity's Visual Studio will auto-generate a summary comment that you can fill in. 
 
 In-line comments (eg: `// comment`) are fine, but I'd only recommend them if your code is doing something that's difficult to understand at first glance. 
 
