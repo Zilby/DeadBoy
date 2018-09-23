@@ -156,8 +156,12 @@ public class PlayerController : MonoBehaviour
 	{
 		foreach (ContactPoint2D contact in collision.contacts)
 		{
-			grounded = rBody.velocity.y <= 5 && (grounded || (transform.position.y - contact.point.y) / (transform.localScale.x * cCollider.size.y) > 0.45f);
-			//print(contact.collider.name + " hit " + contact.otherCollider.name + " " + ((transform.position.y - contact.point.y) / (transform.localScale.x * cCollider.size.y)).ToString());
+			bool touchingGround = Vector2.Distance(transform.position, contact.point) / (transform.localScale.x * cCollider.size.y) > 0.47f;
+			grounded = rBody.velocity.y <= 5 && (grounded || touchingGround);
+			/*
+			print(contact.collider.name + " hit " + contact.otherCollider.name + " " + 
+			      (Vector2.Distance(transform.position, contact.point) / (transform.localScale.x * cCollider.size.y)).ToString());
+			*/
 		}
 	}
 }
