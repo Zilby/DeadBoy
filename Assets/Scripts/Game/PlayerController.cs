@@ -77,7 +77,8 @@ public class PlayerController : MonoBehaviour
 		//Jump();
 	}
 
-	protected virtual void Update() {
+	protected virtual void Update()
+	{
 		Jump();
 	}
 
@@ -129,7 +130,7 @@ public class PlayerController : MonoBehaviour
 		}
 		// Add more force if jump held for longer. 
 		else if (Input.GetKey(KeyCode.Space) &&
-		         (Time.fixedTime - jumpStart < jumpInterval) &&
+				 (Time.fixedTime - jumpStart < jumpInterval) &&
 				 !grounded && jumpHeld)
 		{
 			rBody.velocity = new Vector2(rBody.velocity.x, jumpHeight);
@@ -155,8 +156,8 @@ public class PlayerController : MonoBehaviour
 	{
 		foreach (ContactPoint2D contact in collision.contacts)
 		{
-			grounded = rBody.velocity.y <= 5 && (grounded || transform.position.y - contact.point.y > 1.1f);
-			//print(contact.collider.name + " hit " + contact.otherCollider.name + " " + ((Vector2)(transform.position) - contact.point).ToString());
+			grounded = rBody.velocity.y <= 5 && (grounded || (transform.position.y - contact.point.y) / (transform.localScale.x * cCollider.size.y) > 0.45f);
+			//print(contact.collider.name + " hit " + contact.otherCollider.name + " " + ((transform.position.y - contact.point.y) / (transform.localScale.x * cCollider.size.y)).ToString());
 		}
 	}
 }

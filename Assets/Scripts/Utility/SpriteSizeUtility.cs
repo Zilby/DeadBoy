@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Unity sprite utility class for helping utilizing sprites. 
 /// </summary>
-public static class SpriteUtility
+public static class SpriteSizeUtility
 {
 
 	/// <summary>
