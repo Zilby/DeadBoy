@@ -26,6 +26,7 @@ namespace UnityChan
 		public float			dragForce;
 		public AnimationCurve	dragCurve;
 		public SpringBone[] springBones;
+		public bool usesPhysics;
 
 		void Start ()
 		{
@@ -48,13 +49,34 @@ namespace UnityChan
 #endif	
 		private void LateUpdate ()
 		{
+			if (!usesPhysics)
+			{
+				UpdateSprings();
+			}
+		}
+
+		/// <summary>
+		/// Better for physics based updates
+		/// </summary>
+		private void FixedUpdate()
+		{
+			if (usesPhysics)
+			{
+				UpdateSprings();
+			}
+		}
+
+		private void UpdateSprings() {
 			//Kobayashi
-			if (dynamicRatio != 0.0f) {
-				for (int i = 0; i < springBones.Length; i++) {
-					if (dynamicRatio > springBones [i].threshold) {
-						if(springBones [i])
+			if (dynamicRatio != 0.0f)
+			{
+				for (int i = 0; i < springBones.Length; i++)
+				{
+					if (dynamicRatio > springBones[i].threshold)
+					{
+						if (springBones[i])
 						{
-							springBones [i].UpdateSpring ();
+							springBones[i].UpdateSpring();
 						}
 					}
 				}

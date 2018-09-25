@@ -24,7 +24,6 @@ public class PlayerController : MonoBehaviour
 	public static PlayerController mainPlayer;
 
 	[Header("References")]
-	public SpriteRenderer sprite;
 	public Rigidbody2D rBody;
 	public CapsuleCollider2D cCollider;
 
@@ -90,7 +89,6 @@ public class PlayerController : MonoBehaviour
 	protected virtual void Start()
 	{
 		PlayerController.mainPlayer = this;
-		sprite = sprite == null ? GetComponent<SpriteRenderer>() : sprite;
 		rBody = rBody == null ? GetComponent<Rigidbody2D>() : rBody;
 		cCollider = cCollider == null ? GetComponent<CapsuleCollider2D>() : cCollider;
 		jumpStart = Time.fixedTime - 100f;
@@ -209,16 +207,16 @@ public class PlayerController : MonoBehaviour
 				animState = AnimationState.Falling;
 			}
 		}
-		float flip = transform.localScale.x;
-		if (rBody.velocity.x > 0)
+		float flip = transform.localEulerAngles.y;
+		if (rBody.velocity.x > 1f)
 		{
-			flip = Mathf.Abs(flip) * 1;
+			flip = 180;
 		}
-		else if (rBody.velocity.x < 0)
+		else if (rBody.velocity.x < -1f)
 		{
-			flip = Mathf.Abs(flip) * -1;
+			flip = 0;
 		}
-		transform.localScale = new Vector3(flip, transform.localScale.y, transform.localScale.z);
+		transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, flip, transform.localEulerAngles.z);
 		//print(animState);
 	}
 
