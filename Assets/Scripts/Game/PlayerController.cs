@@ -9,6 +9,18 @@ using UnityEngine.Sprites;
 public class PlayerController : MonoBehaviour
 {
 
+	public enum AnimationState
+	{
+		Idle,
+		GainingSpeed,
+		Running,
+		Stopping,
+		Turning,
+		Jumping,
+		Falling,
+		Landing,
+	}
+
 	public static PlayerController mainPlayer;
 
 	[Header("References")]
@@ -61,6 +73,19 @@ public class PlayerController : MonoBehaviour
 	/// </summary>
 	protected bool jumpHeld;
 
+	/// <summary>
+	/// The state of the player's animation.
+	/// </summary>
+	protected AnimationState animState;
+
+	/// <summary>
+	/// Gets the state of the player's animation.
+	/// </summary>
+	public AnimationState AnimState
+	{
+		get { return animState; }
+	}
+
 
 	protected virtual void Start()
 	{
@@ -69,17 +94,18 @@ public class PlayerController : MonoBehaviour
 		rBody = rBody == null ? GetComponent<Rigidbody2D>() : rBody;
 		cCollider = cCollider == null ? GetComponent<CapsuleCollider2D>() : cCollider;
 		jumpStart = Time.fixedTime - 100f;
+		animState = AnimationState.Idle;
 	}
 
 	protected virtual void FixedUpdate()
 	{
 		Move();
-		//Jump();
 	}
 
 	protected virtual void Update()
 	{
 		Jump();
+		SetAnimationState();
 	}
 
 
@@ -107,8 +133,8 @@ public class PlayerController : MonoBehaviour
 			acceleratedMove = rBody.velocity.x + (movement * aerialControl);
 		}
 		// Clamp the accelerated move to the maximum speeds. 
-		movement = Mathf.Clamp(acceleratedMove, speed * Time.deltaTime * -1, speed * Time.deltaTime);
-		sprite.flipX = Mathf.Abs(movement) <= 1f ? sprite.flipX : movement > 0;
+		movement = Mathf.Clamp(acceleratedMove, speed * Time.fixedDeltaTime * -1, speed * Time.fixedDeltaTime);
+		//sprite.flipX = Mathf.Abs(movement) <= 1f ? sprite.flipX : movement > 0;
 		rBody.velocity = new Vector2(movement, rBody.velocity.y);
 	}
 
@@ -137,6 +163,65 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Sets the current state of the animation.
+	/// </summary>
+	protected virtual void SetAnimationState()
+	{
+		if (grounded)
+		{
+			if (animState == AnimationState.Jumping ||
+				animState == AnimationState.Falling)
+			{
+				animState = AnimationState.Landing;
+			}
+			else if (Mathf.Abs(rBody.velocity.x) >= speed * Time.fixedDeltaTime * (3f / 4f))
+			{
+				animState = AnimationState.Running;
+			}
+			else if (Input.GetKey(KeyCode.A) && rBody.velocity.x <= 0 ||
+					 Input.GetKey(KeyCode.D) && rBody.velocity.x >= 0)
+			{
+				animState = AnimationState.GainingSpeed;
+			}
+			else if (Input.GetKey(KeyCode.A) && rBody.velocity.x > 0 ||
+					 Input.GetKey(KeyCode.D) && rBody.velocity.x < 0)
+			{
+				animState = AnimationState.Turning;
+			}
+			else if (Mathf.Abs(rBody.velocity.x) > 2f)
+			{
+				animState = AnimationState.Stopping;
+			}
+			else
+			{
+				animState = AnimationState.Idle; 
+			}
+		}
+		else
+		{
+			if (rBody.velocity.y > 0)
+			{
+				animState = AnimationState.Jumping;
+			}
+			else
+			{
+				animState = AnimationState.Falling;
+			}
+		}
+		float flip = transform.localScale.x;
+		if (rBody.velocity.x > 0)
+		{
+			flip = Mathf.Abs(flip) * 1;
+		}
+		else if (rBody.velocity.x < 0)
+		{
+			flip = Mathf.Abs(flip) * -1;
+		}
+		transform.localScale = new Vector3(flip, transform.localScale.y, transform.localScale.z);
+		//print(animState);
+	}
+
 	void OnCollisionStay2D(Collision2D collision)
 	{
 		CheckGrounded(collision);
@@ -156,7 +241,7 @@ public class PlayerController : MonoBehaviour
 	{
 		foreach (ContactPoint2D contact in collision.contacts)
 		{
-			bool touchingGround = Vector2.Distance(transform.position, contact.point) / (transform.localScale.x * cCollider.size.y) > 0.47f;
+			bool touchingGround = Vector2.Distance(transform.position, contact.point) / (transform.localScale.y * cCollider.size.y) > 0.47f;
 			grounded = rBody.velocity.y <= 5 && (grounded || touchingGround);
 			/*
 			print(contact.collider.name + " hit " + contact.otherCollider.name + " " + 
