@@ -38,7 +38,8 @@ public class DropShadow : MonoBehaviour
 			m_SpriteRenderer.enabled = true;
 			transform.position = m_ContactCache[0].point + m_ContactCache[0].normal * offset;
 			// Allign to surface rotation. 
-			transform.rotation = Quaternion.FromToRotation(Vector3.up, m_ContactCache[0].normal);
+			Quaternion newRot = Quaternion.FromToRotation(Vector3.up, m_ContactCache[0].normal);
+			transform.rotation = newRot;
 
 			float height = Vector3.SqrMagnitude(origin.transform.position - transform.position);
 			float ratio = Mathf.Clamp(1.0f - height / (maxHeight * maxHeight), 0.0f, 1.0f);
