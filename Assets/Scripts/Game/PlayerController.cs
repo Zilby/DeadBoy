@@ -9,23 +9,12 @@ using UnityEngine.Sprites;
 public class PlayerController : MonoBehaviour
 {
 
-	public enum AnimationState
-	{
-		Idle,
-		GainingSpeed,
-		Running,
-		Stopping,
-		Turning,
-		Jumping,
-		Falling,
-		Landing,
-	}
-
 	public static PlayerController mainPlayer;
 
 	[Header("References")]
 	public Rigidbody2D rBody;
 	public CapsuleCollider2D cCollider;
+	public Animator anim;
 
 	[Header("Movement")]
 	/// <summary>
@@ -73,31 +62,26 @@ public class PlayerController : MonoBehaviour
 	protected bool jumpHeld;
 
 	/// <summary>
-	/// The state of the player's animation.
+	/// The max y velocity before no longer being considered grounded.
 	/// </summary>
-	protected AnimationState animState;
-
-	/// <summary>
-	/// Gets the state of the player's animation.
-	/// </summary>
-	public AnimationState AnimState
-	{
-		get { return animState; }
-	}
-
+	protected const float MAX_Y_VELOCITY = 5;
 
 	protected virtual void Start()
 	{
 		PlayerController.mainPlayer = this;
 		rBody = rBody == null ? GetComponent<Rigidbody2D>() : rBody;
 		cCollider = cCollider == null ? GetComponent<CapsuleCollider2D>() : cCollider;
+		anim = anim == null ? GetComponent<Animator>() : anim;
 		jumpStart = Time.fixedTime - 100f;
-		animState = AnimationState.Idle;
 	}
 
 	protected virtual void FixedUpdate()
 	{
 		Move();
+		if (Mathf.Abs(rBody.velocity.y) > MAX_Y_VELOCITY)
+		{
+			grounded = false;
+		}
 	}
 
 	protected virtual void Update()
@@ -166,47 +150,14 @@ public class PlayerController : MonoBehaviour
 	/// </summary>
 	protected virtual void SetAnimationState()
 	{
-		if (grounded)
-		{
-			if (animState == AnimationState.Jumping ||
-				animState == AnimationState.Falling)
-			{
-				animState = AnimationState.Landing;
-			}
-			else if (Mathf.Abs(rBody.velocity.x) >= speed * Time.fixedDeltaTime * (3f / 4f))
-			{
-				animState = AnimationState.Running;
-			}
-			else if (Input.GetKey(KeyCode.A) && rBody.velocity.x <= 0 ||
-					 Input.GetKey(KeyCode.D) && rBody.velocity.x >= 0)
-			{
-				animState = AnimationState.GainingSpeed;
-			}
-			else if (Input.GetKey(KeyCode.A) && rBody.velocity.x > 0 ||
-					 Input.GetKey(KeyCode.D) && rBody.velocity.x < 0)
-			{
-				animState = AnimationState.Turning;
-			}
-			else if (Mathf.Abs(rBody.velocity.x) > 2f)
-			{
-				animState = AnimationState.Stopping;
-			}
-			else
-			{
-				animState = AnimationState.Idle; 
-			}
-		}
-		else
-		{
-			if (rBody.velocity.y > 0)
-			{
-				animState = AnimationState.Jumping;
-			}
-			else
-			{
-				animState = AnimationState.Falling;
-			}
-		}
+		anim.SetFloat("XVel", rBody.velocity.x);
+		anim.SetFloat("YVel", rBody.velocity.y);
+		anim.SetBool("RightInput", Input.GetKey(KeyCode.D));
+		anim.SetBool("LeftInput", Input.GetKey(KeyCode.A));
+		anim.SetBool("Fell", anim.GetBool("Grounded") != grounded && grounded);
+		anim.SetBool("Grounded", grounded);
+
+
 		float flip = transform.localEulerAngles.y;
 		if (rBody.velocity.x > 1f)
 		{
@@ -217,7 +168,6 @@ public class PlayerController : MonoBehaviour
 			flip = 0;
 		}
 		transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, flip, transform.localEulerAngles.z);
-		//print(animState);
 	}
 
 	void OnCollisionStay2D(Collision2D collision)
@@ -230,21 +180,22 @@ public class PlayerController : MonoBehaviour
 		CheckGrounded(collision);
 	}
 
-	void OnCollisionExit2D(Collision2D collision)
-	{
-		grounded = false;
-	}
-
 	void CheckGrounded(Collision2D collision)
 	{
 		foreach (ContactPoint2D contact in collision.contacts)
 		{
-			bool touchingGround = Vector2.Distance(transform.position, contact.point) / (transform.localScale.y * cCollider.size.y) > 0.47f;
-			grounded = rBody.velocity.y <= 5 && (grounded || touchingGround);
+			grounded = rBody.velocity.y < MAX_Y_VELOCITY && (grounded || TouchingGround(contact));
 			/*
 			print(contact.collider.name + " hit " + contact.otherCollider.name + " " + 
 			      (Vector2.Distance(transform.position, contact.point) / (transform.localScale.x * cCollider.size.y)).ToString());
 			*/
 		}
+	}
+
+	bool TouchingGround(ContactPoint2D contact)
+	{
+		return contact.point.y < transform.position.y &&
+				Vector2.Distance(transform.position, contact.point) /
+								(transform.localScale.y * cCollider.size.y) > 0.47f;
 	}
 }
