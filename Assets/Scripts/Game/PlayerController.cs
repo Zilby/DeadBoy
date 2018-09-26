@@ -66,6 +66,8 @@ public class PlayerController : MonoBehaviour
 	/// </summary>
 	protected const float MAX_Y_VELOCITY = 5;
 
+	protected bool checkForGrounded = false;
+
 	protected virtual void Start()
 	{
 		PlayerController.mainPlayer = this;
@@ -77,11 +79,14 @@ public class PlayerController : MonoBehaviour
 
 	protected virtual void FixedUpdate()
 	{
-		Move();
-		if (Mathf.Abs(rBody.velocity.y) > MAX_Y_VELOCITY)
-		{
-			grounded = false;
+		if(checkForGrounded) {
+			if (rBody.velocity.y > MAX_Y_VELOCITY || rBody.velocity.y < 0)
+			{
+				grounded = false;
+			}
+			checkForGrounded = false;
 		}
+		Move();
 	}
 
 	protected virtual void Update()
@@ -178,6 +183,11 @@ public class PlayerController : MonoBehaviour
 	void OnCollisionEnter2D(Collision2D collision)
 	{
 		CheckGrounded(collision);
+	}
+
+	void OnCollisionExit2D(Collision2D collision)
+	{
+		checkForGrounded = true;
 	}
 
 	void CheckGrounded(Collision2D collision)
