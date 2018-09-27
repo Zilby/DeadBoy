@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
 
 	protected virtual void Start()
 	{
-		PlayerController.mainPlayer = this;
+		mainPlayer = this;
 		rBody = rBody == null ? GetComponent<Rigidbody2D>() : rBody;
 		cCollider = cCollider == null ? GetComponent<CapsuleCollider2D>() : cCollider;
 		anim = anim == null ? GetComponent<Animator>() : anim;
@@ -121,7 +121,6 @@ public class PlayerController : MonoBehaviour
 		}
 		// Clamp the accelerated move to the maximum speeds. 
 		movement = Mathf.Clamp(acceleratedMove, speed * Time.fixedDeltaTime * -1, speed * Time.fixedDeltaTime);
-		//sprite.flipX = Mathf.Abs(movement) <= 1f ? sprite.flipX : movement > 0;
 		rBody.velocity = new Vector2(movement, rBody.velocity.y);
 	}
 
