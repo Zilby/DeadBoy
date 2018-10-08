@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Anima2D;
 using UnityEngine;
 using UnityEngine.Sprites;
 
@@ -15,6 +16,16 @@ public class PlayerController : MonoBehaviour
 	public Rigidbody2D rBody;
 	public CapsuleCollider2D cCollider;
 	public Animator anim;
+
+	[Header("InverseKinematics")]
+	public IkLimb2D rightArm;
+	public IkLimb2D leftArm;
+	public IkLimb2D rightHand;
+	public IkLimb2D leftHand;
+	public IkLimb2D rightLeg;
+	public IkLimb2D leftLeg;
+	public IkLimb2D rightFoot;
+	public IkLimb2D leftFoot;
 
 	[Header("Movement")]
 	/// <summary>
