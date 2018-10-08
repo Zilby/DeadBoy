@@ -156,8 +156,11 @@ public class PlayerController : MonoBehaviour
 	{
 		anim.SetFloat("XVel", rBody.velocity.x);
 		anim.SetFloat("YVel", rBody.velocity.y);
+		anim.SetFloat("XMag", Mathf.Abs(rBody.velocity.x));
+		anim.SetFloat("YMag", Mathf.Abs(rBody.velocity.y));
 		anim.SetBool("RightInput", Input.GetKey(KeyCode.D));
 		anim.SetBool("LeftInput", Input.GetKey(KeyCode.A));
+		anim.SetBool("AnyInput", Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A));
 		anim.SetBool("Fell", anim.GetBool("Grounded") != grounded && grounded);
 		anim.SetBool("Grounded", grounded);
 

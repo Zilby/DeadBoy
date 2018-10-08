@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ac72352e470934fbea09c34991db3cec
+guid: 09ee41b14a1ec449ca8eeb9c161cec6c
 TextureImporter:
   fileIDToRecycleName:
     21300000: DeadboyTestAtlas_0
@@ -115,7 +115,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 944fa88c8c35e44ee965b7487687ab6d
+      spriteID: bb2aad935b04c4cfda00ffbe3fe47e36
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 07376fb54d68d49ec91f52a6267d7e0e
+      spriteID: 6d56782767854471ba7ff0f71909caa9
       vertices: []
       indices: 
       edges: []
@@ -155,7 +155,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4db2c9bc97e04f568b31ce1e8765755
+      spriteID: 765b3de3b22d44a0ebc16a3da7338856
       vertices: []
       indices: 
       edges: []
@@ -175,7 +175,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f2530d6db6ee442abb875861b39f043
+      spriteID: ed0afa560fd804ba6b04d3ded91be939
       vertices: []
       indices: 
       edges: []
@@ -195,7 +195,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 326389b4be9074f3e8d659db08cac4fa
+      spriteID: 4d5b9fd436f924af2aadb04c425b324a
       vertices: []
       indices: 
       edges: []
@@ -204,10 +204,10 @@ TextureImporter:
       name: DeadboyTestAtlas_5
       rect:
         serializedVersion: 2
-        x: 1607
-        y: 769
-        width: 169
-        height: 177
+        x: 1608
+        y: 770
+        width: 167
+        height: 175
       alignment: 9
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,7 +215,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5779b149bcdcb4f1f8fdcd16bbc4a28c
+      spriteID: 39fa9b89e95444143ad801560b709213
       vertices: []
       indices: 
       edges: []
@@ -235,7 +235,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6641afd6896754559b2b6a075276f29a
+      spriteID: 572e8aeb23b4d46219f66732e8411d06
       vertices: []
       indices: 
       edges: []
@@ -255,7 +255,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0982fce876124d83b62b6845ae14820
+      spriteID: fbb102ea6c2404e8d8a106241e3f6f24
       vertices: []
       indices: 
       edges: []
@@ -275,7 +275,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 19266105d71fa45a584892a78e8ad757
+      spriteID: 4bd4bc11da3694463abef4e5c5ea09d6
       vertices: []
       indices: 
       edges: []
@@ -295,7 +295,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c1842ddf1860849bfb9cd970bfcb1211
+      spriteID: 966ab81fac8e94ed0b7c04fbea3c6470
       vertices: []
       indices: 
       edges: []
@@ -315,7 +315,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ca28f75d79e94d1aaf21de06cd479fe
+      spriteID: 3942677ffecff452c9837400a01d7bba
       vertices: []
       indices: 
       edges: []
@@ -331,6 +331,6 @@ TextureImporter:
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 636733695480000000
+  userData: 636742627480000000
   assetBundleName: 
   assetBundleVariant: 

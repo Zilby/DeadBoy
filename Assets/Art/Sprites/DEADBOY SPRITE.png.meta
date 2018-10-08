@@ -1,0 +1,603 @@
+fileFormatVersion: 2
+guid: 566b7df5982414688acb2254b476e20c
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: DEADBOY SPRITE_0
+    21300002: DEADBOY SPRITE_1
+    21300004: DEADBOY SPRITE_2
+    21300006: DEADBOY SPRITE_3
+    21300008: DEADBOY SPRITE_4
+    21300010: DEADBOY SPRITE_5
+    21300012: DEADBOY SPRITE_6
+    21300014: DEADBOY SPRITE_7
+    21300016: DEADBOY SPRITE_8
+    21300018: DEADBOY SPRITE_9
+    21300020: DEADBOY SPRITE_10
+    21300022: DEADBOY SPRITE_11
+    21300024: DEADBOY SPRITE_12
+    21300026: DEADBOY SPRITE_13
+    21300028: DEADBOY SPRITE_14
+    21300030: DEADBOY SPRITE_15
+    21300032: DEADBOY SPRITE_16
+    21300034: DEADBOY SPRITE_17
+    21300036: DEADBOY SPRITE_18
+    21300038: DEADBOY SPRITE_19
+    21300040: DEADBOY SPRITE_20
+    21300042: DEADBOY SPRITE_21
+    21300044: DEADBOY SPRITE_22
+    21300046: DEADBOY SPRITE_23
+  externalObjects: {}
+  serializedVersion: 7
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_0
+      rect:
+        serializedVersion: 2
+        x: 738
+        y: 3192
+        width: 431
+        height: 270
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ed7db25b2c9f40268e02529193c2596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_1
+      rect:
+        serializedVersion: 2
+        x: 1692
+        y: 2957
+        width: 484
+        height: 503
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbc409ce81e6145619a818ad907baf50
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_2
+      rect:
+        serializedVersion: 2
+        x: 2543
+        y: 2964
+        width: 549
+        height: 383
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c6c204b172d844bea8d718082d73b96
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 2356
+        width: 141
+        height: 421
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ceff99d45f01d4b97983cbbc775559b3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_4
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 2337
+        width: 157
+        height: 419
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a25e09a67f9b34d97bd9403019a08915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_5
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 2350
+        width: 399
+        height: 751
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5228b7ba32c37474abfdbca8bd4f4c97
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_6
+      rect:
+        serializedVersion: 2
+        x: 1479
+        y: 2704
+        width: 150
+        height: 240
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5519953593c5476e927c45c9fdab527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_7
+      rect:
+        serializedVersion: 2
+        x: 1666
+        y: 2209
+        width: 490
+        height: 504
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18b5eb62607d249e39628b5f992cbf90
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_8
+      rect:
+        serializedVersion: 2
+        x: 2412
+        y: 2129
+        width: 788
+        height: 733
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfbcb865b29de4c598f81b5e8fad5ebc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_9
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 1577
+        width: 163
+        height: 573
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb979552732af4049ba73901bcab31e2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_10
+      rect:
+        serializedVersion: 2
+        x: 508
+        y: 1586
+        width: 162
+        height: 573
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d63ecd39ac7c94932a18082ecd2e2205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_11
+      rect:
+        serializedVersion: 2
+        x: 1135
+        y: 1993
+        width: 341
+        height: 215
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad414ee11e62a4e49afffe2542801b2c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_12
+      rect:
+        serializedVersion: 2
+        x: 2826
+        y: 1704
+        width: 284
+        height: 296
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cbeb5020b7844f92b7e0398960d2b1c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_13
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 1229
+        width: 175
+        height: 191
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b9dadb1204274cbc8afdbcc0a6f6498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_14
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 1237
+        width: 176
+        height: 193
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14841ae3124ed4bdd869725d8ad5941a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_15
+      rect:
+        serializedVersion: 2
+        x: 1067
+        y: 1245
+        width: 212
+        height: 658
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8d8bc43ddaeb4aecb265995d9363f60
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_16
+      rect:
+        serializedVersion: 2
+        x: 1492
+        y: 1257
+        width: 184
+        height: 628
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c0fb18d9ebe94a39b0043f29948df2f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_17
+      rect:
+        serializedVersion: 2
+        x: 2394
+        y: 1377
+        width: 454
+        height: 209
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 086aeef90861647a686b62e1928552aa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_18
+      rect:
+        serializedVersion: 2
+        x: 1925
+        y: 1001
+        width: 33
+        height: 224
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8cc54ddbc59c4067a0a55c4e799eb25
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_19
+      rect:
+        serializedVersion: 2
+        x: 2066
+        y: 764
+        width: 277
+        height: 473
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 103fb4a5cdee241a28c70c30e6f2c1fe
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_20
+      rect:
+        serializedVersion: 2
+        x: 2939
+        y: 1001
+        width: 129
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ede4740a1ff414d76871c301e4394dae
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_21
+      rect:
+        serializedVersion: 2
+        x: 1037
+        y: 170
+        width: 204
+        height: 811
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8498af1bd05f743d1afd7761725a1bc9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_22
+      rect:
+        serializedVersion: 2
+        x: 1464
+        y: 224
+        width: 182
+        height: 744
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 518ecf17aa45d4bf9b363d749873d271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DEADBOY SPRITE_23
+      rect:
+        serializedVersion: 2
+        x: 2617
+        y: 605
+        width: 454
+        height: 209
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa2c5f4ec874845c19244d7f95287ac4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: c15714c0b6fa843f9b5f100e5212723b
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
