@@ -11,7 +11,7 @@ public class Pullable : Grabable
 	/// <summary>
 	/// The distance joint for this pullable. 
 	/// </summary>
-	private HingeJoint2D joint;
+	private DistanceJoint2D joint;
 
 
 	protected override string Tip
@@ -19,18 +19,16 @@ public class Pullable : Grabable
 		get { return "Press " + GrabInput.ToString() + " To Pull"; }
 	}
 
-	private bool pulling = false;
-
-
 	private void Awake()
 	{
-		joint = GetComponentInChildren<HingeJoint2D>();
+		joint = GetComponentInChildren<DistanceJoint2D>();
 	}
 
 
 	protected override void GrabAction(Rigidbody2D r)
 	{
-		pulling = !pulling;
+		PlayerController p = r.GetComponent<PlayerController>();
+		bool pulling = p.Pulling(transform);
 		joint.enabled = pulling;
 		joint.connectedBody = r;
 		if (pulling)
