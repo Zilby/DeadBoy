@@ -47,7 +47,7 @@ public abstract class Grabable : MonoBehaviour
 	protected virtual void OnTriggerEnter2D(Collider2D collision)
 	{
 		tooltip = ToolTips.TooltipActiveEvent(Tip, TipPos);
-		checkInput = StartCoroutine(CheckForInput());
+		checkInput = StartCoroutine(CheckForInput(collision.attachedRigidbody));
 	}
 
 	protected virtual void OnTriggerStay2D(Collider2D collision)
@@ -64,14 +64,14 @@ public abstract class Grabable : MonoBehaviour
 	/// <summary>
 	/// Checks for player input. 
 	/// </summary>
-	private IEnumerator CheckForInput()
+	private IEnumerator CheckForInput(Rigidbody2D r)
 	{
 		for (; ; )
 		{
 			yield return null;
 			if (Input.GetKeyDown(GrabInput))
 			{
-				GrabAction();
+				GrabAction(r);
 			}
 		}
 	}
@@ -79,5 +79,5 @@ public abstract class Grabable : MonoBehaviour
 	/// <summary>
 	/// The action to be taken when the grabable is grabbed. 
 	/// </summary>
-	protected abstract void GrabAction();
+	protected abstract void GrabAction(Rigidbody2D r);
 }
