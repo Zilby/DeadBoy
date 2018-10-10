@@ -190,18 +190,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected virtual void SetAnimationState()
 	{
-		anim.SetFloat("XVel", rBody.velocity.x);
-		anim.SetFloat("YVel", rBody.velocity.y);
-		anim.SetFloat("XMag", Mathf.Abs(rBody.velocity.x));
-		anim.SetFloat("YMag", Mathf.Abs(rBody.velocity.y));
-		anim.SetBool("RightInput", Input.GetKey(KeyCode.D));
-		anim.SetBool("LeftInput", Input.GetKey(KeyCode.A));
-		anim.SetBool("AnyInput", Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A));
-		anim.SetBool("Fell", anim.GetBool("Grounded") != grounded && grounded);
-		anim.SetBool("Grounded", grounded);
-		anim.SetBool("Pulling", pulling);
-
-		if (!pulling)
+		if(!pulling)
 		{
 			float flip = transform.localEulerAngles.y;
 			if (rBody.velocity.x > 1f)
@@ -214,6 +203,17 @@ public abstract class PlayerController : MonoBehaviour
 			}
 			transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, flip, transform.localEulerAngles.z);
 		}
+		anim.SetFloat("XVel", rBody.velocity.x);
+		anim.SetFloat("YVel", rBody.velocity.y);
+		anim.SetFloat("XMag", Mathf.Abs(rBody.velocity.x));
+		anim.SetFloat("YMag", Mathf.Abs(rBody.velocity.y));
+		anim.SetBool("RightInput", Input.GetKey(KeyCode.D));
+		anim.SetBool("LeftInput", Input.GetKey(KeyCode.A));
+		anim.SetBool("AnyInput", Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A));
+		anim.SetBool("Fell", anim.GetBool("Grounded") != grounded && grounded);
+		anim.SetBool("Grounded", grounded);
+		anim.SetBool("Pulling", pulling);
+		anim.SetBool("Flipped", transform.localEulerAngles.y == 180);
 	}
 
 	void OnCollisionStay2D(Collision2D collision)
