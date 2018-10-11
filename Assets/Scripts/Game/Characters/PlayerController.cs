@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Anima2D;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.Sprites;
 /// <summary>
 /// This class controls the player's movement and abilities. 
 /// </summary>
-public class PlayerController : MonoBehaviour
+public abstract class PlayerController : MonoBehaviour
 {
 
 	public static PlayerController mainPlayer;
@@ -73,6 +74,26 @@ public class PlayerController : MonoBehaviour
 	protected bool jumpHeld;
 
 	/// <summary>
+	/// Whether or not the player is currently pulling. 
+	/// </summary>
+	protected bool pulling;
+
+	/// <summary>
+	/// The pull location.
+	/// </summary>
+	protected Transform pullLocation = null;
+
+	/// <summary>
+	/// The last Right arm location.
+	/// </summary>
+	protected Vector3 lastRAlocation = Vector3.zero;
+
+	/// <summary>
+	/// The last Left arm location.
+	/// </summary>
+	protected Vector3 lastLAlocation = Vector3.zero;
+
+	/// <summary>
 	/// The max y velocity before no longer being considered grounded.
 	/// </summary>
 	protected const float MAX_Y_VELOCITY = 5;
@@ -90,7 +111,8 @@ public class PlayerController : MonoBehaviour
 
 	protected virtual void FixedUpdate()
 	{
-		if(checkForGrounded) {
+		if (checkForGrounded)
+		{
 			if (rBody.velocity.y > MAX_Y_VELOCITY || rBody.velocity.y < 0)
 			{
 				grounded = false;
@@ -141,22 +163,25 @@ public class PlayerController : MonoBehaviour
 	/// </summary>
 	protected virtual void Jump()
 	{
-		if (Input.GetKeyDown(KeyCode.Space) && grounded)
+		if (!pulling)
 		{
-			rBody.velocity = new Vector2(rBody.velocity.x, jumpHeight);
-			jumpStart = Time.fixedTime;
-			jumpHeld = true;
-		}
-		if (!Input.GetKey(KeyCode.Space) && !grounded)
-		{
-			jumpHeld = false;
-		}
-		// Add more force if jump held for longer. 
-		else if (Input.GetKey(KeyCode.Space) &&
-				 (Time.fixedTime - jumpStart < jumpInterval) &&
-				 !grounded && jumpHeld)
-		{
-			rBody.velocity = new Vector2(rBody.velocity.x, jumpHeight);
+			if (Input.GetKeyDown(KeyCode.Space) && grounded)
+			{
+				rBody.velocity = new Vector2(rBody.velocity.x, jumpHeight);
+				jumpStart = Time.fixedTime;
+				jumpHeld = true;
+			}
+			if (!Input.GetKey(KeyCode.Space) && !grounded)
+			{
+				jumpHeld = false;
+			}
+			// Add more force if jump held for longer. 
+			else if (Input.GetKey(KeyCode.Space) &&
+					 (Time.fixedTime - jumpStart < jumpInterval) &&
+					 !grounded && jumpHeld)
+			{
+				rBody.velocity = new Vector2(rBody.velocity.x, jumpHeight);
+			}
 		}
 	}
 
@@ -165,6 +190,19 @@ public class PlayerController : MonoBehaviour
 	/// </summary>
 	protected virtual void SetAnimationState()
 	{
+		if(!pulling)
+		{
+			float flip = transform.localEulerAngles.y;
+			if (rBody.velocity.x > 1f)
+			{
+				flip = 180;
+			}
+			else if (rBody.velocity.x < -1f)
+			{
+				flip = 0;
+			}
+			transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, flip, transform.localEulerAngles.z);
+		}
 		anim.SetFloat("XVel", rBody.velocity.x);
 		anim.SetFloat("YVel", rBody.velocity.y);
 		anim.SetFloat("XMag", Mathf.Abs(rBody.velocity.x));
@@ -174,18 +212,8 @@ public class PlayerController : MonoBehaviour
 		anim.SetBool("AnyInput", Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A));
 		anim.SetBool("Fell", anim.GetBool("Grounded") != grounded && grounded);
 		anim.SetBool("Grounded", grounded);
-
-
-		float flip = transform.localEulerAngles.y;
-		if (rBody.velocity.x > 1f)
-		{
-			flip = 180;
-		}
-		else if (rBody.velocity.x < -1f)
-		{
-			flip = 0;
-		}
-		transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, flip, transform.localEulerAngles.z);
+		anim.SetBool("Pulling", pulling);
+		anim.SetBool("Flipped", transform.localEulerAngles.y == 180);
 	}
 
 	void OnCollisionStay2D(Collision2D collision)
@@ -220,5 +248,52 @@ public class PlayerController : MonoBehaviour
 		return contact.point.y < transform.position.y &&
 				Vector2.Distance(transform.position, contact.point) /
 								(transform.localScale.y * cCollider.size.y) > 0.47f;
+	}
+
+	/// <summary>
+	/// Tries to pull an object. 
+	/// </summary>
+	public bool Pulling(Transform position)
+	{
+		if (grounded || pulling)
+		{
+			pulling = !pulling;
+			pullLocation = position;
+			lastRAlocation = rightArm.transform.position;
+			lastLAlocation = leftArm.transform.position;
+			float flip = transform.localEulerAngles.y;
+			if (transform.position.x < position.position.x)
+			{
+				flip = 180;
+			}
+			else
+			{
+				flip = 0;
+			}
+			transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, flip, transform.localEulerAngles.z);
+		}
+		return pulling;
+	}
+
+
+	/// <summary>
+	/// Sets the pulling for the limbs in the animation.
+	/// </summary>
+	public void SetPullingLocations()
+	{
+		lastRAlocation = Vector3.MoveTowards(lastRAlocation, pullLocation.position, 5f * (rBody.velocity.magnitude + 1) * Time.deltaTime);
+		lastLAlocation = Vector3.MoveTowards(lastLAlocation, pullLocation.position, 5f * (rBody.velocity.magnitude + 1) * Time.deltaTime);
+		rightArm.transform.position = lastRAlocation;
+		leftArm.transform.position = lastLAlocation;
+		rightArm.UpdateIK();
+		leftArm.UpdateIK();
+	}
+
+	protected virtual void LateUpdate()
+	{
+		if (pulling)
+		{
+			SetPullingLocations();
+		}
 	}
 }
