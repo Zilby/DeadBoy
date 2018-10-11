@@ -1,12 +1,48 @@
 fileFormatVersion: 2
-guid: 36775e80cc05644f1830f7b3fc29eb43
+guid: 99a2bc0ffe6574a4abf3ed12e5c3ccd6
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: deadboynewAtlas_0
+    21300002: deadboynewAtlas_2
+    21300004: deadboynewAtlas_3
+    21300006: deadboynewAtlas_4
+    21300008: deadboynewAtlas_5
+    21300010: deadboynewAtlas_6
+    21300012: deadboynewAtlas_7
+    21300014: deadboynewAtlas_8
+    21300016: deadboynewAtlas_9
+    21300018: deadboynewAtlas_13
+    21300020: deadboynewAtlas_14
+    21300022: deadboynewAtlas_15
+    21300024: deadboynewAtlas_16
+    21300026: deadboynewAtlas_17
+    21300028: deadboynewAtlas_18
+    21300030: deadboynewAtlas_19
+    21300032: deadboynewAtlas_20
+    21300034: deadboynewAtlas_21
+    21300036: deadboynewAtlas_22
+    21300038: deadboynewAtlas_23
+    21300040: deadboynewAtlas_24
+    21300042: deadboynewAtlas_25
+    21300044: deadboynewAtlas_26
+    21300046: deadboynewAtlas_27
+    21300048: deadboynewAtlas_28
+    21300050: deadboynewAtlas_29
+    21300052: deadboynewAtlas_30
+    21300054: deadboynewAtlas_31
+    21300056: deadboynewAtlas_32
+    21300058: deadboynewAtlas_33
+    21300060: deadboynewAtlas_34
+    21300062: deadboynewAtlas_35
+    21300064: deadboynewAtlas_36
+    21300066: deadboynewAtlas_37
+    21300068: deadboynewAtlas_38
+    21300070: deadboynewAtlas_39
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -34,13 +70,13 @@ TextureImporter:
     filterMode: -1
     aniso: -1
     mipBias: -100
-    wrapU: -1
-    wrapV: -1
+    wrapU: 1
+    wrapV: 1
     wrapW: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -51,7 +87,7 @@ TextureImporter:
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 0
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   maxTextureSizeSet: 0
@@ -60,7 +96,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -71,7 +107,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -82,11 +118,731 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: deadboynewAtlas_0
+      rect:
+        serializedVersion: 2
+        x: 3735.0635
+        y: 4001.6863
+        width: 171.79907
+        height: 138.45093
+      alignment: 9
+      pivot: {x: 0.49148417, y: 0.46452358}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9705bb91d282ab5459c5bcbc78c5978b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_2
+      rect:
+        serializedVersion: 2
+        x: 3969.1577
+        y: 4022.0125
+        width: 95.22241
+        height: 106.33862
+      alignment: 9
+      pivot: {x: 0.49717075, y: 0.49358645}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67d7d0e7d74946b43b505305549a45ae
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_3
+      rect:
+        serializedVersion: 2
+        x: 3216.871
+        y: 3912.139
+        width: 211.32251
+        height: 45.818115
+      alignment: 9
+      pivot: {x: 0.49984807, y: 0.46620417}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfba976e30879104fa3b43393a544064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_4
+      rect:
+        serializedVersion: 2
+        x: 3467.376
+        y: 3902.6096
+        width: 90.28198
+        height: 45.818115
+      alignment: 9
+      pivot: {x: 0.48873296, y: 0.5104998}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 258de6d7beb7de04f87e6865c04f22ec
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_5
+      rect:
+        serializedVersion: 2
+        x: 4140.05
+        y: 3917.7292
+        width: 121.15967
+        height: 47.053223
+      alignment: 9
+      pivot: {x: 0.4906724, y: 0.46268356}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b96403ce6974ce344a167a9480071a20
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_6
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 1029
+        width: 790
+        height: 2887
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5c0e022bf0c6bd448ce8ba3a5609305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_7
+      rect:
+        serializedVersion: 2
+        x: 2332.1453
+        y: 3656.9053
+        width: 366.9458
+        height: 245.90552
+      alignment: 9
+      pivot: {x: 0.49422693, y: 0.4965097}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a74ef6e22e4be4d48993a2f1c8828399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_8
+      rect:
+        serializedVersion: 2
+        x: 3758.7686
+        y: 3729.4597
+        width: 147.09692
+        height: 142.1565
+      alignment: 9
+      pivot: {x: 0.4774501, y: 0.48566222}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3d110ae80b82814c83c6b1ea096d125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_9
+      rect:
+        serializedVersion: 2
+        x: 3959.2744
+        y: 3739.5347
+        width: 91.51709
+        height: 123.62988
+      alignment: 9
+      pivot: {x: 0.49963987, y: 0.49312583}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a88949bd397a484a92aa29ec5197d3a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_13
+      rect:
+        serializedVersion: 2
+        x: 4629.9053
+        y: 3505.029
+        width: 202.67676
+        height: 243.4353
+      alignment: 9
+      pivot: {x: 0.5012648, y: 0.49487773}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e517dcc1f1025b4897461e5a92272a6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_14
+      rect:
+        serializedVersion: 2
+        x: 4214.3115
+        y: 3576.7651
+        width: 263.19727
+        height: 161.91821
+      alignment: 9
+      pivot: {x: 0.49844164, y: 0.4800857}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00ad865db0c4bb842b05cbf6b2b7e926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_15
+      rect:
+        serializedVersion: 2
+        x: 2318.0266
+        y: 3252.1
+        width: 366.9458
+        height: 244.67041
+      alignment: 9
+      pivot: {x: 0.49863875, y: 0.49209017}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e64ad39b594749f498562056e219987a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_16
+      rect:
+        serializedVersion: 2
+        x: 3362.17
+        y: 3017.126
+        width: 402.76416
+        height: 510.2185
+      alignment: 9
+      pivot: {x: 0.49614602, y: 0.49855852}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e3f8e2f12ffc8a45bcdb4f8b34a4eb2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_17
+      rect:
+        serializedVersion: 2
+        x: 4230.0796
+        y: 3075.251
+        width: 448.4629
+        height: 339.77344
+      alignment: 9
+      pivot: {x: 0.50153625, y: 0.49076533}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c28c5b4745e26ed43a41812477af39c7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_18
+      rect:
+        serializedVersion: 2
+        x: 1771.9435
+        y: 2416.4243
+        width: 150.80225
+        height: 429.93652
+      alignment: 9
+      pivot: {x: 0.50434524, y: 0.49676043}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dab7ebce58b832945bbdca2ca0152f3d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_19
+      rect:
+        serializedVersion: 2
+        x: 2073.397
+        y: 2396.9927
+        width: 165.62354
+        height: 427.4663
+      alignment: 9
+      pivot: {x: 0.49270043, y: 0.5006414}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af12bdc1da021bf459de42cc5f5b0ce5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_20
+      rect:
+        serializedVersion: 2
+        x: 2327.086
+        y: 2410.5842
+        width: 407.70435
+        height: 759.7102
+      alignment: 9
+      pivot: {x: 0.4927929, y: 0.49744695}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 285e04c1b9cc9604baafbc444f2c93a8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_21
+      rect:
+        serializedVersion: 2
+        x: 2960.3875
+        y: 2746.0044
+        width: 156.97778
+        height: 257.02148
+      alignment: 9
+      pivot: {x: 0.49760103, y: 0.5271762}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38c992d4d337365418215fa4d385b51d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_22
+      rect:
+        serializedVersion: 2
+        x: 3343
+        y: 2274
+        width: 391
+        height: 503
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff0d3a08173ff7342b32f15a0bf0bb47
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_23
+      rect:
+        serializedVersion: 2
+        x: 3994.4553
+        y: 2192.9485
+        width: 790.58765
+        height: 738.7134
+      alignment: 9
+      pivot: {x: 0.5015822, y: 0.49687946}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9904e047bb9d7814bb08f1c52e4cb3eb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_24
+      rect:
+        serializedVersion: 2
+        x: 2973.1245
+        y: 2492.1414
+        width: 123.62988
+        height: 139.68652
+      alignment: 9
+      pivot: {x: 0.48026416, y: 0.49653065}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b68ad931ab944374fa0c2dc269967499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_25
+      rect:
+        serializedVersion: 2
+        x: 1743.881
+        y: 1637.9232
+        width: 170.56396
+        height: 581.8546
+      alignment: 9
+      pivot: {x: 0.501976, y: 0.4959603}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 238d6bbdb5f5e07459994c1d70ddbd74
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_26
+      rect:
+        serializedVersion: 2
+        x: 2088.879
+        y: 1646.5675
+        width: 171.79907
+        height: 581.8546
+      alignment: 9
+      pivot: {x: 0.49255708, y: 0.49829006}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a82f011b9e3550549a4ae5df82a98fef
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_27
+      rect:
+        serializedVersion: 2
+        x: 2757.563
+        y: 1969.1615
+        width: 349.65454
+        height: 221.20325
+      alignment: 9
+      pivot: {x: 0.49888316, y: 0.49881047}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d61e03dde30c634d8d4cda798e489ba
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_28
+      rect:
+        serializedVersion: 2
+        x: 4406.497
+        y: 1765.3347
+        width: 292.83984
+        height: 305.19067
+      alignment: 9
+      pivot: {x: 0.5036983, y: 0.49531382}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b59654ff00acca14da05b3efe53dfe4f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_29
+      rect:
+        serializedVersion: 2
+        x: 2614.8357
+        y: 1189.8813
+        width: 218.73315
+        height: 665.8419
+      alignment: 9
+      pivot: {x: 0.49678826, y: 0.49804413}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 190be036e673a044981825b5844cb67b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_30
+      rect:
+        serializedVersion: 2
+        x: 3036.6394
+        y: 1200.0935
+        width: 194.03076
+        height: 637.4346
+      alignment: 9
+      pivot: {x: 0.49920225, y: 0.49637467}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 673595153795ebe49ac80444a9ca1322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_31
+      rect:
+        serializedVersion: 2
+        x: 3972.9824
+        y: 1438.0679
+        width: 463.28418
+        height: 217.49805
+      alignment: 9
+      pivot: {x: 0.5008105, y: 0.49164584}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89d643eb74d7f594da3e8538f87f0b50
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_32
+      rect:
+        serializedVersion: 2
+        x: 1723.8181
+        y: 1127.67
+        width: 184.15015
+        height: 232.31921
+      alignment: 9
+      pivot: {x: 0.48971868, y: 0.52440757}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3a3ab3c3826f014c80697d8159f640f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_33
+      rect:
+        serializedVersion: 2
+        x: 2085.23
+        y: 1136.5303
+        width: 184.15015
+        height: 226.1438
+      alignment: 9
+      pivot: {x: 0.48748276, y: 0.521658}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 108296b25d86f0d48805bf638dee60e4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_34
+      rect:
+        serializedVersion: 2
+        x: 3506.0615
+        y: 1061.0143
+        width: 40.877686
+        height: 233.55444
+      alignment: 9
+      pivot: {x: 0.49998507, y: 0.49875188}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7680bf656d61bad4e81e9b7b8022a15e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_35
+      rect:
+        serializedVersion: 2
+        x: 3647.0503
+        y: 824.78937
+        width: 284.19385
+        height: 481.8111
+      alignment: 9
+      pivot: {x: 0.50123966, y: 0.49751994}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58587b7fd54faea41a23f80514a5dde1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_36
+      rect:
+        serializedVersion: 2
+        x: 4519.1
+        y: 1060.5232
+        width: 138.45117
+        height: 112.513916
+      alignment: 9
+      pivot: {x: 0.501259, y: 0.4841773}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 117e73ab24f69f1418daaf7624a5fe36
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_37
+      rect:
+        serializedVersion: 2
+        x: 2617.8958
+        y: 231.74185
+        width: 210.0874
+        height: 818.99524
+      alignment: 9
+      pivot: {x: 0.5050481, y: 0.4978761}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0aaf6e4c0f20dac4b8f7b38cf430b7c9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_38
+      rect:
+        serializedVersion: 2
+        x: 3044.5974
+        y: 285.60034
+        width: 191.56079
+        height: 752.29944
+      alignment: 9
+      pivot: {x: 0.4954163, y: 0.499003}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 684311e48952465458f0b4470908de30
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboynewAtlas_39
+      rect:
+        serializedVersion: 2
+        x: 4196.403
+        y: 666.8967
+        width: 463.28467
+        height: 217.49799
+      alignment: 9
+      pivot: {x: 0.502061, y: 0.4924331}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df3b60f2457f7544785f7e33f0e2abcb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 02687759a1a1b46e383a1953eddd2678
+    spriteID: d427464492922b843a0b6c49b710812d
     vertices: []
     indices: 
     edges: []
@@ -94,6 +850,6 @@ TextureImporter:
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 
+  userData: 636748327533843576
   assetBundleName: 
   assetBundleVariant: 

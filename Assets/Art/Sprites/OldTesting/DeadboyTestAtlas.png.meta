@@ -124,12 +124,12 @@ TextureImporter:
       name: DeadboyTestAtlas_1
       rect:
         serializedVersion: 2
-        x: 560
-        y: 512
-        width: 86
-        height: 404
+        x: 561
+        y: 514
+        width: 83
+        height: 401
       alignment: 9
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0.50602406, y: 0.49875313}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -331,6 +331,6 @@ TextureImporter:
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 636733695480000000
+  userData: 636748260246005239
   assetBundleName: 
   assetBundleVariant: 
