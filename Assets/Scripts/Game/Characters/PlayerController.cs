@@ -21,8 +21,6 @@ public abstract class PlayerController : MonoBehaviour
 	[Header("InverseKinematics")]
 	public IkLimb2D rightArm;
 	public IkLimb2D leftArm;
-	public IkLimb2D rightHand;
-	public IkLimb2D leftHand;
 	public IkLimb2D rightLeg;
 	public IkLimb2D leftLeg;
 	public IkLimb2D rightFoot;
