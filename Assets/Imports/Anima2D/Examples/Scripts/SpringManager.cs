@@ -28,6 +28,12 @@ namespace UnityChan
 		public SpringBone[] springBones;
 		public bool usesPhysics;
 
+		private void Reset()
+		{
+			stiffnessCurve = AnimationCurve.Linear(0, 1, 1, 1);
+			dragCurve = AnimationCurve.Linear(0, 1, 1, 1);
+		}
+
 		void Start ()
 		{
 			UpdateParameters ();

@@ -38,6 +38,7 @@ TextureImporter:
     21300066: DBAtlas_37
     21300068: DBAtlas_38
     21300070: DBAtlas_39
+    21300072: DBAtlas_1
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -463,12 +464,12 @@ TextureImporter:
       name: DBAtlas_21
       rect:
         serializedVersion: 2
-        x: 2960.3875
-        y: 2746.0044
-        width: 156.97778
-        height: 257.02148
+        x: 2961.1807
+        y: 2726.1213
+        width: 155.74268
+        height: 275.5481
       alignment: 9
-      pivot: {x: 0.49760103, y: 0.5271762}
+      pivot: {x: 0.49403688, y: 0.51578575}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -623,12 +624,12 @@ TextureImporter:
       name: DBAtlas_29
       rect:
         serializedVersion: 2
-        x: 2614.8357
-        y: 1189.8813
-        width: 218.73315
-        height: 665.8419
+        x: 2610.4224
+        y: 1188.347
+        width: 234.78955
+        height: 760.9452
       alignment: 9
-      pivot: {x: 0.49678826, y: 0.49804413}
+      pivot: {x: 0.5017282, y: 0.49697953}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -643,12 +644,12 @@ TextureImporter:
       name: DBAtlas_30
       rect:
         serializedVersion: 2
-        x: 3036.6394
-        y: 1200.0935
-        width: 194.03076
-        height: 637.4346
+        x: 3038.7078
+        y: 1199.9963
+        width: 192.7959
+        height: 675.7229
       alignment: 9
-      pivot: {x: 0.49920225, y: 0.49637467}
+      pivot: {x: 0.49346203, y: 0.49805278}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -850,6 +851,6 @@ TextureImporter:
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 636748334320589601
+  userData: 636749669845441075
   assetBundleName: 
   assetBundleVariant: 

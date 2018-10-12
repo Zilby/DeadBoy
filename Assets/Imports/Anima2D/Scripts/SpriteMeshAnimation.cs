@@ -8,7 +8,7 @@ namespace Anima2D
 	public class SpriteMeshAnimation : MonoBehaviour
 	{
 		[SerializeField]
-		float m_Frame = 0f;
+		int m_Frame = 0;
 
 		[SerializeField]
 		SpriteMesh[] m_Frames;
@@ -38,10 +38,10 @@ namespace Anima2D
 
 		public int frame {
 			get {
-				return (int)m_Frame;
+				return m_Frame;
 			}
 			set {
-				m_Frame = (float)value;
+				m_Frame = value;
 			}
 		}
 
