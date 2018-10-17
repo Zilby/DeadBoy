@@ -287,12 +287,12 @@ TextureImporter:
       name: deadboy SHEET update v4_8
       rect:
         serializedVersion: 2
-        x: 3783
-        y: 3793
-        width: 114
-        height: 74
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 3778.0002
+        y: 3787.6252
+        width: 124
+        height: 83.99292
+      alignment: 9
+      pivot: {x: 0.499998, y: 0.50449806}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -307,12 +307,12 @@ TextureImporter:
       name: deadboy SHEET update v4_9
       rect:
         serializedVersion: 2
-        x: 3966
-        y: 3789
-        width: 71
-        height: 68
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 3961.0002
+        y: 3783.626
+        width: 81
+        height: 77.99341
+      alignment: 9
+      pivot: {x: 0.499997, y: 0.5048378}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -327,12 +327,12 @@ TextureImporter:
       name: deadboy SHEET update v4_10
       rect:
         serializedVersion: 2
-        x: 3761
-        y: 3761
-        width: 138
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 3756
+        y: 3755.6287
+        width: 147.99976
+        height: 41.996826
+      alignment: 9
+      pivot: {x: 0.49999753, y: 0.50887984}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -347,12 +347,12 @@ TextureImporter:
       name: deadboy SHEET update v4_11
       rect:
         serializedVersion: 2
-        x: 3966
-        y: 3744
-        width: 79
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 3961.0002
+        y: 3738.6304
+        width: 88.999756
+        height: 54.995605
+      alignment: 9
+      pivot: {x: 0.4999959, y: 0.506761}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -934,6 +934,6 @@ TextureImporter:
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 636749962329437319
+  userData: 636754122138600835
   assetBundleName: 
   assetBundleVariant: 
