@@ -47,8 +47,11 @@ public class DrownedGirlController : PlayerController
 	/// </summary>
     private bool diving;
 
+	private float MAX_RISE = MAX_Y_VELOCITY + 2;
 
-    protected override void Update() {
+
+
+	protected override void Update() {
         base.Update();
 
         if (swimming)
@@ -84,7 +87,7 @@ public class DrownedGirlController : PlayerController
             float buoyantForce = (surface-feetHeight) * (diving ? divingBuoyancy : surfaceBuoyancy)  * Time.deltaTime;
             // Debug.Log(surface + "  " + feetHeight + "  " + this.gameObject.transform.position.y); 
             
-            rBody.velocity = new Vector2(rBody.velocity.x * waterDrag, Mathf.Min(rBody.velocity.y * momentum + buoyantForce /* *(1-momentum) */, MAX_Y_VELOCITY));
+			rBody.velocity = new Vector2(rBody.velocity.x * waterDrag, Mathf.Min(rBody.velocity.y * momentum + buoyantForce /* *(1-momentum) */, MAX_RISE));
         }
        // Debug.Log(rBody.velocity.y + " " + grounded);
     }

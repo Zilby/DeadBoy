@@ -118,7 +118,7 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		if (checkForGrounded)
 		{
-			if (rBody.velocity.y > MAX_Y_VELOCITY || rBody.velocity.y < 0)
+			if (rBody.velocity.y >= MAX_Y_VELOCITY || rBody.velocity.y < 0)
 			{
 				grounded = false;
 			}
