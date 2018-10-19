@@ -135,6 +135,9 @@ public abstract class PlayerController : MonoBehaviour
 			}
 			checkForGrounded = false;
 		}
+		if (grounded) {
+			rBody.velocity = new Vector3(rBody.velocity.x, 0, 0);
+		}
 		Move();
 	}
 
