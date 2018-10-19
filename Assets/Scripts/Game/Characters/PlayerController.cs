@@ -56,6 +56,12 @@ public abstract class PlayerController : MonoBehaviour
 	[Range(0, 1)]
 	public float aerialControl;
 
+	[Header("Sprites")]
+	/// <summary>
+	/// Inverts the sprite direction (flips the sprites)
+	/// </summary>
+	public bool invertDirection = false;
+
 	/// <summary>
 	/// Whether or not the player is in the air. 
 	/// </summary>
@@ -96,6 +102,11 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected const float MAX_Y_VELOCITY = 5;
 
+	/// <summary>
+	/// The minimum y velocity before no longer being considered grounded.
+	/// </summary>
+	protected const float MIN_Y_VELOCITY = 5;
+
 	protected bool checkForGrounded = false;
 
 	protected virtual void Start()
@@ -111,7 +122,7 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		if (checkForGrounded)
 		{
-			if (rBody.velocity.y > MAX_Y_VELOCITY || rBody.velocity.y < 0)
+			if (rBody.velocity.y > MAX_Y_VELOCITY || rBody.velocity.y < 0 || cCollider.GetContacts(new Collider2D[0]) == 0)
 			{
 				grounded = false;
 			}
@@ -193,11 +204,11 @@ public abstract class PlayerController : MonoBehaviour
 			float flip = transform.localEulerAngles.y;
 			if (rBody.velocity.x > 1f)
 			{
-				flip = 180;
+				flip = 180 + (invertDirection ? 180 : 0);
 			}
 			else if (rBody.velocity.x < -1f)
 			{
-				flip = 0;
+				flip = 0 + (invertDirection ? 180 : 0);
 			}
 			transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, flip, transform.localEulerAngles.z);
 		}
