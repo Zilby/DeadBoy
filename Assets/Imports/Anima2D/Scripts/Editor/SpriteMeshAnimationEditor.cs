@@ -60,7 +60,7 @@ namespace Anima2D
 			{
 				Undo.RecordObject(spriteMeshAnimation,"Set frame");
 
-				m_FrameProperty.floatValue = (float)frame;
+				m_FrameProperty.intValue = frame;
 				spriteMeshAnimation.frame = frame;
 			}
 

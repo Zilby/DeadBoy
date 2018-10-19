@@ -48,6 +48,8 @@ namespace UnityChan
 		private Vector3 oldManagerRotation;
 
 		private Bone2D m_Bone;
+
+		private Vector3 originalSpringForce;
 		
 		private void Awake ()
 		{
@@ -58,6 +60,7 @@ namespace UnityChan
 			// GameObject.Find("unitychan_dynamic").GetComponent<SpringManager>();
 			managerRef = GetParentSpringManager (transform);
 			oldManagerRotation = managerRef.transform.eulerAngles;
+			originalSpringForce = springForce;
 		}
 
 		private void Start()
@@ -108,6 +111,7 @@ namespace UnityChan
 			//drag
 			force += (prevTipPos - currTipPos) * dragForce / sqrDt;
 
+			springForce.x = originalSpringForce.x * (transform.eulerAngles.y == 180 ? -1 : 1);
 			force += springForce / sqrDt;
 
 			//前フレームと値が同じにならないように
