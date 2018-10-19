@@ -10,8 +10,32 @@ using UnityEngine.Sprites;
 /// </summary>
 public abstract class PlayerController : MonoBehaviour
 {
-
-	public static PlayerController mainPlayer;
+	/// <summary>
+	/// The main player (ie: controlled player).
+	/// </summary>
+	public static PlayerController MainPlayer
+	{
+		get { return mainPlayer; }
+		// Set mainplayer in front
+		set
+		{
+			if (mainPlayer != null)
+			{
+				mainPlayer.transform.position = new Vector3(mainPlayer.transform.position.x, mainPlayer.transform.position.y, 0);
+			}
+			mainPlayer = value;
+			mainPlayer.transform.position = new Vector3(mainPlayer.transform.position.x, mainPlayer.transform.position.y, -1f);
+			CameraController.movingToNewPlayer = true;
+		}
+	}
+	/// <summary>
+	/// The main player (ie: controlled player).
+	/// </summary>
+	protected static PlayerController mainPlayer;
+	/// <summary>
+	/// All of the available players.
+	/// </summary>
+	public static List<PlayerController> players = new List<PlayerController>();
 
 	[Header("References")]
 	public Rigidbody2D rBody;
@@ -25,6 +49,12 @@ public abstract class PlayerController : MonoBehaviour
 	public IkLimb2D leftLeg;
 	public IkLimb2D rightFoot;
 	public IkLimb2D leftFoot;
+
+	[Header("Characteristics")]
+	/// <summary>
+	/// Whether or not this is the main player when starting the level. 
+	/// </summary>
+	public bool isMainPlayer = false;
 
 	[Header("Movement")]
 	/// <summary>
@@ -110,38 +140,101 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// The minimum y velocity before no longer being considered grounded.
 	/// </summary>
-	protected const float MIN_Y_VELOCITY = 5;
+	protected const float MIN_Y_VELOCITY = -3;
 
-	protected bool checkForGrounded = false;
+	/// <summary>
+	/// The sort value that determines which player gets selected next when toggling between players. 
+	/// It also determines their corresponding number key. 
+	/// </summary>
+	protected abstract int SORT_VALUE { get; }
 
-//===FUNCTIONS================================================================================================================
+	//===FUNCTIONS================================================================================================================
+
+	protected virtual void Awake()
+	{
+		players.Add(this);
+	}
 
 	protected virtual void Start()
 	{
-		mainPlayer = this;
 		rBody = rBody == null ? GetComponent<Rigidbody2D>() : rBody;
 		cCollider = cCollider == null ? GetComponent<CapsuleCollider2D>() : cCollider;
 		anim = anim == null ? GetComponent<Animator>() : anim;
 		jumpStart = Time.fixedTime - 100f;
+		if (isMainPlayer)
+		{
+			MainPlayer = this;
+			players.Sort(delegate (PlayerController p1, PlayerController p2)
+			{
+				if (p1.SORT_VALUE < p2.SORT_VALUE)
+				{
+					return 1;
+				}
+				else if (p1.SORT_VALUE > p2.SORT_VALUE)
+				{
+					return -1;
+				}
+				return 0;
+			});
+			StartCoroutine(SwapPlayers());
+		}
 	}
 
 	protected virtual void FixedUpdate()
 	{
-		if (checkForGrounded)
+		if (rBody.velocity.y >= MAX_Y_VELOCITY || (rBody.velocity.y < MIN_Y_VELOCITY && cCollider.GetContacts(new Collider2D[0]) == 0))
 		{
-			if (rBody.velocity.y >= MAX_Y_VELOCITY || rBody.velocity.y < 0 || cCollider.GetContacts(new Collider2D[0]) == 0)
-			{
-				grounded = false;
-			}
-			checkForGrounded = false;
+			grounded = false;
 		}
 		Move();
 	}
 
 	protected virtual void Update()
 	{
-		Jump();
+		if (MainPlayer == this)
+		{
+			Jump();
+		}
 		SetAnimationState();
+	}
+
+	/// <summary>
+	/// Changes the current player. 
+	/// </summary>
+	private IEnumerator SwapPlayers()
+	{
+		while (MainPlayer == this)
+		{
+			yield return null;
+			// Go through each player with return;
+			if (Input.GetKeyDown(KeyCode.Return))
+			{
+				int curr = players.IndexOf(MainPlayer);
+				curr += 1;
+				if (curr >= players.Count)
+				{
+					curr = 0;
+				}
+				MainPlayer = players[curr];
+				MainPlayer.StartCoroutine(MainPlayer.SwapPlayers());
+			}
+			// Set individual player based on hitting their sort value number key. 
+			for (int i = 0; i < Utils.keyCodes.Length; i++)
+			{
+				if (Input.GetKeyDown(Utils.keyCodes[i]))
+				{
+					foreach (PlayerController p in players)
+					{
+						if (p.SORT_VALUE == i && p != MainPlayer)
+						{
+							MainPlayer = p;
+							MainPlayer.StartCoroutine(MainPlayer.SwapPlayers());
+							break;
+						}
+					}
+				}
+			}
+		}
 	}
 
 
@@ -151,11 +244,11 @@ public abstract class PlayerController : MonoBehaviour
 	protected virtual void Move()
 	{
 		float movement = 0.0f;
-		if (Input.GetKey(KeyCode.A))
+		if (Input.GetKey(KeyCode.A) && MainPlayer == this)
 		{
 			movement -= speed * Time.deltaTime;
 		}
-		if (Input.GetKey(KeyCode.D))
+		if (Input.GetKey(KeyCode.D) && MainPlayer == this)
 		{
 			movement += speed * Time.deltaTime;
 		}
@@ -206,7 +299,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected virtual void SetAnimationState()
 	{
-		if(!pulling)
+		if (!pulling)
 		{
 			float flip = transform.localEulerAngles.y;
 			if (rBody.velocity.x > 1f)
@@ -223,13 +316,16 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetFloat("YVel", rBody.velocity.y);
 		anim.SetFloat("XMag", Mathf.Abs(rBody.velocity.x));
 		anim.SetFloat("YMag", Mathf.Abs(rBody.velocity.y));
-		anim.SetBool("RightInput", Input.GetKey(KeyCode.D));
-		anim.SetBool("LeftInput", Input.GetKey(KeyCode.A));
-		anim.SetBool("AnyInput", Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A));
 		anim.SetBool("Fell", anim.GetBool("Grounded") != grounded && grounded);
 		anim.SetBool("Grounded", grounded);
 		anim.SetBool("Pulling", pulling);
 		anim.SetBool("Flipped", transform.localEulerAngles.y == 180);
+		if (MainPlayer == this)
+		{
+			anim.SetBool("RightInput", Input.GetKey(KeyCode.D));
+			anim.SetBool("LeftInput", Input.GetKey(KeyCode.A));
+			anim.SetBool("AnyInput", Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A));
+		}
 	}
 
 	protected virtual void EnterWater(Collider2D water)
@@ -241,7 +337,7 @@ public abstract class PlayerController : MonoBehaviour
 	{
 	}
 
-//===COLLISION=DETECTION=======================================================================================================
+	//===COLLISION=DETECTION=======================================================================================================
 
 	void OnCollisionStay2D(Collision2D collision)
 	{
@@ -251,11 +347,6 @@ public abstract class PlayerController : MonoBehaviour
 	void OnCollisionEnter2D(Collision2D collision)
 	{
 		CheckGrounded(collision);
-	}
-
-	void OnCollisionExit2D(Collision2D collision)
-	{
-		checkForGrounded = true;
 	}
 
 	void CheckGrounded(Collision2D collision)
@@ -279,7 +370,8 @@ public abstract class PlayerController : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D collision)
 	{
-		if(collision.gameObject.layer == LayerMask.NameToLayer("Water")) {
+		if (collision.gameObject.layer == LayerMask.NameToLayer("Water"))
+		{
 			swimming = true;
 			this.EnterWater(collision);
 		}
@@ -291,16 +383,17 @@ public abstract class PlayerController : MonoBehaviour
 	// 		this.InWater(collision);
 	// 	}
 	// }
-	
+
 	void OnTriggerExit2D(Collider2D collision)
 	{
-		if(collision.gameObject.layer == LayerMask.NameToLayer("Water")) {
+		if (collision.gameObject.layer == LayerMask.NameToLayer("Water"))
+		{
 			swimming = false;
 			this.ExitWater(collision);
 		}
 	}
 
-//===PULLING=======================================================================================================================
+	//===PULLING=======================================================================================================================
 
 	/// <summary>
 	/// Tries to pull an object. 
