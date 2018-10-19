@@ -330,7 +330,7 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual void EnterWater(Collider2D water)
 	{
-		LevelManager.RestartLevel();
+		// LevelManager.RestartLevel();
 	}
 
 	protected virtual void ExitWater(Collider2D water)
