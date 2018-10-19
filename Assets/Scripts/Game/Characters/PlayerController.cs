@@ -68,6 +68,11 @@ public abstract class PlayerController : MonoBehaviour
 	protected bool grounded;
 
 	/// <summary>
+	/// Whether or not the player is in water.
+	/// <summary>
+	protected bool swimming;
+
+	/// <summary>
 	/// The time of the start of the jump.
 	/// </summary>
 	protected float jumpStart;
@@ -109,6 +114,8 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected bool checkForGrounded = false;
 
+//===FUNCTIONS================================================================================================================
+
 	protected virtual void Start()
 	{
 		mainPlayer = this;
@@ -122,7 +129,7 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		if (checkForGrounded)
 		{
-			if (rBody.velocity.y > MAX_Y_VELOCITY || rBody.velocity.y < 0 || cCollider.GetContacts(new Collider2D[0]) == 0)
+			if (rBody.velocity.y >= MAX_Y_VELOCITY || rBody.velocity.y < 0 || cCollider.GetContacts(new Collider2D[0]) == 0)
 			{
 				grounded = false;
 			}
@@ -225,6 +232,17 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetBool("Flipped", transform.localEulerAngles.y == 180);
 	}
 
+	protected virtual void EnterWater(Collider2D water)
+	{
+		LevelManager.RestartLevel();
+	}
+
+	protected virtual void ExitWater(Collider2D water)
+	{
+	}
+
+//===COLLISION=DETECTION=======================================================================================================
+
 	void OnCollisionStay2D(Collision2D collision)
 	{
 		CheckGrounded(collision);
@@ -258,6 +276,31 @@ public abstract class PlayerController : MonoBehaviour
 				Vector2.Distance(transform.position, contact.point) /
 								(transform.localScale.y * cCollider.size.y) > 0.47f;
 	}
+
+	void OnTriggerEnter2D(Collider2D collision)
+	{
+		if(collision.gameObject.layer == LayerMask.NameToLayer("Water")) {
+			swimming = true;
+			this.EnterWater(collision);
+		}
+	}
+
+	// void OnTriggerStay2D(Collider2D collision)
+	// {
+	// 	if(collision.gameObject.layer == LayerMask.NameToLayer("Water")) {
+	// 		this.InWater(collision);
+	// 	}
+	// }
+	
+	void OnTriggerExit2D(Collider2D collision)
+	{
+		if(collision.gameObject.layer == LayerMask.NameToLayer("Water")) {
+			swimming = false;
+			this.ExitWater(collision);
+		}
+	}
+
+//===PULLING=======================================================================================================================
 
 	/// <summary>
 	/// Tries to pull an object. 
