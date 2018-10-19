@@ -38,10 +38,15 @@ public class DrownedGirlController : PlayerController
 	[Range(0, 1)]
 	public float waterDrag;
 
-    /// <summary>
+	protected override int SORT_VALUE
+	{
+		get { return 2; }
+	}
+
+	/// <summary>
 	/// The collider for the body of water currently in
 	/// </summary>
-    private BoxCollider2D waterCollider;
+	private BoxCollider2D waterCollider;
     /// <summary>
 	/// Whether drowned girl is diving under water
 	/// </summary>
@@ -65,7 +70,6 @@ public class DrownedGirlController : PlayerController
                 diving = false;
 
                 grounded = false;
-                checkForGrounded = true;
             }
         }
     } 
