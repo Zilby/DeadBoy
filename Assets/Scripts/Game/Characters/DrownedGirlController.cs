@@ -68,7 +68,6 @@ public class DrownedGirlController : PlayerController
             else if (diving && Input.GetKeyDown(KeyCode.W)) 
             {
                 diving = false;
-
                 grounded = false;
             }
         }
@@ -85,10 +84,11 @@ public class DrownedGirlController : PlayerController
     protected override void Move() {
         base.Move();
 
-        if (swimming) {
+        if (swimming) 
+		{
             float surface = waterCollider.transform.position.y + waterCollider.size.y*waterCollider.transform.lossyScale.y/2;
             float feetHeight = this.gameObject.transform.position.y - settleDepth;
-            float buoyantForce = (surface-feetHeight) * (diving ? divingBuoyancy : surfaceBuoyancy)  * Time.deltaTime;
+            float buoyantForce = (diving ? divingBuoyancy : (surface - feetHeight) * surfaceBuoyancy)  * Time.deltaTime;
             // Debug.Log(surface + "  " + feetHeight + "  " + this.gameObject.transform.position.y); 
             
 			rBody.velocity = new Vector2(rBody.velocity.x * waterDrag, Mathf.Min(rBody.velocity.y * momentum + buoyantForce /* *(1-momentum) */, MAX_RISE));
