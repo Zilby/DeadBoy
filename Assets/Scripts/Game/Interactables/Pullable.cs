@@ -16,7 +16,7 @@ public class Pullable : Interactable
 
 	protected override string Tip
 	{
-		get { return "Press " + GrabInput.ToString() + " To Pull"; }
+		get { return "Press " + InteractInput.ToString() + " To Pull"; }
 	}
 
 	private void Awake()
@@ -33,7 +33,7 @@ public class Pullable : Interactable
 		joint.connectedBody = r;
 		if (pulling)
 		{
-			ToolTips.instance.SetTooltipString(tooltip, "Press " + GrabInput.ToString() + " To Release");
+			ToolTips.instance.SetTooltipString(tooltip, "Press " + InteractInput.ToString() + " To Release");
 		}
 		else
 		{
