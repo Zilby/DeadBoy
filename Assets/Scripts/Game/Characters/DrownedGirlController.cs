@@ -59,7 +59,7 @@ public class DrownedGirlController : PlayerController
 	protected override void Update() {
         base.Update();
 
-        if (swimming)
+		if (swimming && MainPlayer == this)
         {
             if (!diving && Input.GetKeyDown(KeyCode.S)) 
             {
