@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Class for pullable objects. 
 /// </summary>
-public class Pullable : Grabable
+public class Pullable : Interactable
 {
 
 	/// <summary>
@@ -25,7 +25,7 @@ public class Pullable : Grabable
 	}
 
 
-	protected override void GrabAction(Rigidbody2D r)
+	protected override void InteractAction(Rigidbody2D r)
 	{
 		PlayerController p = r.GetComponent<PlayerController>();
 		bool pulling = p.Pulling(transform);

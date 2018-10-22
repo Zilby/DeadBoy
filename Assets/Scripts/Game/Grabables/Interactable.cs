@@ -3,38 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Inheritable class for grabable objects. 
+/// Inheritable class for interactable objects. 
 /// </summary>
-public abstract class Grabable : MonoBehaviour
+public abstract class Interactable : MonoBehaviour
 {
 	/// <summary>
-	/// Gets the position above the grabable for the tooltip.
+	/// The tip position.
+	/// </summary>
+	[Range(-10, 10)]
+	public float tipPos = 3;
+
+	/// <summary>
+	/// Gets the position above the interactable for the tooltip.
 	/// </summary>
 	protected Vector3 TipPos
 	{
 		get
 		{
 			Vector3 pos = transform.position;
-			pos.y += 3;
+			pos.y += tipPos;
 			return pos;
 		}
 	}
 
 	/// <summary>
-	/// The tooltip for this grabable. 
+	/// The tooltip for this interactable. 
 	/// </summary>
 	protected abstract string Tip { get; }
 
 	/// <summary>
-	/// The input needed to activate this grabable. 
+	/// The input needed to activate this interactable. 
 	/// </summary>
-	protected virtual KeyCode GrabInput
+	protected virtual KeyCode InteractInput
 	{
 		get { return KeyCode.J; }
 	}
 
 	/// <summary>
-	/// The tooltip index for this grabable. 
+	/// The tooltip index for this interactable. 
 	/// </summary>
 	protected int tooltip = 0;
 
@@ -69,15 +75,15 @@ public abstract class Grabable : MonoBehaviour
 		for (; ; )
 		{
 			yield return null;
-			if (Input.GetKeyDown(GrabInput))
+			if (Input.GetKeyDown(InteractInput))
 			{
-				GrabAction(r);
+				InteractAction(r);
 			}
 		}
 	}
 
 	/// <summary>
-	/// The action to be taken when the grabable is grabbed. 
+	/// The action to be taken when the interactable is grabbed. 
 	/// </summary>
-	protected abstract void GrabAction(Rigidbody2D r);
+	protected abstract void InteractAction(Rigidbody2D r);
 }
