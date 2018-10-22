@@ -181,7 +181,7 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		if (!pulling)
 		{
-			if (Input.GetKeyDown(KeyCode.Space) && grounded)
+			if (Input.GetKeyDown(KeyCode.Space) && grounded || swimming)
 			{
 				rBody.velocity = new Vector2(rBody.velocity.x, jumpHeight);
 				jumpStart = Time.fixedTime;
