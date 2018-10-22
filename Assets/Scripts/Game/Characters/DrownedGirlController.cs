@@ -38,10 +38,15 @@ public class DrownedGirlController : PlayerController
 	[Range(0, 1)]
 	public float waterDrag;
 
-    /// <summary>
+	protected override int SORT_VALUE
+	{
+		get { return 2; }
+	}
+
+	/// <summary>
 	/// The collider for the body of water currently in
 	/// </summary>
-    private BoxCollider2D waterCollider;
+	private BoxCollider2D waterCollider;
     /// <summary>
 	/// Whether drowned girl is diving under water
 	/// </summary>
@@ -54,7 +59,7 @@ public class DrownedGirlController : PlayerController
 	protected override void Update() {
         base.Update();
 
-        if (swimming)
+		if (swimming && MainPlayer == this)
         {
             if (!diving && Input.GetKeyDown(KeyCode.S)) 
             {
@@ -63,9 +68,7 @@ public class DrownedGirlController : PlayerController
             else if (diving && Input.GetKeyDown(KeyCode.W)) 
             {
                 diving = false;
-
                 grounded = false;
-                checkForGrounded = true;
             }
         }
     } 
@@ -81,10 +84,11 @@ public class DrownedGirlController : PlayerController
     protected override void Move() {
         base.Move();
 
-        if (swimming) {
+        if (swimming) 
+		{
             float surface = waterCollider.transform.position.y + waterCollider.size.y*waterCollider.transform.lossyScale.y/2;
             float feetHeight = this.gameObject.transform.position.y - settleDepth;
-            float buoyantForce = (surface-feetHeight) * (diving ? divingBuoyancy : surfaceBuoyancy)  * Time.deltaTime;
+            float buoyantForce = (diving ? divingBuoyancy : (surface - feetHeight) * surfaceBuoyancy)  * Time.deltaTime;
             // Debug.Log(surface + "  " + feetHeight + "  " + this.gameObject.transform.position.y);
 
 			rBody.velocity = new Vector2(rBody.velocity.x * waterDrag, Mathf.Min(rBody.velocity.y * momentum + buoyantForce /* *(1-momentum) */, MAX_RISE)); 

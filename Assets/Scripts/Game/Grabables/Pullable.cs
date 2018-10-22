@@ -33,11 +33,11 @@ public class Pullable : Grabable
 		joint.connectedBody = r;
 		if (pulling)
 		{
-			ToolTips.TooltipTextEvent(tooltip, "Press " + GrabInput.ToString() + " To Release");
+			ToolTips.instance.SetTooltipString(tooltip, "Press " + GrabInput.ToString() + " To Release");
 		}
 		else
 		{
-			ToolTips.TooltipTextEvent(tooltip, Tip);
+			ToolTips.instance.SetTooltipString(tooltip, Tip);
 		}
 	}
 }

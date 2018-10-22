@@ -10,21 +10,9 @@ using UnityEngine;
 public class ToolTips : MonoBehaviour
 {
 	/// <summary>
-	/// Called when setting a tooltip active. 
+	/// The instance of the tooltips class.
 	/// </summary>
-	public static Func<string, Vector3, int> TooltipActiveEvent;
-	/// <summary>
-	/// Called when the tooltip is currently displayed. 
-	/// </summary>
-	public static Action<int, Vector3> TooltipStayEvent;
-	/// <summary>
-	/// Called when the tooltip text needs changing. 
-	/// </summary>
-	public static Action<int, string> TooltipTextEvent;
-	/// <summary>
-	/// Called when setting a tooltip inactive. 
-	/// </summary>
-	public static Action<int> TooltipInactiveEvent;
+	public static ToolTips instance;
 
 	/// <summary>
 	/// The individual tooltips. 
@@ -33,11 +21,8 @@ public class ToolTips : MonoBehaviour
 
 	private void Awake()
 	{
+		instance = this;
 		tips = GetComponentsInChildren<FadeableUI>();
-		TooltipActiveEvent = SetTooltipActive;
-		TooltipTextEvent = SetTooltipString;
-		TooltipStayEvent = SetTooltipPosition;
-		TooltipInactiveEvent = SetTooltipInactive;
 	}
 
 	/// <summary>
@@ -46,7 +31,7 @@ public class ToolTips : MonoBehaviour
 	/// <returns>The index of the active tooltip.</returns>
 	/// <param name="s">String of the tooltip.</param>
 	/// <param name="location">Location of the tooltip in worldspace.</param>
-	private int SetTooltipActive(string s, Vector3 location)
+	public int SetTooltipActive(string s, Vector3 location)
 	{
 		int i = 0;
 		while (tips[i].IsVisible)
@@ -64,7 +49,7 @@ public class ToolTips : MonoBehaviour
 	/// </summary>
 	/// <param name="i">The index of the active tooltip.</param>
 	/// <param name="s">String of the tooltip.</param>
-	private void SetTooltipString(int i, string s) 
+	public void SetTooltipString(int i, string s) 
 	{
 		tips[i].GetComponentInChildren<TextMeshProUGUI>().text = s;
 	}
@@ -74,7 +59,7 @@ public class ToolTips : MonoBehaviour
 	/// </summary>
 	/// <param name="i">The index of the tooltip.</param>
 	/// <param name="location">The location to set the position to in world space.</param>
-	private void SetTooltipPosition(int i, Vector3 location)
+	public void SetTooltipPosition(int i, Vector3 location)
 	{
 		tips[i].transform.position = location;
 	}
@@ -83,7 +68,7 @@ public class ToolTips : MonoBehaviour
 	/// Sets the given tooltip inactive.
 	/// </summary>
 	/// <param name="i">The index of the tooltip.</param>
-	private void SetTooltipInactive(int i)
+	public void SetTooltipInactive(int i)
 	{
 		StartCoroutine(tips[i].FadeOut(dur: 0.25f));
 	}

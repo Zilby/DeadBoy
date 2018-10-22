@@ -46,18 +46,18 @@ public abstract class Grabable : MonoBehaviour
 
 	protected virtual void OnTriggerEnter2D(Collider2D collision)
 	{
-		tooltip = ToolTips.TooltipActiveEvent(Tip, TipPos);
+		tooltip = ToolTips.instance.SetTooltipActive(Tip, TipPos);
 		checkInput = StartCoroutine(CheckForInput(collision.attachedRigidbody));
 	}
 
 	protected virtual void OnTriggerStay2D(Collider2D collision)
 	{
-		ToolTips.TooltipStayEvent(tooltip, TipPos);
+		ToolTips.instance.SetTooltipPosition(tooltip, TipPos);
 	}
 
 	protected virtual void OnTriggerExit2D(Collider2D collision)
 	{
-		ToolTips.TooltipInactiveEvent(tooltip);
+		ToolTips.instance.SetTooltipInactive(tooltip);
 		StopCoroutine(checkInput);
 	}
 
