@@ -79,9 +79,6 @@ public class DrownedGirlController : PlayerController
                 grounded = false;
             }
         }
-        if (rBody.velocity.y > 0.1f) {
-            Debug.Log(rBody.velocity.y);
-        }
     } 
 
     protected override void EnterWater(Collider2D water) {
