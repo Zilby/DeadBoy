@@ -51,6 +51,14 @@ public class DrownedGirlController : PlayerController
 	/// Whether drowned girl is diving under water
 	/// </summary>
     private bool diving;
+    /// <summary>
+    /// Whether drowned girl is poking above the water's surface
+    /// </summary>
+    private bool surfaced { get { 
+        return swimming && 
+                this.gameObject.transform.position.y +  this.cCollider.size.y*this.gameObject.transform.lossyScale.y/2 > 
+                waterCollider.transform.position.y + waterCollider.size.y*waterCollider.transform.lossyScale.y/2; 
+    }}
 
 	private float MAX_RISE = MAX_Y_VELOCITY + 1.0f;
 
@@ -71,6 +79,9 @@ public class DrownedGirlController : PlayerController
                 grounded = false;
             }
         }
+        if (rBody.velocity.y > 0.1f) {
+            Debug.Log(rBody.velocity.y);
+        }
     } 
 
     protected override void EnterWater(Collider2D water) {
@@ -79,6 +90,10 @@ public class DrownedGirlController : PlayerController
     
     protected override void ExitWater(Collider2D water) {
         this.waterCollider = null;
+    }
+
+    protected override bool CanJump() {
+        return base.CanJump() || surfaced;
     }
 
     protected override void Move() {
@@ -91,13 +106,13 @@ public class DrownedGirlController : PlayerController
             float buoyantForce = (diving ? divingBuoyancy : (surface - feetHeight) * surfaceBuoyancy)  * Time.deltaTime;
             // Debug.Log(surface + "  " + feetHeight + "  " + this.gameObject.transform.position.y);
 
-			rBody.velocity = new Vector2(rBody.velocity.x * waterDrag, Mathf.Min(rBody.velocity.y * momentum + buoyantForce /* *(1-momentum) */, MAX_RISE)); 
-            // float speed = rBody.velocity.y * momentum + buoyantForce /* *(1-momentum) */;
-            // if (!diving) {
-            //     speed = Mathf.Min(speed, MAX_RISE);
-            // }
-            // float tmp = rBody.velocity.x;
-            // rBody.velocity = new Vector2(rBody.velocity.x * waterDrag, speed);
+			//rBody.velocity = new Vector2(rBody.velocity.x * waterDrag, Mathf.Min(rBody.velocity.y * momentum + buoyantForce /* *(1-momentum) */, MAX_RISE)); 
+            float speed = rBody.velocity.y * momentum + buoyantForce /* *(1-momentum) */;
+            if (!diving && !surfaced) {
+                speed = Mathf.Min(speed, MAX_RISE);
+            }
+            float tmp = rBody.velocity.x;
+            rBody.velocity = new Vector2(rBody.velocity.x * waterDrag, speed);
             // if (grounded) {Debug.Log(tmp +"   " + rBody.velocity.x);}
         }
     }
