@@ -266,6 +266,12 @@ public abstract class PlayerController : MonoBehaviour
 		rBody.velocity = new Vector2(movement, rBody.velocity.y);
 	}
 
+	/// <summary>
+	/// Determines if the character is able to jump
+	/// </summary>
+	protected virtual bool CanJump() {
+		return grounded;
+	} 
 
 	/// <summary>
 	/// Makes the player jump if given input. 
@@ -274,7 +280,7 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		if (!pulling)
 		{
-			if (Input.GetKeyDown(KeyCode.Space) && grounded)
+			if (Input.GetKeyDown(KeyCode.Space) && CanJump())
 			{
 				rBody.velocity = new Vector2(rBody.velocity.x, jumpHeight);
 				jumpStart = Time.fixedTime;
