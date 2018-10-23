@@ -10,6 +10,8 @@ using UnityEngine.Sprites;
 /// </summary>
 public abstract class PlayerController : MonoBehaviour
 {
+	#region StaticVariables
+
 	/// <summary>
 	/// The main player (ie: controlled player).
 	/// </summary>
@@ -36,6 +38,10 @@ public abstract class PlayerController : MonoBehaviour
 	/// All of the available players.
 	/// </summary>
 	public static List<PlayerController> players = new List<PlayerController>();
+
+	#endregion
+
+	#region Fields
 
 	[Header("References")]
 	public Rigidbody2D rBody;
@@ -148,7 +154,11 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected abstract int SORT_VALUE { get; }
 
-	//===FUNCTIONS================================================================================================================
+	#endregion
+
+	#region Functions
+
+	#region General
 
 	protected virtual void Awake()
 	{
@@ -196,6 +206,14 @@ public abstract class PlayerController : MonoBehaviour
 			Jump();
 		}
 		SetAnimationState();
+	}
+
+	protected virtual void LateUpdate()
+	{
+		if (pulling)
+		{
+			SetPullingLocations();
+		}
 	}
 
 	/// <summary>
@@ -269,9 +287,10 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Determines if the character is able to jump
 	/// </summary>
-	protected virtual bool CanJump() {
+	protected virtual bool CanJump()
+	{
 		return grounded;
-	} 
+	}
 
 	/// <summary>
 	/// Makes the player jump if given input. 
@@ -334,16 +353,9 @@ public abstract class PlayerController : MonoBehaviour
 		}
 	}
 
-	protected virtual void EnterWater(Collider2D water)
-	{
-		// LevelManager.RestartLevel();
-	}
+	#endregion
 
-	protected virtual void ExitWater(Collider2D water)
-	{
-	}
-
-	//===COLLISION=DETECTION=======================================================================================================
+	#region CollisionDetection
 
 	void OnCollisionStay2D(Collision2D collision)
 	{
@@ -399,7 +411,22 @@ public abstract class PlayerController : MonoBehaviour
 		}
 	}
 
-	//===PULLING=======================================================================================================================
+	#endregion
+
+	#region Water
+
+	protected virtual void EnterWater(Collider2D water)
+	{
+		// LevelManager.RestartLevel();
+	}
+
+	protected virtual void ExitWater(Collider2D water)
+	{
+	}
+
+	#endregion
+
+	#region Pulling
 
 	/// <summary>
 	/// Tries to pull an object. 
@@ -440,11 +467,6 @@ public abstract class PlayerController : MonoBehaviour
 		leftArm.UpdateIK();
 	}
 
-	protected virtual void LateUpdate()
-	{
-		if (pulling)
-		{
-			SetPullingLocations();
-		}
-	}
+	#endregion
+	#endregion
 }
