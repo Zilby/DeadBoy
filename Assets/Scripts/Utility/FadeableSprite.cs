@@ -39,7 +39,11 @@ public class FadeableSprite : Fadeable
     {
         set
         {
-            rend.GetComponent<Collider2D>().enabled = value;
+			Collider2D col = rend.GetComponent<Collider2D>();
+			if (col != null)
+			{
+				rend.GetComponent<Collider2D>().enabled = value;
+			}
         }
     }
 

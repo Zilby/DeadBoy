@@ -7,13 +7,36 @@ using UnityEngine;
 /// </summary>
 public class SongManager : MonoBehaviour
 {
-	public List<AudioClip> clips;
+	public enum Songs
+	{
+		Sewers = 0,
+	}
 
-	public static Action<int> PlayClip;
+	public static SongManager instance;
 
-	private static SongManager instance;
+	[Serializable]
+	public struct LoopableClip
+	{
+		public AudioClip clip;
+		public float loopTime;
+	}
 
-	private AudioSource s;
+	public List<LoopableClip> clips;
+
+	/// <summary>
+	/// List of audio sources. 
+	/// </summary>
+	private AudioSource[] s;
+
+	/// <summary>
+	/// The current audio source index.
+	/// </summary>
+	private int currentSource = 0;
+
+	/// <summary>
+	/// The looptime for the current source. 
+	/// </summary>
+	private float loopTime = 0;
 
 	void Awake()
 	{
@@ -21,17 +44,41 @@ public class SongManager : MonoBehaviour
 		{
 			instance = this;
 			DontDestroyOnLoad(gameObject);
-			s = GetComponent<AudioSource>();
-			PlayClip = delegate (int i)
-			{
-				s.Stop();
-				s.clip = clips[i];
-				s.Play();
-			};
+			s = GetComponents<AudioSource>();
 		}
 		else
 		{
 			Destroy(gameObject);
+		}
+	}
+
+	/// <summary>
+	/// Plays the clip at the given index. 
+	/// </summary>
+	public void PlaySong(Songs song)
+	{
+		LoopableClip l = clips[(int)song];
+		if (s[currentSource].clip != l.clip)
+		{
+			s[currentSource].Stop();
+			s[currentSource].clip = l.clip;
+			loopTime = l.loopTime;
+			s[currentSource].loop = loopTime == 0;
+			s[currentSource].Play();
+		}
+	}
+
+	void Update()
+	{
+		int nextSource = 1 - currentSource;
+		if (loopTime != 0)
+		{
+			if (!s[nextSource].isPlaying)
+			{
+				s[nextSource].loop = false;
+				s[nextSource].PlayScheduled(loopTime);
+				currentSource = nextSource;
+			}
 		}
 	}
 }

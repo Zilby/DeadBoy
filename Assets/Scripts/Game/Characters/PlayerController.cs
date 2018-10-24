@@ -124,9 +124,27 @@ public abstract class PlayerController : MonoBehaviour
 	protected bool pulling;
 
 	/// <summary>
-	/// The pull location.
+	/// Whether or not the player is currently picking up a pickup.
 	/// </summary>
-	protected Transform pullLocation = null;
+	protected bool pickingUp;
+
+	/// <summary>
+	/// The location of an objet to be interacted with.
+	/// </summary>
+	protected Transform objectLocation = null;
+
+	/// <summary>
+	/// The current pickup held.
+	/// </summary>
+	protected Pickup.Type currentPickup = Pickup.Type.none;
+
+	/// <summary>
+	/// Gets the current pickup.
+	/// </summary>
+	public Pickup.Type CurrentPickup
+	{
+		get { return currentPickup; }
+	}
 
 	/// <summary>
 	/// The last Right arm location.
@@ -154,6 +172,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected abstract int SORT_VALUE { get; }
 
+
 	#endregion
 
 	#region Functions
@@ -165,7 +184,7 @@ public abstract class PlayerController : MonoBehaviour
 		players.Add(this);
 	}
 
-	protected virtual void OnDestroy() 
+	protected virtual void OnDestroy()
 	{
 		players.Remove(this);
 	}
@@ -217,7 +236,14 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		if (pulling)
 		{
-			SetPullingLocations();
+			SetArmLocations();
+		}
+		if (pickingUp) {
+			SetArmLocations(l:false);
+			if(Vector2.Distance(lastRAlocation, objectLocation.position) < 0.1f) {
+				objectLocation.parent = rightArm.transform;
+				pickingUp = false;
+			}
 		}
 	}
 
@@ -442,7 +468,7 @@ public abstract class PlayerController : MonoBehaviour
 		if (grounded || pulling)
 		{
 			pulling = !pulling;
-			pullLocation = position;
+			objectLocation = position;
 			lastRAlocation = rightArm.transform.position;
 			lastLAlocation = leftArm.transform.position;
 			float flip = transform.localEulerAngles.y;
@@ -463,14 +489,36 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Sets the pulling for the limbs in the animation.
 	/// </summary>
-	public void SetPullingLocations()
+	public void SetArmLocations(bool r = true, bool l = true)
 	{
-		lastRAlocation = Vector3.MoveTowards(lastRAlocation, pullLocation.position, 5f * (rBody.velocity.magnitude + 1) * Time.deltaTime);
-		lastLAlocation = Vector3.MoveTowards(lastLAlocation, pullLocation.position, 5f * (rBody.velocity.magnitude + 1) * Time.deltaTime);
-		rightArm.transform.position = lastRAlocation;
-		leftArm.transform.position = lastLAlocation;
-		rightArm.UpdateIK();
-		leftArm.UpdateIK();
+		if (r)
+		{
+			lastRAlocation = Vector3.MoveTowards(lastRAlocation, objectLocation.position, 5f * (rBody.velocity.magnitude + 1) * Time.deltaTime);
+			rightArm.transform.position = lastRAlocation;
+			rightArm.UpdateIK();
+		}
+		if (l)
+		{
+			lastLAlocation = Vector3.MoveTowards(lastLAlocation, objectLocation.position, 5f * (rBody.velocity.magnitude + 1) * Time.deltaTime);
+			leftArm.transform.position = lastLAlocation;
+			leftArm.UpdateIK();
+		}
+	}
+
+	/// <summary>
+	/// Picks up the given pickup at the given transform.
+	/// </summary>
+	public void PickUp(Transform t, Pickup.Type p)
+	{
+		lastRAlocation = rightArm.transform.position;
+		objectLocation = t;
+		pickingUp = true;
+		currentPickup = p;
+	}
+
+	public void UsePickup() {
+		currentPickup = Pickup.Type.none;
+		Destroy(objectLocation.gameObject);
 	}
 
 	#endregion

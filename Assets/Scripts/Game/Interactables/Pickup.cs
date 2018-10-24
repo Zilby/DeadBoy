@@ -7,12 +7,33 @@ using UnityEngine;
 /// </summary>
 public class Pickup : Interactable
 {
+	public enum Type
+	{
+		none = -1,
+		key = 0,
+	}
+
+	public Type type;
+	public Rigidbody2D rbody;
+	public Collider2D col;
+
+
 	protected override string Tip
 	{
 		get { return "Press " + InteractInput.ToString() + " To Grab"; }
 	}
+
 	protected override void InteractAction(Rigidbody2D r)
 	{
-		throw new System.NotImplementedException();
+		PlayerController p = r.GetComponent<PlayerController>();
+		if (rbody != null)
+		{
+			Destroy(rbody);
+		}
+		Transform t = col.transform;
+		Destroy(col);
+		p.PickUp(t, type);
+		OnTriggerExit2D(null);
+		Destroy(this);
 	}
 }
