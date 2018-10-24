@@ -165,6 +165,11 @@ public abstract class PlayerController : MonoBehaviour
 		players.Add(this);
 	}
 
+	protected virtual void OnDestroy() 
+	{
+		players.Remove(this);
+	}
+
 	protected virtual void Start()
 	{
 		rBody = rBody == null ? GetComponent<Rigidbody2D>() : rBody;
@@ -417,7 +422,8 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual void EnterWater(Collider2D water)
 	{
-		// LevelManager.RestartLevel();
+		CameraController.Deactivate();
+		LevelManager.instance.RestartLevel();
 	}
 
 	protected virtual void ExitWater(Collider2D water)

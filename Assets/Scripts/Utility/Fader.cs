@@ -91,4 +91,5 @@ public class Fader : MonoBehaviour
 		yield return new WaitForSecondsRealtime(0.8f);
 		yield return fadeable.FadeOut(dur: 0.5f);
 	}
+
 }
