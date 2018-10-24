@@ -21,8 +21,9 @@ public class CameraController : MonoBehaviour
 	private float oldDiffX;
 	private float oldDiffY;
 
-	public static bool movingToNewPlayer;
+	public static bool movingToNewPosition;
 
+	public static Transform followTransform; 
 
 	private void Awake()
 	{
@@ -38,8 +39,13 @@ public class CameraController : MonoBehaviour
 	{
 		get
 		{
-			float x = PlayerController.MainPlayer.transform.position.x;
-			float y = PlayerController.MainPlayer.transform.position.y;
+			Transform t = PlayerController.MainPlayer.transform;
+			if (followTransform != null) 
+			{
+				t = followTransform;
+			}
+			float x = t.position.x;
+			float y = t.position.y;
 			return new Vector3(x, y, transform.position.z);
 		}
 	}
@@ -49,7 +55,7 @@ public class CameraController : MonoBehaviour
 	/// </summary>
 	private void Update()
 	{
-		if (Mathf.Abs(transform.position.x - RelativePlayerPosition.x) > MAX_X_DIFF && !movingToNewPlayer && Mathf.Abs(oldDiffX) <= MAX_X_DIFF)
+		if (Mathf.Abs(transform.position.x - RelativePlayerPosition.x) > MAX_X_DIFF && !movingToNewPosition && Mathf.Abs(oldDiffX) <= MAX_X_DIFF)
 		{
 			transform.position = new Vector3(RelativePlayerPosition.x - oldDiffX,
 											  transform.position.y, transform.position.z);
@@ -58,7 +64,7 @@ public class CameraController : MonoBehaviour
 		{
 			oldDiffX = RelativePlayerPosition.x - transform.position.x;
 		}
-		if (Mathf.Abs(transform.position.y - RelativePlayerPosition.y) > MAX_Y_DIFF && !movingToNewPlayer && Mathf.Abs(oldDiffY) <= MAX_Y_DIFF)
+		if (Mathf.Abs(transform.position.y - RelativePlayerPosition.y) > MAX_Y_DIFF && !movingToNewPosition && Mathf.Abs(oldDiffY) <= MAX_Y_DIFF)
 		{
 			transform.position = new Vector3(transform.position.x, RelativePlayerPosition.y - oldDiffY,
 											 transform.position.z);
@@ -75,22 +81,23 @@ public class CameraController : MonoBehaviour
 	/// </summary>
 	void FixedUpdate()
 	{
-		float moveSpeed = movingToNewPlayer ? CAMERA_MOVE_SPEED * 2: CAMERA_MOVE_SPEED;
-		if (Mathf.Abs(transform.position.x - RelativePlayerPosition.x) <= MAX_X_DIFF || movingToNewPlayer || Mathf.Abs(oldDiffX) > MAX_X_DIFF)
+		float moveSpeed = movingToNewPosition ? CAMERA_MOVE_SPEED * 2: CAMERA_MOVE_SPEED;
+		if (Mathf.Abs(transform.position.x - RelativePlayerPosition.x) <= MAX_X_DIFF || movingToNewPosition || Mathf.Abs(oldDiffX) > MAX_X_DIFF)
 		{
 			transform.position = new Vector3(Mathf.Lerp(transform.position.x, RelativePlayerPosition.x, moveSpeed * Time.fixedDeltaTime),
 											 transform.position.y, transform.position.z);
 		}
-		if (Mathf.Abs(transform.position.y - RelativePlayerPosition.y) <= MAX_Y_DIFF || movingToNewPlayer || Mathf.Abs(oldDiffY) > MAX_Y_DIFF)
+		if (Mathf.Abs(transform.position.y - RelativePlayerPosition.y) <= MAX_Y_DIFF || movingToNewPosition || Mathf.Abs(oldDiffY) > MAX_Y_DIFF)
 		{
 
 			transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, RelativePlayerPosition.y, moveSpeed * Time.fixedDeltaTime),
 										 transform.position.z);
 		}
 		if ((Mathf.Abs(transform.position.x - RelativePlayerPosition.x) <= MAX_X_DIFF || (transform.position.x == xRange.x || transform.position.x == xRange.y)) &&
-			(Mathf.Abs(transform.position.y - RelativePlayerPosition.y) <= MAX_Y_DIFF || (transform.position.y == yRange.x || transform.position.y == yRange.y)))
+			(Mathf.Abs(transform.position.y - RelativePlayerPosition.y) <= MAX_Y_DIFF || (transform.position.y == yRange.x || transform.position.y == yRange.y)) &&
+		    followTransform == null)
 		{
-			movingToNewPlayer = false;
+			movingToNewPosition = false;
 		}
 	}
 

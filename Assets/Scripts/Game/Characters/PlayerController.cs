@@ -27,7 +27,7 @@ public abstract class PlayerController : MonoBehaviour
 			}
 			mainPlayer = value;
 			mainPlayer.transform.position = new Vector3(mainPlayer.transform.position.x, mainPlayer.transform.position.y, -1f);
-			CameraController.movingToNewPlayer = true;
+			CameraController.movingToNewPosition = true;
 		}
 	}
 	/// <summary>
@@ -238,9 +238,11 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			SetArmLocations();
 		}
-		if (pickingUp) {
-			SetArmLocations(l:false);
-			if(Vector2.Distance(lastRAlocation, objectLocation.position) < 0.1f) {
+		if (pickingUp)
+		{
+			SetArmLocations(l: false);
+			if (Vector2.Distance(lastRAlocation, objectLocation.position) < 0.1f)
+			{
 				objectLocation.parent = rightArm.transform;
 				pickingUp = false;
 			}
@@ -382,6 +384,12 @@ public abstract class PlayerController : MonoBehaviour
 			anim.SetBool("LeftInput", Input.GetKey(KeyCode.A));
 			anim.SetBool("AnyInput", Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A));
 		}
+		else
+		{
+			anim.SetBool("RightInput", false);
+			anim.SetBool("LeftInput", false);
+			anim.SetBool("AnyInput", false);
+		}
 	}
 
 	#endregion
@@ -516,7 +524,8 @@ public abstract class PlayerController : MonoBehaviour
 		currentPickup = p;
 	}
 
-	public void UsePickup() {
+	public void UsePickup()
+	{
 		currentPickup = Pickup.Type.none;
 		Destroy(objectLocation.gameObject);
 	}

@@ -52,7 +52,6 @@ public abstract class Interactable : MonoBehaviour
 
 	protected virtual void OnTriggerEnter2D(Collider2D collision)
 	{
-		print(collision.name);
 		tooltip = ToolTips.instance.SetTooltipActive(Tip, TipPos);
 		checkInput = StartCoroutine(CheckForInput(collision.attachedRigidbody));
 	}
