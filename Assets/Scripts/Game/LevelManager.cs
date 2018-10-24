@@ -8,17 +8,19 @@ public class LevelManager : MonoBehaviour
 {
 	public static LevelManager instance;
 
-	public enum Levels {
+	public enum Levels
+	{
 		Sewer,
 	}
 
 	public Levels level;
 
+	private int players;
 
-    void Awake()
-    {
+	void Awake()
+	{
 		instance = this;
-    }
+	}
 
 	private void Start()
 	{
@@ -36,8 +38,28 @@ public class LevelManager : MonoBehaviour
 	/// Restarts the level.
 	/// </summary>
 	public void RestartLevel()
-    {
+	{
 		Fader.SceneEvent(SceneManager.GetActiveScene().name);
-    }
+	}
 
+	public void OnTriggerEnter2D(Collider2D other)
+	{
+		players += 1;
+		if (players == PlayerController.players.Count)
+		{
+			switch (level)
+			{
+				case Levels.Sewer:
+					Fader.SceneEvent("DemoEnd");
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
+	public void OnTriggerExit2D(Collider2D collision)
+	{
+		players -= 1;
+	}
 }

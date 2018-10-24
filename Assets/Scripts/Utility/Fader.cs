@@ -28,7 +28,7 @@ public class Fader : MonoBehaviour
 	/// </summary>
 	public static Fade FadeOut;
 
-	public delegate void SceneLoad(string s, bool save = false);
+	public delegate void SceneLoad(string s, float wait = 0.5f, bool save = false);
 	/// <summary>
 	/// Fades in the given scene.
 	/// </summary>
@@ -65,14 +65,14 @@ public class Fader : MonoBehaviour
 				fadeable.Show();
 				fadeable.SelfFadeOut(dur: f);
 			};
-			SceneEvent = delegate (string s, bool b)
+			SceneEvent = delegate (string s, float w, bool b)
 			{
 				if (b)
 				{
 					//FileData.Save();
 				}
 				gameObject.SetActive(true);
-				StartCoroutine(FadeInScene(s));
+				StartCoroutine(FadeInScene(s, w));
 			};
 		}
 		else
@@ -84,11 +84,11 @@ public class Fader : MonoBehaviour
 	/// <summary>
 	/// Fades in the given scene.
 	/// </summary>
-	private IEnumerator FadeInScene(string scene)
+	private IEnumerator FadeInScene(string scene, float wait)
 	{
 		yield return fadeable.FadeIn();
 		SceneManager.LoadScene(scene);
-		yield return new WaitForSecondsRealtime(0.8f);
+		yield return new WaitForSecondsRealtime(wait);
 		yield return fadeable.FadeOut(dur: 0.5f);
 	}
 
