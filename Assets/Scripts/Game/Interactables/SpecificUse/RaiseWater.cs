@@ -20,6 +20,7 @@ public class RaiseWater : Interactable
 	{
 		PlayerController p = r.GetComponent<PlayerController>();
 		p.StartCoroutine(Raise());
+		p.StartCoroutine(Waterfall());
 		p.StartCoroutine(RedirectCamera());
 
 		p.GrabAndDrag(transform, movePosition);
@@ -30,7 +31,6 @@ public class RaiseWater : Interactable
 
 	private IEnumerator Raise()
 	{
-		look.gameObject.SetActive(true);
 		while (Mathf.Abs(height) > 0)
 		{
 			float hspeed = height * speed;
@@ -41,5 +41,10 @@ public class RaiseWater : Interactable
 			width -= yspeed;
 			yield return new WaitForFixedUpdate();
 		}
+	}
+
+	private IEnumerator Waterfall() {
+		yield return new WaitForSeconds(1.5f);
+		look.gameObject.SetActive(true);
 	}
 }
