@@ -9,7 +9,6 @@ public class RaiseWater : Interactable
 	public float width = 1;
 
 	public Transform t;
-	public Transform look;
 
 	protected override string Tip
 	{
@@ -38,13 +37,5 @@ public class RaiseWater : Interactable
 			width -= yspeed;
 			yield return new WaitForFixedUpdate();
 		}
-	}
-
-	private IEnumerator RedirectCamera()
-	{
-		CameraController.movingToNewPosition = true;
-		CameraController.followTransform = look;
-		yield return new WaitForSeconds(2f);
-		CameraController.followTransform = null;
 	}
 }

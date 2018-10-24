@@ -12,6 +12,10 @@ public abstract class Interactable : MonoBehaviour
 	/// </summary>
 	[Range(-10, 10)]
 	public float tipPos = 3;
+	/// <summary>
+	/// Transform to look at after interacting.
+	/// </summary>
+	public Transform look;
 
 	/// <summary>
 	/// Gets the position above the interactable for the tooltip.
@@ -86,4 +90,17 @@ public abstract class Interactable : MonoBehaviour
 	/// The action to be taken when the interactable is grabbed. 
 	/// </summary>
 	protected abstract void InteractAction(Rigidbody2D r);
+
+	/// <summary>
+	/// Redirects the camera to the look transform.
+	/// </summary>
+	/// <returns>The camera.</returns>
+	protected virtual IEnumerator RedirectCamera()
+	{
+		yield return new WaitForSeconds(0.8f);
+		CameraController.movingToNewPosition = true;
+		CameraController.followTransform = look;
+		yield return new WaitForSeconds(2f);
+		CameraController.followTransform = null;
+	}
 }

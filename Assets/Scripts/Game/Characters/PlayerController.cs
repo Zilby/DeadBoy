@@ -129,6 +129,11 @@ public abstract class PlayerController : MonoBehaviour
 	protected bool pickingUp;
 
 	/// <summary>
+	/// Whether or not the hands are returning to their original position.
+	/// </summary>
+	protected bool returningPosition;
+
+	/// <summary>
 	/// The location of an objet to be interacted with.
 	/// </summary>
 	protected Transform objectLocation = null;
@@ -137,6 +142,11 @@ public abstract class PlayerController : MonoBehaviour
 	/// The current pickup held.
 	/// </summary>
 	protected Pickup.Type currentPickup = Pickup.Type.none;
+
+	/// <summary>
+	/// Action to be called once an object is pressed. 
+	/// </summary>
+	protected Action pressAction;
 
 	/// <summary>
 	/// Gets the current pickup.
@@ -149,12 +159,22 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// The last Right arm location.
 	/// </summary>
-	protected Vector3 lastRAlocation = Vector3.zero;
+	protected Vector3 lastRALocation = Vector3.zero;
 
 	/// <summary>
 	/// The last Left arm location.
 	/// </summary>
-	protected Vector3 lastLAlocation = Vector3.zero;
+	protected Vector3 lastLALocation = Vector3.zero;
+
+	/// <summary>
+	/// The original Right arm location.
+	/// </summary>
+	protected Vector3 originalRALocation = Vector3.zero;
+
+	/// <summary>
+	/// The original Left arm location.
+	/// </summary>
+	protected Vector3 originalLALocation = Vector3.zero;
 
 	/// <summary>
 	/// The max y velocity before no longer being considered grounded.
@@ -171,6 +191,13 @@ public abstract class PlayerController : MonoBehaviour
 	/// It also determines their corresponding number key. 
 	/// </summary>
 	protected abstract int SORT_VALUE { get; }
+
+	protected bool AcceptingMoveInput {
+		get 
+		{
+			return MainPlayer == this && originalRALocation == Vector3.zero && originalLALocation == Vector3.zero;
+		}
+	}
 
 
 	#endregion
@@ -225,7 +252,7 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual void Update()
 	{
-		if (MainPlayer == this)
+		if (AcceptingMoveInput)
 		{
 			Jump();
 		}
@@ -241,10 +268,37 @@ public abstract class PlayerController : MonoBehaviour
 		if (pickingUp)
 		{
 			SetArmLocations(l: false);
-			if (Vector2.Distance(lastRAlocation, objectLocation.position) < 0.1f)
+			if (Vector2.Distance(lastRALocation, returningPosition ? originalRALocation : objectLocation.position) < 0.1f)
 			{
-				objectLocation.parent = rightArm.transform;
-				pickingUp = false;
+				if (returningPosition)
+				{
+					pickingUp = false;
+					returningPosition = false;
+					originalRALocation = Vector3.zero;
+				}
+				else
+				{
+					objectLocation.parent = rightArm.transform;
+					returningPosition = true;
+				}
+			}
+		}
+		if (pressAction != null)
+		{
+			SetArmLocations(l: false);
+			if (Vector2.Distance(lastRALocation, returningPosition ? originalRALocation : objectLocation.position) < 0.1f)
+			{
+				if (returningPosition)
+				{
+					pressAction = null;
+					returningPosition = false;
+					originalRALocation = Vector3.zero;
+				}
+				else
+				{
+					pressAction();
+					returningPosition = true;
+				}
 			}
 		}
 	}
@@ -254,33 +308,36 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	private IEnumerator SwapPlayers()
 	{
-		while (MainPlayer == this)
+		if (CameraController.followTransform == null)
 		{
-			yield return null;
-			// Go through each player with return;
-			if (Input.GetKeyDown(KeyCode.Return))
+			while (MainPlayer == this)
 			{
-				int curr = players.IndexOf(MainPlayer);
-				curr += 1;
-				if (curr >= players.Count)
+				yield return null;
+				// Go through each player with return;
+				if (Input.GetKeyDown(KeyCode.Return))
 				{
-					curr = 0;
-				}
-				MainPlayer = players[curr];
-				MainPlayer.StartCoroutine(MainPlayer.SwapPlayers());
-			}
-			// Set individual player based on hitting their sort value number key. 
-			for (int i = 0; i < Utils.keyCodes.Length; i++)
-			{
-				if (Input.GetKeyDown(Utils.keyCodes[i]))
-				{
-					foreach (PlayerController p in players)
+					int curr = players.IndexOf(MainPlayer);
+					curr += 1;
+					if (curr >= players.Count)
 					{
-						if (p.SORT_VALUE == i && p != MainPlayer)
+						curr = 0;
+					}
+					MainPlayer = players[curr];
+					MainPlayer.StartCoroutine(MainPlayer.SwapPlayers());
+				}
+				// Set individual player based on hitting their sort value number key. 
+				for (int i = 0; i < Utils.keyCodes.Length; i++)
+				{
+					if (Input.GetKeyDown(Utils.keyCodes[i]))
+					{
+						foreach (PlayerController p in players)
 						{
-							MainPlayer = p;
-							MainPlayer.StartCoroutine(MainPlayer.SwapPlayers());
-							break;
+							if (p.SORT_VALUE == i && p != MainPlayer)
+							{
+								MainPlayer = p;
+								MainPlayer.StartCoroutine(MainPlayer.SwapPlayers());
+								break;
+							}
 						}
 					}
 				}
@@ -295,11 +352,11 @@ public abstract class PlayerController : MonoBehaviour
 	protected virtual void Move()
 	{
 		float movement = 0.0f;
-		if (Input.GetKey(KeyCode.A) && MainPlayer == this)
+		if (Input.GetKey(KeyCode.A) && AcceptingMoveInput)
 		{
 			movement -= speed * Time.deltaTime;
 		}
-		if (Input.GetKey(KeyCode.D) && MainPlayer == this)
+		if (Input.GetKey(KeyCode.D) && AcceptingMoveInput)
 		{
 			movement += speed * Time.deltaTime;
 		}
@@ -378,7 +435,7 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetBool("Grounded", grounded);
 		anim.SetBool("Pulling", pulling);
 		anim.SetBool("Flipped", transform.localEulerAngles.y == 180);
-		if (MainPlayer == this)
+		if (AcceptingMoveInput)
 		{
 			anim.SetBool("RightInput", Input.GetKey(KeyCode.D));
 			anim.SetBool("LeftInput", Input.GetKey(KeyCode.A));
@@ -466,7 +523,7 @@ public abstract class PlayerController : MonoBehaviour
 
 	#endregion
 
-	#region Pulling
+	#region Interactables
 
 	/// <summary>
 	/// Tries to pull an object. 
@@ -477,8 +534,8 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			pulling = !pulling;
 			objectLocation = position;
-			lastRAlocation = rightArm.transform.position;
-			lastLAlocation = leftArm.transform.position;
+			lastRALocation = rightArm.transform.position;
+			lastLALocation = leftArm.transform.position;
 			float flip = transform.localEulerAngles.y;
 			if (transform.position.x < position.position.x)
 			{
@@ -499,16 +556,17 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public void SetArmLocations(bool r = true, bool l = true)
 	{
+		float s = 5f * (rBody.velocity.magnitude + 1) * Time.deltaTime;
 		if (r)
 		{
-			lastRAlocation = Vector3.MoveTowards(lastRAlocation, objectLocation.position, 5f * (rBody.velocity.magnitude + 1) * Time.deltaTime);
-			rightArm.transform.position = lastRAlocation;
+			lastRALocation = Vector3.MoveTowards(lastRALocation, returningPosition ? originalRALocation : objectLocation.position, s);
+			rightArm.transform.position = lastRALocation;
 			rightArm.UpdateIK();
 		}
 		if (l)
 		{
-			lastLAlocation = Vector3.MoveTowards(lastLAlocation, objectLocation.position, 5f * (rBody.velocity.magnitude + 1) * Time.deltaTime);
-			leftArm.transform.position = lastLAlocation;
+			lastLALocation = Vector3.MoveTowards(lastLALocation, returningPosition ? originalLALocation : objectLocation.position, s);
+			leftArm.transform.position = lastLALocation;
 			leftArm.UpdateIK();
 		}
 	}
@@ -518,12 +576,27 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public void PickUp(Transform t, Pickup.Type p)
 	{
-		lastRAlocation = rightArm.transform.position;
+		lastRALocation = rightArm.transform.position;
+		originalRALocation = rightArm.transform.position;
 		objectLocation = t;
 		pickingUp = true;
 		currentPickup = p;
 	}
 
+	/// <summary>
+	/// Presses the given location
+	/// </summary>
+	public void Press(Transform t, Action a)
+	{
+		lastRALocation = rightArm.transform.position;
+		originalRALocation = rightArm.transform.position;
+		objectLocation = t;
+		pressAction = a;
+	}
+
+	/// <summary>
+	/// Uses the current pickup.
+	/// </summary>
 	public void UsePickup()
 	{
 		currentPickup = Pickup.Type.none;
