@@ -16,6 +16,8 @@ public abstract class Fadeable : MonoBehaviour
     /// </summary>
     [System.NonSerialized]
     public bool useUnscaledDeltaTimeForUI = true;
+
+	public bool fadeInOnEnable = false;
     /// <summary>
     /// A reference to an active fade coroutine.
     /// </summary>
@@ -62,10 +64,18 @@ public abstract class Fadeable : MonoBehaviour
         IsVisible = Alpha > 0;
     }
 
-    /// <summary>
-    /// Immediately displays the sprite.
-    /// </summary>
-    public virtual void Show()
+	public virtual void OnEnable() 
+	{
+		if(fadeInOnEnable) 
+		{
+			SelfFadeIn();
+		}
+	}
+
+	/// <summary>
+	/// Immediately displays the sprite.
+	/// </summary>
+	public virtual void Show()
     {
         IsVisible = true;
         Alpha = 1;
