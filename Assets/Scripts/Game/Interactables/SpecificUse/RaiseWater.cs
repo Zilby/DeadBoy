@@ -9,6 +9,7 @@ public class RaiseWater : Interactable
 	public float width = 1;
 
 	public Transform t;
+	public Vector3 movePosition;
 
 	protected override string Tip
 	{
@@ -20,6 +21,9 @@ public class RaiseWater : Interactable
 		PlayerController p = r.GetComponent<PlayerController>();
 		p.StartCoroutine(Raise());
 		p.StartCoroutine(RedirectCamera());
+
+		p.GrabAndDrag(transform, movePosition);
+
 		OnTriggerExit2D(null);
 		Destroy(this);
 	}

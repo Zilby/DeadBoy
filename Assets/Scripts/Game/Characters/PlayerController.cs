@@ -119,16 +119,6 @@ public abstract class PlayerController : MonoBehaviour
 	protected bool jumpHeld;
 
 	/// <summary>
-	/// Whether or not the player is currently pulling. 
-	/// </summary>
-	protected bool pulling;
-
-	/// <summary>
-	/// Whether or not the player is currently picking up a pickup.
-	/// </summary>
-	protected bool pickingUp;
-
-	/// <summary>
 	/// Whether or not the hands are returning to their original position.
 	/// </summary>
 	protected bool returningPosition;
@@ -139,6 +129,16 @@ public abstract class PlayerController : MonoBehaviour
 	protected Transform objectLocation = null;
 
 	/// <summary>
+	/// Whether or not the player is currently pulling. 
+	/// </summary>
+	protected bool pulling;
+
+	/// <summary>
+	/// Whether or not the player is currently picking up a pickup.
+	/// </summary>
+	protected bool pickingUp;
+
+	/// <summary>
 	/// The current pickup held.
 	/// </summary>
 	protected Pickup.Type currentPickup = Pickup.Type.none;
@@ -147,6 +147,16 @@ public abstract class PlayerController : MonoBehaviour
 	/// Action to be called once an object is pressed. 
 	/// </summary>
 	protected Action pressAction;
+
+	/// <summary>
+	/// The location to drag the object to.
+	/// </summary>
+	protected Vector3 dragLocation = Vector3.zero;
+
+	/// <summary>
+	/// The speed of dragging an object. 
+	/// </summary>
+	protected float dragSpeed;
 
 	/// <summary>
 	/// Gets the current pickup.
@@ -192,8 +202,9 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected abstract int SORT_VALUE { get; }
 
-	protected bool AcceptingMoveInput {
-		get 
+	protected bool AcceptingMoveInput
+	{
+		get
 		{
 			return MainPlayer == this && originalRALocation == Vector3.zero && originalLALocation == Vector3.zero;
 		}
@@ -301,6 +312,37 @@ public abstract class PlayerController : MonoBehaviour
 				}
 			}
 		}
+		if (dragSpeed != 0)
+		{
+			SetArmLocations();
+			if (Vector2.Distance(lastRALocation, returningPosition ? originalRALocation : objectLocation.position) < 0.01f &&
+				Vector2.Distance(lastLALocation, returningPosition ? originalLALocation : objectLocation.position) < 0.01f)
+			{
+				if (returningPosition)
+				{
+					dragSpeed = 0;
+					returningPosition = false;
+					originalRALocation = Vector3.zero;
+					originalLALocation = Vector3.zero;
+				}
+				else
+				{
+					if (Vector2.Distance(Vector3.zero, dragLocation) > 0.01f)
+					{
+						float speedx = dragLocation.x * dragSpeed * Time.deltaTime;
+						float speedy = dragLocation.y * dragSpeed * Time.deltaTime;
+						objectLocation.position = new Vector3(objectLocation.position.x + speedx, objectLocation.position.y + speedy, objectLocation.position.z);
+						dragLocation.x -= speedx;
+						dragLocation.y -= speedy;
+					}
+					else
+					{
+						dragLocation = Vector3.zero;
+						returningPosition = true;
+					}
+				}
+			}
+		}
 	}
 
 	/// <summary>
@@ -308,36 +350,33 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	private IEnumerator SwapPlayers()
 	{
-		if (CameraController.followTransform == null)
+		while (MainPlayer == this)
 		{
-			while (MainPlayer == this)
+			yield return null;
+			// Go through each player with return;
+			if (Input.GetKeyDown(KeyCode.Return))
 			{
-				yield return null;
-				// Go through each player with return;
-				if (Input.GetKeyDown(KeyCode.Return))
+				int curr = players.IndexOf(MainPlayer);
+				curr += 1;
+				if (curr >= players.Count)
 				{
-					int curr = players.IndexOf(MainPlayer);
-					curr += 1;
-					if (curr >= players.Count)
-					{
-						curr = 0;
-					}
-					MainPlayer = players[curr];
-					MainPlayer.StartCoroutine(MainPlayer.SwapPlayers());
+					curr = 0;
 				}
-				// Set individual player based on hitting their sort value number key. 
-				for (int i = 0; i < Utils.keyCodes.Length; i++)
+				MainPlayer = players[curr];
+				MainPlayer.StartCoroutine(MainPlayer.SwapPlayers());
+			}
+			// Set individual player based on hitting their sort value number key. 
+			for (int i = 0; i < Utils.keyCodes.Length; i++)
+			{
+				if (Input.GetKeyDown(Utils.keyCodes[i]))
 				{
-					if (Input.GetKeyDown(Utils.keyCodes[i]))
+					foreach (PlayerController p in players)
 					{
-						foreach (PlayerController p in players)
+						if (p.SORT_VALUE == i && p != MainPlayer)
 						{
-							if (p.SORT_VALUE == i && p != MainPlayer)
-							{
-								MainPlayer = p;
-								MainPlayer.StartCoroutine(MainPlayer.SwapPlayers());
-								break;
-							}
+							MainPlayer = p;
+							MainPlayer.StartCoroutine(MainPlayer.SwapPlayers());
+							break;
 						}
 					}
 				}
@@ -592,6 +631,20 @@ public abstract class PlayerController : MonoBehaviour
 		originalRALocation = rightArm.transform.position;
 		objectLocation = t;
 		pressAction = a;
+	}
+
+	/// <summary>
+	/// Grabs the given object and drags it to the given location..
+	/// </summary>
+	public void GrabAndDrag(Transform t, Vector3 position, float speed = 2)
+	{
+		lastRALocation = rightArm.transform.position;
+		originalRALocation = rightArm.transform.position;
+		lastLALocation = leftArm.transform.position;
+		originalLALocation = leftArm.transform.position;
+		objectLocation = t;
+		dragLocation = position;
+		dragSpeed = speed;
 	}
 
 	/// <summary>
