@@ -138,27 +138,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9246fe454ebe12a4fbf6ed86093e7f7e
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: deadboy SHEET update v4_1
-      rect:
-        serializedVersion: 2
-        x: 3810
-        y: 4004
-        width: 52
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5a62591900346664780c934f4a05779e
+      spriteID: 9fa6ef059fad6034e95d939ea506f0d9
       vertices: []
       indices: 
       edges: []
@@ -178,7 +158,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7095be9691ce5f14e87cd8a970e559a4
+      spriteID: 5ba27f2482815b9418e5cf23b4846d73
       vertices: []
       indices: 
       edges: []
@@ -198,7 +178,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 338fb755f917c0b42a772e60b72abafd
+      spriteID: 9b58e8f8cfa5daf468f4f9610b7febba
       vertices: []
       indices: 
       edges: []
@@ -218,7 +198,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da5574e1a1354404f8b6f83c78210b4e
+      spriteID: fb1eccc41d5478643a43db9b4362600e
       vertices: []
       indices: 
       edges: []
@@ -238,7 +218,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 349e10fdfd70a2e40b0da54fb85ba98c
+      spriteID: 78d07b00365df774d9fde0ee5b66d35e
       vertices: []
       indices: 
       edges: []
@@ -252,13 +232,13 @@ TextureImporter:
         width: 790
         height: 2887
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba7e6aaeca8a1d24a84f7492d7af50f1
+      spriteID: f3ef28f50804b5c49b2d4cd8bc6a4a68
       vertices: []
       indices: 
       edges: []
@@ -278,47 +258,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d89b265757f1434a961e773d1c424f6
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: deadboy SHEET update v4_8
-      rect:
-        serializedVersion: 2
-        x: 3778.0002
-        y: 3787.6252
-        width: 124
-        height: 83.99292
-      alignment: 9
-      pivot: {x: 0.499998, y: 0.50449806}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 453c7db7efd924846ac629a184eec0aa
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: deadboy SHEET update v4_9
-      rect:
-        serializedVersion: 2
-        x: 3961.0002
-        y: 3783.626
-        width: 81
-        height: 77.99341
-      alignment: 9
-      pivot: {x: 0.499997, y: 0.5048378}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: af24fcb4adb430f47950b8428ab15938
+      spriteID: b38d6b95a161a8f44bc1f1ec17b94e06
       vertices: []
       indices: 
       edges: []
@@ -338,7 +278,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 69b37b999b20b3c4c9e8725eeb20d763
+      spriteID: 689e9fef41ee64d47b8cfee814f977ed
       vertices: []
       indices: 
       edges: []
@@ -358,27 +298,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5172c35a17e0ba449d6b1abfaae400f
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: deadboy SHEET update v4_12
-      rect:
-        serializedVersion: 2
-        x: 3818
-        y: 3730.631
-        width: 61
-        height: 30.997559
-      alignment: 9
-      pivot: {x: 0.49999997, y: 0.5119323}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7f039ed6d9354524c8a60c66670d50af
+      spriteID: 51e6a9ff94860234a9baad10a2199c23
       vertices: []
       indices: 
       edges: []
@@ -398,7 +318,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 583cdf5e3cc5b294bb086fa91d0694d3
+      spriteID: f363e6d23b74be64a87c5b75072dedf2
       vertices: []
       indices: 
       edges: []
@@ -418,7 +338,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ea39e006c9ec02418e95c776cce3b96
+      spriteID: a71840fbfa123ba46838d0ddfa4547b9
       vertices: []
       indices: 
       edges: []
@@ -438,7 +358,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8bbde5f37c03a9045abcf16212a01a6e
+      spriteID: cf25478c50b680048bb1ce3bdec18211
       vertices: []
       indices: 
       edges: []
@@ -447,18 +367,18 @@ TextureImporter:
       name: deadboy SHEET update v4_16
       rect:
         serializedVersion: 2
-        x: 3363
-        y: 3020
-        width: 398
-        height: 503
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 3355.1729
+        y: 3012.0337
+        width: 412.64478
+        height: 521.3345
+      alignment: 9
+      pivot: {x: 0.50122267, y: 0.49769598}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a24661ee3b076e4a929da90f3ca104a
+      spriteID: 9256159331616cf41988ceb7f4493bc4
       vertices: []
       indices: 
       edges: []
@@ -478,7 +398,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c2020ad5d677b8949a0cfda8c9a278bf
+      spriteID: 5a5905c411b13f44790ba214f15d946f
       vertices: []
       indices: 
       edges: []
@@ -498,7 +418,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f8fdf40d34ce2ea4ab7c2e2c52d47f19
+      spriteID: 518f21141faa3d04ba499f06c48e5a14
       vertices: []
       indices: 
       edges: []
@@ -518,7 +438,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: accfa7aba8e2c4740a5465e3596cf88e
+      spriteID: 538459ac09d24ab49a08c4e56ca07963
       vertices: []
       indices: 
       edges: []
@@ -538,7 +458,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cdc23088ab500b444a216824b03b9e14
+      spriteID: 201e41bc24328d84fa067cf973049df3
       vertices: []
       indices: 
       edges: []
@@ -547,38 +467,18 @@ TextureImporter:
       name: deadboy SHEET update v4_21
       rect:
         serializedVersion: 2
-        x: 2955.447
-        y: 2739.2112
+        x: 2955.2817
+        y: 2735.249
         width: 168.09375
-        height: 289.13428
+        height: 274.313
       alignment: 9
-      pivot: {x: 0.49408582, y: 0.4921202}
+      pivot: {x: 0.4950691, y: 0.53315365}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b18d5987fe17d4c4e884ade343814c41
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: deadboy SHEET update v4_22
-      rect:
-        serializedVersion: 2
-        x: 3337.9172
-        y: 2268.705
-        width: 402.76392
-        height: 516.3943
-      alignment: 9
-      pivot: {x: 0.49801573, y: 0.4972841}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 81b75c716c10f164a89019fdeec87481
+      spriteID: cf6563f020ef32949b872ad48f34c2e8
       vertices: []
       indices: 
       edges: []
@@ -598,7 +498,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5cce2d423b00ebe40b283a08ca0e4027
+      spriteID: 2c7eef48eba3d6640899ccff4a9f4eeb
       vertices: []
       indices: 
       edges: []
@@ -618,7 +518,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8159e296981f8664a9c02c71e8476b0f
+      spriteID: 24f4bced8e1059c47b9c68823e16c40c
       vertices: []
       indices: 
       edges: []
@@ -638,7 +538,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d0fb7d91510b5d408cd7178af3dbed5
+      spriteID: 9cc3d7d4d66130046a2a2773ee889663
       vertices: []
       indices: 
       edges: []
@@ -658,7 +558,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b25526751ddf7934190df7bb721b693c
+      spriteID: b8ef76b8e3476434eb86f3d35f04f149
       vertices: []
       indices: 
       edges: []
@@ -678,7 +578,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 03e979b2f553cfb47b8f8df417d6c746
+      spriteID: 1e0fcb7cd3293884d8c3436ce49ecf68
       vertices: []
       indices: 
       edges: []
@@ -698,7 +598,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08e31c0f57bbeb246adc1a21da2eaed0
+      spriteID: 9f43b8d3fb50ed943ae6dabf5061c806
       vertices: []
       indices: 
       edges: []
@@ -718,7 +618,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71c60c6ce2fa57945b58cdf13387ef96
+      spriteID: 03e8a50e2b16977478c2cd75bdaf8b37
       vertices: []
       indices: 
       edges: []
@@ -738,7 +638,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d10c6b94be3a51745a2c1b18a0a2ae90
+      spriteID: b677338e177002e4e91ba54a84f89193
       vertices: []
       indices: 
       edges: []
@@ -747,18 +647,18 @@ TextureImporter:
       name: deadboy SHEET update v4_31
       rect:
         serializedVersion: 2
-        x: 3976
-        y: 1439
-        width: 458
-        height: 212
+        x: 1725
+        y: 1130
+        width: 178
+        height: 239
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e65d5ae4f60e148418464fae173e52d7
+      spriteID: b2d9d73a07fb41d4ab4879aa5c9f8c33
       vertices: []
       indices: 
       edges: []
@@ -778,7 +678,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce07d08ac5451984d86cf6bb717dd2d4
+      spriteID: 09baa28ee8bb17747803819cb4622492
       vertices: []
       indices: 
       edges: []
@@ -798,7 +698,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af7a1a8175b27e84da41e7845d483bb5
+      spriteID: 73b03aa0aafee2042b142a3fc6c42bf2
       vertices: []
       indices: 
       edges: []
@@ -818,7 +718,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b5dbf88061194924daa988419344e9c0
+      spriteID: 9a00bccf929904c42874974a6ee08180
       vertices: []
       indices: 
       edges: []
@@ -838,7 +738,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4287c59a8154b44d9c16c01d69858fb
+      spriteID: 1f95080d2569b7d4b83dffb10c511cbf
       vertices: []
       indices: 
       edges: []
@@ -858,7 +758,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ae2a6e3e164a8944ad2659b51ce7029
+      spriteID: f08ab90cb60ec474eba6dca4911c6caa
       vertices: []
       indices: 
       edges: []
@@ -878,7 +778,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e48f33e436013114e96ce2a98d5b08e2
+      spriteID: 9982a7ce7bc86b143a1acbc66e144ad7
       vertices: []
       indices: 
       edges: []
@@ -898,27 +798,47 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d035b0790e5333f409505aae7176ea15
+      spriteID: 3d63125f6f6c9a545845cd1ea62b8d41
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: deadboy SHEET update v4_39
+      name: deadboy SHEET update v4_1
       rect:
         serializedVersion: 2
-        x: 4193.8696
-        y: 660.13446
-        width: 474.4004
-        height: 227.3789
+        x: 3969.1282
+        y: 1434.4668
+        width: 471.92993
+        height: 224.90857
       alignment: 9
-      pivot: {x: 0.49563697, y: 0.50077415}
+      pivot: {x: 0.50721794, y: 0.5314741}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: feeb273fd5a08b746adc89f194ea107b
+      spriteID: c92723b8d9197984fa896052702ea14f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: deadboy SHEET update v4_8
+      rect:
+        serializedVersion: 2
+        x: 3778.0002
+        y: 3787.6252
+        width: 124
+        height: 83.99292
+      alignment: 9
+      pivot: {x: 0.499998, y: 0.50449806}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 151482320b9430d498cd5e32a8d032d1
       vertices: []
       indices: 
       edges: []
@@ -934,6 +854,6 @@ TextureImporter:
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 636756745845235425
+  userData: 636760236060278268
   assetBundleName: 
   assetBundleVariant: 
