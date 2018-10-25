@@ -38,6 +38,8 @@ public class SongManager : MonoBehaviour
 	/// </summary>
 	private float loopTime = 0;
 
+	private double time;
+
 	void Awake()
 	{
 		if (instance == null)
@@ -62,6 +64,7 @@ public class SongManager : MonoBehaviour
 		{
 			s[currentSource].Stop();
 			s[currentSource].clip = l.clip;
+			time = AudioSettings.dspTime;
 			loopTime = l.loopTime;
 			s[currentSource].loop = loopTime == 0;
 			s[currentSource].Play();
@@ -75,8 +78,10 @@ public class SongManager : MonoBehaviour
 		{
 			if (!s[nextSource].isPlaying)
 			{
+				time = time + loopTime;
+				s[nextSource].clip = s[currentSource].clip;
 				s[nextSource].loop = false;
-				s[nextSource].PlayScheduled(loopTime);
+				s[nextSource].PlayScheduled(time);
 				currentSource = nextSource;
 			}
 		}
