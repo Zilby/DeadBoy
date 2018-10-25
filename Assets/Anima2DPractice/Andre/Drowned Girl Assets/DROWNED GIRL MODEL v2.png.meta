@@ -1,0 +1,750 @@
+fileFormatVersion: 2
+guid: d9fe40238c6ebdd409ad4f6e3d53b6ea
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: DROWNED GIRL MODEL v2_0
+    21300002: DROWNED GIRL MODEL v2_1
+    21300004: DROWNED GIRL MODEL v2_2
+    21300006: DROWNED GIRL MODEL v2_3
+    21300008: DROWNED GIRL MODEL v2_4
+    21300010: DROWNED GIRL MODEL v2_5
+    21300012: DROWNED GIRL MODEL v2_6
+    21300014: DROWNED GIRL MODEL v2_7
+    21300016: DROWNED GIRL MODEL v2_9
+    21300018: DROWNED GIRL MODEL v2_10
+    21300020: DROWNED GIRL MODEL v2_13
+    21300022: DROWNED GIRL MODEL v2_14
+    21300024: DROWNED GIRL MODEL v2_15
+    21300026: DROWNED GIRL MODEL v2_16
+    21300028: DROWNED GIRL MODEL v2_17
+    21300030: DROWNED GIRL MODEL v2_18
+    21300032: DROWNED GIRL MODEL v2_19
+    21300034: DROWNED GIRL MODEL v2_20
+    21300036: DROWNED GIRL MODEL v2_21
+    21300038: DROWNED GIRL MODEL v2_22
+    21300040: DROWNED GIRL MODEL v2_23
+    21300042: DROWNED GIRL MODEL v2_24
+    21300044: DROWNED GIRL MODEL v2_25
+    21300046: DROWNED GIRL MODEL v2_26
+    21300048: DROWNED GIRL MODEL v2_27
+    21300050: DROWNED GIRL MODEL v2_28
+    21300052: DROWNED GIRL MODEL v2_29
+    21300054: DROWNED GIRL MODEL v2_30
+    21300056: DROWNED GIRL MODEL v2_31
+    21300058: DROWNED GIRL MODEL v2_32
+    21300060: DROWNED GIRL MODEL v2_8
+  externalObjects: {}
+  serializedVersion: 7
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_0
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 132
+        width: 1276
+        height: 2412
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb6dfea830dbee047ad618d9d5ea0c4d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_1
+      rect:
+        serializedVersion: 2
+        x: 2781
+        y: 2260
+        width: 367
+        height: 213
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31f09e00e0ece024c880f33bc8517f78
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_2
+      rect:
+        serializedVersion: 2
+        x: 3292
+        y: 2268
+        width: 329
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0521e3c8ed5af74f968592adb838425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_3
+      rect:
+        serializedVersion: 2
+        x: 3770
+        y: 2264
+        width: 80
+        height: 204
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 306d5499389dea14a9d77ac43b17d3f9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_4
+      rect:
+        serializedVersion: 2
+        x: 3991
+        y: 2441
+        width: 75
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4c1cb8129cbe284dafab381af2a14e7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_5
+      rect:
+        serializedVersion: 2
+        x: 4087
+        y: 2451
+        width: 135
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12e22f400f1c2e147ac1ad0acc8dcdd6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_6
+      rect:
+        serializedVersion: 2
+        x: 4301
+        y: 2375
+        width: 98
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b41f61cb84319644c95b4851accdfc72
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_7
+      rect:
+        serializedVersion: 2
+        x: 4472
+        y: 2353
+        width: 87
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59ef86f89ecc56040bd833858ff6c808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_9
+      rect:
+        serializedVersion: 2
+        x: 3961
+        y: 2290
+        width: 103
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05b6f19b99011ea4abbaab7e6d9fd5de
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_10
+      rect:
+        serializedVersion: 2
+        x: 4103
+        y: 2283
+        width: 151
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4f3a0ad96684b747bcbb8c6e4afb87b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_13
+      rect:
+        serializedVersion: 2
+        x: 2804
+        y: 1797
+        width: 289
+        height: 422
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e660b0e451a695f41b3302571361fbd0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_14
+      rect:
+        serializedVersion: 2
+        x: 3246
+        y: 2119
+        width: 56
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a8e89b2f38f40643aa06629ce726c88
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_15
+      rect:
+        serializedVersion: 2
+        x: 3533
+        y: 2106
+        width: 93
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9bacd772581fc2419305572b8cc630d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_16
+      rect:
+        serializedVersion: 2
+        x: 3921
+        y: 638
+        width: 1109
+        height: 1576
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c75edccbd8e247440bf4e46b10299c14
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_17
+      rect:
+        serializedVersion: 2
+        x: 1860
+        y: 1581
+        width: 118
+        height: 417
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be3b20fedeb5e2b46bca635932ee9cbf
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_18
+      rect:
+        serializedVersion: 2
+        x: 2323
+        y: 1561
+        width: 116
+        height: 437
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac68361b5271dd949b308d20aaadc40c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_19
+      rect:
+        serializedVersion: 2
+        x: 3201
+        y: 1774
+        width: 156
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c2e354b85ebee14caaa9c467ae42b52
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_20
+      rect:
+        serializedVersion: 2
+        x: 3604
+        y: 1842
+        width: 118
+        height: 209
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da6e7751e851b734389beeab3a3bcdaa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_21
+      rect:
+        serializedVersion: 2
+        x: 1833
+        y: 670
+        width: 143
+        height: 770
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae07649c0e3642f4ca34b95bcaebe63c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_22
+      rect:
+        serializedVersion: 2
+        x: 2333
+        y: 645
+        width: 131
+        height: 815
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1caa21a3b7550714ba6e40b394d542d7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_23
+      rect:
+        serializedVersion: 2
+        x: 2774
+        y: 1295
+        width: 145
+        height: 361
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c5f17bc4f8cf54458a96937d6c26528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_24
+      rect:
+        serializedVersion: 2
+        x: 3118
+        y: 1249
+        width: 304
+        height: 480
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9ead14341c40254f8de097fa577b29a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_25
+      rect:
+        serializedVersion: 2
+        x: 3558
+        y: 1349
+        width: 149
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 088873db0296f39478275ba4248da9c4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_26
+      rect:
+        serializedVersion: 2
+        x: 2680
+        y: 708
+        width: 166
+        height: 415
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 799fdfbe4d101b84eae62fc2f710c2ee
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_27
+      rect:
+        serializedVersion: 2
+        x: 2962
+        y: 670
+        width: 513
+        height: 442
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63f780eafa6ebe048a3375a4a38597b4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_28
+      rect:
+        serializedVersion: 2
+        x: 3586
+        y: 701
+        width: 189
+        height: 429
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c0975f0f9a1ab74292f818d4c528fec
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_29
+      rect:
+        serializedVersion: 2
+        x: 1528
+        y: 215
+        width: 410
+        height: 234
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 103754ec8d625fe49878ea20a19f869b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_30
+      rect:
+        serializedVersion: 2
+        x: 2092
+        y: 238
+        width: 407
+        height: 206
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abd2453b75afb6445a32decdb5e79ea2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_31
+      rect:
+        serializedVersion: 2
+        x: 3221
+        y: 333
+        width: 340
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab1fdccaac83956429211830230bf20f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_32
+      rect:
+        serializedVersion: 2
+        x: 3699
+        y: 313
+        width: 335
+        height: 221
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57cb75ef2f7996a41b5e6449cec6a577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DROWNED GIRL MODEL v2_8
+      rect:
+        serializedVersion: 2
+        x: 4595
+        y: 2338
+        width: 126
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd75ba3eed021f84585dfd3da3f54c2f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 457007b1fe3e4414fbf68d6c1330b110
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
