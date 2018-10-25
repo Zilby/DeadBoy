@@ -1,38 +1,40 @@
 fileFormatVersion: 2
-guid: d9fe40238c6ebdd409ad4f6e3d53b6ea
+guid: 2266970bdb87cba4c9b84b68a187e54f
 TextureImporter:
   fileIDToRecycleName:
-    21300000: DROWNED GIRL MODEL v2_0
-    21300002: DROWNED GIRL MODEL v2_1
-    21300004: DROWNED GIRL MODEL v2_2
-    21300006: DROWNED GIRL MODEL v2_3
-    21300008: DROWNED GIRL MODEL v2_4
-    21300010: DROWNED GIRL MODEL v2_5
-    21300012: DROWNED GIRL MODEL v2_6
-    21300014: DROWNED GIRL MODEL v2_7
-    21300016: DROWNED GIRL MODEL v2_9
-    21300018: DROWNED GIRL MODEL v2_10
-    21300020: DROWNED GIRL MODEL v2_13
-    21300022: DROWNED GIRL MODEL v2_14
-    21300024: DROWNED GIRL MODEL v2_15
-    21300026: DROWNED GIRL MODEL v2_16
-    21300028: DROWNED GIRL MODEL v2_17
-    21300030: DROWNED GIRL MODEL v2_18
-    21300032: DROWNED GIRL MODEL v2_19
-    21300034: DROWNED GIRL MODEL v2_20
-    21300036: DROWNED GIRL MODEL v2_21
-    21300038: DROWNED GIRL MODEL v2_22
-    21300040: DROWNED GIRL MODEL v2_23
-    21300042: DROWNED GIRL MODEL v2_24
-    21300044: DROWNED GIRL MODEL v2_25
-    21300046: DROWNED GIRL MODEL v2_26
-    21300048: DROWNED GIRL MODEL v2_27
-    21300050: DROWNED GIRL MODEL v2_28
-    21300052: DROWNED GIRL MODEL v2_29
-    21300054: DROWNED GIRL MODEL v2_30
-    21300056: DROWNED GIRL MODEL v2_31
-    21300058: DROWNED GIRL MODEL v2_32
-    21300060: DROWNED GIRL MODEL v2_8
+    21300000: DGAtlas_0
+    21300002: DGAtlas_1
+    21300004: DGAtlas_2
+    21300006: DGAtlas_3
+    21300008: DGAtlas_4
+    21300010: DGAtlas_5
+    21300012: DGAtlas_6
+    21300014: DGAtlas_7
+    21300016: DGAtlas_8
+    21300018: DGAtlas_9
+    21300020: DGAtlas_10
+    21300022: DGAtlas_11
+    21300024: DGAtlas_12
+    21300026: DGAtlas_13
+    21300028: DGAtlas_14
+    21300030: DGAtlas_15
+    21300032: DGAtlas_16
+    21300034: DGAtlas_17
+    21300036: DGAtlas_18
+    21300038: DGAtlas_19
+    21300040: DGAtlas_20
+    21300042: DGAtlas_21
+    21300044: DGAtlas_22
+    21300046: DGAtlas_23
+    21300048: DGAtlas_24
+    21300050: DGAtlas_25
+    21300052: DGAtlas_26
+    21300054: DGAtlas_27
+    21300056: DGAtlas_28
+    21300058: DGAtlas_29
+    21300060: DGAtlas_30
+    21300062: DGAtlas_31
+    21300064: DGAtlas_32
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -63,7 +65,7 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: -1
-    aniso: -1
+    aniso: 1
     mipBias: -100
     wrapU: 1
     wrapV: 1
@@ -115,621 +117,621 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_0
+      name: DGAtlas_0
       rect:
         serializedVersion: 2
-        x: 187
-        y: 132
-        width: 1276
-        height: 2412
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fb6dfea830dbee047ad618d9d5ea0c4d
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_1
-      rect:
-        serializedVersion: 2
-        x: 2781
-        y: 2260
-        width: 367
-        height: 213
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 31f09e00e0ece024c880f33bc8517f78
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_2
-      rect:
-        serializedVersion: 2
-        x: 3292
-        y: 2268
-        width: 329
-        height: 198
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c0521e3c8ed5af74f968592adb838425
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_3
-      rect:
-        serializedVersion: 2
-        x: 3770
-        y: 2264
-        width: 80
-        height: 204
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 306d5499389dea14a9d77ac43b17d3f9
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_4
-      rect:
-        serializedVersion: 2
-        x: 3991
-        y: 2441
-        width: 75
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c4c1cb8129cbe284dafab381af2a14e7
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_5
-      rect:
-        serializedVersion: 2
-        x: 4087
+        x: 930
         y: 2451
         width: 135
         height: 35
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12e22f400f1c2e147ac1ad0acc8dcdd6
+      spriteID: 676443afb3882164eb039932bb2dd05e
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_6
+      name: DGAtlas_1
       rect:
         serializedVersion: 2
-        x: 4301
-        y: 2375
-        width: 98
-        height: 48
+        x: 1086
+        y: 2441
+        width: 75
+        height: 45
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b41f61cb84319644c95b4851accdfc72
+      spriteID: abfc4b43b7af21c40936e6b28db1f9fb
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_7
+      name: DGAtlas_2
       rect:
         serializedVersion: 2
-        x: 4472
+        x: 1302
+        y: 2264
+        width: 80
+        height: 204
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0f9fff75e2d54f4495313cdbd1b6b99
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_3
+      rect:
+        serializedVersion: 2
+        x: 1531
+        y: 2268
+        width: 329
+        height: 198
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6900e96a6d7287148933788f3f6afd2b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_4
+      rect:
+        serializedVersion: 2
+        x: 2004
+        y: 2260
+        width: 367
+        height: 213
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ca233c89d2842d4f9f174493b28fc99
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_5
+      rect:
+        serializedVersion: 2
+        x: 3689
+        y: 132
+        width: 1276
+        height: 2412
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ece55c64eb2ab2c4d91850de408add86
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_6
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 2343
+        width: 126
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b23d942233a309b4cb9c10b645f87bd4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_7
+      rect:
+        serializedVersion: 2
+        x: 593
         y: 2353
         width: 87
         height: 81
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 59ef86f89ecc56040bd833858ff6c808
+      spriteID: 4f6058fc795cce94a99f5196cc9898d8
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_9
+      name: DGAtlas_8
       rect:
         serializedVersion: 2
-        x: 3961
+        x: 753
+        y: 2375
+        width: 98
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95e802aa713cb2d41b2619abd00bffd6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_10
+      rect:
+        serializedVersion: 2
+        x: 899
+        y: 2272
+        width: 151
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 067b82daa80817242b3c958a1d183d5a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_11
+      rect:
+        serializedVersion: 2
+        x: 1088
         y: 2290
         width: 103
         height: 78
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 05b6f19b99011ea4abbaab7e6d9fd5de
+      spriteID: 53a27bdaefcbfdd40becfa96df7dab96
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_10
+      name: DGAtlas_13
       rect:
         serializedVersion: 2
-        x: 4103
-        y: 2283
-        width: 151
-        height: 87
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b4f3a0ad96684b747bcbb8c6e4afb87b
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_13
-      rect:
-        serializedVersion: 2
-        x: 2804
-        y: 1797
-        width: 289
-        height: 422
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e660b0e451a695f41b3302571361fbd0
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_14
-      rect:
-        serializedVersion: 2
-        x: 3246
-        y: 2119
-        width: 56
-        height: 90
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5a8e89b2f38f40643aa06629ce726c88
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_15
-      rect:
-        serializedVersion: 2
-        x: 3533
-        y: 2106
-        width: 93
-        height: 98
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b9bacd772581fc2419305572b8cc630d
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_16
-      rect:
-        serializedVersion: 2
-        x: 3921
+        x: 122
         y: 638
         width: 1109
         height: 1576
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c75edccbd8e247440bf4e46b10299c14
+      spriteID: 4c78c0c84576d874aaebcc352f2d9006
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_17
+      name: DGAtlas_15
       rect:
         serializedVersion: 2
-        x: 1860
-        y: 1581
-        width: 118
-        height: 417
+        x: 1526
+        y: 2106
+        width: 93
+        height: 98
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: be3b20fedeb5e2b46bca635932ee9cbf
+      spriteID: 892b62787d4c17345a0af68331ca0437
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_18
+      name: DGAtlas_16
       rect:
         serializedVersion: 2
-        x: 2323
-        y: 1561
-        width: 116
-        height: 437
+        x: 1850
+        y: 2119
+        width: 56
+        height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ac68361b5271dd949b308d20aaadc40c
+      spriteID: 23e4666fab6fe0b48bbdf93ba27b9790
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_19
+      name: DGAtlas_17
       rect:
         serializedVersion: 2
-        x: 3201
+        x: 2059
+        y: 1797
+        width: 289
+        height: 422
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94bfafe0d00f2104ab94d1170f4c2ef2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_18
+      rect:
+        serializedVersion: 2
+        x: 1795
         y: 1774
         width: 156
         height: 73
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c2e354b85ebee14caaa9c467ae42b52
+      spriteID: 7e44173c6af01bb4ea2bbb5adf88dd0f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_20
+      name: DGAtlas_19
       rect:
         serializedVersion: 2
-        x: 3604
-        y: 1842
+        x: 2713
+        y: 1561
+        width: 116
+        height: 437
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43c205dbbe74abf4885447e30452c15d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_20
+      rect:
+        serializedVersion: 2
+        x: 3174
+        y: 1581
         width: 118
-        height: 209
+        height: 417
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da6e7751e851b734389beeab3a3bcdaa
+      spriteID: 4e136a3c8344f2b4c9acc55fa3145b4d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_21
+      name: DGAtlas_21
       rect:
         serializedVersion: 2
-        x: 1833
-        y: 670
-        width: 143
-        height: 770
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ae07649c0e3642f4ca34b95bcaebe63c
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_22
-      rect:
-        serializedVersion: 2
-        x: 2333
-        y: 645
-        width: 131
-        height: 815
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1caa21a3b7550714ba6e40b394d542d7
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_23
-      rect:
-        serializedVersion: 2
-        x: 2774
-        y: 1295
-        width: 145
-        height: 361
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3c5f17bc4f8cf54458a96937d6c26528
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_24
-      rect:
-        serializedVersion: 2
-        x: 3118
-        y: 1249
-        width: 304
-        height: 480
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d9ead14341c40254f8de097fa577b29a
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_25
-      rect:
-        serializedVersion: 2
-        x: 3558
+        x: 1445
         y: 1349
         width: 149
         height: 320
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 088873db0296f39478275ba4248da9c4
+      spriteID: 4b0200f2a0d6e0a46bb3cb0fd6ac736b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_26
+      name: DGAtlas_22
       rect:
         serializedVersion: 2
-        x: 2680
-        y: 708
-        width: 166
-        height: 415
+        x: 1730
+        y: 1249
+        width: 304
+        height: 480
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 799fdfbe4d101b84eae62fc2f710c2ee
+      spriteID: 93e032f7c4abd734b9a1add3dadc111c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_27
+      name: DGAtlas_23
       rect:
         serializedVersion: 2
-        x: 2962
+        x: 2233
+        y: 1295
+        width: 145
+        height: 361
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 231475f91634a3f4eb8850b26c25dca6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_24
+      rect:
+        serializedVersion: 2
+        x: 2688
+        y: 645
+        width: 131
+        height: 815
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bccb63a273eae25498e6f91e8f0351b2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_25
+      rect:
+        serializedVersion: 2
+        x: 3176
         y: 670
-        width: 513
-        height: 442
+        width: 143
+        height: 770
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 63f780eafa6ebe048a3375a4a38597b4
+      spriteID: 230455158d2fd3249a7c6043f98148a5
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_28
+      name: DGAtlas_26
       rect:
         serializedVersion: 2
-        x: 3586
+        x: 1377
         y: 701
         width: 189
         height: 429
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c0975f0f9a1ab74292f818d4c528fec
+      spriteID: 508a44f19bd726d47a7b00032dd7b639
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_29
+      name: DGAtlas_27
       rect:
         serializedVersion: 2
-        x: 1528
-        y: 215
-        width: 410
-        height: 234
+        x: 1677
+        y: 670
+        width: 513
+        height: 442
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 103754ec8d625fe49878ea20a19f869b
+      spriteID: 9276a04b47fbd994d9aa47c6a5832f9a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_30
+      name: DGAtlas_28
       rect:
         serializedVersion: 2
-        x: 2092
-        y: 238
-        width: 407
-        height: 206
+        x: 2306
+        y: 708
+        width: 166
+        height: 415
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: abd2453b75afb6445a32decdb5e79ea2
+      spriteID: 67aac94e58f967746803a4cf64754a19
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_31
+      name: DGAtlas_29
       rect:
         serializedVersion: 2
-        x: 3221
-        y: 333
-        width: 340
-        height: 194
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ab1fdccaac83956429211830230bf20f
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_32
-      rect:
-        serializedVersion: 2
-        x: 3699
+        x: 1118
         y: 313
         width: 335
         height: 221
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 57cb75ef2f7996a41b5e6449cec6a577
+      spriteID: ca80374106b6d204e885e4510ce2edc2
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DROWNED GIRL MODEL v2_8
+      name: DGAtlas_30
       rect:
         serializedVersion: 2
-        x: 4595
-        y: 2338
-        width: 126
-        height: 110
+        x: 1591
+        y: 333
+        width: 340
+        height: 194
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bd75ba3eed021f84585dfd3da3f54c2f
+      spriteID: 63f382acd8796b74d94c7d9fc26200e3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_31
+      rect:
+        serializedVersion: 2
+        x: 2653
+        y: 238
+        width: 407
+        height: 206
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d4a2d7b34246a14b9ae36b921d3e444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_32
+      rect:
+        serializedVersion: 2
+        x: 3214
+        y: 215
+        width: 410
+        height: 234
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db88d670acc6dd346885c0dc1fdbdaf0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_14
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 118
+        width: 163
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4250651a98a1ffd48a494324da55f0fe
       vertices: []
       indices: 
       edges: []
@@ -737,7 +739,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 457007b1fe3e4414fbf68d6c1330b110
+    spriteID: 31d13ab5fca6f2a44a7bf2adecc4a439
     vertices: []
     indices: 
     edges: []
