@@ -206,7 +206,7 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		get
 		{
-			return MainPlayer == this && originalRALocation == Vector3.zero && originalLALocation == Vector3.zero;
+			return MainPlayer == this && (originalRALocation == Vector3.zero && originalLALocation == Vector3.zero || pulling);
 		}
 	}
 
@@ -453,7 +453,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected virtual void SetAnimationState()
 	{
-		if (!pulling)
+		if (!pulling && AcceptingMoveInput)
 		{
 			float flip = transform.localEulerAngles.y;
 			if (rBody.velocity.x > 1f)
@@ -575,16 +575,6 @@ public abstract class PlayerController : MonoBehaviour
 			objectLocation = position;
 			lastRALocation = rightArm.transform.position;
 			lastLALocation = leftArm.transform.position;
-			float flip = transform.localEulerAngles.y;
-			if (transform.position.x < position.position.x)
-			{
-				flip = 180;
-			}
-			else
-			{
-				flip = 0;
-			}
-			transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, flip, transform.localEulerAngles.z);
 		}
 		return pulling;
 	}

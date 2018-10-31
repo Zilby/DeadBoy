@@ -57,7 +57,11 @@ public abstract class Interactable : MonoBehaviour
 	protected virtual void OnTriggerEnter2D(Collider2D collision)
 	{
 		tooltip = ToolTips.instance.SetTooltipActive(Tip, TipPos);
-		checkInput = StartCoroutine(CheckForInput(collision.attachedRigidbody));
+		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
+		if (p != null)
+		{
+			checkInput = StartCoroutine(CheckForInput(p));
+		}
 	}
 
 	protected virtual void OnTriggerStay2D(Collider2D collision)
@@ -74,22 +78,33 @@ public abstract class Interactable : MonoBehaviour
 	/// <summary>
 	/// Checks for player input. 
 	/// </summary>
-	private IEnumerator CheckForInput(Rigidbody2D r)
+	private IEnumerator CheckForInput(PlayerController p)
 	{
 		for (; ; )
 		{
 			yield return null;
 			if (Input.GetKeyDown(InteractInput))
 			{
-				InteractAction(r);
+				InteractAction(p);
 			}
 		}
 	}
 
 	/// <summary>
-	/// The action to be taken when the interactable is grabbed. 
+	/// The action to be taken when the interactable is interacted with. 
 	/// </summary>
-	protected abstract void InteractAction(Rigidbody2D r);
+	protected virtual void InteractAction(PlayerController p) {
+		float flip;
+		if (transform.position.x > p.transform.position.x)
+		{
+			flip = 180 + (p.invertDirection ? 180 : 0);
+		}
+		else
+		{
+			flip = 0 + (p.invertDirection ? 180 : 0);
+		}
+		p.transform.localEulerAngles = new Vector3(p.transform.localEulerAngles.x, flip, p.transform.localEulerAngles.z);
+	}
 
 	/// <summary>
 	/// Redirects the camera to the look transform.

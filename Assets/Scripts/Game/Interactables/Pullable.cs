@@ -25,12 +25,12 @@ public class Pullable : Interactable
 	}
 
 
-	protected override void InteractAction(Rigidbody2D r)
+	protected override void InteractAction(PlayerController p)
 	{
-		PlayerController p = r.GetComponent<PlayerController>();
+		base.InteractAction(p);
 		bool pulling = p.Pulling(transform);
 		joint.enabled = pulling;
-		joint.connectedBody = r;
+		joint.connectedBody = p.rBody;
 		if (pulling)
 		{
 			ToolTips.instance.SetTooltipString(tooltip, "Press " + InteractInput.ToString() + " To Release");

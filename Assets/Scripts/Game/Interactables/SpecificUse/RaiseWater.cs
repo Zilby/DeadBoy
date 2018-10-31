@@ -16,9 +16,9 @@ public class RaiseWater : Interactable
 		get { return "Press " + InteractInput.ToString() + " To Pull"; }
 	}
 
-	protected override void InteractAction(Rigidbody2D r)
+	protected override void InteractAction(PlayerController p)
 	{
-		PlayerController p = r.GetComponent<PlayerController>();
+		base.InteractAction(p);
 		p.StartCoroutine(Raise());
 		p.StartCoroutine(Waterfall());
 		p.StartCoroutine(RedirectCamera());

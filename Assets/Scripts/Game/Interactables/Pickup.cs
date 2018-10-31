@@ -23,9 +23,9 @@ public class Pickup : Interactable
 		get { return "Press " + InteractInput.ToString() + " To Grab"; }
 	}
 
-	protected override void InteractAction(Rigidbody2D r)
+	protected override void InteractAction(PlayerController p)
 	{
-		PlayerController p = r.GetComponent<PlayerController>();
+		base.InteractAction(p);
 		if (rbody != null)
 		{
 			Destroy(rbody);
