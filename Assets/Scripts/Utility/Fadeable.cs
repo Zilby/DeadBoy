@@ -27,8 +27,10 @@ public abstract class Fadeable : MonoBehaviour
     /// </summary>
     [ConditionalHideAttribute("fadeInOnEnable", true, false)]
     public float fadeDelay = 0;
+	[ConditionalHideAttribute("fadeInOnEnable", true, false)]
+	public float fadeDuration = FADE_IN_DUR;
 
-    protected Coroutine fadeCoroutine;
+	protected Coroutine fadeCoroutine;
     protected bool isFading = false;
 
     public bool IsVisible { get; protected set; }
@@ -75,7 +77,7 @@ public abstract class Fadeable : MonoBehaviour
 	{
 		if(fadeInOnEnable) 
 		{
-			SelfFadeIn();
+			StartCoroutine(DelayedFade());
 		}
 	}
 
@@ -102,21 +104,25 @@ public abstract class Fadeable : MonoBehaviour
         BlocksRaycasts = false;
     }
 
+	public virtual IEnumerator DelayedFade() {
+		IsVisible = false;
+		Alpha = 0;
+		yield return new WaitForSeconds(fadeDelay);
+		SelfFadeIn(dur:fadeDuration);
+	}
+
 
     /// <summary>
     /// Fades in the Canvas group over the defined time.
     /// Interaction is disabled until the animation has finished.
     /// </summary>
-    public virtual IEnumerator FadeIn(float startAlpha = 0, float endAlpha = 1, float dur = FADE_IN_DUR, float delay = 0)
+    public virtual IEnumerator FadeIn(float startAlpha = 0, float endAlpha = 1, float dur = FADE_IN_DUR)
     {
         IsVisible = true;
         isFading = true;
         Active = true;
         BlocksRaycasts = false;
         Alpha = startAlpha;
-
-        yield return new WaitForSeconds(delay);
-
         float duration = dur;
         float timeElapsed = duration * Alpha;
 
@@ -174,7 +180,7 @@ public abstract class Fadeable : MonoBehaviour
         {
             StopCoroutine(fadeCoroutine);
         }
-        fadeCoroutine = StartCoroutine(FadeIn(startAlpha, endAlpha, dur, fadeDelay));
+        fadeCoroutine = StartCoroutine(FadeIn(startAlpha, endAlpha, dur));
     }
 
 

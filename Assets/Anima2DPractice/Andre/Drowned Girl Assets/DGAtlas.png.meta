@@ -93,7 +93,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -104,7 +104,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -120,12 +120,21 @@ TextureImporter:
       name: DGAtlas_0
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 922.5705
         y: 2442.8052
         width: 153.39056
         height: 52.765625
       alignment: 9
       pivot: {x: 0.48848876, y: 0.48696145}
+=======
+        x: 925
+        y: 2445.3113
+        width: 145.00012
+        height: 44.990234
+      alignment: 9
+      pivot: {x: 0.5, y: 0.51541674}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -140,12 +149,21 @@ TextureImporter:
       name: DGAtlas_1
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 1078.7891
         y: 2435.3567
         width: 93.015625
         height: 57.796875
       alignment: 9
       pivot: {x: 0.48068202, y: 0.4869348}
+=======
+        x: 1081
+        y: 2435.3145
+        width: 85
+        height: 54.98706
+      alignment: 9
+      pivot: {x: 0.5, y: 0.51258504}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -180,12 +198,21 @@ TextureImporter:
       name: DGAtlas_3
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 1526.2737
         y: 2261.8926
         width: 344.57812
         height: 213.76562
       alignment: 9
       pivot: {x: 0.4911116, y: 0.4916947}
+=======
+        x: 1526.0001
+        y: 2262.3628
+        width: 342.0625
+        height: 211.19336
+      alignment: 9
+      pivot: {x: 0.49552312, y: 0.49545687}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -200,12 +227,21 @@ TextureImporter:
       name: DGAtlas_4
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 1999.1642
         y: 2254.2966
         width: 379.797
         height: 226.34375
       alignment: 9
       pivot: {x: 0.4958855, y: 0.49572214}
+=======
+        x: 1999.0001
+        y: 2254.365
+        width: 379.79675
+        height: 226.28296
+      alignment: 9
+      pivot: {x: 0.49631777, y: 0.49555326}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -240,12 +276,21 @@ TextureImporter:
       name: DGAtlas_6
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 428.0547
         y: 2336.3955
         width: 140.8125
         height: 115.65625
       alignment: 9
       pivot: {x: 0.50382847, y: 0.48942012}
+=======
+        x: 431
+        y: 2337.3418
+        width: 138.29688
+        height: 113.11157
+      alignment: 9
+      pivot: {x: 0.4916961, y: 0.49206463}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -260,12 +305,21 @@ TextureImporter:
       name: DGAtlas_7
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 588.6016
         y: 2343.8145
         width: 100.5625
         height: 98.046875
       alignment: 9
       pivot: {x: 0.47630516, y: 0.50675297}
+=======
+        x: 588
+        y: 2347.3389
+        width: 100.5625
+        height: 92.99243
+      alignment: 9
+      pivot: {x: 0.48228773, y: 0.4963967}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -280,12 +334,21 @@ TextureImporter:
       name: DGAtlas_8
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 745.03125
         y: 2370.2993
         width: 113.140625
         height: 65.34375
       alignment: 9
       pivot: {x: 0.5035216, y: 0.43922615}
+=======
+        x: 748
+        y: 2369.3328
+        width: 108.00006
+        height: 57.98633
+      alignment: 9
+      pivot: {x: 0.4999997, y: 0.51162463}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -300,12 +363,21 @@ TextureImporter:
       name: DGAtlas_10
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 891.1797
         y: 2277.4482
         width: 168.48438
         height: 100.5625
       alignment: 9
       pivot: {x: 0.49452806, y: 0.42313743}
+=======
+        x: 894
+        y: 2273.9062
+        width: 163.45312
+        height: 100.53711
+      alignment: 9
+      pivot: {x: 0.49249557, y: 0.458475}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -320,12 +392,21 @@ TextureImporter:
       name: DGAtlas_11
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 1080.4375
         y: 2280.7493
         width: 118.171875
         height: 95.53125
       alignment: 9
       pivot: {x: 0.49980167, y: 0.505078}
+=======
+        x: 1083
+        y: 2284.3567
+        width: 113
+        height: 87.97803
+      alignment: 9
+      pivot: {x: 0.5, y: 0.50743705}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -340,12 +421,21 @@ TextureImporter:
       name: DGAtlas_13
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 115.21023
         y: 631.12805
         width: 1126.9375
         height: 1594.8439
       alignment: 9
       pivot: {x: 0.49806648, y: 0.49840117}
+=======
+        x: 116.999985
+        y: 632.8208
+        width: 1121.9062
+        height: 1589.3687
+      alignment: 9
+      pivot: {x: 0.49870476, y: 0.49905306}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -360,12 +450,21 @@ TextureImporter:
       name: DGAtlas_15
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 1518.7893
         y: 2101.5134
         width: 110.625
         height: 115.65625
       alignment: 9
       pivot: {x: 0.4855215, y: 0.4624637}
+=======
+        x: 1521
+        y: 2100.4082
+        width: 105.59375
+        height: 110.596924
+      alignment: 9
+      pivot: {x: 0.48771945, y: 0.49361268}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -380,12 +479,21 @@ TextureImporter:
       name: DGAtlas_16
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 1842.6016
         y: 2110.875
         width: 72.890625
         height: 108.109375
       alignment: 9
       pivot: {x: 0.4856394, y: 0.49140048}
+=======
+        x: 1845
+        y: 2113.4048
+        width: 66
+        height: 99.97461
+      alignment: 9
+      pivot: {x: 0.50000185, y: 0.5060806}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -400,12 +508,21 @@ TextureImporter:
       name: DGAtlas_17
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 2051.4766
         y: 1788.0321
         width: 306.84375
         height: 440.172
       alignment: 9
       pivot: {x: 0.49544248, y: 0.4997317}
+=======
+        x: 2054
+        y: 1791.4951
+        width: 301.8125
+        height: 435.021
+      alignment: 9
+      pivot: {x: 0.49534065, y: 0.49768832}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -420,12 +537,21 @@ TextureImporter:
       name: DGAtlas_18
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 1787.633
         y: 1766.0165
         width: 173.51562
         height: 87.984375
       alignment: 9
       pivot: {x: 0.4919849, y: 0.50558436}
+=======
+        x: 1790.0001
+        y: 1768.5016
+        width: 166
+        height: 82.979614
+      alignment: 9
+      pivot: {x: 0.49999997, y: 0.5061293}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -440,12 +566,21 @@ TextureImporter:
       name: DGAtlas_19
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 2705.414
         y: 1555.1467
         width: 133.26562
         height: 452.75
       alignment: 9
       pivot: {x: 0.49214262, y: 0.4955348}
+=======
+        x: 2708
+        y: 1555.5614
+        width: 128.23438
+        height: 450.1106
+      alignment: 9
+      pivot: {x: 0.491286, y: 0.49751934}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -460,12 +595,21 @@ TextureImporter:
       name: DGAtlas_20
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 3169.5708
         y: 1572.498
         width: 133.26562
         height: 435.14062
       alignment: 9
       pivot: {x: 0.47596067, y: 0.49869356}
+=======
+        x: 3169.0002
+        y: 1575.5558
+        width: 130.75
+        height: 429.99133
+      alignment: 9
+      pivot: {x: 0.48948187, y: 0.49755442}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -480,12 +624,21 @@ TextureImporter:
       name: DGAtlas_21
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 1437.2894
         y: 1340.0797
         width: 165.96875
         height: 337.03125
       alignment: 9
       pivot: {x: 0.49533913, y: 0.5012007}
+=======
+        x: 1440.0001
+        y: 1343.621
+        width: 160.9375
+        height: 331.90967
+      alignment: 9
+      pivot: {x: 0.49398136, y: 0.49826515}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -500,12 +653,21 @@ TextureImporter:
       name: DGAtlas_22
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 1723.0237
         y: 1240.7383
         width: 321.9375
         height: 498.03125
       alignment: 9
       pivot: {x: 0.49381188, y: 0.49848622}
+=======
+        x: 1725.0001
+        y: 1243.6492
+        width: 316.90625
+        height: 492.86414
+      alignment: 9
+      pivot: {x: 0.49541503, y: 0.49780622}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -520,12 +682,21 @@ TextureImporter:
       name: DGAtlas_23
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 2225.8987
         y: 1289.9631
         width: 163.45312
         height: 377.28125
       alignment: 9
       pivot: {x: 0.4869978, y: 0.49177334}
+=======
+        x: 2228
+        y: 1289.6361
+        width: 158.42188
+        height: 374.6631
+      alignment: 9
+      pivot: {x: 0.48920012, y: 0.49608272}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -540,12 +711,21 @@ TextureImporter:
       name: DGAtlas_24
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 2683.086
         y: 639.2962
         width: 145.84375
         height: 830.0937
       alignment: 9
       pivot: {x: 0.48280478, y: 0.49777988}
+=======
+        x: 2683
+        y: 639.8188
+        width: 143.32812
+        height: 827.34845
+      alignment: 9
+      pivot: {x: 0.49187833, y: 0.49879992}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -560,12 +740,21 @@ TextureImporter:
       name: DGAtlas_25
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 3171.0552
         y: 661.6169
         width: 158.42188
         height: 787.3282
       alignment: 9
       pivot: {x: 0.4825411, y: 0.4996433}
+=======
+        x: 3171.0002
+        y: 664.8118
+        width: 155.90625
+        height: 782.0799
+      alignment: 9
+      pivot: {x: 0.4906795, y: 0.49891105}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -580,12 +769,21 @@ TextureImporter:
       name: DGAtlas_26
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 1369.2109
         y: 695.97516
         width: 206.21875
         height: 445.20306
       alignment: 9
       pivot: {x: 0.49602273, y: 0.49308926}
+=======
+        x: 1372
+        y: 695.80304
+        width: 201.1875
+        height: 442.56598
+      alignment: 9
+      pivot: {x: 0.49456412, y: 0.4964163}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -600,12 +798,21 @@ TextureImporter:
       name: DGAtlas_27
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 1669.8517
         y: 661.66266
         width: 530.73425
         height: 457.7812
       alignment: 9
       pivot: {x: 0.49676168, y: 0.5009759}
+=======
+        x: 1672
+        y: 664.8118
+        width: 525.7031
+        height: 455.14044
+      alignment: 9
+      pivot: {x: 0.49742925, y: 0.49696347}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -620,12 +827,21 @@ TextureImporter:
       name: DGAtlas_28
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 2293.3132
         y: 702.4264
         width: 189.2102
         height: 430.10938
       alignment: 9
       pivot: {x: 0.50571674, y: 0.49539402}
+=======
+        x: 2301
+        y: 702.80115
+        width: 178.54688
+        height: 427.47644
+      alignment: 9
+      pivot: {x: 0.49286777, y: 0.4975686}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -640,12 +856,21 @@ TextureImporter:
       name: DGAtlas_29
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 1110.3203
         y: 305.11298
         width: 352.12512
         height: 238.92188
       alignment: 9
       pivot: {x: 0.49749273, y: 0.49550527}
+=======
+        x: 1113
+        y: 307.91208
+        width: 347.09375
+        height: 233.82767
+      alignment: 9
+      pivot: {x: 0.4969839, y: 0.49432966}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -660,12 +885,21 @@ TextureImporter:
       name: DGAtlas_30
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 1583.383
         y: 324.98068
         width: 357.15625
         height: 211.24997
       alignment: 9
       pivot: {x: 0.49730876, y: 0.49713296}
+=======
+        x: 1586
+        y: 327.90646
+        width: 352.125
+        height: 206.1636
+      alignment: 9
+      pivot: {x: 0.4969826, y: 0.4952064}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -680,12 +914,21 @@ TextureImporter:
       name: DGAtlas_31
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 2645.7898
         y: 233.14166
         width: 425.07812
         height: 218.79688
       alignment: 9
       pivot: {x: 0.49569815, y: 0.49296105}
+=======
+        x: 2648.0002
+        y: 232.93314
+        width: 420.04688
+        height: 218.73822
+      alignment: 9
+      pivot: {x: 0.49637315, y: 0.49404657}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -700,12 +943,21 @@ TextureImporter:
       name: DGAtlas_32
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 3206.8052
         y: 207.27567
         width: 427.59375
         height: 251.5
       alignment: 9
       pivot: {x: 0.49625444, y: 0.4959218}
+=======
+        x: 3209.0002
+        y: 209.9396
+        width: 422.5625
+        height: 246.40231
+      alignment: 9
+      pivot: {x: 0.4969685, y: 0.49537033}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -720,12 +972,21 @@ TextureImporter:
       name: DGAtlas_14
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 643.4453
         y: 156.69962
         width: 135.78125
         height: 223.82812
       alignment: 9
       pivot: {x: 0.5233027, y: 0.52406454}
+=======
+        x: 643.09375
+        y: 155.72046
+        width: 135.78125
+        height: 226.28296
+      alignment: 9
+      pivot: {x: 0.52589184, y: 0.5227064}
+>>>>>>> 30f5e329b0ff27369b4303f137d85d570310365d
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

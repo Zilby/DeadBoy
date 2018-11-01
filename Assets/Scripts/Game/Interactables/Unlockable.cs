@@ -17,9 +17,9 @@ public class Unlockable : Interactable
 	}
 
 
-	protected override void InteractAction(Rigidbody2D r)
+	protected override void InteractAction(PlayerController p)
 	{
-		PlayerController p = r.GetComponent<PlayerController>();
+		base.InteractAction(p);
 		p.UsePickup();
 		foreach (FadeableSprite s in sprites) 
 		{

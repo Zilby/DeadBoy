@@ -16,9 +16,9 @@ public class ButtonMove : Interactable
 		get { return "Press " + InteractInput.ToString() + " To Press"; }
 	}
 
-	protected override void InteractAction(Rigidbody2D r)
+	protected override void InteractAction(PlayerController p)
 	{
-		PlayerController p = r.GetComponent<PlayerController>();
+		base.InteractAction(p);
 		p.StartCoroutine(MoveToLocation());
 		p.StartCoroutine(RedirectCamera());
 
