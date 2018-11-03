@@ -518,7 +518,7 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		return contact.point.y < transform.position.y &&
 				Vector2.Distance(transform.position, contact.point) /
-								(transform.localScale.y * cCollider.size.y) > 0.47f;
+								(transform.localScale.y) > 4.5f;
 	}
 
 	void OnTriggerEnter2D(Collider2D collision)
