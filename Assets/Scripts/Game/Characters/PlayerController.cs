@@ -23,10 +23,16 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			if (mainPlayer != null)
 			{
-				mainPlayer.transform.position = new Vector3(mainPlayer.transform.position.x, mainPlayer.transform.position.y, 0);
+				foreach (SpriteMeshInstance s in mainPlayer.Sprites)
+				{
+					s.sortingOrder -= 1000;
+				}
 			}
 			mainPlayer = value;
-			mainPlayer.transform.position = new Vector3(mainPlayer.transform.position.x, mainPlayer.transform.position.y, -1f);
+			foreach (SpriteMeshInstance s in mainPlayer.Sprites)
+			{
+				s.sortingOrder += 1000;
+			}
 			CameraController.movingToNewPosition = true;
 		}
 	}
@@ -210,6 +216,26 @@ public abstract class PlayerController : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// All of the connected sprite mesh instances
+	/// </summary>
+	private SpriteMeshInstance[] sprites;
+
+	/// <summary>
+	/// Gets all of the connected sprite mesh instances
+	/// </summary>
+	public SpriteMeshInstance[] Sprites
+	{
+		get
+		{
+			if (sprites == null)
+			{
+				sprites = GetComponentsInChildren<SpriteMeshInstance>();
+			}
+			return sprites;
+		}
+	}
+
 
 	#endregion
 
@@ -249,6 +275,10 @@ public abstract class PlayerController : MonoBehaviour
 				return 0;
 			});
 			StartCoroutine(SwapPlayers());
+		}
+		foreach (SpriteMeshInstance s in Sprites)
+		{
+			s.sortingOrder += 100 * SORT_VALUE;
 		}
 	}
 

@@ -660,12 +660,12 @@ TextureImporter:
       name: DGAtlas_30
       rect:
         serializedVersion: 2
-        x: 1589.1272
-        y: 330.03802
-        width: 347.16125
-        height: 201.22583
+        x: 1587.8157
+        y: 328.1683
+        width: 350.93542
+        height: 204.99997
       alignment: 9
-      pivot: {x: 0.4950806, y: 0.49676514}
+      pivot: {x: 0.49349344, y: 0.49674007}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -747,6 +747,6 @@ TextureImporter:
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 636768274510000000
+  userData: 636768650440000000
   assetBundleName: 
   assetBundleVariant: 
