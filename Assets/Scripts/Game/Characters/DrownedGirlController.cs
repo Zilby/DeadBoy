@@ -12,6 +12,18 @@ public class DrownedGirlController : PlayerController
 	[Range(0, 200)]
 	public float surfaceBuoyancy;
 
+    /// <summary>
+	/// Upward force when diving in water
+	/// </summary>
+	[Range(0, 200)]
+	public float divingBuoyancy;
+
+    /// <summary> 
+    /// How fast W and S move up and down in the water.
+    /// </summary>
+    [Range(0,50)]
+    public float verticalControl;
+
 	/// <summary>
 	/// Modifier for the depth at witch drowned girl will settle.
     /// Surface Bouancy also affects this, so tweak that first.
@@ -25,12 +37,6 @@ public class DrownedGirlController : PlayerController
 	/// </summary>
 	[Range(0.7f, 0.999f)]
 	public float momentum;
-
-    /// <summary>
-	/// Upward force when diving in water
-	/// </summary>
-	[Range(0, 7)]
-	public float divingBuoyancy;
     
 	/// <summary>
 	/// Horixontal speed reduction while in water
@@ -62,7 +68,7 @@ public class DrownedGirlController : PlayerController
 
 	private float MAX_RISE = MAX_Y_VELOCITY + 1.0f;
 
-
+    private float timeSinceDive;
 
 	protected override void Update() {
         base.Update();
@@ -72,11 +78,16 @@ public class DrownedGirlController : PlayerController
             if (!diving && Input.GetKeyDown(KeyCode.S)) 
             {
                 diving = true;
+                timeSinceDive = 0;
             }
             else if (diving && Input.GetKeyDown(KeyCode.W)) 
             {
-                diving = false;
                 grounded = false;
+            }
+
+            timeSinceDive += Time.deltaTime;
+            if (diving && surfaced && timeSinceDive > 0.5f) {
+                diving = false;
             }
         }
     } 
@@ -87,10 +98,11 @@ public class DrownedGirlController : PlayerController
     
     protected override void ExitWater(Collider2D water) {
         this.waterCollider = null;
+        this.diving = false;
     }
 
     protected override bool CanJump() {
-        return base.CanJump() || surfaced;
+        return swimming ? surfaced : base.CanJump();
     }
 
     protected override void Move() {
@@ -100,17 +112,25 @@ public class DrownedGirlController : PlayerController
 		{
             float surface = waterCollider.transform.position.y + waterCollider.size.y*waterCollider.transform.lossyScale.y/2;
             float feetHeight = this.gameObject.transform.position.y - settleDepth;
-            float buoyantForce = (diving ? divingBuoyancy : (surface - feetHeight) * surfaceBuoyancy)  * Time.deltaTime;
-            // Debug.Log(surface + "  " + feetHeight + "  " + this.gameObject.transform.position.y);
 
-			//rBody.velocity = new Vector2(rBody.velocity.x * waterDrag, Mathf.Min(rBody.velocity.y * momentum + buoyantForce /* *(1-momentum) */, MAX_RISE)); 
+            float adjustedDivingBuoyancy = divingBuoyancy;
+            if (diving && Input.GetKey(KeyCode.S)) 
+            {
+                adjustedDivingBuoyancy -= verticalControl;
+            }
+            else if (diving && Input.GetKey(KeyCode.W)) 
+            {
+                adjustedDivingBuoyancy += verticalControl;
+            }
+
+            float buoyantForce = (diving ? adjustedDivingBuoyancy : (surface - feetHeight) * surfaceBuoyancy)  * Time.deltaTime;
             float speed = rBody.velocity.y * momentum + buoyantForce /* *(1-momentum) */;
+
             if (!diving && !surfaced) {
                 speed = Mathf.Min(speed, MAX_RISE);
             }
-            float tmp = rBody.velocity.x;
+
             rBody.velocity = new Vector2(rBody.velocity.x * waterDrag, speed);
-            // if (grounded) {Debug.Log(tmp +"   " + rBody.velocity.x);}
         }
     }
 }
