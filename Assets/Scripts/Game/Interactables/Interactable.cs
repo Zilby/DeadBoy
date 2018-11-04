@@ -40,7 +40,7 @@ public abstract class Interactable : MonoBehaviour
 	/// </summary>
 	protected virtual KeyCode InteractInput
 	{
-		get { return KeyCode.J; }
+		get { return KeyCode.F; }
 	}
 
 	/// <summary>
