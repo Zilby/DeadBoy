@@ -133,4 +133,15 @@ public class DrownedGirlController : PlayerController
             rBody.velocity = new Vector2(rBody.velocity.x * waterDrag, speed);
         }
     }
+
+
+	/// <summary>
+	/// Sets the current state of the animation.
+	/// </summary>
+	protected virtual void SetAnimationState() {
+        base.SetAnimationState();
+
+		anim.SetBool("Swimming", swimming);
+        anim.SetBool("Diving", diving);
+    }
 }
