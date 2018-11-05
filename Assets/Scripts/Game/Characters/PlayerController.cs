@@ -147,19 +147,14 @@ public abstract class PlayerController : MonoBehaviour
 	protected bool pulling;
 
 	/// <summary>
-	/// Whether or not the player is currently picking up a pickup.
-	/// </summary>
-	protected bool pickingUp;
-
-	/// <summary>
 	/// The current pickup held.
 	/// </summary>
 	protected Pickup.Type currentPickup = Pickup.Type.none;
 
 	/// <summary>
-	/// Action to be called once an object is pressed. 
+	/// Action to be called once an object is interacted with. 
 	/// </summary>
-	protected Action pressAction;
+	protected Action interactAction;
 
 	/// <summary>
 	/// The location to drag the object to.
@@ -616,8 +611,7 @@ public abstract class PlayerController : MonoBehaviour
 					returningPosition = false;
 					settingRA = false;
 					settingLA = false;
-					pickingUp = false;
-					pressAction = null;
+					interactAction = null;
 					dragSpeed = 0;
 				}
 				else
@@ -629,11 +623,7 @@ public abstract class PlayerController : MonoBehaviour
 					else
 					{
 						returningPosition = true;
-						if (pickingUp)
-						{
-							objectLocation.parent = rightArm.transform;
-						}
-						pressAction?.Invoke();
+						interactAction?.Invoke();
 					}
 				}
 			}
@@ -686,8 +676,11 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		settingRA = true;
 		SetUpArmMovement(t);
-		pickingUp = true;
-		currentPickup = p;
+		interactAction = delegate
+		{
+			objectLocation.parent = rightArm.transform;
+			currentPickup = p;
+		};
 	}
 
 	/// <summary>
@@ -697,7 +690,7 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		settingRA = true;
 		SetUpArmMovement(t);
-		pressAction = a;
+		interactAction = a;
 	}
 
 	/// <summary>
