@@ -18,6 +18,17 @@ public abstract class Interactable : MonoBehaviour
 	public Transform look;
 
 	/// <summary>
+	/// Whether or not to move the player left or right when interacting. 
+	/// </summary>
+	public bool movePlayer;
+
+	/// <summary>
+	/// The position to the left or right that the player is moved to. 
+	/// </summary>
+	[ConditionalHide("movePlayer", true, false, 0, 10)]
+	public float playerMovePosition = 1;
+
+	/// <summary>
 	/// Gets the position above the interactable for the tooltip.
 	/// </summary>
 	protected Vector3 TipPos
@@ -93,17 +104,34 @@ public abstract class Interactable : MonoBehaviour
 	/// <summary>
 	/// The action to be taken when the interactable is interacted with. 
 	/// </summary>
-	protected virtual void InteractAction(PlayerController p) {
+	protected virtual void InteractAction(PlayerController p)
+	{
+		p.StartCoroutine(RepositionPlayer(p));
+	}
+
+	private IEnumerator RepositionPlayer(PlayerController p)
+	{
 		float flip;
+		float mPos = transform.position.x;
 		if (transform.position.x > p.transform.position.x)
 		{
 			flip = 180 + (p.invertDirection ? 180 : 0);
+			mPos -= playerMovePosition;
 		}
 		else
 		{
 			flip = 0 + (p.invertDirection ? 180 : 0);
+			mPos += playerMovePosition;
 		}
 		p.transform.localEulerAngles = new Vector3(p.transform.localEulerAngles.x, flip, p.transform.localEulerAngles.z);
+		float t = 0.0f;
+		while (Mathf.Abs(p.transform.position.x - mPos) > 0.01f && movePlayer)
+		{
+			p.transform.position = new Vector3(Mathf.Lerp(p.transform.position.x, mPos, t), p.transform.position.y, p.transform.position.z);
+			t += 2f * Time.deltaTime;
+			yield return new WaitForEndOfFrame();
+		}
+		yield return null;
 	}
 
 	/// <summary>

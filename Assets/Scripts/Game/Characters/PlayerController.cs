@@ -10,7 +10,10 @@ using UnityEngine.Sprites;
 /// </summary>
 public abstract class PlayerController : MonoBehaviour
 {
-	#region StaticVariables
+
+	#region Fields
+
+	#region Static
 
 	/// <summary>
 	/// The main player (ie: controlled player).
@@ -47,7 +50,7 @@ public abstract class PlayerController : MonoBehaviour
 
 	#endregion
 
-	#region Fields
+	#region Public
 
 	[Header("References")]
 	public Rigidbody2D rBody;
@@ -103,6 +106,10 @@ public abstract class PlayerController : MonoBehaviour
 	/// Inverts the sprite direction (flips the sprites)
 	/// </summary>
 	public bool invertDirection = false;
+
+	#endregion
+
+	#region Protected
 
 	/// <summary>
 	/// Whether or not the player is in the air. 
@@ -165,12 +172,14 @@ public abstract class PlayerController : MonoBehaviour
 	protected float dragSpeed;
 
 	/// <summary>
-	/// Gets the current pickup.
+	/// Whether or not the right arm location is currently being set. 
 	/// </summary>
-	public Pickup.Type CurrentPickup
-	{
-		get { return currentPickup; }
-	}
+	protected bool settingRA = false;
+
+	/// <summary>
+	/// Whether or not the left arm location is currently being set. 
+	/// </summary>
+	protected bool settingLA = false;
 
 	/// <summary>
 	/// The last Right arm location.
@@ -193,6 +202,11 @@ public abstract class PlayerController : MonoBehaviour
 	protected Vector3 originalLALocation = Vector3.zero;
 
 	/// <summary>
+	/// All of the connected sprite mesh instances
+	/// </summary>
+	protected SpriteMeshInstance[] sprites;
+
+	/// <summary>
 	/// The max y velocity before no longer being considered grounded.
 	/// </summary>
 	protected const float MAX_Y_VELOCITY = 5;
@@ -201,6 +215,34 @@ public abstract class PlayerController : MonoBehaviour
 	/// The minimum y velocity before no longer being considered grounded.
 	/// </summary>
 	protected const float MIN_Y_VELOCITY = -3;
+
+	#endregion
+
+	#region Properties
+
+	/// <summary>
+	/// Gets the current pickup.
+	/// </summary>
+	public Pickup.Type CurrentPickup
+	{
+		get { return currentPickup; }
+	}
+
+	/// <summary>
+	/// Whether or not the right arm has reached the location it was moving towards. 
+	/// </summary>
+	protected bool rightArmAtLocation
+	{
+		get { return !settingRA || Vector2.Distance(lastRALocation, returningPosition ? originalRALocation : objectLocation.position) < 0.01f; }
+	}
+
+	/// <summary>
+	/// Whether or not the left arm has reached the location it was moving towards. 
+	/// </summary>
+	protected bool leftArmAtLocation
+	{
+		get { return !settingLA || Vector2.Distance(lastLALocation, returningPosition ? originalLALocation : objectLocation.position) < 0.01f; }
+	}
 
 	/// <summary>
 	/// The sort value that determines which player gets selected next when toggling between players. 
@@ -212,14 +254,9 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		get
 		{
-			return MainPlayer == this && (originalRALocation == Vector3.zero && originalLALocation == Vector3.zero || pulling);
+			return MainPlayer == this && ((!settingRA && !settingLA) || pulling);
 		}
 	}
-
-	/// <summary>
-	/// All of the connected sprite mesh instances
-	/// </summary>
-	private SpriteMeshInstance[] sprites;
 
 	/// <summary>
 	/// Gets all of the connected sprite mesh instances
@@ -236,6 +273,7 @@ public abstract class PlayerController : MonoBehaviour
 		}
 	}
 
+	#endregion
 
 	#endregion
 
@@ -302,77 +340,7 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual void LateUpdate()
 	{
-		if (pulling)
-		{
-			SetArmLocations();
-		}
-		if (pickingUp)
-		{
-			SetArmLocations(l: false);
-			if (Vector2.Distance(lastRALocation, returningPosition ? originalRALocation : objectLocation.position) < 0.1f)
-			{
-				if (returningPosition)
-				{
-					pickingUp = false;
-					returningPosition = false;
-					originalRALocation = Vector3.zero;
-				}
-				else
-				{
-					objectLocation.parent = rightArm.transform;
-					returningPosition = true;
-				}
-			}
-		}
-		if (pressAction != null)
-		{
-			SetArmLocations(l: false);
-			if (Vector2.Distance(lastRALocation, returningPosition ? originalRALocation : objectLocation.position) < 0.1f)
-			{
-				if (returningPosition)
-				{
-					pressAction = null;
-					returningPosition = false;
-					originalRALocation = Vector3.zero;
-				}
-				else
-				{
-					pressAction();
-					returningPosition = true;
-				}
-			}
-		}
-		if (dragSpeed != 0)
-		{
-			SetArmLocations();
-			if (Vector2.Distance(lastRALocation, returningPosition ? originalRALocation : objectLocation.position) < 0.01f &&
-				Vector2.Distance(lastLALocation, returningPosition ? originalLALocation : objectLocation.position) < 0.01f)
-			{
-				if (returningPosition)
-				{
-					dragSpeed = 0;
-					returningPosition = false;
-					originalRALocation = Vector3.zero;
-					originalLALocation = Vector3.zero;
-				}
-				else
-				{
-					if (Vector2.Distance(Vector3.zero, dragLocation) > 0.01f)
-					{
-						float speedx = dragLocation.x * dragSpeed * Time.deltaTime;
-						float speedy = dragLocation.y * dragSpeed * Time.deltaTime;
-						objectLocation.position = new Vector3(objectLocation.position.x + speedx, objectLocation.position.y + speedy, objectLocation.position.z);
-						dragLocation.x -= speedx;
-						dragLocation.y -= speedy;
-					}
-					else
-					{
-						dragLocation = Vector3.zero;
-						returningPosition = true;
-					}
-				}
-			}
-		}
+		UpdateKinematics();
 	}
 
 	/// <summary>
@@ -592,37 +560,40 @@ public abstract class PlayerController : MonoBehaviour
 
 	#endregion
 
-	#region Interactables
+	#region KinematicMovements
 
 	/// <summary>
-	/// Tries to pull an object. 
+	/// Sets up moving the arms to the given position.
 	/// </summary>
-	public bool Pulling(Transform position)
+	protected void SetUpArmMovement(Transform t)
 	{
-		if (grounded || pulling)
+		if (settingRA)
 		{
-			pulling = !pulling;
-			objectLocation = position;
 			lastRALocation = rightArm.transform.position;
-			lastLALocation = leftArm.transform.position;
+			originalRALocation = rightArm.transform.position;
 		}
-		return pulling;
+		if (settingLA)
+		{
+			lastLALocation = leftArm.transform.position;
+			originalLALocation = leftArm.transform.position;
+		}
+		objectLocation = t;
 	}
 
 
 	/// <summary>
 	/// Sets the pulling for the limbs in the animation.
 	/// </summary>
-	public void SetArmLocations(bool r = true, bool l = true)
+	protected void SetArmLocations()
 	{
 		float s = 5f * (rBody.velocity.magnitude + 1) * Time.deltaTime;
-		if (r)
+		if (settingRA)
 		{
 			lastRALocation = Vector3.MoveTowards(lastRALocation, returningPosition ? originalRALocation : objectLocation.position, s);
 			rightArm.transform.position = lastRALocation;
 			rightArm.UpdateIK();
 		}
-		if (l)
+		if (settingLA)
 		{
 			lastLALocation = Vector3.MoveTowards(lastLALocation, returningPosition ? originalLALocation : objectLocation.position, s);
 			leftArm.transform.position = lastLALocation;
@@ -631,13 +602,90 @@ public abstract class PlayerController : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Updates the IKs to go where they're set to go.
+	/// </summary>
+	protected void UpdateKinematics()
+	{
+		if (settingLA || settingRA)
+		{
+			SetArmLocations();
+			if (rightArmAtLocation && leftArmAtLocation)
+			{
+				if (returningPosition)
+				{
+					returningPosition = false;
+					settingRA = false;
+					settingLA = false;
+					pickingUp = false;
+					pressAction = null;
+					dragSpeed = 0;
+				}
+				else
+				{
+					if (dragSpeed != 0)
+					{
+						DragToLocation();
+					}
+					else
+					{
+						returningPosition = true;
+						if (pickingUp)
+						{
+							objectLocation.parent = rightArm.transform;
+						}
+						pressAction?.Invoke();
+					}
+				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Drags the object to the set drag location, and then sets the hands to return to the default position. 
+	/// </summary>
+	protected void DragToLocation()
+	{
+		if (Vector2.Distance(Vector3.zero, dragLocation) > 0.01f)
+		{
+			float speedx = dragLocation.x * dragSpeed * Time.deltaTime;
+			float speedy = dragLocation.y * dragSpeed * Time.deltaTime;
+			objectLocation.position = new Vector3(objectLocation.position.x + speedx, objectLocation.position.y + speedy, objectLocation.position.z);
+			dragLocation.x -= speedx;
+			dragLocation.y -= speedy;
+		}
+		else
+		{
+			dragLocation = Vector3.zero;
+			returningPosition = true;
+		}
+	}
+
+	#endregion
+
+	#region Interactables
+
+	/// <summary>
+	/// Tries to pull an object. 
+	/// </summary>
+	public bool Pulling(Transform t)
+	{
+		if (grounded || pulling)
+		{
+			pulling = !pulling;
+			settingRA = pulling;
+			settingLA = pulling;
+			SetUpArmMovement(t);
+		}
+		return pulling;
+	}
+
+	/// <summary>
 	/// Picks up the given pickup at the given transform.
 	/// </summary>
 	public void PickUp(Transform t, Pickup.Type p)
 	{
-		lastRALocation = rightArm.transform.position;
-		originalRALocation = rightArm.transform.position;
-		objectLocation = t;
+		settingRA = true;
+		SetUpArmMovement(t);
 		pickingUp = true;
 		currentPickup = p;
 	}
@@ -647,9 +695,8 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public void Press(Transform t, Action a)
 	{
-		lastRALocation = rightArm.transform.position;
-		originalRALocation = rightArm.transform.position;
-		objectLocation = t;
+		settingRA = true;
+		SetUpArmMovement(t);
 		pressAction = a;
 	}
 
@@ -658,11 +705,9 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public void GrabAndDrag(Transform t, Vector3 position, float speed = 2)
 	{
-		lastRALocation = rightArm.transform.position;
-		originalRALocation = rightArm.transform.position;
-		lastLALocation = leftArm.transform.position;
-		originalLALocation = leftArm.transform.position;
-		objectLocation = t;
+		settingRA = true;
+		//settingLA = true;
+		SetUpArmMovement(t);
 		dragLocation = position;
 		dragSpeed = speed;
 	}
@@ -677,5 +722,6 @@ public abstract class PlayerController : MonoBehaviour
 	}
 
 	#endregion
+
 	#endregion
 }
