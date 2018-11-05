@@ -86,7 +86,7 @@ public class DrownedGirlController : PlayerController
             }
 
             timeSinceDive += Time.deltaTime;
-            if (diving && surfaced && timeSinceDive > 0.5f) {
+            if (diving && surfaced && timeSinceDive > 0.8f) {
                 diving = false;
             }
         }
