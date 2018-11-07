@@ -38,7 +38,7 @@ public class DrownedGirlController : PlayerController
 	[Range(0, 1)]
 	public float waterDrag;
 
-	protected override int SORT_VALUE
+	public override int SORT_VALUE
 	{
 		get { return 2; }
 	}
@@ -67,13 +67,13 @@ public class DrownedGirlController : PlayerController
 	protected override void Update() {
         base.Update();
 
-		if (swimming && MainPlayer == this)
+		if (swimming)
         {
-            if (!diving && Input.GetKeyDown(KeyCode.S)) 
+            if (!diving && PlayerControllerManager.GetInputStart(this, PlayerInput.Down)) 
             {
                 diving = true;
             }
-            else if (diving && Input.GetKeyDown(KeyCode.W)) 
+            else if (diving && PlayerControllerManager.GetInputStart(this, PlayerInput.Up)) 
             {
                 diving = false;
                 grounded = false;

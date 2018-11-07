@@ -36,7 +36,7 @@ public class Unlockable : Interactable
 
 	protected override void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (PlayerController.MainPlayer.CurrentPickup == requiredPickup)
+		if (PlayerControllerManager.MainPlayer.CurrentPickup == requiredPickup)
 		{
 			base.OnTriggerEnter2D(collision);
 		}
@@ -44,7 +44,7 @@ public class Unlockable : Interactable
 
 	protected override void OnTriggerStay2D(Collider2D collision)
 	{
-		if (PlayerController.MainPlayer.CurrentPickup == requiredPickup)
+		if (PlayerControllerManager.MainPlayer.CurrentPickup == requiredPickup)
 		{
 			base.OnTriggerStay2D(collision);
 		}
@@ -52,7 +52,7 @@ public class Unlockable : Interactable
 
 	protected override void OnTriggerExit2D(Collider2D collision)
 	{
-		if (PlayerController.MainPlayer.CurrentPickup == requiredPickup)
+		if (PlayerControllerManager.MainPlayer.CurrentPickup == requiredPickup)
 		{
 			base.OnTriggerExit2D(collision);
 		}

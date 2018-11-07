@@ -34,6 +34,7 @@ public abstract class Fadeable : MonoBehaviour
     protected bool isFading = false;
 
     public bool IsVisible { get; protected set; }
+    public bool VisibleOrFading { get{ return IsVisible || isFading; } }
 
     /// <summary>
     /// Gets or sets the alpha value.
