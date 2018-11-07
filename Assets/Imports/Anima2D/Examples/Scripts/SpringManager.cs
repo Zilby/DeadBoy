@@ -32,6 +32,7 @@ namespace UnityChan
 		{
 			stiffnessCurve = AnimationCurve.Linear(0, 1, 1, 1);
 			dragCurve = AnimationCurve.Linear(0, 1, 1, 1);
+			springBones = GetComponentsInChildren<SpringBone>();
 		}
 
 		void Start ()
@@ -59,6 +60,10 @@ namespace UnityChan
 			{
 				UpdateSprings();
 			}
+			else
+			{
+				SetSprings();
+			}
 		}
 
 		/// <summary>
@@ -83,6 +88,24 @@ namespace UnityChan
 						if (springBones[i])
 						{
 							springBones[i].UpdateSpring();
+						}
+					}
+				}
+			}
+		}
+
+		private void SetSprings()
+		{
+			//Kobayashi
+			if (dynamicRatio != 0.0f)
+			{
+				for (int i = 0; i < springBones.Length; i++)
+				{
+					if (dynamicRatio > springBones[i].threshold)
+					{
+						if (springBones[i])
+						{
+							springBones[i].SetSpring();
 						}
 					}
 				}
