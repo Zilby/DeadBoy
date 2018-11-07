@@ -22,12 +22,14 @@ namespace UnityChan
 		public float radius = 0.05f;
 
 		//各SpringBoneに設定されているstiffnessForceとdragForceを使用するか？
-		public bool isUseEachBoneForceSettings = false;
+		public bool overrideManager = false;
 
 		//バネが戻る力
+		[ConditionalHide("overrideManager")]
 		public float stiffnessForce = 0.01f;
 
 		//力の減衰力
+		[ConditionalHide("overrideManager")]
 		public float dragForce = 0.4f;
 		public Vector3 springForce = new Vector3(0.0f, -0.0001f, 0.0f);
 		public SpringCollider[] colliders;

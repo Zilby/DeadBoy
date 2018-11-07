@@ -129,7 +129,7 @@ namespace UnityChan
 		
 			for (int i = 0; i < springBones.Length; i++) {
 				//Kobayashi
-				if (!springBones [i].isUseEachBoneForceSettings) {
+				if (!springBones [i].overrideManager) {
 					var scale = curve.Evaluate (start + (end - start) * i / (springBones.Length - 1));
 					prop.SetValue (springBones [i], baseValue * scale);
 				}
