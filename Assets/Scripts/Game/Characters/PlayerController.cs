@@ -13,43 +13,6 @@ public abstract class PlayerController : MonoBehaviour
 
 	#region Fields
 
-	#region Static
-
-	/// <summary>
-	/// The main player (ie: controlled player).
-	/// </summary>
-	public static PlayerController MainPlayer
-	{
-		get { return mainPlayer; }
-		// Set mainplayer in front
-		set
-		{
-			if (mainPlayer != null)
-			{
-				foreach (SpriteMeshInstance s in mainPlayer.Sprites)
-				{
-					s.sortingOrder -= 1000;
-				}
-			}
-			mainPlayer = value;
-			foreach (SpriteMeshInstance s in mainPlayer.Sprites)
-			{
-				s.sortingOrder += 1000;
-			}
-			CameraController.movingToNewPosition = true;
-		}
-	}
-	/// <summary>
-	/// The main player (ie: controlled player).
-	/// </summary>
-	protected static PlayerController mainPlayer;
-	/// <summary>
-	/// All of the available players.
-	/// </summary>
-	public static List<PlayerController> players = new List<PlayerController>();
-
-	#endregion
-
 	#region Public
 
 	[Header("References")]
@@ -243,15 +206,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// The sort value that determines which player gets selected next when toggling between players. 
 	/// It also determines their corresponding number key. 
 	/// </summary>
-	protected abstract int SORT_VALUE { get; }
-
-	protected bool AcceptingMoveInput
-	{
-		get
-		{
-			return MainPlayer == this && ((!settingRA && !settingLA) || pulling);
-		}
-	}
+	public abstract int SORT_VALUE { get; }
 
 	/// <summary>
 	/// Gets all of the connected sprite mesh instances
@@ -278,37 +233,20 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual void Awake()
 	{
-		players.Add(this);
+		rBody = rBody == null ? GetComponent<Rigidbody2D>() : rBody;
+		cCollider = cCollider == null ? GetComponent<CapsuleCollider2D>() : cCollider;
+		anim = anim == null ? GetComponent<Animator>() : anim;
+		PlayerControllerManager.Register(this, isMainPlayer);
 	}
 
 	protected virtual void OnDestroy()
 	{
-		players.Remove(this);
+		PlayerControllerManager.Unregister(this);
 	}
 
 	protected virtual void Start()
 	{
-		rBody = rBody == null ? GetComponent<Rigidbody2D>() : rBody;
-		cCollider = cCollider == null ? GetComponent<CapsuleCollider2D>() : cCollider;
-		anim = anim == null ? GetComponent<Animator>() : anim;
 		jumpStart = Time.fixedTime - 100f;
-		if (isMainPlayer)
-		{
-			MainPlayer = this;
-			players.Sort(delegate (PlayerController p1, PlayerController p2)
-			{
-				if (p1.SORT_VALUE < p2.SORT_VALUE)
-				{
-					return 1;
-				}
-				else if (p1.SORT_VALUE > p2.SORT_VALUE)
-				{
-					return -1;
-				}
-				return 0;
-			});
-			StartCoroutine(SwapPlayers());
-		}
 		foreach (SpriteMeshInstance s in Sprites)
 		{
 			s.sortingOrder += 100 * SORT_VALUE;
@@ -326,10 +264,7 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual void Update()
 	{
-		if (AcceptingMoveInput)
-		{
-			Jump();
-		}
+		Jump();
 		SetAnimationState();
 	}
 
@@ -339,56 +274,16 @@ public abstract class PlayerController : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Changes the current player. 
-	/// </summary>
-	private IEnumerator SwapPlayers()
-	{
-		while (MainPlayer == this)
-		{
-			yield return null;
-			// Go through each player with return;
-			if (Input.GetKeyDown(KeyCode.Return))
-			{
-				int curr = players.IndexOf(MainPlayer);
-				curr += 1;
-				if (curr >= players.Count)
-				{
-					curr = 0;
-				}
-				MainPlayer = players[curr];
-				MainPlayer.StartCoroutine(MainPlayer.SwapPlayers());
-			}
-			// Set individual player based on hitting their sort value number key. 
-			for (int i = 0; i < Utils.keyCodes.Length; i++)
-			{
-				if (Input.GetKeyDown(Utils.keyCodes[i]))
-				{
-					foreach (PlayerController p in players)
-					{
-						if (p.SORT_VALUE == i && p != MainPlayer)
-						{
-							MainPlayer = p;
-							MainPlayer.StartCoroutine(MainPlayer.SwapPlayers());
-							break;
-						}
-					}
-				}
-			}
-		}
-	}
-
-
-	/// <summary>
 	/// Moves the player left or right if given input. 
 	/// </summary>
 	protected virtual void Move()
 	{
 		float movement = 0.0f;
-		if (Input.GetKey(KeyCode.A) && AcceptingMoveInput)
+		if (PlayerControllerManager.GetInputHeld(this, PlayerInput.Left))
 		{
 			movement -= speed * Time.deltaTime;
 		}
-		if (Input.GetKey(KeyCode.D) && AcceptingMoveInput)
+		if (PlayerControllerManager.GetInputHeld(this, PlayerInput.Right))
 		{
 			movement += speed * Time.deltaTime;
 		}
@@ -421,18 +316,18 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		if (!pulling)
 		{
-			if (Input.GetKeyDown(KeyCode.Space) && CanJump())
+			if (PlayerControllerManager.GetInputStart(this, PlayerInput.Jump) && CanJump())
 			{
 				rBody.velocity = new Vector2(rBody.velocity.x, jumpHeight);
 				jumpStart = Time.fixedTime;
 				jumpHeld = true;
 			}
-			if (!Input.GetKey(KeyCode.Space) && !grounded)
+			if (!PlayerControllerManager.GetInputHeld(this, PlayerInput.Jump) && !grounded)
 			{
 				jumpHeld = false;
 			}
 			// Add more force if jump held for longer. 
-			else if (Input.GetKey(KeyCode.Space) &&
+			else if (PlayerControllerManager.GetInputHeld(this, PlayerInput.Jump) &&
 					 (Time.fixedTime - jumpStart < jumpInterval) &&
 					 !grounded && jumpHeld)
 			{
@@ -446,7 +341,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected virtual void SetAnimationState()
 	{
-		if (!pulling && AcceptingMoveInput)
+		if (!pulling)
 		{
 			float flip = transform.localEulerAngles.y;
 			if (rBody.velocity.x > 1f)
@@ -467,19 +362,15 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetBool("Grounded", grounded);
 		anim.SetBool("Pulling", pulling);
 		anim.SetBool("Flipped", transform.localEulerAngles.y == 180);
-		if (AcceptingMoveInput)
-		{
-			anim.SetBool("RightInput", Input.GetKey(KeyCode.D));
-			anim.SetBool("LeftInput", Input.GetKey(KeyCode.A));
-			anim.SetBool("AnyInput", Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A));
-		}
-		else
-		{
-			anim.SetBool("RightInput", false);
-			anim.SetBool("LeftInput", false);
-			anim.SetBool("AnyInput", false);
-		}
+	
+		bool left = PlayerControllerManager.GetInputHeld(this, PlayerInput.Left);
+		bool right = PlayerControllerManager.GetInputHeld(this, PlayerInput.Right);
+		anim.SetBool("RightInput", right);
+		anim.SetBool("LeftInput", left);
+		anim.SetBool("AnyInput", left || right);
 	}
+
+	///
 
 	#endregion
 
