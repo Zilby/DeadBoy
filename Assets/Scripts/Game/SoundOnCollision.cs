@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class WaterDroplet : MonoBehaviour
+public class SoundOnCollision : MonoBehaviour
 {
 	public ParticleSystem part;
 
