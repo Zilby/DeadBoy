@@ -84,9 +84,7 @@ public class PlayerControllerManager : MonoBehaviour
             switch(input)
             {
                 case PlayerInput.Left:
-                    bool x = Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow);
-                    Debug.Log(x + " " + pc);
-                    return x;
+                    return Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow);
                 case PlayerInput.Right:
                     return Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow);
                 case PlayerInput.Up:
@@ -113,9 +111,7 @@ public class PlayerControllerManager : MonoBehaviour
             switch(input)
             {
                 case PlayerInput.Left:
-                    bool x = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
-                    Debug.Log(x + " " + pc);
-                    return x;
+                    return Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
                 case PlayerInput.Right:
                     return Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
                 case PlayerInput.Up:
@@ -147,12 +143,68 @@ public class PlayerControllerManager : MonoBehaviour
             }
             return 0;
         });
+
+        StartCoroutine(SwapTutorial());
+    }
+
+    protected IEnumerator SwapTutorial() 
+    {
+        yield return new WaitForSeconds(2.0f);
+
+    	List<PlayerController> swappedTo = new List<PlayerController>();
+        Dictionary<PlayerController, int> tips = new Dictionary<PlayerController, int>();
+        PlayerController lastControlled = MainPlayer;
+        Vector3 tipOffset = new Vector3(0.0f, 2.43f, 0.0f);
+
+        foreach (PlayerController p in players)
+        {
+            if (p != MainPlayer) 
+            {
+                tips[p] = ToolTips.instance.SetTooltipActive("Press "+p.SORT_VALUE+ " to swap characters",p.transform.position + tipOffset);
+            }
+            else 
+            {
+                tips[p] = -1;
+            }
+        }
+
+
+        while(swappedTo.Count < players.Count)
+        {
+            yield return null;
+            if (MainPlayer != lastControlled) 
+            {
+                if (tips[MainPlayer] >= 0) 
+                {
+                    ToolTips.instance.SetTooltipInactive(tips[MainPlayer]);
+                    tips[MainPlayer] = -1;
+                }
+                
+                if (swappedTo.IndexOf(lastControlled) < 0) 
+                {
+                    tips[lastControlled] = ToolTips.instance.SetTooltipActive("Press "+lastControlled.SORT_VALUE+ " to swap characters",lastControlled.transform.position + tipOffset);
+                }
+                
+                if(swappedTo.IndexOf(MainPlayer) < 0) 
+                {
+                    swappedTo.Add(MainPlayer);
+                }
+                lastControlled = MainPlayer;
+            }
+        }
+
+        int tabTip = ToolTips.instance.SetTooltipActive("Press E to cycle characters", MainPlayer.transform.position + tipOffset);
+        while (MainPlayer == lastControlled) {
+            ToolTips.instance.SetTooltipPosition(tabTip, MainPlayer.transform.position + tipOffset);
+            yield return null;
+        }
+        ToolTips.instance.SetTooltipInactive(tabTip);
     }
 
     void Update()
     {
-        // Go through each player with tab;
-        if (Input.GetKeyDown(KeyCode.Tab))
+        // Go through each player with e;
+        if (Input.GetKeyDown(KeyCode.E))
         {
             int curr = players.IndexOf(MainPlayer);
             curr += 1;

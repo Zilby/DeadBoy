@@ -34,7 +34,7 @@ public class ToolTips : MonoBehaviour
 	public int SetTooltipActive(string s, Vector3 location)
 	{
 		int i = 0;
-		while (tips[i].IsVisible)
+		while (tips[i].VisibleOrFading)
 		{
 			++i;
 		}
