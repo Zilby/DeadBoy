@@ -19,11 +19,12 @@ public class RaiseWater : Interactable
 	protected override void InteractAction(PlayerController p)
 	{
 		base.InteractAction(p);
-		p.StartCoroutine(Raise());
-		p.StartCoroutine(Waterfall());
-		p.StartCoroutine(RedirectCamera());
-
-		p.GrabAndDrag(transform, movePosition);
+		p.GrabAndDrag(transform, movePosition, delegate
+		{
+			p.StartCoroutine(Raise());
+			p.StartCoroutine(Waterfall());
+			p.StartCoroutine(RedirectCamera());
+		});
 
 		OnTriggerExit2D(null);
 		Destroy(this);
@@ -43,7 +44,8 @@ public class RaiseWater : Interactable
 		}
 	}
 
-	private IEnumerator Waterfall() {
+	private IEnumerator Waterfall()
+	{
 		yield return new WaitForSeconds(1.5f);
 		look.gameObject.SetActive(true);
 	}

@@ -110,6 +110,11 @@ public abstract class PlayerController : MonoBehaviour
 	protected bool pulling;
 
 	/// <summary>
+	/// Whether or not the player is currently climbing. 
+	/// </summary>
+	protected bool climbing;
+
+	/// <summary>
 	/// The current pickup held.
 	/// </summary>
 	protected Pickup.Type currentPickup = Pickup.Type.none;
@@ -150,16 +155,6 @@ public abstract class PlayerController : MonoBehaviour
 	protected Vector3 lastLALocation = Vector3.zero;
 
 	/// <summary>
-	/// The original Right arm location.
-	/// </summary>
-	protected Vector3 originalRALocation = Vector3.zero;
-
-	/// <summary>
-	/// The original Left arm location.
-	/// </summary>
-	protected Vector3 originalLALocation = Vector3.zero;
-
-	/// <summary>
 	/// All of the connected sprite mesh instances
 	/// </summary>
 	protected SpriteMeshInstance[] sprites;
@@ -191,7 +186,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected bool rightArmAtLocation
 	{
-		get { return !settingRA || Vector2.Distance(lastRALocation, returningPosition ? originalRALocation : objectLocation.position) < 0.01f; }
+		get { return !settingRA || Vector2.Distance(lastRALocation, returningPosition ? rightArm.transform.position : objectLocation.position) < 0.001f; }
 	}
 
 	/// <summary>
@@ -199,7 +194,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected bool leftArmAtLocation
 	{
-		get { return !settingLA || Vector2.Distance(lastLALocation, returningPosition ? originalLALocation : objectLocation.position) < 0.01f; }
+		get { return !settingLA || Vector2.Distance(lastLALocation, returningPosition ? leftArm.transform.position : objectLocation.position) < 0.001f; }
 	}
 
 	/// <summary>
@@ -361,8 +356,9 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetBool("Fell", anim.GetBool("Grounded") != grounded && grounded);
 		anim.SetBool("Grounded", grounded);
 		anim.SetBool("Pulling", pulling);
+		anim.SetBool("Climbing", climbing);
 		anim.SetBool("Flipped", transform.localEulerAngles.y == 180);
-	
+
 		bool left = PlayerControllerManager.GetInputHeld(this, PlayerInput.Left);
 		bool right = PlayerControllerManager.GetInputHeld(this, PlayerInput.Right);
 		anim.SetBool("RightInput", right);
@@ -456,14 +452,13 @@ public abstract class PlayerController : MonoBehaviour
 		if (settingRA)
 		{
 			lastRALocation = rightArm.transform.position;
-			originalRALocation = rightArm.transform.position;
 		}
 		if (settingLA)
 		{
 			lastLALocation = leftArm.transform.position;
-			originalLALocation = leftArm.transform.position;
 		}
 		objectLocation = t;
+		returningPosition = false;
 	}
 
 
@@ -472,16 +467,16 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected void SetArmLocations()
 	{
-		float s = 5f * (rBody.velocity.magnitude + 1) * Time.deltaTime;
+		float s = 3f * (rBody.velocity.magnitude + 1) * Time.deltaTime;
 		if (settingRA)
 		{
-			lastRALocation = Vector3.MoveTowards(lastRALocation, returningPosition ? originalRALocation : objectLocation.position, s);
+			lastRALocation = Vector3.MoveTowards(lastRALocation, returningPosition ? rightArm.transform.position : objectLocation.position, s);
 			rightArm.transform.position = lastRALocation;
 			rightArm.UpdateIK();
 		}
 		if (settingLA)
 		{
-			lastLALocation = Vector3.MoveTowards(lastLALocation, returningPosition ? originalLALocation : objectLocation.position, s);
+			lastLALocation = Vector3.MoveTowards(lastLALocation, returningPosition ? leftArm.transform.position : objectLocation.position, s);
 			leftArm.transform.position = lastLALocation;
 			leftArm.UpdateIK();
 		}
@@ -494,7 +489,6 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		if (settingLA || settingRA)
 		{
-			SetArmLocations();
 			if (rightArmAtLocation && leftArmAtLocation)
 			{
 				if (returningPosition)
@@ -511,15 +505,27 @@ public abstract class PlayerController : MonoBehaviour
 					{
 						DragToLocation();
 					}
-					else
+					else if (!pulling || climbing)
 					{
-						returningPosition = true;
-						interactAction?.Invoke();
+						SetUpReturningHandPositions();
 					}
 				}
 			}
+			SetArmLocations();
 		}
 	}
+
+
+	/// <summary>
+	/// Sets up returning hands to their default positions.
+	/// </summary>
+	protected void SetUpReturningHandPositions()
+	{
+		returningPosition = true;
+		interactAction?.Invoke();
+		dragLocation = Vector3.zero;
+	}
+
 
 	/// <summary>
 	/// Drags the object to the set drag location, and then sets the hands to return to the default position. 
@@ -536,8 +542,7 @@ public abstract class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			dragLocation = Vector3.zero;
-			returningPosition = true;
+			SetUpReturningHandPositions();
 		}
 	}
 
@@ -553,9 +558,12 @@ public abstract class PlayerController : MonoBehaviour
 		if (grounded || pulling)
 		{
 			pulling = !pulling;
-			settingRA = pulling;
-			settingLA = pulling;
-			SetUpArmMovement(t);
+			if (pulling)
+			{
+				settingRA = true;
+				settingLA = true;
+				SetUpArmMovement(t);
+			}
 		}
 		return pulling;
 	}
@@ -587,13 +595,14 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Grabs the given object and drags it to the given location..
 	/// </summary>
-	public void GrabAndDrag(Transform t, Vector3 position, float speed = 2)
+	public void GrabAndDrag(Transform t, Vector3 position, Action a, float speed = 2)
 	{
 		settingRA = true;
 		//settingLA = true;
 		SetUpArmMovement(t);
 		dragLocation = position;
 		dragSpeed = speed;
+		interactAction = a;
 	}
 
 	/// <summary>
@@ -603,6 +612,17 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		currentPickup = Pickup.Type.none;
 		Destroy(objectLocation.gameObject);
+	}
+
+	/// <summary>
+	/// Climbs a ledge
+	/// </summary>
+	public IEnumerator ClimbLedge(Transform t)
+	{
+		settingRA = true;
+		settingLA = true;
+		//while()
+		yield return null;
 	}
 
 	#endregion
