@@ -28,6 +28,9 @@ public abstract class Interactable : MonoBehaviour
 	[ConditionalHide("movePlayer", true, false, 0, 10)]
 	public float playerMovePosition = 1;
 
+	[System.NonSerialized]
+	public bool moving = false;
+
 	/// <summary>
 	/// Gets the position above the interactable for the tooltip.
 	/// </summary>
@@ -52,6 +55,14 @@ public abstract class Interactable : MonoBehaviour
 	protected virtual KeyCode InteractInput
 	{
 		get { return KeyCode.F; }
+	}
+
+	/// <summary>
+	/// Speed at which the player is repositioned. 
+	/// </summary>
+	protected virtual float REPOSITION_SPEED 
+	{
+		get { return 2f; }
 	}
 
 	/// <summary>
@@ -111,6 +122,7 @@ public abstract class Interactable : MonoBehaviour
 
 	private IEnumerator RepositionPlayer(PlayerController p)
 	{
+		moving = true;
 		float flip;
 		float mPos = transform.position.x;
 		if (transform.position.x > p.transform.position.x)
@@ -128,9 +140,10 @@ public abstract class Interactable : MonoBehaviour
 		while (Mathf.Abs(p.transform.position.x - mPos) > 0.01f && movePlayer)
 		{
 			p.transform.position = new Vector3(Mathf.Lerp(p.transform.position.x, mPos, t), p.transform.position.y, p.transform.position.z);
-			t += 2f * Time.deltaTime;
+			t += REPOSITION_SPEED * Time.deltaTime;
 			yield return new WaitForEndOfFrame();
 		}
+		moving = false;
 		yield return null;
 	}
 

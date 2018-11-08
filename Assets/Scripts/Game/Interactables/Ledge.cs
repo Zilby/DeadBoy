@@ -12,10 +12,27 @@ public class Ledge : Interactable
 		get { return "Press " + InteractInput.ToString() + " To Climb Up"; }
 	}
 
+	/// <summary>
+	/// Speed at which the player is repositioned. 
+	/// </summary>
+	protected override float REPOSITION_SPEED
+	{
+		get { return 8f; }
+	}
+
 
 	protected override void InteractAction(PlayerController p)
 	{
 		base.InteractAction(p);
-		StartCoroutine(p.ClimbLedge(transform));
+
+		StartCoroutine(DelayedClimb(p));
+	}
+
+	protected IEnumerator DelayedClimb(PlayerController p) {
+		while (moving)
+		{
+			yield return null;
+		}
+		yield return p.ClimbLedge(transform);
 	}
 }
