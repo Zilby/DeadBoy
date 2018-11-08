@@ -10,44 +10,10 @@ using UnityEngine.Sprites;
 /// </summary>
 public abstract class PlayerController : MonoBehaviour
 {
-	#region StaticVariables
-
-	/// <summary>
-	/// The main player (ie: controlled player).
-	/// </summary>
-	public static PlayerController MainPlayer
-	{
-		get { return mainPlayer; }
-		// Set mainplayer in front
-		set
-		{
-			if (mainPlayer != null)
-			{
-				foreach (SpriteMeshInstance s in mainPlayer.Sprites)
-				{
-					s.sortingOrder -= 1000;
-				}
-			}
-			mainPlayer = value;
-			foreach (SpriteMeshInstance s in mainPlayer.Sprites)
-			{
-				s.sortingOrder += 1000;
-			}
-			CameraController.movingToNewPosition = true;
-		}
-	}
-	/// <summary>
-	/// The main player (ie: controlled player).
-	/// </summary>
-	protected static PlayerController mainPlayer;
-	/// <summary>
-	/// All of the available players.
-	/// </summary>
-	public static List<PlayerController> players = new List<PlayerController>();
-
-	#endregion
 
 	#region Fields
+
+	#region Public
 
 	[Header("References")]
 	public Rigidbody2D rBody;
@@ -104,6 +70,10 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public bool invertDirection = false;
 
+	#endregion
+
+	#region Protected
+
 	/// <summary>
 	/// Whether or not the player is in the air. 
 	/// </summary>
@@ -127,7 +97,12 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Whether or not the hands are returning to their original position.
 	/// </summary>
-	protected bool returningPosition;
+	protected bool returningArmPosition;
+
+	/// <summary>
+	/// Whether or not the legs are returning to their original position.
+	/// </summary>
+	protected bool returningLegPosition;
 
 	/// <summary>
 	/// The location of an objet to be interacted with.
@@ -135,14 +110,24 @@ public abstract class PlayerController : MonoBehaviour
 	protected Transform objectLocation = null;
 
 	/// <summary>
+	/// The right offset of the object location. 
+	/// </summary>
+	protected Vector3 rObjectOffset = Vector3.zero;
+
+	/// <summary>
+	/// The left offset of the object location. 
+	/// </summary>
+	protected Vector3 lObjectOffset = Vector3.zero;
+
+	/// <summary>
 	/// Whether or not the player is currently pulling. 
 	/// </summary>
 	protected bool pulling;
 
 	/// <summary>
-	/// Whether or not the player is currently picking up a pickup.
+	/// Whether or not the player is currently climbing. 
 	/// </summary>
-	protected bool pickingUp;
+	protected bool climbing;
 
 	/// <summary>
 	/// The current pickup held.
@@ -150,9 +135,9 @@ public abstract class PlayerController : MonoBehaviour
 	protected Pickup.Type currentPickup = Pickup.Type.none;
 
 	/// <summary>
-	/// Action to be called once an object is pressed. 
+	/// Action to be called once an object is interacted with. 
 	/// </summary>
-	protected Action pressAction;
+	protected Action interactAction;
 
 	/// <summary>
 	/// The location to drag the object to.
@@ -165,12 +150,24 @@ public abstract class PlayerController : MonoBehaviour
 	protected float dragSpeed;
 
 	/// <summary>
-	/// Gets the current pickup.
+	/// Whether or not the right arm location is currently being set. 
 	/// </summary>
-	public Pickup.Type CurrentPickup
-	{
-		get { return currentPickup; }
-	}
+	protected bool settingRA = false;
+
+	/// <summary>
+	/// Whether or not the left arm location is currently being set. 
+	/// </summary>
+	protected bool settingLA = false;
+
+	/// <summary>
+	/// Whether or not the right leg location is currently being set. 
+	/// </summary>
+	protected bool settingRL = false;
+
+	/// <summary>
+	/// Whether or not the left leg location is currently being set. 
+	/// </summary>
+	protected bool settingLL = false;
 
 	/// <summary>
 	/// The last Right arm location.
@@ -183,14 +180,19 @@ public abstract class PlayerController : MonoBehaviour
 	protected Vector3 lastLALocation = Vector3.zero;
 
 	/// <summary>
-	/// The original Right arm location.
+	/// The last Right leg location.
 	/// </summary>
-	protected Vector3 originalRALocation = Vector3.zero;
+	protected Vector3 lastRLLocation = Vector3.zero;
 
 	/// <summary>
-	/// The original Left arm location.
+	/// The last Left leg location.
 	/// </summary>
-	protected Vector3 originalLALocation = Vector3.zero;
+	protected Vector3 lastLLLocation = Vector3.zero;
+
+	/// <summary>
+	/// All of the connected sprite mesh instances
+	/// </summary>
+	protected SpriteMeshInstance[] sprites;
 
 	/// <summary>
 	/// The max y velocity before no longer being considered grounded.
@@ -203,23 +205,78 @@ public abstract class PlayerController : MonoBehaviour
 	protected const float MIN_Y_VELOCITY = -3;
 
 	/// <summary>
-	/// The sort value that determines which player gets selected next when toggling between players. 
-	/// It also determines their corresponding number key. 
+	/// The limb move speed.
 	/// </summary>
-	protected abstract int SORT_VALUE { get; }
+	protected const float LIMB_MOVE_SPEED = 3f;
 
-	protected bool AcceptingMoveInput
+	#endregion
+
+	#region Properties
+
+	/// <summary>
+	/// Gets the current pickup.
+	/// </summary>
+	public Pickup.Type CurrentPickup
+	{
+		get { return currentPickup; }
+	}
+
+	/// <summary>
+	/// Whether or not the right arm has reached the location it was moving towards. 
+	/// </summary>
+	protected bool rightArmAtLocation
+	{
+		get { return !settingRA || Vector2.Distance(lastRALocation, returningArmPosition ? rightArm.transform.position : objectLocation.position + rObjectOffset) < 0.001f; }
+	}
+
+	/// <summary>
+	/// Whether or not the left arm has reached the location it was moving towards. 
+	/// </summary>
+	protected bool leftArmAtLocation
+	{
+		get { return !settingLA || Vector2.Distance(lastLALocation, returningArmPosition ? leftArm.transform.position : objectLocation.position + lObjectOffset) < 0.001f; }
+	}
+
+	/// <summary>
+	/// Whether or not the right leg has reached the location it was moving towards. 
+	/// </summary>
+	protected bool rightLegAtLocation
+	{
+		get { return !settingRL || Vector2.Distance(lastRLLocation, returningLegPosition ? rightLeg.transform.position : objectLocation.position + rObjectOffset) < 0.001f; }
+	}
+
+	/// <summary>
+	/// Whether or not the left leg has reached the location it was moving towards. 
+	/// </summary>
+	protected bool leftLegAtLocation
+	{
+		get { return !settingLL || Vector2.Distance(lastLALocation, returningLegPosition ? leftLeg.transform.position : objectLocation.position + lObjectOffset) < 0.001f; }
+	}
+
+	/// <summary>
+	/// Gets the limb move speed.
+	/// </summary>
+	protected float LimbMoveSpeed
 	{
 		get
 		{
-			return MainPlayer == this && (originalRALocation == Vector3.zero && originalLALocation == Vector3.zero || pulling);
+			return LIMB_MOVE_SPEED * (rBody.velocity.magnitude + 1) * Time.deltaTime;
 		}
 	}
 
 	/// <summary>
-	/// All of the connected sprite mesh instances
+	/// Whether or not this player is currently accepting movement input. 
 	/// </summary>
-	private SpriteMeshInstance[] sprites;
+	public bool AcceptingMoveInput
+	{
+		get { return ((!settingRA && !settingLA) || pulling) && !climbing; }
+	}
+
+	/// <summary>
+	/// The sort value that determines which player gets selected next when toggling between players. 
+	/// It also determines their corresponding number key. 
+	/// </summary>
+	public abstract int SORT_VALUE { get; }
 
 	/// <summary>
 	/// Gets all of the connected sprite mesh instances
@@ -236,6 +293,7 @@ public abstract class PlayerController : MonoBehaviour
 		}
 	}
 
+	#endregion
 
 	#endregion
 
@@ -245,37 +303,20 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual void Awake()
 	{
-		players.Add(this);
+		rBody = rBody == null ? GetComponent<Rigidbody2D>() : rBody;
+		cCollider = cCollider == null ? GetComponent<CapsuleCollider2D>() : cCollider;
+		anim = anim == null ? GetComponent<Animator>() : anim;
+		InputManager.Register(this, isMainPlayer);
 	}
 
 	protected virtual void OnDestroy()
 	{
-		players.Remove(this);
+		InputManager.Unregister(this);
 	}
 
 	protected virtual void Start()
 	{
-		rBody = rBody == null ? GetComponent<Rigidbody2D>() : rBody;
-		cCollider = cCollider == null ? GetComponent<CapsuleCollider2D>() : cCollider;
-		anim = anim == null ? GetComponent<Animator>() : anim;
 		jumpStart = Time.fixedTime - 100f;
-		if (isMainPlayer)
-		{
-			MainPlayer = this;
-			players.Sort(delegate (PlayerController p1, PlayerController p2)
-			{
-				if (p1.SORT_VALUE < p2.SORT_VALUE)
-				{
-					return 1;
-				}
-				else if (p1.SORT_VALUE > p2.SORT_VALUE)
-				{
-					return -1;
-				}
-				return 0;
-			});
-			StartCoroutine(SwapPlayers());
-		}
 		foreach (SpriteMeshInstance s in Sprites)
 		{
 			s.sortingOrder += 100 * SORT_VALUE;
@@ -293,127 +334,14 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual void Update()
 	{
-		if (AcceptingMoveInput)
-		{
-			Jump();
-		}
+		Jump();
 		SetAnimationState();
 	}
 
 	protected virtual void LateUpdate()
 	{
-		if (pulling)
-		{
-			SetArmLocations();
-		}
-		if (pickingUp)
-		{
-			SetArmLocations(l: false);
-			if (Vector2.Distance(lastRALocation, returningPosition ? originalRALocation : objectLocation.position) < 0.1f)
-			{
-				if (returningPosition)
-				{
-					pickingUp = false;
-					returningPosition = false;
-					originalRALocation = Vector3.zero;
-				}
-				else
-				{
-					objectLocation.parent = rightArm.transform;
-					returningPosition = true;
-				}
-			}
-		}
-		if (pressAction != null)
-		{
-			SetArmLocations(l: false);
-			if (Vector2.Distance(lastRALocation, returningPosition ? originalRALocation : objectLocation.position) < 0.1f)
-			{
-				if (returningPosition)
-				{
-					pressAction = null;
-					returningPosition = false;
-					originalRALocation = Vector3.zero;
-				}
-				else
-				{
-					pressAction();
-					returningPosition = true;
-				}
-			}
-		}
-		if (dragSpeed != 0)
-		{
-			SetArmLocations();
-			if (Vector2.Distance(lastRALocation, returningPosition ? originalRALocation : objectLocation.position) < 0.01f &&
-				Vector2.Distance(lastLALocation, returningPosition ? originalLALocation : objectLocation.position) < 0.01f)
-			{
-				if (returningPosition)
-				{
-					dragSpeed = 0;
-					returningPosition = false;
-					originalRALocation = Vector3.zero;
-					originalLALocation = Vector3.zero;
-				}
-				else
-				{
-					if (Vector2.Distance(Vector3.zero, dragLocation) > 0.01f)
-					{
-						float speedx = dragLocation.x * dragSpeed * Time.deltaTime;
-						float speedy = dragLocation.y * dragSpeed * Time.deltaTime;
-						objectLocation.position = new Vector3(objectLocation.position.x + speedx, objectLocation.position.y + speedy, objectLocation.position.z);
-						dragLocation.x -= speedx;
-						dragLocation.y -= speedy;
-					}
-					else
-					{
-						dragLocation = Vector3.zero;
-						returningPosition = true;
-					}
-				}
-			}
-		}
+		UpdateKinematics();
 	}
-
-	/// <summary>
-	/// Changes the current player. 
-	/// </summary>
-	private IEnumerator SwapPlayers()
-	{
-		while (MainPlayer == this)
-		{
-			yield return null;
-			// Go through each player with return;
-			if (Input.GetKeyDown(KeyCode.Return))
-			{
-				int curr = players.IndexOf(MainPlayer);
-				curr += 1;
-				if (curr >= players.Count)
-				{
-					curr = 0;
-				}
-				MainPlayer = players[curr];
-				MainPlayer.StartCoroutine(MainPlayer.SwapPlayers());
-			}
-			// Set individual player based on hitting their sort value number key. 
-			for (int i = 0; i < Utils.keyCodes.Length; i++)
-			{
-				if (Input.GetKeyDown(Utils.keyCodes[i]))
-				{
-					foreach (PlayerController p in players)
-					{
-						if (p.SORT_VALUE == i && p != MainPlayer)
-						{
-							MainPlayer = p;
-							MainPlayer.StartCoroutine(MainPlayer.SwapPlayers());
-							break;
-						}
-					}
-				}
-			}
-		}
-	}
-
 
 	/// <summary>
 	/// Moves the player left or right if given input. 
@@ -421,11 +349,11 @@ public abstract class PlayerController : MonoBehaviour
 	protected virtual void Move()
 	{
 		float movement = 0.0f;
-		if (Input.GetKey(KeyCode.A) && AcceptingMoveInput)
+		if (InputManager.GetInputHeld(this, PlayerInput.Left))
 		{
 			movement -= speed * Time.deltaTime;
 		}
-		if (Input.GetKey(KeyCode.D) && AcceptingMoveInput)
+		if (InputManager.GetInputHeld(this, PlayerInput.Right))
 		{
 			movement += speed * Time.deltaTime;
 		}
@@ -458,18 +386,18 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		if (!pulling)
 		{
-			if (Input.GetKeyDown(KeyCode.Space) && CanJump())
+			if (InputManager.GetInputStart(this, PlayerInput.Jump) && CanJump())
 			{
 				rBody.velocity = new Vector2(rBody.velocity.x, jumpHeight);
 				jumpStart = Time.fixedTime;
 				jumpHeld = true;
 			}
-			if (!Input.GetKey(KeyCode.Space) && !grounded)
+			if (!InputManager.GetInputHeld(this, PlayerInput.Jump) && !grounded)
 			{
 				jumpHeld = false;
 			}
 			// Add more force if jump held for longer. 
-			else if (Input.GetKey(KeyCode.Space) &&
+			else if (InputManager.GetInputHeld(this, PlayerInput.Jump) &&
 					 (Time.fixedTime - jumpStart < jumpInterval) &&
 					 !grounded && jumpHeld)
 			{
@@ -483,7 +411,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected virtual void SetAnimationState()
 	{
-		if (!pulling && AcceptingMoveInput)
+		if (!pulling)
 		{
 			float flip = transform.localEulerAngles.y;
 			if (rBody.velocity.x > 1f)
@@ -496,6 +424,8 @@ public abstract class PlayerController : MonoBehaviour
 			}
 			transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, flip, transform.localEulerAngles.z);
 		}
+		anim.SetFloat("OldXVel", anim.GetFloat("XVel"));
+		anim.SetFloat("OldYVel", anim.GetFloat("YVel"));
 		anim.SetFloat("XVel", rBody.velocity.x);
 		anim.SetFloat("YVel", rBody.velocity.y);
 		anim.SetFloat("XMag", Mathf.Abs(rBody.velocity.x));
@@ -503,20 +433,17 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetBool("Fell", anim.GetBool("Grounded") != grounded && grounded);
 		anim.SetBool("Grounded", grounded);
 		anim.SetBool("Pulling", pulling);
+		anim.SetBool("Climbing", climbing);
 		anim.SetBool("Flipped", transform.localEulerAngles.y == 180);
-		if (AcceptingMoveInput)
-		{
-			anim.SetBool("RightInput", Input.GetKey(KeyCode.D));
-			anim.SetBool("LeftInput", Input.GetKey(KeyCode.A));
-			anim.SetBool("AnyInput", Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A));
-		}
-		else
-		{
-			anim.SetBool("RightInput", false);
-			anim.SetBool("LeftInput", false);
-			anim.SetBool("AnyInput", false);
-		}
+
+		bool left = InputManager.GetInputHeld(this, PlayerInput.Left);
+		bool right = InputManager.GetInputHeld(this, PlayerInput.Right);
+		anim.SetBool("RightInput", right);
+		anim.SetBool("LeftInput", left);
+		anim.SetBool("AnyInput", left || right);
 	}
+
+	///
 
 	#endregion
 
@@ -592,42 +519,214 @@ public abstract class PlayerController : MonoBehaviour
 
 	#endregion
 
+	#region KinematicMovements
+
+	/// <summary>
+	/// Sets up moving limbs to their given position.
+	/// </summary>
+	protected void SetUpLimbMovement(Transform t)
+	{
+		if (settingRA)
+		{
+			lastRALocation = rightArm.transform.position;
+		}
+		if (settingLA)
+		{
+			lastLALocation = leftArm.transform.position;
+		}
+		if (settingRL)
+		{
+			lastRLLocation = rightLeg.transform.position;
+		}
+		if (settingLL)
+		{
+			lastLLLocation = leftLeg.transform.position;
+		}
+		objectLocation = t;
+		returningArmPosition = false;
+		returningLegPosition = false;
+	}
+
+	/// <summary>
+	/// Sets the pulling for the arms in the animation.
+	/// </summary>
+	protected void SetArmLocations()
+	{
+		SetRightArmLocation();
+		SetLeftArmLocation();
+	}
+
+
+	/// <summary>
+	/// Sets the pulling for the legs in the animation.
+	/// </summary>
+	protected void SetLegLocations()
+	{
+		SetRightLegLocation();
+		SetLeftLegLocation();
+	}
+
+	/// <summary>
+	/// Sets the pulling for the right arm in the animation.
+	/// </summary>
+	protected void SetRightArmLocation()
+	{
+		if (settingRA)
+		{
+			lastRALocation = Vector3.MoveTowards(lastRALocation, returningArmPosition ? rightArm.transform.position : objectLocation.position + rObjectOffset, LimbMoveSpeed);
+			rightArm.transform.position = lastRALocation;
+			rightArm.UpdateIK();
+		}
+	}
+
+	/// <summary>
+	/// Sets the pulling for the left arm in the animation.
+	/// </summary>
+	protected void SetLeftArmLocation()
+	{
+		if (settingLA)
+		{
+			lastLALocation = Vector3.MoveTowards(lastLALocation, returningArmPosition ? leftArm.transform.position : objectLocation.position + lObjectOffset, LimbMoveSpeed);
+			leftArm.transform.position = lastLALocation;
+			leftArm.UpdateIK();
+		}
+	}
+
+
+	/// <summary>
+	/// Sets the pulling for the right leg in the animation.
+	/// </summary>
+	protected void SetRightLegLocation()
+	{
+		if (settingRL)
+		{
+			lastRLLocation = Vector3.MoveTowards(lastRLLocation, returningLegPosition ? rightLeg.transform.position : objectLocation.position + rObjectOffset, LimbMoveSpeed);
+			rightLeg.transform.position = lastRLLocation;
+			rightLeg.UpdateIK();
+		}
+	}
+
+
+
+	/// <summary>
+	/// Sets the pulling for the left leg in the animation.
+	/// </summary>
+	protected void SetLeftLegLocation()
+	{
+		if (settingLL)
+		{
+			lastLLLocation = Vector3.MoveTowards(lastLLLocation, returningLegPosition ? leftLeg.transform.position : objectLocation.position + lObjectOffset, LimbMoveSpeed);
+			leftLeg.transform.position = lastLLLocation;
+			leftLeg.UpdateIK();
+		}
+	}
+
+
+	/// <summary>
+	/// Updates the IKs to go where they're set to go.
+	/// </summary>
+	protected void UpdateKinematics()
+	{
+		if (settingLA || settingRA || settingLL || settingRL)
+		{
+			if (rightArmAtLocation && leftArmAtLocation)
+			{
+				if (returningArmPosition)
+				{
+					returningArmPosition = false;
+					settingRA = false;
+					settingLA = false;
+					interactAction = null;
+					dragSpeed = 0;
+				}
+				else
+				{
+					if (dragSpeed != 0)
+					{
+						DragToLocation();
+					}
+					else if (!pulling && !climbing)
+					{
+						SetUpReturningHandPositions();
+					}
+				}
+			}
+			if (rightLegAtLocation && leftLegAtLocation)
+			{
+				if (returningLegPosition)
+				{
+					returningLegPosition = false;
+					settingRL = false;
+					settingLL = false;
+				}
+				else
+				{
+					if (!pulling && !climbing)
+					{
+						returningLegPosition = true;
+						rObjectOffset = Vector3.zero;
+						lObjectOffset = Vector3.zero;
+					}
+				}
+			}
+			SetArmLocations();
+			SetLegLocations();
+		}
+	}
+
+
+	/// <summary>
+	/// Sets up returning hands to their default positions.
+	/// </summary>
+	protected void SetUpReturningHandPositions()
+	{
+		returningArmPosition = true;
+		interactAction?.Invoke();
+		dragLocation = Vector3.zero;
+		rObjectOffset = Vector3.zero;
+		lObjectOffset = Vector3.zero;
+	}
+
+
+	/// <summary>
+	/// Drags the object to the set drag location, and then sets the hands to return to the default position. 
+	/// </summary>
+	protected void DragToLocation()
+	{
+		if (Vector2.Distance(Vector3.zero, dragLocation) > 0.01f)
+		{
+			float speedx = dragLocation.x * dragSpeed * Time.deltaTime;
+			float speedy = dragLocation.y * dragSpeed * Time.deltaTime;
+			objectLocation.position = new Vector3(objectLocation.position.x + speedx, objectLocation.position.y + speedy, objectLocation.position.z);
+			dragLocation.x -= speedx;
+			dragLocation.y -= speedy;
+		}
+		else
+		{
+			SetUpReturningHandPositions();
+		}
+	}
+
+	#endregion
+
 	#region Interactables
 
 	/// <summary>
 	/// Tries to pull an object. 
 	/// </summary>
-	public bool Pulling(Transform position)
+	public bool Pulling(Transform t)
 	{
 		if (grounded || pulling)
 		{
 			pulling = !pulling;
-			objectLocation = position;
-			lastRALocation = rightArm.transform.position;
-			lastLALocation = leftArm.transform.position;
+			if (pulling)
+			{
+				settingRA = true;
+				settingLA = true;
+				SetUpLimbMovement(t);
+			}
 		}
 		return pulling;
-	}
-
-
-	/// <summary>
-	/// Sets the pulling for the limbs in the animation.
-	/// </summary>
-	public void SetArmLocations(bool r = true, bool l = true)
-	{
-		float s = 5f * (rBody.velocity.magnitude + 1) * Time.deltaTime;
-		if (r)
-		{
-			lastRALocation = Vector3.MoveTowards(lastRALocation, returningPosition ? originalRALocation : objectLocation.position, s);
-			rightArm.transform.position = lastRALocation;
-			rightArm.UpdateIK();
-		}
-		if (l)
-		{
-			lastLALocation = Vector3.MoveTowards(lastLALocation, returningPosition ? originalLALocation : objectLocation.position, s);
-			leftArm.transform.position = lastLALocation;
-			leftArm.UpdateIK();
-		}
 	}
 
 	/// <summary>
@@ -635,11 +734,13 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public void PickUp(Transform t, Pickup.Type p)
 	{
-		lastRALocation = rightArm.transform.position;
-		originalRALocation = rightArm.transform.position;
-		objectLocation = t;
-		pickingUp = true;
-		currentPickup = p;
+		settingRA = true;
+		SetUpLimbMovement(t);
+		interactAction = delegate
+		{
+			objectLocation.parent = rightArm.transform;
+			currentPickup = p;
+		};
 	}
 
 	/// <summary>
@@ -647,24 +748,22 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public void Press(Transform t, Action a)
 	{
-		lastRALocation = rightArm.transform.position;
-		originalRALocation = rightArm.transform.position;
-		objectLocation = t;
-		pressAction = a;
+		settingRA = true;
+		SetUpLimbMovement(t);
+		interactAction = a;
 	}
 
 	/// <summary>
 	/// Grabs the given object and drags it to the given location..
 	/// </summary>
-	public void GrabAndDrag(Transform t, Vector3 position, float speed = 2)
+	public void GrabAndDrag(Transform t, Vector3 position, Action a, float speed = 2)
 	{
-		lastRALocation = rightArm.transform.position;
-		originalRALocation = rightArm.transform.position;
-		lastLALocation = leftArm.transform.position;
-		originalLALocation = leftArm.transform.position;
-		objectLocation = t;
+		settingRA = true;
+		//settingLA = true;
+		SetUpLimbMovement(t);
 		dragLocation = position;
 		dragSpeed = speed;
+		interactAction = a;
 	}
 
 	/// <summary>
@@ -676,6 +775,46 @@ public abstract class PlayerController : MonoBehaviour
 		Destroy(objectLocation.gameObject);
 	}
 
+	/// <summary>
+	/// Climbs a ledge
+	/// </summary>
+	public IEnumerator ClimbLedge(Transform t)
+	{
+		bool side = transform.position.x > t.position.x;
+		climbing = true;
+		rBody.simulated = false;
+		rBody.velocity = Vector3.zero;
+		settingRA = true;
+		settingLA = true;
+		// for initialization
+		SetUpLimbMovement(t);
+		while (transform.position.y < t.position.y)
+		{
+			transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up, 3f * Time.deltaTime);
+			yield return null;
+		}
+		returningArmPosition = true;
+		lastLLLocation = leftLeg.transform.position;
+		settingLL = true;
+		while (cCollider.bounds.min.y < t.position.y)
+		{
+			transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up, 3f * Time.deltaTime);
+			yield return null;
+		}
+		lastRLLocation = rightLeg.transform.position;
+		settingRL = true;
+		rObjectOffset = new Vector3(side ? -0.8f : 0.8f, 0, 0);
+		while (side ? (transform.position.x + 0.4f > t.position.x) : (transform.position.x - 0.4f < t.position.x))
+		{
+			transform.position = Vector3.MoveTowards(transform.position, transform.position + (side ? Vector3.left : Vector3.right), 3f * Time.deltaTime);
+			yield return null;
+		}
+		returningLegPosition = true;
+		rBody.simulated = true;
+		climbing = false;
+	}
+
 	#endregion
+
 	#endregion
 }
