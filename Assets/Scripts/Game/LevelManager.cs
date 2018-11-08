@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour
 	public void OnTriggerEnter2D(Collider2D other)
 	{
 		players += 1;
-		if (players == PlayerControllerManager.players.Count)
+		if (players == InputManager.players.Count)
 		{
 			switch (level)
 			{

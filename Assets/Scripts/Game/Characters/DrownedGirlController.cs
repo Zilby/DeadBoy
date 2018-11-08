@@ -69,11 +69,11 @@ public class DrownedGirlController : PlayerController
 
 		if (swimming)
         {
-            if (!diving && PlayerControllerManager.GetInputStart(this, PlayerInput.Down)) 
+            if (!diving && InputManager.GetInputStart(this, PlayerInput.Down)) 
             {
                 diving = true;
             }
-            else if (diving && PlayerControllerManager.GetInputStart(this, PlayerInput.Up)) 
+            else if (diving && InputManager.GetInputStart(this, PlayerInput.Up)) 
             {
                 diving = false;
                 grounded = false;
