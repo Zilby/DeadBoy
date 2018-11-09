@@ -13,7 +13,7 @@ public class ButtonMove : Interactable
 
 	protected override string Tip
 	{
-		get { return "Press " + InteractInput.ToString() + " To Press"; }
+		get { return "Press " + InteractInput[0].ToString() + " To Press"; }
 	}
 
 	protected override void InteractAction(PlayerController p)
@@ -27,7 +27,7 @@ public class ButtonMove : Interactable
 			GetComponent<SpriteRenderer>().sprite = sprite;
 			Destroy(this);
 		});
-		OnTriggerExit2D(null);
+		EndInteraction();
 	}
 
 	private IEnumerator MoveToLocation()

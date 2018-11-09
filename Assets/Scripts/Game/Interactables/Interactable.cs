@@ -52,9 +52,9 @@ public abstract class Interactable : MonoBehaviour
 	/// <summary>
 	/// The input needed to activate this interactable. 
 	/// </summary>
-	protected virtual KeyCode InteractInput
+	protected virtual List<KeyCode> InteractInput
 	{
-		get { return KeyCode.F; }
+		get { return InputManager.KeyBindings[(int)PlayerInput.Interact]; }
 	}
 
 	/// <summary>
@@ -78,36 +78,60 @@ public abstract class Interactable : MonoBehaviour
 
 	protected virtual void OnTriggerEnter2D(Collider2D collision)
 	{
-		tooltip = ToolTips.instance.SetTooltipActive(Tip, TipPos);
 		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
 		if (p != null)
 		{
+			if (Tip != null)
+			{
+				tooltip = ToolTips.instance.SetTooltipActive(Tip, TipPos);
+			}
 			checkInput = StartCoroutine(CheckForInput(p));
 		}
 	}
 
 	protected virtual void OnTriggerStay2D(Collider2D collision)
 	{
-		ToolTips.instance.SetTooltipPosition(tooltip, TipPos);
+		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
+		if (p != null)
+		{
+			if (Tip != null)
+			{
+				ToolTips.instance.SetTooltipPosition(tooltip, TipPos);
+			}
+		}
 	}
 
 	protected virtual void OnTriggerExit2D(Collider2D collision)
 	{
-		ToolTips.instance.SetTooltipInactive(tooltip);
+		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
+		if (p != null)
+		{
+			EndInteraction();
+		}
+	}
+
+	protected virtual void EndInteraction() {
+		if (Tip != null)
+		{
+			ToolTips.instance.SetTooltipInactive(tooltip);
+		}
 		StopCoroutine(checkInput);
 	}
 
 	/// <summary>
 	/// Checks for player input. 
 	/// </summary>
-	private IEnumerator CheckForInput(PlayerController p)
+	protected virtual IEnumerator CheckForInput(PlayerController p)
 	{
 		for (; ; )
 		{
 			yield return null;
-			if (Input.GetKeyDown(InteractInput))
+			foreach (KeyCode k in InteractInput)
 			{
-				InteractAction(p);
+				if (Input.GetKeyDown(k))
+				{
+					InteractAction(p);
+				}
 			}
 		}
 	}

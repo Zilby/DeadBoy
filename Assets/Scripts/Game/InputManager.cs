@@ -15,6 +15,7 @@ public enum PlayerInput
 	Down = 3,
 	Jump = 4,
 	Interact = 5,
+	Swap = 6,
 }
 
 public class InputManager : MonoBehaviour
@@ -24,7 +25,7 @@ public class InputManager : MonoBehaviour
 
 	#region Fields
 
-	private static List<List<KeyCode>> KeyBindings
+	public static List<List<KeyCode>> KeyBindings
 	{
 		get
 		{
@@ -35,7 +36,8 @@ public class InputManager : MonoBehaviour
 				new List<KeyCode> { KeyCode.W, KeyCode.UpArrow },
 				new List<KeyCode> { KeyCode.S, KeyCode.DownArrow },
 				new List<KeyCode> { KeyCode.Space },
-				new List<KeyCode> { KeyCode.F }
+				new List<KeyCode> { KeyCode.F, KeyCode.J },
+				new List<KeyCode> { KeyCode.E, KeyCode.Tab }
 			};
 		}
 	}
@@ -100,47 +102,26 @@ public class InputManager : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Returns whether an input for the given action was pressed this frame for a given character.
+	/// Gets whether the given input was pressed this frame. 
 	/// </summary>
-	public static bool GetInputStart(PlayerController pc, PlayerInput input)
+	/// <returns><c>true</c>, if input was received, <c>false</c> otherwise.</returns>
+	/// <param name="pc">The player that's receiving input.</param>
+	/// <param name="input">The input to be receieved.</param>
+	/// <param name="held">Whether or not the input was held or just pressed.</param>
+	/// <param name="moveInput">Whether or not the player must be accepting move input.</param>
+	public static bool GetInput(PlayerController pc, PlayerInput input, bool held, bool moveInput = true)
 	{
-		if (AcceptingMoveInput(pc))
+		if (MainPlayer == pc && (!moveInput || pc.AcceptingMoveInput))
 		{
 			foreach (KeyCode k in KeyBindings[(int)input])
 			{
-				if (Input.GetKeyDown(k))
+				if (held ? Input.GetKey(k) : Input.GetKeyDown(k))
 				{
 					return true;
 				}
 			}
 		}
 		return false;
-	}
-	/// <summary>
-	/// Returns whether an input for the given action was held this frame for a given character.
-	/// </summary>
-	public static bool GetInputHeld(PlayerController pc, PlayerInput input)
-	{
-		if (AcceptingMoveInput(pc))
-		{
-			foreach (KeyCode k in KeyBindings[(int)input])
-			{
-				if (Input.GetKey(k))
-				{
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-
-	/// <summary>
-	/// Whether or not the given player controller is accepting move input. 
-	/// </summary>
-	private static bool AcceptingMoveInput(PlayerController p)
-	{
-		return MainPlayer == p && p.AcceptingMoveInput;
 	}
 
 	#endregion
@@ -164,17 +145,49 @@ public class InputManager : MonoBehaviour
 			return 0;
 		});
 
-		StartCoroutine(SwapTutorial());
+		StartCoroutine(GeneralTutorial());
 	}
+
+	protected IEnumerator GeneralTutorial()
+	{
+		yield return new WaitForSeconds(1.0f);
+		yield return MovementTutorial();
+		yield return new WaitForSeconds(0.3f);
+		yield return SwapTutorial();
+	}
+
+
+	protected IEnumerator MovementTutorial()
+	{
+		Vector3 tipOffset = new Vector3(0.0f, 2.7f, 0.0f);
+		int t = ToolTips.instance.SetTooltipActive("Press " +  KeyBindings[(int)PlayerInput.Left][0] + " and " +
+										   KeyBindings[(int)PlayerInput.Right][0] + " to move", MainPlayer.transform.position + tipOffset);
+		while (!GetInput(MainPlayer, PlayerInput.Left, true) && !GetInput(MainPlayer, PlayerInput.Right, true))
+		{
+			yield return null;
+		}
+
+		ToolTips.instance.SetTooltipInactive(t);
+
+		yield return new WaitForSeconds(0.3f);
+
+		t = ToolTips.instance.SetTooltipActive("Press " + KeyBindings[(int)PlayerInput.Jump][0] + " to jump", MainPlayer.transform.position + tipOffset);
+		while (!GetInput(MainPlayer, PlayerInput.Jump, true))
+		{
+			ToolTips.instance.SetTooltipPosition(t, MainPlayer.transform.position + tipOffset);
+			yield return null;
+		}
+
+		ToolTips.instance.SetTooltipInactive(t);
+	}
+
 
 	protected IEnumerator SwapTutorial()
 	{
-		yield return new WaitForSeconds(2.0f);
-
+		Vector3 tipOffset = new Vector3(0.0f, 2.7f, 0.0f);
 		List<PlayerController> swappedTo = new List<PlayerController>();
 		Dictionary<PlayerController, int> tips = new Dictionary<PlayerController, int>();
 		PlayerController lastControlled = MainPlayer;
-		Vector3 tipOffset = new Vector3(0.0f, 2.43f, 0.0f);
 
 		foreach (PlayerController p in players)
 		{
@@ -213,7 +226,9 @@ public class InputManager : MonoBehaviour
 			}
 		}
 
-		int tabTip = ToolTips.instance.SetTooltipActive("Press E to cycle characters", MainPlayer.transform.position + tipOffset);
+		yield return new WaitForSeconds(0.3f);
+
+		int tabTip = ToolTips.instance.SetTooltipActive("Press " + KeyBindings[(int)PlayerInput.Swap][0] + " to cycle characters", MainPlayer.transform.position + tipOffset);
 		while (MainPlayer == lastControlled)
 		{
 			ToolTips.instance.SetTooltipPosition(tabTip, MainPlayer.transform.position + tipOffset);
@@ -222,18 +237,22 @@ public class InputManager : MonoBehaviour
 		ToolTips.instance.SetTooltipInactive(tabTip);
 	}
 
+
 	void Update()
 	{
-		// Go through each player with e;
-		if (Input.GetKeyDown(KeyCode.E))
+		foreach (KeyCode k in KeyBindings[(int)PlayerInput.Swap])
 		{
-			int curr = players.IndexOf(MainPlayer);
-			curr += 1;
-			if (curr >= players.Count)
+			// Go through each player with e;
+			if (Input.GetKeyDown(k))
 			{
-				curr = 0;
+				int curr = players.IndexOf(MainPlayer);
+				curr += 1;
+				if (curr >= players.Count)
+				{
+					curr = 0;
+				}
+				MainPlayer = players[curr];
 			}
-			MainPlayer = players[curr];
 		}
 		// Set individual player based on hitting their sort value number key. 
 		for (int i = 0; i < Utils.keyCodes.Length; i++)

@@ -13,7 +13,7 @@ public class Unlockable : Interactable
 
 	protected override string Tip
 	{
-		get { return "Press " + InteractInput.ToString() + " To Unlock"; }
+		get { return "Press " + InteractInput[0].ToString() + " To Unlock"; }
 	}
 
 
@@ -29,7 +29,7 @@ public class Unlockable : Interactable
 		{
 			s.SelfFadeOut();
 		}
-		base.OnTriggerExit2D(null);
+		EndInteraction();
 		Destroy(this);
 	}
 

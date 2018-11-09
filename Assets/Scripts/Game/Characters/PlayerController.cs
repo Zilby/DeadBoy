@@ -10,6 +10,15 @@ using UnityEngine.Sprites;
 /// </summary>
 public abstract class PlayerController : MonoBehaviour
 {
+	protected enum IK
+	{
+		RightArm = 0,
+		LeftArm = 1,
+		RightLeg = 2,
+		LeftLeg = 3,
+		RightFoot = 4,
+		LeftFoot = 5
+	}
 
 	#region Fields
 
@@ -21,12 +30,10 @@ public abstract class PlayerController : MonoBehaviour
 	public Animator anim;
 
 	[Header("InverseKinematics")]
-	public IkLimb2D rightArm;
-	public IkLimb2D leftArm;
-	public IkLimb2D rightLeg;
-	public IkLimb2D leftLeg;
-	public IkLimb2D rightFoot;
-	public IkLimb2D leftFoot;
+	public IkLimb2D[] iKLimbs = new IkLimb2D[IKCount];
+	[Space(10)]
+	[InspectorButton("SetDefaultIKs")]
+	public bool SetUpDefaultLimbs;
 
 	[Header("Characteristics")]
 	/// <summary>
@@ -95,14 +102,9 @@ public abstract class PlayerController : MonoBehaviour
 	protected bool jumpHeld;
 
 	/// <summary>
-	/// Whether or not the hands are returning to their original position.
+	/// Whether or not the iks are returning to their original position.
 	/// </summary>
-	protected bool returningArmPosition;
-
-	/// <summary>
-	/// Whether or not the legs are returning to their original position.
-	/// </summary>
-	protected bool returningLegPosition;
+	protected bool[] returningToPosition = new bool[IKCount];
 
 	/// <summary>
 	/// The location of an objet to be interacted with.
@@ -110,14 +112,9 @@ public abstract class PlayerController : MonoBehaviour
 	protected Transform objectLocation = null;
 
 	/// <summary>
-	/// The right offset of the object location. 
+	/// The offsets of the object location. 
 	/// </summary>
-	protected Vector3 rObjectOffset = Vector3.zero;
-
-	/// <summary>
-	/// The left offset of the object location. 
-	/// </summary>
-	protected Vector3 lObjectOffset = Vector3.zero;
+	protected Vector3[] ObjectOffsets = new Vector3[IKCount];
 
 	/// <summary>
 	/// Whether or not the player is currently pulling. 
@@ -150,44 +147,14 @@ public abstract class PlayerController : MonoBehaviour
 	protected float dragSpeed;
 
 	/// <summary>
-	/// Whether or not the right arm location is currently being set. 
+	/// Whether or not the ik location is currently being set. 
 	/// </summary>
-	protected bool settingRA = false;
+	protected bool[] settingIK = new bool[IKCount];
 
 	/// <summary>
-	/// Whether or not the left arm location is currently being set. 
+	/// The last location of the ik.
 	/// </summary>
-	protected bool settingLA = false;
-
-	/// <summary>
-	/// Whether or not the right leg location is currently being set. 
-	/// </summary>
-	protected bool settingRL = false;
-
-	/// <summary>
-	/// Whether or not the left leg location is currently being set. 
-	/// </summary>
-	protected bool settingLL = false;
-
-	/// <summary>
-	/// The last Right arm location.
-	/// </summary>
-	protected Vector3 lastRALocation = Vector3.zero;
-
-	/// <summary>
-	/// The last Left arm location.
-	/// </summary>
-	protected Vector3 lastLALocation = Vector3.zero;
-
-	/// <summary>
-	/// The last Right leg location.
-	/// </summary>
-	protected Vector3 lastRLLocation = Vector3.zero;
-
-	/// <summary>
-	/// The last Left leg location.
-	/// </summary>
-	protected Vector3 lastLLLocation = Vector3.zero;
+	protected Vector3[] lastIKLocation = new Vector3[IKCount];
 
 	/// <summary>
 	/// All of the connected sprite mesh instances
@@ -214,6 +181,15 @@ public abstract class PlayerController : MonoBehaviour
 	#region Properties
 
 	/// <summary>
+	/// Whether or not the player is currently climbing
+	/// </summary>
+	public bool Climbing
+	{
+		get { return climbing; }
+		set { climbing = value; }
+	}
+
+	/// <summary>
 	/// Gets the current pickup.
 	/// </summary>
 	public Pickup.Type CurrentPickup
@@ -222,36 +198,13 @@ public abstract class PlayerController : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Whether or not the right arm has reached the location it was moving towards. 
+	/// Gets the IK Count.
 	/// </summary>
-	protected bool rightArmAtLocation
+	protected static int IKCount
 	{
-		get { return !settingRA || Vector2.Distance(lastRALocation, returningArmPosition ? rightArm.transform.position : objectLocation.position + rObjectOffset) < 0.001f; }
+		get { return Enum.GetValues(typeof(IK)).Length; }
 	}
 
-	/// <summary>
-	/// Whether or not the left arm has reached the location it was moving towards. 
-	/// </summary>
-	protected bool leftArmAtLocation
-	{
-		get { return !settingLA || Vector2.Distance(lastLALocation, returningArmPosition ? leftArm.transform.position : objectLocation.position + lObjectOffset) < 0.001f; }
-	}
-
-	/// <summary>
-	/// Whether or not the right leg has reached the location it was moving towards. 
-	/// </summary>
-	protected bool rightLegAtLocation
-	{
-		get { return !settingRL || Vector2.Distance(lastRLLocation, returningLegPosition ? rightLeg.transform.position : objectLocation.position + rObjectOffset) < 0.001f; }
-	}
-
-	/// <summary>
-	/// Whether or not the left leg has reached the location it was moving towards. 
-	/// </summary>
-	protected bool leftLegAtLocation
-	{
-		get { return !settingLL || Vector2.Distance(lastLALocation, returningLegPosition ? leftLeg.transform.position : objectLocation.position + lObjectOffset) < 0.001f; }
-	}
 
 	/// <summary>
 	/// Gets the limb move speed.
@@ -269,7 +222,15 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public bool AcceptingMoveInput
 	{
-		get { return ((!settingRA && !settingLA) || pulling) && !climbing; }
+		get
+		{
+			bool output = !climbing;
+			for (int i = 0; i < IKCount; ++i)
+			{
+				output &= !settingIK[i] || (pulling && i < 2);
+			}
+			return output;
+		}
 	}
 
 	/// <summary>
@@ -300,6 +261,12 @@ public abstract class PlayerController : MonoBehaviour
 	#region Functions
 
 	#region General
+
+
+	protected virtual void Reset()
+	{
+		SetDefaultIKs();
+	}
 
 	protected virtual void Awake()
 	{
@@ -349,11 +316,11 @@ public abstract class PlayerController : MonoBehaviour
 	protected virtual void Move()
 	{
 		float movement = 0.0f;
-		if (InputManager.GetInputHeld(this, PlayerInput.Left))
+		if (InputManager.GetInput(this, PlayerInput.Left, true))
 		{
 			movement -= speed * Time.deltaTime;
 		}
-		if (InputManager.GetInputHeld(this, PlayerInput.Right))
+		if (InputManager.GetInput(this, PlayerInput.Right, true))
 		{
 			movement += speed * Time.deltaTime;
 		}
@@ -386,18 +353,18 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		if (!pulling)
 		{
-			if (InputManager.GetInputStart(this, PlayerInput.Jump) && CanJump())
+			if (InputManager.GetInput(this, PlayerInput.Jump, false) && CanJump())
 			{
 				rBody.velocity = new Vector2(rBody.velocity.x, jumpHeight);
 				jumpStart = Time.fixedTime;
 				jumpHeld = true;
 			}
-			if (!InputManager.GetInputHeld(this, PlayerInput.Jump) && !grounded)
+			if (!InputManager.GetInput(this, PlayerInput.Jump, true) && !grounded)
 			{
 				jumpHeld = false;
 			}
 			// Add more force if jump held for longer. 
-			else if (InputManager.GetInputHeld(this, PlayerInput.Jump) &&
+			else if (InputManager.GetInput(this, PlayerInput.Jump, true) &&
 					 (Time.fixedTime - jumpStart < jumpInterval) &&
 					 !grounded && jumpHeld)
 			{
@@ -411,7 +378,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected virtual void SetAnimationState()
 	{
-		if (!pulling)
+		if (!pulling && !climbing)
 		{
 			float flip = transform.localEulerAngles.y;
 			if (rBody.velocity.x > 1f)
@@ -436,8 +403,8 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetBool("Climbing", climbing);
 		anim.SetBool("Flipped", transform.localEulerAngles.y == 180);
 
-		bool left = InputManager.GetInputHeld(this, PlayerInput.Left);
-		bool right = InputManager.GetInputHeld(this, PlayerInput.Right);
+		bool left = InputManager.GetInput(this, PlayerInput.Left, true);
+		bool right = InputManager.GetInput(this, PlayerInput.Right, true);
 		anim.SetBool("RightInput", right);
 		anim.SetBool("LeftInput", left);
 		anim.SetBool("AnyInput", left || right);
@@ -526,99 +493,85 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected void SetUpLimbMovement(Transform t)
 	{
-		if (settingRA)
+		for (int i = 0; i < IKCount; ++i)
 		{
-			lastRALocation = rightArm.transform.position;
-		}
-		if (settingLA)
-		{
-			lastLALocation = leftArm.transform.position;
-		}
-		if (settingRL)
-		{
-			lastRLLocation = rightLeg.transform.position;
-		}
-		if (settingLL)
-		{
-			lastLLLocation = leftLeg.transform.position;
+			if (settingIK[i])
+			{
+				lastIKLocation[i] = iKLimbs[i].transform.position;
+				returningToPosition[i] = false;
+			}
 		}
 		objectLocation = t;
-		returningArmPosition = false;
-		returningLegPosition = false;
-	}
-
-	/// <summary>
-	/// Sets the pulling for the arms in the animation.
-	/// </summary>
-	protected void SetArmLocations()
-	{
-		SetRightArmLocation();
-		SetLeftArmLocation();
 	}
 
 
 	/// <summary>
-	/// Sets the pulling for the legs in the animation.
+	/// Cancels the kinematics.
 	/// </summary>
-	protected void SetLegLocations()
+	private void CancelKinematics()
 	{
-		SetRightLegLocation();
-		SetLeftLegLocation();
-	}
-
-	/// <summary>
-	/// Sets the pulling for the right arm in the animation.
-	/// </summary>
-	protected void SetRightArmLocation()
-	{
-		if (settingRA)
+		for (int i = 0; i < IKCount; ++i)
 		{
-			lastRALocation = Vector3.MoveTowards(lastRALocation, returningArmPosition ? rightArm.transform.position : objectLocation.position + rObjectOffset, LimbMoveSpeed);
-			rightArm.transform.position = lastRALocation;
-			rightArm.UpdateIK();
+			if (settingIK[i])
+			{
+				settingIK[i] = false;
+				returningToPosition[i] = false;
+			}
 		}
-	}
-
-	/// <summary>
-	/// Sets the pulling for the left arm in the animation.
-	/// </summary>
-	protected void SetLeftArmLocation()
-	{
-		if (settingLA)
-		{
-			lastLALocation = Vector3.MoveTowards(lastLALocation, returningArmPosition ? leftArm.transform.position : objectLocation.position + lObjectOffset, LimbMoveSpeed);
-			leftArm.transform.position = lastLALocation;
-			leftArm.UpdateIK();
-		}
+		objectLocation = null;
 	}
 
 
 	/// <summary>
-	/// Sets the pulling for the right leg in the animation.
+	/// Sets the pulling for the limb in the animation.
 	/// </summary>
-	protected void SetRightLegLocation()
+	protected void SetLocation(IK ik)
 	{
-		if (settingRL)
+		int i = (int)ik;
+		float s = LimbMoveSpeed / (returningToPosition[i] && (i == (int)IK.LeftLeg || i == (int)IK.RightLeg) ? 3f : 1f);
+		lastIKLocation[i] = Vector3.MoveTowards(lastIKLocation[i], returningToPosition[i] ? iKLimbs[i].transform.position :
+												objectLocation.position + ObjectOffsets[i], s);
+		iKLimbs[i].transform.position = lastIKLocation[i];
+		iKLimbs[i].UpdateIK();
+	}
+
+
+	/// <summary>
+	/// Sets the pulling for the limbs in the animation.
+	/// </summary>
+	protected void SetAllLocations()
+	{
+		foreach (IK ik in Enum.GetValues(typeof(IK)))
 		{
-			lastRLLocation = Vector3.MoveTowards(lastRLLocation, returningLegPosition ? rightLeg.transform.position : objectLocation.position + rObjectOffset, LimbMoveSpeed);
-			rightLeg.transform.position = lastRLLocation;
-			rightLeg.UpdateIK();
+			if (settingIK[(int)ik])
+			{
+				SetLocation(ik);
+			}
 		}
 	}
 
 
+	/// <summary>
+	/// Whether or not the ik has reached the location it was moving towards. 
+	/// </summary>
+	protected bool ikAtLocation(IK ik)
+	{
+		int i = (int)ik;
+		return !settingIK[i] || Vector2.Distance(lastIKLocation[i], returningToPosition[i] ? iKLimbs[i].transform.position : objectLocation.position + ObjectOffsets[i]) < 0.01f;
+	}
+
 
 	/// <summary>
-	/// Sets the pulling for the left leg in the animation.
+	/// Whether or not all the iks have reached the location they were moving towards. 
 	/// </summary>
-	protected void SetLeftLegLocation()
+	protected bool allIKsAtLocation()
 	{
-		if (settingLL)
+		bool output = true;
+		foreach (IK ik in Enum.GetValues(typeof(IK)))
 		{
-			lastLLLocation = Vector3.MoveTowards(lastLLLocation, returningLegPosition ? leftLeg.transform.position : objectLocation.position + lObjectOffset, LimbMoveSpeed);
-			leftLeg.transform.position = lastLLLocation;
-			leftLeg.UpdateIK();
+			output &= ikAtLocation(ik);
 		}
+		return output;
 	}
 
 
@@ -627,64 +580,37 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected void UpdateKinematics()
 	{
-		if (settingLA || settingRA || settingLL || settingRL)
+		if (dragSpeed != 0)
 		{
-			if (rightArmAtLocation && leftArmAtLocation)
-			{
-				if (returningArmPosition)
-				{
-					returningArmPosition = false;
-					settingRA = false;
-					settingLA = false;
-					interactAction = null;
-					dragSpeed = 0;
-				}
-				else
-				{
-					if (dragSpeed != 0)
-					{
-						DragToLocation();
-					}
-					else if (!pulling && !climbing)
-					{
-						SetUpReturningHandPositions();
-					}
-				}
-			}
-			if (rightLegAtLocation && leftLegAtLocation)
-			{
-				if (returningLegPosition)
-				{
-					returningLegPosition = false;
-					settingRL = false;
-					settingLL = false;
-				}
-				else
-				{
-					if (!pulling && !climbing)
-					{
-						returningLegPosition = true;
-						rObjectOffset = Vector3.zero;
-						lObjectOffset = Vector3.zero;
-					}
-				}
-			}
-			SetArmLocations();
-			SetLegLocations();
+			DragToLocation();
 		}
-	}
-
-
-	/// <summary>
-	/// Sets up returning hands to their default positions.
-	/// </summary>
-	protected void SetUpReturningHandPositions()
-	{
-		returningArmPosition = true;
-		interactAction?.Invoke();
-		dragLocation = Vector3.zero;
-		rObjectOffset = Vector3.zero;
-		lObjectOffset = Vector3.zero;
+		foreach (IK ik in Enum.GetValues(typeof(IK)))
+		{
+			int i = (int)ik;
+			if (settingIK[i] && ikAtLocation(ik))
+			{
+				if (returningToPosition[i])
+				{
+					returningToPosition[i] = false;
+					settingIK[i] = false;
+				}
+				else
+				{
+					if (!pulling && !climbing && dragSpeed == 0)
+					{
+						SetLocation(ik);
+						returningToPosition[i] = true;
+						ObjectOffsets[i] = Vector3.zero;
+					}
+				}
+			}
+		}
+		SetAllLocations();
+		if (allIKsAtLocation())
+		{
+			interactAction?.Invoke();
+			interactAction = null;
+		}
 	}
 
 
@@ -703,7 +629,22 @@ public abstract class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			SetUpReturningHandPositions();
+			dragSpeed = 0;
+			dragLocation = Vector3.zero;
+		}
+	}
+
+
+	/// <summary>
+	/// Finds and sets the default IK limbs
+	/// </summary>
+	public void SetDefaultIKs() 
+	{
+		iKLimbs = new IkLimb2D[IKCount];
+		foreach (IK ik in Enum.GetValues(typeof(IK)))
+		{
+			int i = (int)ik;
+			iKLimbs[i] = Utils.FindDeepChild<IkLimb2D>(transform, ik.ToString());
 		}
 	}
 
@@ -721,8 +662,8 @@ public abstract class PlayerController : MonoBehaviour
 			pulling = !pulling;
 			if (pulling)
 			{
-				settingRA = true;
-				settingLA = true;
+				settingIK[(int)IK.RightArm] = true;
+				settingIK[(int)IK.LeftArm] = true;
 				SetUpLimbMovement(t);
 			}
 		}
@@ -734,11 +675,11 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public void PickUp(Transform t, Pickup.Type p)
 	{
-		settingRA = true;
+		settingIK[(int)IK.RightArm] = true;
 		SetUpLimbMovement(t);
 		interactAction = delegate
 		{
-			objectLocation.parent = rightArm.transform;
+			objectLocation.parent = iKLimbs[(int)IK.RightArm].transform;
 			currentPickup = p;
 		};
 	}
@@ -748,7 +689,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public void Press(Transform t, Action a)
 	{
-		settingRA = true;
+		settingIK[(int)IK.RightArm] = true;
 		SetUpLimbMovement(t);
 		interactAction = a;
 	}
@@ -758,7 +699,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public void GrabAndDrag(Transform t, Vector3 position, Action a, float speed = 2)
 	{
-		settingRA = true;
+		settingIK[(int)IK.RightArm] = true;
 		//settingLA = true;
 		SetUpLimbMovement(t);
 		dragLocation = position;
@@ -784,8 +725,8 @@ public abstract class PlayerController : MonoBehaviour
 		climbing = true;
 		rBody.simulated = false;
 		rBody.velocity = Vector3.zero;
-		settingRA = true;
-		settingLA = true;
+		settingIK[(int)IK.RightArm] = true;
+		settingIK[(int)IK.LeftArm] = true;
 		// for initialization
 		SetUpLimbMovement(t);
 		while (transform.position.y < t.position.y)
@@ -793,25 +734,62 @@ public abstract class PlayerController : MonoBehaviour
 			transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up, 3f * Time.deltaTime);
 			yield return null;
 		}
-		returningArmPosition = true;
-		lastLLLocation = leftLeg.transform.position;
-		settingLL = true;
 		while (cCollider.bounds.min.y < t.position.y)
 		{
+			if ((!returningToPosition[(int)IK.RightArm] || !returningToPosition[(int)IK.LeftArm]) && cCollider.bounds.min.y > t.position.y - 1f)
+			{
+				returningToPosition[(int)IK.RightArm] = true;
+				returningToPosition[(int)IK.LeftArm] = true;
+			}
+			if (!settingIK[(int)IK.LeftLeg] && cCollider.bounds.min.y > t.position.y - 2f)
+			{
+				lastIKLocation[(int)IK.LeftLeg] = iKLimbs[(int)IK.LeftLeg].transform.position;
+				settingIK[(int)IK.LeftLeg] = true;
+			}
 			transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up, 3f * Time.deltaTime);
 			yield return null;
 		}
-		lastRLLocation = rightLeg.transform.position;
-		settingRL = true;
-		rObjectOffset = new Vector3(side ? -0.8f : 0.8f, 0, 0);
+		transform.position = new Vector3(transform.position.x, t.position.y + transform.position.y - cCollider.bounds.min.y, transform.position.z);
+
+		lastIKLocation[(int)IK.RightLeg] = iKLimbs[(int)IK.RightLeg].transform.position;
+		settingIK[(int)IK.RightLeg] = true;
+		ObjectOffsets[(int)IK.RightLeg] = new Vector3(side ? -0.5f : 0.5f, 0, 0);
 		while (side ? (transform.position.x + 0.4f > t.position.x) : (transform.position.x - 0.4f < t.position.x))
 		{
 			transform.position = Vector3.MoveTowards(transform.position, transform.position + (side ? Vector3.left : Vector3.right), 3f * Time.deltaTime);
 			yield return null;
 		}
-		returningLegPosition = true;
 		rBody.simulated = true;
+		returningToPosition[(int)IK.RightLeg] = true;
+		returningToPosition[(int)IK.LeftLeg] = true;
+		while (!grounded)
+		{
+			if (CancelClimbOnInput())
+			{
+				yield break;
+			}
+			yield return null;
+		}
+		yield return null;
 		climbing = false;
+	}
+
+	/// <summary>
+	/// Cancels climbing given player input. 
+	/// </summary>
+	/// <returns><c>true</c>, if climb on input was canceled, <c>false</c> otherwise.</returns>
+	private bool CancelClimbOnInput()
+	{
+		if (InputManager.GetInput(this, PlayerInput.Left, true, false) ||
+			InputManager.GetInput(this, PlayerInput.Right, true, false) ||
+			InputManager.GetInput(this, PlayerInput.Jump, false, false))
+		{
+			CancelKinematics();
+			rBody.simulated = true;
+			grounded = true;
+			climbing = false;
+		}
+		return !climbing;
 	}
 
 	#endregion

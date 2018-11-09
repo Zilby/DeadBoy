@@ -20,7 +20,7 @@ public class Pickup : Interactable
 
 	protected override string Tip
 	{
-		get { return "Press " + InteractInput.ToString() + " To Grab"; }
+		get { return "Press " + InteractInput[0].ToString() + " To Grab"; }
 	}
 
 	protected override void InteractAction(PlayerController p)
@@ -33,7 +33,7 @@ public class Pickup : Interactable
 		Transform t = col.transform;
 		Destroy(col);
 		p.PickUp(t, type);
-		OnTriggerExit2D(null);
+		EndInteraction();
 		Destroy(this);
 	}
 }

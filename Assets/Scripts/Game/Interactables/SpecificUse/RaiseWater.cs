@@ -13,7 +13,7 @@ public class RaiseWater : Interactable
 
 	protected override string Tip
 	{
-		get { return "Press " + InteractInput.ToString() + " To Pull"; }
+		get { return "Press " + InteractInput[0].ToString() + " To Pull"; }
 	}
 
 	protected override void InteractAction(PlayerController p)
@@ -26,7 +26,7 @@ public class RaiseWater : Interactable
 			p.StartCoroutine(RedirectCamera());
 		});
 
-		OnTriggerExit2D(null);
+		EndInteraction();
 		Destroy(this);
 	}
 
