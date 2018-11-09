@@ -75,12 +75,12 @@ public class DrownedGirlController : PlayerController
 
 		if (swimming)
         {
-			if (!diving && InputManager.GetInput(this, PlayerInput.Down, false)) 
+			if (!diving && InputManager.GetInput(this, PlayerInput.Down, InputType.Pressed)) 
             {
                 diving = true;
                 timeSinceDive = 0;
             }
-			else if (diving && InputManager.GetInput(this, PlayerInput.Up, false)) 
+			else if (diving && InputManager.GetInput(this, PlayerInput.Up, InputType.Pressed)) 
             {
                 grounded = false;
             }
@@ -114,11 +114,11 @@ public class DrownedGirlController : PlayerController
             float feetHeight = this.gameObject.transform.position.y - settleDepth;
 
             float adjustedDivingBuoyancy = divingBuoyancy;
-            if (diving && Input.GetKey(KeyCode.S)) 
+            if (diving && InputManager.GetInput(this, PlayerInput.Down, InputType.Held)) 
             {
                 adjustedDivingBuoyancy -= verticalControl;
             }
-            else if (diving && Input.GetKey(KeyCode.W)) 
+            else if (diving && InputManager.GetInput(this, PlayerInput.Up, InputType.Held)) 
             {
                 adjustedDivingBuoyancy += verticalControl;
             }

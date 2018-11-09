@@ -18,6 +18,16 @@ public enum PlayerInput
 	Swap = 6,
 }
 
+/// <summary>
+/// What kind of input should be checked for
+///</summary>
+public enum InputType
+{
+	Pressed = 0,
+	Held = 1,
+	Released = 2,
+}
+
 public class InputManager : MonoBehaviour
 {
 
@@ -109,13 +119,15 @@ public class InputManager : MonoBehaviour
 	/// <param name="input">The input to be receieved.</param>
 	/// <param name="held">Whether or not the input was held or just pressed.</param>
 	/// <param name="moveInput">Whether or not the player must be accepting move input.</param>
-	public static bool GetInput(PlayerController pc, PlayerInput input, bool held, bool moveInput = true)
+	public static bool GetInput(PlayerController pc, PlayerInput input, InputType type, bool moveInput = true)
 	{
 		if (MainPlayer == pc && (!moveInput || pc.AcceptingMoveInput))
 		{
 			foreach (KeyCode k in KeyBindings[(int)input])
 			{
-				if (held ? Input.GetKey(k) : Input.GetKeyDown(k))
+				if ((type == InputType.Held && Input.GetKey(k)) ||
+					(type == InputType.Pressed && Input.GetKeyDown(k)) ||
+					(type == InputType.Released && Input.GetKeyUp(k)))
 				{
 					return true;
 				}
@@ -162,7 +174,7 @@ public class InputManager : MonoBehaviour
 		Vector3 tipOffset = new Vector3(0.0f, 2.7f, 0.0f);
 		int t = ToolTips.instance.SetTooltipActive("Press " +  KeyBindings[(int)PlayerInput.Left][0] + " and " +
 										   KeyBindings[(int)PlayerInput.Right][0] + " to move", MainPlayer.transform.position + tipOffset);
-		while (!GetInput(MainPlayer, PlayerInput.Left, true) && !GetInput(MainPlayer, PlayerInput.Right, true))
+		while (!GetInput(MainPlayer, PlayerInput.Left, InputType.Held) && !GetInput(MainPlayer, PlayerInput.Right, InputType.Held))
 		{
 			yield return null;
 		}
@@ -172,7 +184,7 @@ public class InputManager : MonoBehaviour
 		yield return new WaitForSeconds(0.3f);
 
 		t = ToolTips.instance.SetTooltipActive("Press " + KeyBindings[(int)PlayerInput.Jump][0] + " to jump", MainPlayer.transform.position + tipOffset);
-		while (!GetInput(MainPlayer, PlayerInput.Jump, true))
+		while (!GetInput(MainPlayer, PlayerInput.Jump, InputType.Held))
 		{
 			ToolTips.instance.SetTooltipPosition(t, MainPlayer.transform.position + tipOffset);
 			yield return null;
