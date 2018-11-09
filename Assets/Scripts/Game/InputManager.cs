@@ -143,12 +143,39 @@ public class InputManager : MonoBehaviour
 			return 0;
 		});
 
+		StartCoroutine(GeneralTutorial());
+	}
+
+	protected IEnumerator GeneralTutorial()
+	{
+		yield return new WaitForSeconds(1.0f);
+		Vector3 tipOffset = new Vector3(0.0f, 2.43f, 0.0f);
+
+		int tip = ToolTips.instance.SetTooltipActive("WASD or arrow keys to move", MainPlayer.transform.position + tipOffset);
+		float tipTime = 0.0f;
+		while (tipTime < 3.0f) {
+			yield return null;
+			tipTime += Time.deltaTime;
+			ToolTips.instance.SetTooltipPosition(tip, MainPlayer.transform.position + tipOffset);
+		}
+		ToolTips.instance.SetTooltipInactive(tip);
+		yield return new WaitForSeconds(0.5f);
+
+		tip = ToolTips.instance.SetTooltipActive("Press Space to jump", MainPlayer.transform.position + tipOffset);
+		tipTime = 0.0f;
+		while (tipTime < 2.0f) {
+			yield return null;
+			tipTime += Time.deltaTime;
+			ToolTips.instance.SetTooltipPosition(tip, MainPlayer.transform.position + tipOffset);
+		}
+		ToolTips.instance.SetTooltipInactive(tip);
+
 		StartCoroutine(SwapTutorial());
 	}
 
 	protected IEnumerator SwapTutorial()
 	{
-		yield return new WaitForSeconds(2.0f);
+		yield return new WaitForSeconds(1.0f);
 
 		List<PlayerController> swappedTo = new List<PlayerController>();
 		Dictionary<PlayerController, int> tips = new Dictionary<PlayerController, int>();
