@@ -19,4 +19,23 @@ public static class Utils
 		 KeyCode.Alpha8,
 		 KeyCode.Alpha9,
 	};
+
+	public static T FindDeepChild<T>(Transform t, string name)
+	{
+		Transform tr = t.Find(name);
+		T result = default(T);
+		if (tr != null) {
+			result = tr.GetComponent<T>();
+		}
+		if (result == null)
+		{
+			foreach (Transform child in t)
+			{
+				result = FindDeepChild<T>(child, name);
+				if (result != null)
+					break;
+			}
+		}
+		return result;
+	}
 }

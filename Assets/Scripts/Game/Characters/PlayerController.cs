@@ -12,12 +12,12 @@ public abstract class PlayerController : MonoBehaviour
 {
 	protected enum IK
 	{
-		rightArm = 0,
-		leftArm = 1,
-		rightLeg = 2,
-		leftLeg = 3,
-		rightFoot = 4,
-		leftFoot = 5
+		RightArm = 0,
+		LeftArm = 1,
+		RightLeg = 2,
+		LeftLeg = 3,
+		RightFoot = 4,
+		LeftFoot = 5
 	}
 
 	#region Fields
@@ -31,6 +31,9 @@ public abstract class PlayerController : MonoBehaviour
 
 	[Header("InverseKinematics")]
 	public IkLimb2D[] iKLimbs = new IkLimb2D[IKCount];
+	[Space(10)]
+	[InspectorButton("SetDefaultIKs")]
+	public bool SetUpDefaultLimbs;
 
 	[Header("Characteristics")]
 	/// <summary>
@@ -258,6 +261,12 @@ public abstract class PlayerController : MonoBehaviour
 	#region Functions
 
 	#region General
+
+
+	protected virtual void Reset()
+	{
+		SetDefaultIKs();
+	}
 
 	protected virtual void Awake()
 	{
@@ -519,7 +528,7 @@ public abstract class PlayerController : MonoBehaviour
 	protected void SetLocation(IK ik)
 	{
 		int i = (int)ik;
-		float s = LimbMoveSpeed / (returningToPosition[i] && (i == (int)IK.leftLeg || i == (int)IK.rightLeg) ? 3f : 1f);
+		float s = LimbMoveSpeed / (returningToPosition[i] && (i == (int)IK.LeftLeg || i == (int)IK.RightLeg) ? 3f : 1f);
 		lastIKLocation[i] = Vector3.MoveTowards(lastIKLocation[i], returningToPosition[i] ? iKLimbs[i].transform.position :
 												objectLocation.position + ObjectOffsets[i], s);
 		iKLimbs[i].transform.position = lastIKLocation[i];
@@ -625,6 +634,20 @@ public abstract class PlayerController : MonoBehaviour
 		}
 	}
 
+
+	/// <summary>
+	/// Finds and sets the default IK limbs
+	/// </summary>
+	public void SetDefaultIKs() 
+	{
+		iKLimbs = new IkLimb2D[IKCount];
+		foreach (IK ik in Enum.GetValues(typeof(IK)))
+		{
+			int i = (int)ik;
+			iKLimbs[i] = Utils.FindDeepChild<IkLimb2D>(transform, ik.ToString());
+		}
+	}
+
 	#endregion
 
 	#region Interactables
@@ -639,8 +662,8 @@ public abstract class PlayerController : MonoBehaviour
 			pulling = !pulling;
 			if (pulling)
 			{
-				settingIK[(int)IK.rightArm] = true;
-				settingIK[(int)IK.leftArm] = true;
+				settingIK[(int)IK.RightArm] = true;
+				settingIK[(int)IK.LeftArm] = true;
 				SetUpLimbMovement(t);
 			}
 		}
@@ -652,11 +675,11 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public void PickUp(Transform t, Pickup.Type p)
 	{
-		settingIK[(int)IK.rightArm] = true;
+		settingIK[(int)IK.RightArm] = true;
 		SetUpLimbMovement(t);
 		interactAction = delegate
 		{
-			objectLocation.parent = iKLimbs[(int)IK.rightArm].transform;
+			objectLocation.parent = iKLimbs[(int)IK.RightArm].transform;
 			currentPickup = p;
 		};
 	}
@@ -666,7 +689,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public void Press(Transform t, Action a)
 	{
-		settingIK[(int)IK.rightArm] = true;
+		settingIK[(int)IK.RightArm] = true;
 		SetUpLimbMovement(t);
 		interactAction = a;
 	}
@@ -676,7 +699,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public void GrabAndDrag(Transform t, Vector3 position, Action a, float speed = 2)
 	{
-		settingIK[(int)IK.rightArm] = true;
+		settingIK[(int)IK.RightArm] = true;
 		//settingLA = true;
 		SetUpLimbMovement(t);
 		dragLocation = position;
@@ -702,8 +725,8 @@ public abstract class PlayerController : MonoBehaviour
 		climbing = true;
 		rBody.simulated = false;
 		rBody.velocity = Vector3.zero;
-		settingIK[(int)IK.rightArm] = true;
-		settingIK[(int)IK.leftArm] = true;
+		settingIK[(int)IK.RightArm] = true;
+		settingIK[(int)IK.LeftArm] = true;
 		// for initialization
 		SetUpLimbMovement(t);
 		while (transform.position.y < t.position.y)
@@ -713,32 +736,32 @@ public abstract class PlayerController : MonoBehaviour
 		}
 		while (cCollider.bounds.min.y < t.position.y)
 		{
-			if ((!returningToPosition[(int)IK.rightArm] || !returningToPosition[(int)IK.leftArm]) && cCollider.bounds.min.y > t.position.y - 1f)
+			if ((!returningToPosition[(int)IK.RightArm] || !returningToPosition[(int)IK.LeftArm]) && cCollider.bounds.min.y > t.position.y - 1f)
 			{
-				returningToPosition[(int)IK.rightArm] = true;
-				returningToPosition[(int)IK.leftArm] = true;
+				returningToPosition[(int)IK.RightArm] = true;
+				returningToPosition[(int)IK.LeftArm] = true;
 			}
-			if (!settingIK[(int)IK.leftLeg] && cCollider.bounds.min.y > t.position.y - 2f)
+			if (!settingIK[(int)IK.LeftLeg] && cCollider.bounds.min.y > t.position.y - 2f)
 			{
-				lastIKLocation[(int)IK.leftLeg] = iKLimbs[(int)IK.leftLeg].transform.position;
-				settingIK[(int)IK.leftLeg] = true;
+				lastIKLocation[(int)IK.LeftLeg] = iKLimbs[(int)IK.LeftLeg].transform.position;
+				settingIK[(int)IK.LeftLeg] = true;
 			}
 			transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up, 3f * Time.deltaTime);
 			yield return null;
 		}
 		transform.position = new Vector3(transform.position.x, t.position.y + transform.position.y - cCollider.bounds.min.y, transform.position.z);
 
-		lastIKLocation[(int)IK.rightLeg] = iKLimbs[(int)IK.rightLeg].transform.position;
-		settingIK[(int)IK.rightLeg] = true;
-		ObjectOffsets[(int)IK.rightLeg] = new Vector3(side ? -0.5f : 0.5f, 0, 0);
+		lastIKLocation[(int)IK.RightLeg] = iKLimbs[(int)IK.RightLeg].transform.position;
+		settingIK[(int)IK.RightLeg] = true;
+		ObjectOffsets[(int)IK.RightLeg] = new Vector3(side ? -0.5f : 0.5f, 0, 0);
 		while (side ? (transform.position.x + 0.4f > t.position.x) : (transform.position.x - 0.4f < t.position.x))
 		{
 			transform.position = Vector3.MoveTowards(transform.position, transform.position + (side ? Vector3.left : Vector3.right), 3f * Time.deltaTime);
 			yield return null;
 		}
 		rBody.simulated = true;
-		returningToPosition[(int)IK.rightLeg] = true;
-		returningToPosition[(int)IK.leftLeg] = true;
+		returningToPosition[(int)IK.RightLeg] = true;
+		returningToPosition[(int)IK.LeftLeg] = true;
 		while (!grounded)
 		{
 			if (CancelClimbOnInput())
