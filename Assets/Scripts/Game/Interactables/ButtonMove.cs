@@ -27,7 +27,7 @@ public class ButtonMove : Interactable
 			GetComponent<SpriteRenderer>().sprite = sprite;
 			Destroy(this);
 		});
-		OnTriggerExit2D(null);
+		EndInteraction();
 	}
 
 	private IEnumerator MoveToLocation()

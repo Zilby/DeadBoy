@@ -26,7 +26,7 @@ public class RaiseWater : Interactable
 			p.StartCoroutine(RedirectCamera());
 		});
 
-		OnTriggerExit2D(null);
+		EndInteraction();
 		Destroy(this);
 	}
 

@@ -29,7 +29,7 @@ public class Unlockable : Interactable
 		{
 			s.SelfFadeOut();
 		}
-		base.OnTriggerExit2D(null);
+		EndInteraction();
 		Destroy(this);
 	}
 

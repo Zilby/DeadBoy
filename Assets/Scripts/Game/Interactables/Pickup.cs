@@ -33,7 +33,7 @@ public class Pickup : Interactable
 		Transform t = col.transform;
 		Destroy(col);
 		p.PickUp(t, type);
-		OnTriggerExit2D(null);
+		EndInteraction();
 		Destroy(this);
 	}
 }
