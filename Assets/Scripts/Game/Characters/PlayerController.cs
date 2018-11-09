@@ -316,11 +316,11 @@ public abstract class PlayerController : MonoBehaviour
 	protected virtual void Move()
 	{
 		float movement = 0.0f;
-		if (InputManager.GetInput(this, PlayerInput.Left, true))
+		if (InputManager.GetInput(this, PlayerInput.Left, InputType.Held))
 		{
 			movement -= speed * Time.deltaTime;
 		}
-		if (InputManager.GetInput(this, PlayerInput.Right, true))
+		if (InputManager.GetInput(this, PlayerInput.Right, InputType.Held))
 		{
 			movement += speed * Time.deltaTime;
 		}
@@ -353,18 +353,18 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		if (!pulling)
 		{
-			if (InputManager.GetInput(this, PlayerInput.Jump, false) && CanJump())
+			if (InputManager.GetInput(this, PlayerInput.Jump, InputType.Pressed) && CanJump())
 			{
 				rBody.velocity = new Vector2(rBody.velocity.x, jumpHeight);
 				jumpStart = Time.fixedTime;
 				jumpHeld = true;
 			}
-			if (!InputManager.GetInput(this, PlayerInput.Jump, true) && !grounded)
+			if (!InputManager.GetInput(this, PlayerInput.Jump, InputType.Held) && !grounded)
 			{
 				jumpHeld = false;
 			}
 			// Add more force if jump held for longer. 
-			else if (InputManager.GetInput(this, PlayerInput.Jump, true) &&
+			else if (InputManager.GetInput(this, PlayerInput.Jump, InputType.Held) &&
 					 (Time.fixedTime - jumpStart < jumpInterval) &&
 					 !grounded && jumpHeld)
 			{
@@ -403,8 +403,8 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetBool("Climbing", climbing);
 		anim.SetBool("Flipped", transform.localEulerAngles.y == 180);
 
-		bool left = InputManager.GetInput(this, PlayerInput.Left, true);
-		bool right = InputManager.GetInput(this, PlayerInput.Right, true);
+		bool left = InputManager.GetInput(this, PlayerInput.Left, InputType.Held);
+		bool right = InputManager.GetInput(this, PlayerInput.Right, InputType.Held);
 		anim.SetBool("RightInput", right);
 		anim.SetBool("LeftInput", left);
 		anim.SetBool("AnyInput", left || right);
@@ -780,9 +780,9 @@ public abstract class PlayerController : MonoBehaviour
 	/// <returns><c>true</c>, if climb on input was canceled, <c>false</c> otherwise.</returns>
 	private bool CancelClimbOnInput()
 	{
-		if (InputManager.GetInput(this, PlayerInput.Left, true, false) ||
-			InputManager.GetInput(this, PlayerInput.Right, true, false) ||
-			InputManager.GetInput(this, PlayerInput.Jump, false, false))
+		if (InputManager.GetInput(this, PlayerInput.Left, InputType.Held, false) ||
+			InputManager.GetInput(this, PlayerInput.Right, InputType.Held, false) ||
+			InputManager.GetInput(this, PlayerInput.Jump, InputType.Pressed, false))
 		{
 			CancelKinematics();
 			rBody.simulated = true;
