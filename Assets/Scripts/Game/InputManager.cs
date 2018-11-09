@@ -145,11 +145,10 @@ public class InputManager : MonoBehaviour
 			return 0;
 		});
 
-		StartCoroutine(ControlsTutorial());
+		StartCoroutine(GeneralTutorial());
 	}
 
-
-	protected IEnumerator ControlsTutorial()
+	protected IEnumerator GeneralTutorial()
 	{
 		yield return new WaitForSeconds(1.0f);
 		yield return MovementTutorial();
@@ -161,7 +160,7 @@ public class InputManager : MonoBehaviour
 	protected IEnumerator MovementTutorial()
 	{
 		Vector3 tipOffset = new Vector3(0.0f, 2.7f, 0.0f);
-		int t = ToolTips.instance.SetTooltipActive("Press " + KeyBindings[(int)PlayerInput.Left][0] + " and " +
+		int t = ToolTips.instance.SetTooltipActive("Press " +  KeyBindings[(int)PlayerInput.Left][0] + " and " +
 										   KeyBindings[(int)PlayerInput.Right][0] + " to move", MainPlayer.transform.position + tipOffset);
 		while (!GetInput(MainPlayer, PlayerInput.Left, true) && !GetInput(MainPlayer, PlayerInput.Right, true))
 		{
@@ -237,6 +236,7 @@ public class InputManager : MonoBehaviour
 		}
 		ToolTips.instance.SetTooltipInactive(tabTip);
 	}
+
 
 	void Update()
 	{
