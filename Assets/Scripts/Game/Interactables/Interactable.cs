@@ -52,9 +52,9 @@ public abstract class Interactable : MonoBehaviour
 	/// <summary>
 	/// The input needed to activate this interactable. 
 	/// </summary>
-	protected virtual KeyCode InteractInput
+	protected virtual List<KeyCode> InteractInput
 	{
-		get { return KeyCode.F; }
+		get { return InputManager.KeyBindings[(int)PlayerInput.Interact]; }
 	}
 
 	/// <summary>
@@ -105,9 +105,12 @@ public abstract class Interactable : MonoBehaviour
 		for (; ; )
 		{
 			yield return null;
-			if (Input.GetKeyDown(InteractInput))
+			foreach (KeyCode k in InteractInput)
 			{
-				InteractAction(p);
+				if (Input.GetKeyDown(k))
+				{
+					InteractAction(p);
+				}
 			}
 		}
 	}

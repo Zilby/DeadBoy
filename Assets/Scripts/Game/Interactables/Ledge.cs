@@ -9,7 +9,7 @@ public class Ledge : Interactable
 {
 	protected override string Tip
 	{
-		get { return "Press " + InteractInput.ToString() + " To Climb Up"; }
+		get { return "Press " + InteractInput[0].ToString() + " To Climb Up"; }
 	}
 
 	/// <summary>
@@ -25,6 +25,7 @@ public class Ledge : Interactable
 	{
 		base.InteractAction(p);
 
+		p.Climbing = true;
 		StartCoroutine(DelayedClimb(p));
 	}
 

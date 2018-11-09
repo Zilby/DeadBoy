@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// For managing individual levels in the game. 
+/// </summary>
 public class LevelManager : MonoBehaviour
 {
 	public static LevelManager instance;
@@ -14,6 +17,8 @@ public class LevelManager : MonoBehaviour
 	}
 
 	public Levels level;
+
+	public float timescale = 1;
 
 	private int players;
 
@@ -61,5 +66,13 @@ public class LevelManager : MonoBehaviour
 	public void OnTriggerExit2D(Collider2D collision)
 	{
 		players -= 1;
+	}
+
+	public void Update()
+	{
+#if UNITY_EDITOR
+		Time.timeScale = timescale;
+		Time.fixedDeltaTime = 0.02f * Time.timeScale;
+#endif
 	}
 }
