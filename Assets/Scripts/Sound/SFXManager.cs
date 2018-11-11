@@ -17,14 +17,13 @@ public class SFXManager : MonoBehaviour
 	public ClipDict clips;
 	private Dictionary<string, AudioClip> lastPlayedClips;
 
-	[Space(10)]
-	[InspectorButton("SetUpClips")]
-	public bool SetUpClipKeys;
+	[InspectorButton("LoadClips")]
+	public bool SetUpClips;
 
 	/// <summary>
 	/// Sets up the audio clip list
 	/// </summary>
-	private void SetUpClips()
+	private void LoadClips()
 	{
 		clips = new ClipDict();
 		AudioClip[] loaded = Resources.LoadAll<AudioClip>("Audio/SFX/Loose");
@@ -68,7 +67,8 @@ public class SFXManager : MonoBehaviour
 	/// <summary>
 	/// Plays the clip at the given index. 
 	/// </summary>
-	public void PlayClip(string clip, Vector3 location, float volume = 1, float pitch = 1)
+	public void PlayClip(string clip, float volume = 1, float pitch = 1, ulong delay = 0, Vector3? location = null,
+						 float spread = 360, float doppler = 1, AudioRolloffMode rm = AudioRolloffMode.Logarithmic, float maxD = 500, float minD = 1)
 	{
 		ClipList clipList = clips[clip];
 		// Get random clip if list is greater than 1.
@@ -84,17 +84,39 @@ public class SFXManager : MonoBehaviour
 			}
 		}
 		lastPlayedClips[clip] = a;
-		StartCoroutine(PlayClip(a, location, volume, pitch));
+		StartCoroutine(PlayClip(a, volume, pitch, delay, location, spread, doppler, rm, maxD, minD));
 	}
 
 
 	/// <summary>
 	/// Plays the given audio clip.
 	/// </summary>
-	public IEnumerator PlayClip(AudioClip a, Vector3 location, float volume = 1, float pitch = 1)
+	public IEnumerator PlayClip(AudioClip a, float volume = 1, float pitch = 1, ulong delay = 0, Vector3? location = null,
+								float spread = 360, float doppler = 1, AudioRolloffMode rm = AudioRolloffMode.Logarithmic, float maxD = 500, float minD = 1)
 	{
 		GameObject g = new GameObject(a.ToString(), typeof(AudioSource));
-		yield return null;
+		g.transform.parent = transform;
+		AudioSource s = g.GetComponent<AudioSource>();
+		s.clip = a;
+		s.volume = volume;
+		s.pitch = pitch;
+		if (location != null) 
+		{
+			g.transform.position = (Vector3)location;
+			s.spatialBlend = 1;
+			s.spread = spread;
+			s.dopplerLevel = doppler;
+			s.rolloffMode = rm;
+			s.maxDistance = maxD;
+			s.minDistance = minD;
+		}
+		s.loop = false;
+		s.Play(delay);
+		while (s.isPlaying)
+		{
+			yield return null;
+		}
+		Destroy(g);
 	}
 
 }

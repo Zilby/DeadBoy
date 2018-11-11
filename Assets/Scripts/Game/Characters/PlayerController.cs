@@ -31,7 +31,7 @@ public abstract class PlayerController : MonoBehaviour
 
 	[Header("InverseKinematics")]
 	public IkLimb2D[] iKLimbs = new IkLimb2D[IKCount];
-	[Space(10)]
+
 	[InspectorButton("SetDefaultIKs")]
 	public bool SetUpDefaultLimbs;
 
