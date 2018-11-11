@@ -6,6 +6,11 @@ using UnityEngine;
 [System.Serializable]
 public class ListWrapper<T>
 {
+	public ListWrapper()
+	{
+		list = new List<T>();
+	}
+
 	public List<T> list;
  	public T this[int key]
 	{

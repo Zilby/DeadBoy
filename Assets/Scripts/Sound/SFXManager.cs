@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Audio;
 /// <summary>
@@ -9,63 +10,84 @@ using UnityEngine.Audio;
 public class SFXManager : MonoBehaviour
 {
 	public static SFXManager instance;
-	public enum Sounds
-	{
-		//None = -1,
-		DBFootsteps = 0,
-		DGFootsteps = 1,
-		WaterDrops = 2,
-	}
+
 	public AudioMixerGroup sfxGroup;
 	[Serializable] public class ClipList : ListWrapper<AudioClip> { }
-	[Serializable] public class ClipDict : SerializableDictionary<Sounds, ClipList> { }
+	[Serializable] public class ClipDict : SerializableDictionary<string, ClipList> { }
 	public ClipDict clips;
-	// public Dictionary<Sounds, List<AudioClip>> clips;
-	// Make a custom property attribute
+	private Dictionary<string, AudioClip> lastPlayedClips;
+
+	[Space(10)]
 	[InspectorButton("SetUpClips")]
 	public bool SetUpClipKeys;
-	private AudioClip[] lastPlayedClips;
+
+	/// <summary>
+	/// Sets up the audio clip list
+	/// </summary>
 	private void SetUpClips()
 	{
-		foreach (Sounds s in Enum.GetValues(typeof(Sounds)))
+		clips = new ClipDict();
+		AudioClip[] loaded = Resources.LoadAll<AudioClip>("Audio/SFX/Loose");
+		foreach (AudioClip c in loaded)
 		{
-			if (!clips.ContainsKey(s))
+			ClipList l = new ClipList();
+			l.list.Add(c);
+			clips[c.name] = l;
+		}
+		string path = "/Resources/Audio/SFX/Compiled";
+		DirectoryInfo levelDirectoryPath = new DirectoryInfo(Application.dataPath + path);
+		DirectoryInfo[] dInfo = levelDirectoryPath.GetDirectories("*", SearchOption.TopDirectoryOnly);
+		foreach (DirectoryInfo d in dInfo)
+		{
+			loaded = Resources.LoadAll<AudioClip>("Audio/SFX/Compiled/" + d.Name);
+			ClipList l = new ClipList();
+			foreach (AudioClip c in loaded)
 			{
-				clips[s] = null;
+				l.list.Add(c);
 			}
+			clips[d.Name] = l;
 		}
 	}
+
+
 	void Awake()
 	{
 		if (instance == null)
 		{
 			instance = this;
 			DontDestroyOnLoad(gameObject);
-			lastPlayedClips = new AudioClip[Enum.GetValues(typeof(Sounds)).Length];
+			lastPlayedClips = new Dictionary<string, AudioClip>();
 		}
 		else
 		{
 			Destroy(gameObject);
 		}
 	}
+
+
 	/// <summary>
 	/// Plays the clip at the given index. 
 	/// </summary>
-	public void PlayClip(Sounds sound, Vector3 location, float volume = 1, float pitch = 1)
+	public void PlayClip(string clip, Vector3 location, float volume = 1, float pitch = 1)
 	{
-		ClipList clipList = clips[sound];
+		ClipList clipList = clips[clip];
 		// Get random clip if list is greater than 1.
 		AudioClip a = clipList[UnityEngine.Random.Range(0, clipList.Count - 1)];
 		if (clipList.Count > 1)
 		{
-			while (a == lastPlayedClips[(int)sound])
+			if (lastPlayedClips.ContainsKey(clip))
 			{
-				a = clipList[UnityEngine.Random.Range(0, clipList.Count - 1)];
+				while (a == lastPlayedClips[clip])
+				{
+					a = clipList[UnityEngine.Random.Range(0, clipList.Count - 1)];
+				}
 			}
 		}
-		lastPlayedClips[(int)sound] = a;
+		lastPlayedClips[clip] = a;
 		StartCoroutine(PlayClip(a, location, volume, pitch));
 	}
+
+
 	/// <summary>
 	/// Plays the given audio clip.
 	/// </summary>
@@ -74,4 +96,5 @@ public class SFXManager : MonoBehaviour
 		GameObject g = new GameObject(a.ToString(), typeof(AudioSource));
 		yield return null;
 	}
+
 }
