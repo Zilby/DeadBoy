@@ -35,6 +35,7 @@ TextureImporter:
     21300060: DGAtlas_30
     21300062: DGAtlas_31
     21300064: DGAtlas_32
+    21300066: DGAtlas_33
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -736,6 +737,66 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: DGAtlas_9
+      rect:
+        serializedVersion: 2
+        x: 2745.0156
+        y: 2185.597
+        width: 148.3872
+        height: 368.54834
+      alignment: 9
+      pivot: {x: 0.5390231, y: 0.4989931}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d29c1c20be31e4b0a9e3aa1cf14026fb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_12
+      rect:
+        serializedVersion: 2
+        x: 3080.8633
+        y: 2194.4675
+        width: 147.12915
+        height: 350.93555
+      alignment: 9
+      pivot: {x: 0.5038887, y: 0.5130072}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3de7df9576204aaba0f359c4a012014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DGAtlas_33
+      rect:
+        serializedVersion: 2
+        x: 3332.8425
+        y: 2173.1772
+        width: 316.96777
+        height: 368.54834
+      alignment: 9
+      pivot: {x: 0.49581605, y: 0.51505524}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9df4930bf6e7548bcb6e15185f0f0905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -747,6 +808,6 @@ TextureImporter:
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 636772420250000000
+  userData: 636776598450000000
   assetBundleName: 
   assetBundleVariant: 
