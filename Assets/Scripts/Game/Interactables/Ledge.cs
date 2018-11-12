@@ -43,7 +43,7 @@ public class Ledge : Interactable
 			yield return null;
 			foreach (KeyCode k in InteractInput)
 			{
-				if (!activateOnExit && Input.GetKey(k) && p.rBody.velocity.y >= 0)
+				if (!activateOnExit && Input.GetKey(k))
 				{
 					InteractAction(p);
 					yield break;
@@ -66,7 +66,7 @@ public class Ledge : Interactable
 	protected override void InteractAction(PlayerController p)
 	{
 		base.InteractAction(p);
-
+		p.rBody.velocity = Vector2.zero;
 		p.Climbing = true;
 		StartCoroutine(DelayedClimb(p));
 	}

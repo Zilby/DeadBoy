@@ -237,6 +237,7 @@ public abstract class PlayerController : MonoBehaviour
 			bool output = !climbing;
 			for (int i = 0; i < IKCount; ++i)
 			{
+				// Allow move input when pulling with arms
 				output &= !settingIK[i] || (pulling && i < 2);
 			}
 			return output;
@@ -414,8 +415,9 @@ public abstract class PlayerController : MonoBehaviour
 
 		anim.SetBool("Fell", anim.GetBool("Grounded") != grounded && grounded);
 		anim.SetBool("Grounded", grounded);
-		anim.SetBool("Pulling", pulling);
+		anim.SetBool("Pulling", pulling && !climbing);
 		anim.SetBool("Climbing", climbing);
+		anim.SetBool("PullingUp", climbing && pulling);
 		anim.SetBool("Flipped", transform.localEulerAngles.y == 180);
 
 		bool left = InputManager.GetInput(this, PlayerInput.Left, InputType.Held);
@@ -738,6 +740,7 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		bool side = transform.position.x > t.position.x;
 		climbing = true;
+		pulling = true;
 		rBody.simulated = false;
 		rBody.velocity = Vector3.zero;
 		settingIK[(int)IK.RightArm] = true;
@@ -748,6 +751,10 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up, 3f * Time.deltaTime);
 			yield return null;
+			if (pulling && transform.position.y > t.position.y - 1.5f)
+			{
+				pulling = false;
+			}
 		}
 		while (cCollider.bounds.min.y < t.position.y)
 		{
