@@ -176,6 +176,11 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected const float LIMB_MOVE_SPEED = 3f;
 
+	/// <summary>
+	/// The smoothed out animation speed.
+	/// </summary>
+	private const float SMOOTH_ANIM_SPEED = 8F;
+
 	#endregion
 
 	#region Properties
@@ -397,6 +402,11 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetFloat("YVel", rBody.velocity.y);
 		anim.SetFloat("XMag", Mathf.Abs(rBody.velocity.x));
 		anim.SetFloat("YMag", Mathf.Abs(rBody.velocity.y));
+		anim.SetFloat("SmoothXVel", Mathf.MoveTowards(anim.GetFloat("SmoothXVel"), rBody.velocity.x, SMOOTH_ANIM_SPEED * Time.deltaTime));
+		anim.SetFloat("SmoothYVel", Mathf.MoveTowards(anim.GetFloat("SmoothYVel"), rBody.velocity.y, SMOOTH_ANIM_SPEED * Time.deltaTime));
+		anim.SetFloat("SmoothXMag", Mathf.MoveTowards(anim.GetFloat("SmoothXMag"), Mathf.Abs(rBody.velocity.x), SMOOTH_ANIM_SPEED * Time.deltaTime));
+		anim.SetFloat("SmoothYMag", Mathf.MoveTowards(anim.GetFloat("SmoothYMag"), Mathf.Abs(rBody.velocity.y), SMOOTH_ANIM_SPEED * Time.deltaTime));
+
 		anim.SetBool("Fell", anim.GetBool("Grounded") != grounded && grounded);
 		anim.SetBool("Grounded", grounded);
 		anim.SetBool("Pulling", pulling);
@@ -426,7 +436,7 @@ public abstract class PlayerController : MonoBehaviour
 		CheckGrounded(collision);
 	}
 
-	void CheckGrounded(Collision2D collision)
+	protected virtual void CheckGrounded(Collision2D collision)
 	{
 		foreach (ContactPoint2D contact in collision.contacts)
 		{
