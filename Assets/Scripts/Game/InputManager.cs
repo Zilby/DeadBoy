@@ -16,6 +16,7 @@ public enum PlayerInput
 	Jump = 4,
 	Interact = 5,
 	Swap = 6,
+	Pause = 7,
 }
 
 /// <summary>
@@ -47,7 +48,8 @@ public class InputManager : MonoBehaviour
 				new List<KeyCode> { KeyCode.S, KeyCode.DownArrow },
 				new List<KeyCode> { KeyCode.Space },
 				new List<KeyCode> { KeyCode.F, KeyCode.J },
-				new List<KeyCode> { KeyCode.E, KeyCode.Tab }
+				new List<KeyCode> { KeyCode.E, KeyCode.Tab },
+				new List<KeyCode> { KeyCode.Escape },
 			};
 		}
 	}
@@ -280,6 +282,14 @@ public class InputManager : MonoBehaviour
 					}
 				}
 			}
+		}
+
+		CheckPause();
+	}
+
+	void CheckPause() {
+		if (GetInput(MainPlayer, PlayerInput.Pause, InputType.Pressed, false)) {
+			PauseMenu.instance.Pause();
 		}
 	}
 

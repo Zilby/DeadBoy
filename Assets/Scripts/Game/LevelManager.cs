@@ -37,6 +37,11 @@ public class LevelManager : MonoBehaviour
 			default:
 				break;
 		}
+
+#if UNITY_EDITOR
+		Time.timeScale = timescale;
+		Time.fixedDeltaTime = 0.02f * Time.timeScale;
+#endif
 	}
 
 	/// <summary>
@@ -70,9 +75,5 @@ public class LevelManager : MonoBehaviour
 
 	public void Update()
 	{
-#if UNITY_EDITOR
-		Time.timeScale = timescale;
-		Time.fixedDeltaTime = 0.02f * Time.timeScale;
-#endif
 	}
 }
