@@ -74,6 +74,7 @@ public class Fader : MonoBehaviour
 					//FileData.Save();
 				}
 				gameObject.SetActive(true);
+				Time.timeScale =  1;
 				StartCoroutine(FadeInScene(s, w));
 			};
 			Quit = QuitGame;

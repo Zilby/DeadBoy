@@ -47,8 +47,4 @@ public class PauseMenu : MonoBehaviour
 			fadeable.SelfFadeOut();
 		}
 	}
-
-    void OnDestroy() {
-        Time.timeScale = oldTimeScale;
-    }
 }
