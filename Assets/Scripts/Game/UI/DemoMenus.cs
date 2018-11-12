@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DemoMenus : BaseMenu
+public class DemoMenus : MonoBehaviour
 {
 
 	public FadeableUI fadeable;
