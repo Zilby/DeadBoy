@@ -8,4 +8,9 @@ public class DeadboyController : PlayerController
 	{
 		get { return 1; }
 	}
+
+
+	public override string Name { 
+		get { return "Deadboy"; } 
+	}
 }

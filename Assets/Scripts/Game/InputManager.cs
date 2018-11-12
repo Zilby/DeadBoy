@@ -207,7 +207,7 @@ public class InputManager : MonoBehaviour
 		{
 			if (p != MainPlayer)
 			{
-				tips[p] = ToolTips.instance.SetTooltipActive("Press " + p.SORT_VALUE + " to swap characters", p.transform.position + tipOffset);
+				tips[p] = ToolTips.instance.SetTooltipActive("Press " + p.SORT_VALUE + " to control " + p.Name, p.transform.position + tipOffset);
 			}
 			else
 			{
@@ -229,7 +229,7 @@ public class InputManager : MonoBehaviour
 
 				if (swappedTo.IndexOf(lastControlled) < 0)
 				{
-					tips[lastControlled] = ToolTips.instance.SetTooltipActive("Press " + lastControlled.SORT_VALUE + " to swap characters", lastControlled.transform.position + tipOffset);
+					tips[lastControlled] = ToolTips.instance.SetTooltipActive("Press " + lastControlled.SORT_VALUE + " to control " + lastControlled.Name, lastControlled.transform.position + tipOffset);
 				}
 
 				if (swappedTo.IndexOf(MainPlayer) < 0)

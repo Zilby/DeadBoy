@@ -49,6 +49,9 @@ public class DrownedGirlController : PlayerController
 		get { return 2; }
 	}
 
+
+	public override string Name { get { return "Drowned Girl"; } }
+
 	/// <summary>
 	/// The collider for the body of water currently in
 	/// </summary>

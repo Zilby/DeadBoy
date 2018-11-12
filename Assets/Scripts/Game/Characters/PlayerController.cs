@@ -186,6 +186,11 @@ public abstract class PlayerController : MonoBehaviour
 	#region Properties
 
 	/// <summary>
+	/// The character's name 
+	/// </summary>
+	public abstract string Name { get; }
+
+	/// <summary>
 	/// Whether or not the player is currently climbing
 	/// </summary>
 	public bool Climbing
