@@ -28,6 +28,9 @@ public abstract class Interactable : MonoBehaviour
 	[ConditionalHide("movePlayer", true, false, 0, 10)]
 	public float playerMovePosition = 1;
 
+	[StringInList(typeof(SFXManager), "GetSoundFXList")]
+	public string clip;
+
 	[System.NonSerialized]
 	public bool moving = false;
 
@@ -142,6 +145,7 @@ public abstract class Interactable : MonoBehaviour
 	protected virtual void InteractAction(PlayerController p)
 	{
 		p.StartCoroutine(RepositionPlayer(p));
+		SFXManager.instance.PlayClip(clip, delay: (ulong)0.2, location: transform.position);
 	}
 
 	private IEnumerator RepositionPlayer(PlayerController p)

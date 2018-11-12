@@ -23,11 +23,20 @@ public class SFXManager : MonoBehaviour
 	public bool SetUpClips;
 
 	/// <summary>
+	/// Default clip if there's none selected. 
+	/// </summary>
+	private string NO_CLIP 
+	{
+		get { return "None"; }
+	}
+
+	/// <summary>
 	/// Sets up the audio clip list
 	/// </summary>
 	private void LoadClips()
 	{
 		clips = new ClipDict();
+		clips[NO_CLIP] = null;
 		AudioClip[] loaded = Resources.LoadAll<AudioClip>("Audio/SFX/Loose");
 		foreach (AudioClip c in loaded)
 		{
@@ -86,21 +95,24 @@ public class SFXManager : MonoBehaviour
 	public void PlayClip(string clip, float volume = 1, float pitch = 1, ulong delay = 0, Vector3? location = null,
 	                     float spread = 360, float doppler = 1, AudioRolloffMode rm = AudioRolloffMode.Linear, float maxD = 20, float minD = 1)
 	{
-		ClipList clipList = clips[clip];
-		// Get random clip if list is greater than 1.
-		AudioClip a = clipList[UnityEngine.Random.Range(0, clipList.Count - 1)];
-		if (clipList.Count > 1)
+		if (clip != NO_CLIP && clip != null)
 		{
-			if (lastPlayedClips.ContainsKey(clip))
+			ClipList clipList = clips[clip];
+			// Get random clip if list is greater than 1.
+			AudioClip a = clipList[UnityEngine.Random.Range(0, clipList.Count - 1)];
+			if (clipList.Count > 1)
 			{
-				while (a == lastPlayedClips[clip])
+				if (lastPlayedClips.ContainsKey(clip))
 				{
-					a = clipList[UnityEngine.Random.Range(0, clipList.Count - 1)];
+					while (a == lastPlayedClips[clip])
+					{
+						a = clipList[UnityEngine.Random.Range(0, clipList.Count - 1)];
+					}
 				}
 			}
+			lastPlayedClips[clip] = a;
+			StartCoroutine(PlayClip(a, volume, pitch, delay, location, spread, doppler, rm, maxD, minD));
 		}
-		lastPlayedClips[clip] = a;
-		StartCoroutine(PlayClip(a, volume, pitch, delay, location, spread, doppler, rm, maxD, minD));
 	}
 
 
@@ -113,6 +125,7 @@ public class SFXManager : MonoBehaviour
 		GameObject g = new GameObject(a.ToString(), typeof(AudioSource));
 		g.transform.parent = transform;
 		AudioSource s = g.GetComponent<AudioSource>();
+		s.playOnAwake = false;
 		s.clip = a;
 		s.volume = volume;
 		s.pitch = pitch;
@@ -127,7 +140,7 @@ public class SFXManager : MonoBehaviour
 			s.minDistance = minD;
 		}
 		s.loop = false;
-		s.Play(delay);
+		s.PlayDelayed(delay);
 		while (s.isPlaying)
 		{
 			yield return null;
