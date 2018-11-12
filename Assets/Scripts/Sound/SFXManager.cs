@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 /// <summary>
 /// Manages in-game SFX
 /// </summary>
+[ExecuteInEditMode]
 public class SFXManager : MonoBehaviour
 {
 	public static SFXManager instance;
@@ -48,18 +50,32 @@ public class SFXManager : MonoBehaviour
 		}
 	}
 
+	private void Update()
+	{
+		if (!Application.isPlaying)
+		{
+			if (instance == null)
+			{
+				instance = this;
+			}
+		}
+	}
+
 
 	void Awake()
 	{
-		if (instance == null)
+		if (Application.isPlaying)
 		{
-			instance = this;
-			DontDestroyOnLoad(gameObject);
-			lastPlayedClips = new Dictionary<string, AudioClip>();
-		}
-		else
-		{
-			Destroy(gameObject);
+			if (instance == null)
+			{
+				instance = this;
+				DontDestroyOnLoad(gameObject);
+				lastPlayedClips = new Dictionary<string, AudioClip>();
+			}
+			else
+			{
+				Destroy(gameObject);
+			}
 		}
 	}
 
@@ -68,7 +84,7 @@ public class SFXManager : MonoBehaviour
 	/// Plays the clip at the given index. 
 	/// </summary>
 	public void PlayClip(string clip, float volume = 1, float pitch = 1, ulong delay = 0, Vector3? location = null,
-						 float spread = 360, float doppler = 1, AudioRolloffMode rm = AudioRolloffMode.Logarithmic, float maxD = 500, float minD = 1)
+	                     float spread = 360, float doppler = 1, AudioRolloffMode rm = AudioRolloffMode.Linear, float maxD = 20, float minD = 1)
 	{
 		ClipList clipList = clips[clip];
 		// Get random clip if list is greater than 1.
@@ -92,7 +108,7 @@ public class SFXManager : MonoBehaviour
 	/// Plays the given audio clip.
 	/// </summary>
 	public IEnumerator PlayClip(AudioClip a, float volume = 1, float pitch = 1, ulong delay = 0, Vector3? location = null,
-								float spread = 360, float doppler = 1, AudioRolloffMode rm = AudioRolloffMode.Logarithmic, float maxD = 500, float minD = 1)
+								float spread = 360, float doppler = 1, AudioRolloffMode rm = AudioRolloffMode.Linear, float maxD = 20, float minD = 1)
 	{
 		GameObject g = new GameObject(a.ToString(), typeof(AudioSource));
 		g.transform.parent = transform;
@@ -119,4 +135,8 @@ public class SFXManager : MonoBehaviour
 		Destroy(g);
 	}
 
+	public static string[] GetSoundFXList()
+	{
+		return instance.clips.Keys.ToArray();
+	}
 }
