@@ -101,10 +101,6 @@ public class DrownedGirlController : PlayerController
         this.diving = false;
     }
 
-    protected override bool CanJump() {
-        return swimming ? surfaced : base.CanJump();
-    }
-
     protected override void Move() {
         base.Move();
 
@@ -138,9 +134,10 @@ public class DrownedGirlController : PlayerController
 	/// <summary>
 	/// Sets the current state of the animation.
 	/// </summary>
-	protected virtual void SetAnimationState() {
+	protected override void SetAnimationState() {
         base.SetAnimationState();
 
+		anim.SetBool("WasSwimming", anim.GetBool("Swimming"));
 		anim.SetBool("Swimming", swimming);
         anim.SetBool("Diving", diving);
     }
