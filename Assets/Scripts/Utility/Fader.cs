@@ -34,6 +34,8 @@ public class Fader : MonoBehaviour
 	/// </summary>
 	public static SceneLoad SceneEvent;
 
+	public static Func<IEnumerator> Quit;
+
 	private static Fader instance;
 
 	private FadeableUI fadeable;
@@ -74,6 +76,7 @@ public class Fader : MonoBehaviour
 				gameObject.SetActive(true);
 				StartCoroutine(FadeInScene(s, w));
 			};
+			Quit = QuitGame;
 		}
 		else
 		{
@@ -90,6 +93,12 @@ public class Fader : MonoBehaviour
 		SceneManager.LoadScene(scene);
 		yield return new WaitForSecondsRealtime(wait);
 		yield return fadeable.FadeOut(dur: 0.5f);
+	}
+
+	private IEnumerator QuitGame() 
+	{
+		yield return fadeable.FadeIn();
+		Utils.Quit();
 	}
 
 }

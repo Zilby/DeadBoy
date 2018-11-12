@@ -18,6 +18,7 @@ public class LevelManager : MonoBehaviour
 
 	public Levels level;
 
+	[Range(0, 10)]
 	public float timescale = 1;
 
 	private int players;
@@ -25,6 +26,8 @@ public class LevelManager : MonoBehaviour
 	void Awake()
 	{
 		instance = this;
+		Time.timeScale = timescale;
+		Time.fixedDeltaTime = timescale * 0.2f;
 	}
 
 	private void Start()
@@ -37,11 +40,6 @@ public class LevelManager : MonoBehaviour
 			default:
 				break;
 		}
-
-#if UNITY_EDITOR
-		Time.timeScale = timescale;
-		Time.fixedDeltaTime = 0.02f * Time.timeScale;
-#endif
 	}
 
 	/// <summary>
@@ -75,5 +73,13 @@ public class LevelManager : MonoBehaviour
 
 	public void Update()
 	{
+		// For testing in slowmo in-editor.
+#if UNITY_EDITOR
+		if (!PauseMenu.instance.Paused)
+		{
+			Time.timeScale = timescale;
+			Time.fixedDeltaTime = 0.02f * Time.timeScale;
+		}
+#endif
 	}
 }

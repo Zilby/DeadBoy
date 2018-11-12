@@ -1,45 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PauseMenu : BaseMenu
+public class PauseMenu : MonoBehaviour
 {
 	public static PauseMenu instance;
-    void Awake()
+
+	public FadeableUI fadeable;
+
+	public Button resume;
+	public Button menu;
+	public Button quit;
+
+
+	void Awake()
 	{
-        Debug.Log("awake");
 		instance = this;
+		resume.onClick.AddListener(Pause);
+		menu.onClick.AddListener(delegate { Fader.SceneEvent("DemoSplash"); });
+		quit.onClick.AddListener(delegate { StartCoroutine(Fader.Quit()); } );
+	}
+
+	public bool Paused 
+	{
+		get { return paused; }
 	}
 
 	private bool paused;
-    private float oldTimeScale;
-	public void Pause() {
-		if (paused) {
+	private float oldTimeScale;
+
+	public void Pause()
+	{
+		paused = !paused;
+		if (paused)
+		{
 			Time.timeScale = oldTimeScale;
-			ShowMenu(false);
-			paused = false;
-		} else {
-            oldTimeScale = Time.timeScale;
+			fadeable.SelfFadeIn();
+		}
+		else
+		{
+			oldTimeScale = Time.timeScale;
 			Time.timeScale = 0;
-			ShowMenu(true);
-			paused = true;
+			fadeable.SelfFadeOut();
 		}
 	}
-
-    void OnDestroy()
-    {
-        /// to reset the timescale if the scene changes
-        if(paused) {
-            Pause();
-        }
-    }
-
-    /// <summary>
-    /// Activate each of the child objects that comprise the menu.
-    /// </summary>
-    private void ShowMenu(bool show) {
-        foreach (Transform child in transform) {
-            child.gameObject.SetActive(show);
-        }
-    }
 }
