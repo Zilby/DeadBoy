@@ -26,12 +26,12 @@ public class LevelManager : MonoBehaviour
 	void Awake()
 	{
 		instance = this;
-		Time.timeScale = timescale;
-		Time.fixedDeltaTime = timescale * 0.2f;
 	}
 
 	private void Start()
 	{
+		Time.timeScale = timescale;
+		Time.fixedDeltaTime = timescale * 0.02f;
 		switch (level)
 		{
 			case Levels.Sewer:
