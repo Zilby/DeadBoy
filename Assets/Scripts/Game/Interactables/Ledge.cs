@@ -43,7 +43,7 @@ public class Ledge : Interactable
 			yield return null;
 			foreach (KeyCode k in InteractInput)
 			{
-				if (!activateOnExit && Input.GetKey(k))
+				if (!activateOnExit && Input.GetKey(k) && (p.rBody.velocity.y >=0 || p.Grounded || p.Swimming))
 				{
 					InteractAction(p);
 					yield break;

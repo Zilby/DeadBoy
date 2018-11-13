@@ -191,6 +191,22 @@ public abstract class PlayerController : MonoBehaviour
 	public abstract string Name { get; }
 
 	/// <summary>
+	/// Whether or not the player is currently grounded
+	/// </summary>
+	public bool Grounded
+	{
+		get { return grounded; }
+	}
+
+	/// <summary>
+	/// Whether or not the player is currently swimming
+	/// </summary>
+	public bool Swimming
+	{
+		get { return swimming; }
+	}
+
+	/// <summary>
 	/// Whether or not the player is currently climbing
 	/// </summary>
 	public bool Climbing
