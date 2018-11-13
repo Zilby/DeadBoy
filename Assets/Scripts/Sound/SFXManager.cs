@@ -140,6 +140,8 @@ public class SFXManager : MonoBehaviour
 			s.minDistance = minD;
 		}
 		s.loop = false;
+		// Have to add after initializing audio source. 
+		g.AddComponent<AudioVarier>();
 		s.PlayDelayed(delay);
 		while (s.isPlaying)
 		{

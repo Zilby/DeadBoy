@@ -10,7 +10,7 @@ using UnityEngine.Sprites;
 /// </summary>
 public abstract class PlayerController : MonoBehaviour
 {
-	protected enum IK
+	public enum IK
 	{
 		RightArm = 0,
 		LeftArm = 1,
@@ -443,7 +443,13 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetBool("AnyInput", left || right);
 	}
 
-	///
+	/// <summary>
+	/// Plays a footstep sound effect for the given IK
+	/// </summary>
+	public virtual void Footstep(IK ik) 
+	{
+		//SFXManager.instance.PlayClip("DBFootstepsRock", location: iKLimbs[(int)ik].transform.position);
+	}
 
 	#endregion
 
