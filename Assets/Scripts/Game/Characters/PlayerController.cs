@@ -132,6 +132,11 @@ public abstract class PlayerController : MonoBehaviour
 	protected Pickup.Type currentPickup = Pickup.Type.none;
 
 	/// <summary>
+	/// The held object.
+	/// </summary>
+	protected GameObject heldObject;
+
+	/// <summary>
 	/// Action to be called once an object is interacted with. 
 	/// </summary>
 	protected Action interactAction;
@@ -720,6 +725,7 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			objectLocation.parent = iKLimbs[(int)IK.RightArm].transform;
 			currentPickup = p;
+			heldObject = objectLocation.gameObject;
 		};
 	}
 
@@ -752,7 +758,7 @@ public abstract class PlayerController : MonoBehaviour
 	public void UsePickup()
 	{
 		currentPickup = Pickup.Type.none;
-		Destroy(objectLocation.gameObject);
+		Destroy(heldObject);
 	}
 
 	/// <summary>
