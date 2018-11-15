@@ -453,7 +453,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public virtual void Footstep(IK ik) 
 	{
-		//SFXManager.instance.PlayClip("DBFootstepsRock", location: iKLimbs[(int)ik].transform.position);
+		SFXManager.instance.PlayClip("DBFootstepsRock", location: iKLimbs[(int)ik].transform.position);
 	}
 
 	#endregion
