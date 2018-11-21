@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Anima2D;
 using InControl;
 using UnityEngine;
@@ -43,59 +45,73 @@ public class DBInputManager : MonoBehaviour
 	public static DBInputManager instance;
 
 	/// <summary>
-	/// Whether the game is in coop mode.
+	/// Gets the main player.
 	/// </summary>
-	public static bool coOpEnabled = false;
+	public static PlayerController MainPlayer
+	{
+		get
+		{
+			if (controllers.Count > 0)
+			{
+				foreach (PlayerController p in players.Keys)
+				{
+					if (players[p] == controllers[0])
+					{
+						return p;
+					}
+				}
+			}
+			return null;
+		}
+	}
 
 	/// <summary>
-	/// The first (primary) player. 
+	/// All of the available player controllers. 
 	/// </summary>
-	public static PlayerController player1;
+	public static List<ControllerActions> controllers = new List<ControllerActions>();
 
 	/// <summary>
-	/// All of the available players.
+	/// All of the available players and their associated controller actions
 	/// </summary>
-	public static PlayerController[] players = new PlayerController[10];
+	public static Dictionary<PlayerController, ControllerActions> players = new Dictionary<PlayerController, ControllerActions>();
 
-	/// <summary>
-	/// Dictionary of players to their assigned input device. 
-	/// </summary>
-	public static Dictionary<PlayerController, ControllerActions> inputDevices = new Dictionary<PlayerController, ControllerActions>();
 
 	#endregion
 
 	#region Functions
 
 	/// <summary>
-	/// Sets up the given player to send input with the given controller. 
+	/// Sets up a new controller with the given characteristics. 
 	/// </summary>
-	public static void SetUpPlayer(PlayerController p, bool keyboard, bool usesEventSystem)
+	public static ControllerActions SetUpController(bool keyboard, bool usesEventSystem)
 	{
-		inputDevices[p] = new ControllerActions();
+		ControllerActions c = new ControllerActions();
 
 		if (keyboard)
 		{
-			inputDevices[p].Device = null;
+			c.Device = null;
 		}
 		else
 		{
-			inputDevices[p].Device = InputManager.ActiveDevice;
-			inputDevices[p].SetControllerBindings();
+			c.Device = InputManager.ActiveDevice;
+			c.SetControllerBindings();
 		}
 		if (usesEventSystem)
 		{
 			InControlInputModule ICIM = EventSystem.current.GetComponent<InControlInputModule>();
 			if (keyboard)
 			{
-				ICIM.SubmitAction = inputDevices[p].actions[PlayerInput.None];
-				ICIM.CancelAction = inputDevices[p].actions[PlayerInput.None];
+				ICIM.SubmitAction = c.actions[PlayerInput.None];
+				ICIM.CancelAction = c.actions[PlayerInput.None];
 			}
 			else
 			{
-				ICIM.SubmitAction = inputDevices[p].actions[PlayerInput.Submit];
-				ICIM.CancelAction = inputDevices[p].actions[PlayerInput.Cancel];
+				ICIM.SubmitAction = c.actions[PlayerInput.Submit];
+				ICIM.CancelAction = c.actions[PlayerInput.Cancel];
 			}
 		}
+
+		return c;
 	}
 
 	/// <summary>
@@ -103,14 +119,12 @@ public class DBInputManager : MonoBehaviour
 	/// Optionally sets the character as the controlled one.
 	/// Should be called in awake
 	/// </summary>
-	public static void Register(PlayerController pc, bool main)
+	public static void Register(PlayerController pc, int initial)
 	{
-		players[pc.SORT_VALUE] = pc;
-		inputDevices[pc] = null;
-		if (main)
+		players[pc] = null;
+		if (initial >= 0 && initial < controllers.Count)
 		{
-			player1 = pc;
-			SetUpPlayer(pc, true, true);
+			players[pc] = controllers[initial];
 		}
 	}
 
@@ -119,8 +133,7 @@ public class DBInputManager : MonoBehaviour
 	/// </summary>
 	public static void Unregister(PlayerController pc)
 	{
-		players[pc.SORT_VALUE] = null;
-		inputDevices.Remove(pc);
+		players.Remove(pc);
 	}
 
 	/// <summary>
@@ -132,9 +145,9 @@ public class DBInputManager : MonoBehaviour
 	/// <param name="moveInput">Whether or not the player must be accepting move input.</param>
 	public static bool GetInput(PlayerController pc, PlayerInput input, InputType type, bool moveInput = true)
 	{
-		if (inputDevices[pc] != null && (!moveInput || pc.AcceptingMoveInput))
+		if (players[pc] != null && (!moveInput || pc.AcceptingMoveInput))
 		{
-			return GetInput(inputDevices[pc], input, type);
+			return GetInput(players[pc], input, type);
 		}
 		return false;
 	}
@@ -177,11 +190,11 @@ public class DBInputManager : MonoBehaviour
 	/// <param name="input">The input to be receieved.</param>
 	public static PlayerController GetInput(PlayerInput input, InputType type, bool moveInput = false)
 	{
-		foreach (PlayerController c in inputDevices.Keys)
+		foreach (PlayerController p in players.Keys)
 		{
-			if (GetInput(c, input, type, moveInput))
+			if (GetInput(p, input, type, moveInput))
 			{
-				return c;
+				return p;
 			}
 		}
 		return null;
@@ -192,9 +205,9 @@ public class DBInputManager : MonoBehaviour
 	/// </summary>
 	public static string GetInputName(PlayerController pc, PlayerInput input)
 	{
-		if (inputDevices[pc] != null)
+		if (players[pc] != null)
 		{
-			if (inputDevices[pc].Device == null)
+			if (players[pc].Device == null)
 			{
 				return SaveManager.saveData.input.KeyBindings[(int)input][0].ToString();
 			}
@@ -212,12 +225,8 @@ public class DBInputManager : MonoBehaviour
 	/// </summary>
 	private static void UserSwappedPlayers(PlayerController newP, PlayerController oldP)
 	{
-		if (player1 == oldP)
-		{
-			player1 = newP;
-		}
-		inputDevices[newP] = inputDevices[oldP];
-		inputDevices[oldP] = null;
+		players[newP] = players[oldP];
+		players[oldP] = null;
 		foreach (SpriteMeshInstance s in oldP.Sprites)
 		{
 			s.sortingOrder -= 1000 * oldP.SORT_VALUE;
@@ -252,6 +261,7 @@ public class DBInputManager : MonoBehaviour
 		if (instance == null)
 		{
 			instance = this;
+			controllers.Add(SetUpController(true, true));
 			DontDestroyOnLoad(gameObject);
 		}
 		else
@@ -359,47 +369,59 @@ public class DBInputManager : MonoBehaviour
 
 	void Update()
 	{
-		PlayerController c = GetInput(PlayerInput.Swap, InputType.Pressed);
-		if (c != null)
+		// Cycle Players on input
+		PlayerController player = GetInput(PlayerInput.Swap, InputType.Pressed);
+		if (player != null)
 		{
-			int curr = c.SORT_VALUE + 1;
-			while (players[curr] == null)
+			List<PlayerController> sortedPlayers = players.Keys.ToList();
+			sortedPlayers.Sort(delegate (PlayerController p1, PlayerController p2)
 			{
-				curr += 1;
-				if (curr >= players.Length)
+				if (p1.SORT_VALUE < p2.SORT_VALUE)
 				{
-					curr = 0;
+					return 1;
 				}
+				else if (p1.SORT_VALUE > p2.SORT_VALUE)
+				{
+					return -1;
+				}
+				return 0;
+			});
+			int curr = sortedPlayers.IndexOf(player) + 1;
+			if (curr >= sortedPlayers.Count)
+			{
+				curr = 0;
 			}
-			while (curr != c.SORT_VALUE)
+			while (sortedPlayers[curr] != player)
 			{
-				while (players[curr] == null)
+				if (players[sortedPlayers[curr]] == null)
 				{
-					curr += 1;
-					if (curr >= players.Length)
-					{
-						curr = 0;
-					}
-				}
-				if (inputDevices[players[curr]] == null)
-				{
-					UserSwappedPlayers(players[curr], c);
+					UserSwappedPlayers(sortedPlayers[curr], player);
 					break;
 				}
+				curr += 1;
+				if (curr >= sortedPlayers.Count)
+				{
+						curr = 0;
+				}
 			}
-
 		}
 		// Set individual player based on hitting their sort value number key. 
 		for (int i = 0; i < Utils.keyCodes.Length; i++)
 		{
 			if (Input.GetKeyDown(Utils.keyCodes[i]))
 			{
-				foreach (PlayerController p in players)
+				foreach (PlayerController p in players.Keys)
 				{
-					if (inputDevices[p] != null && inputDevices[p].Device == null && inputDevices[players[i]] == null)
+					if (players[p] != null && players[p].Device == null)
 					{
-						UserSwappedPlayers(players[i], p);
-						break;
+						foreach (PlayerController p2 in players.Keys)
+						{
+							if (p2.SORT_VALUE == i && p != p2)
+							{
+								UserSwappedPlayers(p2, p);
+								break;
+							}
+						}
 					}
 				}
 			}

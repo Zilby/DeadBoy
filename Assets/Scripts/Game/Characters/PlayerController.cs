@@ -37,9 +37,9 @@ public abstract class PlayerController : MonoBehaviour
 
 	[Header("Characteristics")]
 	/// <summary>
-	/// Whether or not this is the main player when starting the level. 
+	/// The initial controller starting with this player.
 	/// </summary>
-	public bool isMainPlayer = false;
+	public int initialPlayer = 0;
 
 	[Header("Movement")]
 	/// <summary>
@@ -305,7 +305,6 @@ public abstract class PlayerController : MonoBehaviour
 		rBody = rBody == null ? GetComponent<Rigidbody2D>() : rBody;
 		cCollider = cCollider == null ? GetComponent<CapsuleCollider2D>() : cCollider;
 		anim = anim == null ? GetComponent<Animator>() : anim;
-		DBInputManager.Register(this, isMainPlayer);
 	}
 
 	protected virtual void OnDestroy()
@@ -315,6 +314,7 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual void Start()
 	{
+		DBInputManager.Register(this, initialPlayer);
 		jumpStart = Time.fixedTime - 100f;
 		foreach (SpriteMeshInstance s in Sprites)
 		{

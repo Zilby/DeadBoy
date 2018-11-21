@@ -39,7 +39,7 @@ public class CameraController : MonoBehaviour
 	{
 		get
 		{
-			Transform t = DBInputManager.player1.transform;
+			Transform t = DBInputManager.MainPlayer.transform;
 			if (followTransform != null) 
 			{
 				t = followTransform;
