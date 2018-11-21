@@ -89,19 +89,16 @@ public class SongManager : AudioManager<SongManager, LoopableClip>
 	protected override void Update()
 	{
 		base.Update();
-		if (!Application.isPlaying)
+		int nextSource = 1 - currentSource;
+		if (loopTime != 0)
 		{
-			int nextSource = 1 - currentSource;
-			if (loopTime != 0)
+			if (!s[nextSource].isPlaying)
 			{
-				if (!s[nextSource].isPlaying)
-				{
-					time = time + loopTime;
-					s[nextSource].clip = s[currentSource].clip;
-					s[nextSource].loop = false;
-					s[nextSource].PlayScheduled(time);
-					currentSource = nextSource;
-				}
+				time = time + loopTime;
+				s[nextSource].clip = s[currentSource].clip;
+				s[nextSource].loop = false;
+				s[nextSource].PlayScheduled(time);
+				currentSource = nextSource;
 			}
 		}
 	}
