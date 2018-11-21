@@ -46,6 +46,9 @@ public abstract class AudioManager<T, D> : MonoBehaviour
 	protected abstract void LoadClips();
 
 
+	/// <summary>
+	/// Singleton in-game stuff. 
+	/// </summary>
 	protected virtual void Awake()
 	{
 		if (Application.isPlaying)
@@ -53,10 +56,26 @@ public abstract class AudioManager<T, D> : MonoBehaviour
 			if (instance == null)
 			{
 				Initialize();
+				DontDestroyOnLoad(gameObject);
 			}
 			else
 			{
 				Destroy(gameObject);
+			}
+		}
+	}
+
+
+	/// <summary>
+	/// Singleton in-editor stuff. 
+	/// </summary>
+	protected virtual void Update()
+	{
+		if (!Application.isPlaying)
+		{
+			if (instance == null)
+			{
+				Initialize();
 			}
 		}
 	}
@@ -68,18 +87,5 @@ public abstract class AudioManager<T, D> : MonoBehaviour
 	protected virtual void Initialize() 
 	{
 		instance = this as T;
-		DontDestroyOnLoad(gameObject);
-	}
-
-
-	protected virtual void Update()
-	{
-		if (!Application.isPlaying)
-		{
-			if (instance == null)
-			{
-				instance = this as T;
-			}
-		}
 	}
 }
