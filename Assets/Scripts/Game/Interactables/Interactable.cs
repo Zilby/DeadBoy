@@ -28,7 +28,7 @@ public abstract class Interactable : MonoBehaviour
 	[ConditionalHide("movePlayer", true, false, 0, 10)]
 	public float playerMovePosition = 1;
 
-	[StringInList(typeof(SFXManager), "GetSoundFXList")]
+	[StringInList(typeof(SFXManager), "GetClipList")]
 	public string clip;
 
 	[System.NonSerialized]

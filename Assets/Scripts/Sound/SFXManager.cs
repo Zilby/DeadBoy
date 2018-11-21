@@ -5,35 +5,30 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
+
+[Serializable] public class ClipList : ListWrapper<AudioClip> { }
+
 /// <summary>
 /// Manages in-game SFX
 /// </summary>
-[ExecuteInEditMode]
-public class SFXManager : MonoBehaviour
+public class SFXManager : AudioManager<SFXManager, ClipList>
 {
-	public static SFXManager instance;
-
-	public AudioMixerGroup sfxGroup;
-	[Serializable] public class ClipList : ListWrapper<AudioClip> { }
 	[Serializable] public class ClipDict : SerializableDictionary<string, ClipList> { }
 	public ClipDict clips;
-	private Dictionary<string, AudioClip> lastPlayedClips;
 
-	[InspectorButton("LoadClips")]
-	public bool SetUpClips;
-
-	/// <summary>
-	/// Default clip if there's none selected. 
-	/// </summary>
-	private string NO_CLIP 
+	protected override Dictionary<string, ClipList> Clips
 	{
-		get { return "None"; }
+		get { return clips; }
 	}
+
+	public AudioMixerGroup sfxGroup;
+
+	private Dictionary<string, AudioClip> lastPlayedClips;
 
 	/// <summary>
 	/// Sets up the audio clip list
 	/// </summary>
-	private void LoadClips()
+	protected override void LoadClips()
 	{
 		clips = new ClipDict();
 		clips[NO_CLIP] = null;
@@ -59,33 +54,10 @@ public class SFXManager : MonoBehaviour
 		}
 	}
 
-	private void Update()
+	protected override void Initialize()
 	{
-		if (!Application.isPlaying)
-		{
-			if (instance == null)
-			{
-				instance = this;
-			}
-		}
-	}
-
-
-	void Awake()
-	{
-		if (Application.isPlaying)
-		{
-			if (instance == null)
-			{
-				instance = this;
-				DontDestroyOnLoad(gameObject);
-				lastPlayedClips = new Dictionary<string, AudioClip>();
-			}
-			else
-			{
-				Destroy(gameObject);
-			}
-		}
+		base.Initialize();
+		lastPlayedClips = new Dictionary<string, AudioClip>();
 	}
 
 
@@ -148,10 +120,5 @@ public class SFXManager : MonoBehaviour
 			yield return null;
 		}
 		Destroy(g);
-	}
-
-	public static string[] GetSoundFXList()
-	{
-		return instance.clips.Keys.ToArray();
 	}
 }

@@ -7,7 +7,7 @@ public class SoundOnCollision : MonoBehaviour
 {
 	public ParticleSystem part;
 
-	[StringInList(typeof(SFXManager), "GetSoundFXList")]
+	[StringInList(typeof(SFXManager), "GetClipList")]
 	public string clip;
 
 	[Range(0.01f, 10f)]

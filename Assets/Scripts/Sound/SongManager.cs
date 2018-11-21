@@ -2,26 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
+public class LoopableClip
+{
+	public AudioClip clip;
+	public float loopTime;
+}
+
 /// <summary>
 /// Manages the in-game songs. 
 /// </summary>
-public class SongManager : MonoBehaviour
+public class SongManager : AudioManager<SongManager, LoopableClip>
 {
-	public enum Songs
+	[Serializable] public class ClipDict : SerializableDictionary<string, LoopableClip> { }
+	public ClipDict clips;
+
+	protected override Dictionary<string, LoopableClip> Clips
 	{
-		Sewers = 0,
+		get { return clips; }
 	}
 
-	public static SongManager instance;
-
-	[Serializable]
-	public struct LoopableClip
+	/// <summary>
+	/// Sets up the audio clip list
+	/// </summary>
+	protected override void LoadClips()
 	{
-		public AudioClip clip;
-		public float loopTime;
+		ClipDict newClips = new ClipDict();
+		newClips[NO_CLIP] = null;
+		AudioClip[] loaded = Resources.LoadAll<AudioClip>("Audio/Music");
+		foreach (AudioClip c in loaded)
+		{
+			LoopableClip l = new LoopableClip();
+			l.clip = c;
+			if (clips != null && clips.ContainsKey(c.name))
+			{
+				l.loopTime = clips[c.name].loopTime;
+			}
+			newClips[c.name] = l;
+		}
+		clips = newClips;
 	}
-
-	public List<LoopableClip> clips;
 
 	/// <summary>
 	/// List of audio sources. 
@@ -38,29 +58,24 @@ public class SongManager : MonoBehaviour
 	/// </summary>
 	private float loopTime = 0;
 
+	/// <summary>
+	/// The AudioSetting.dspTime at the start of the current song / loop. 
+	/// </summary>
 	private double time;
 
-	void Awake()
+	protected override void Initialize()
 	{
-		if (instance == null)
-		{
-			instance = this;
-			DontDestroyOnLoad(gameObject);
-			s = GetComponents<AudioSource>();
-		}
-		else
-		{
-			Destroy(gameObject);
-		}
+		base.Initialize();
+		s = GetComponents<AudioSource>();
 	}
 
 	/// <summary>
 	/// Plays the clip at the given index. 
 	/// </summary>
-	public void PlaySong(Songs song)
+	public void PlaySong(string song)
 	{
-		LoopableClip l = clips[(int)song];
-		if (s[currentSource].clip != l.clip)
+		LoopableClip l = clips[song];
+		if (song != NO_CLIP && s[currentSource].clip != l.clip)
 		{
 			s[currentSource].Stop();
 			s[currentSource].clip = l.clip;
@@ -71,18 +86,22 @@ public class SongManager : MonoBehaviour
 		}
 	}
 
-	void Update()
+	protected override void Update()
 	{
-		int nextSource = 1 - currentSource;
-		if (loopTime != 0)
+		base.Update();
+		if (!Application.isPlaying)
 		{
-			if (!s[nextSource].isPlaying)
+			int nextSource = 1 - currentSource;
+			if (loopTime != 0)
 			{
-				time = time + loopTime;
-				s[nextSource].clip = s[currentSource].clip;
-				s[nextSource].loop = false;
-				s[nextSource].PlayScheduled(time);
-				currentSource = nextSource;
+				if (!s[nextSource].isPlaying)
+				{
+					time = time + loopTime;
+					s[nextSource].clip = s[currentSource].clip;
+					s[nextSource].loop = false;
+					s[nextSource].PlayScheduled(time);
+					currentSource = nextSource;
+				}
 			}
 		}
 	}

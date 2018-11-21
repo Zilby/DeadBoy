@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class DemoMenus : MonoBehaviour
 {
+	[StringInList(typeof(SongManager), "GetClipList")]
+	public string song;
 
 	public FadeableUI fadeable;
 
@@ -14,8 +16,9 @@ public class DemoMenus : MonoBehaviour
 
 	private void Awake()
 	{
-		if (SongManager.instance != null) {
-			SongManager.instance.PlaySong(SongManager.Songs.Sewers);
+		if (SongManager.instance != null) 
+		{
+			SongManager.instance.PlaySong(song);
 		}
 		
 		if (play != null) {

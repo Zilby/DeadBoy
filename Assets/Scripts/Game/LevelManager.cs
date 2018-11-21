@@ -16,6 +16,9 @@ public class LevelManager : MonoBehaviour
 		Sewer,
 	}
 
+	[StringInList(typeof(SongManager), "GetClipList")]
+	public string song;
+
 	public Levels level;
 
 	[Range(0, 10)]
@@ -35,7 +38,7 @@ public class LevelManager : MonoBehaviour
 		switch (level)
 		{
 			case Levels.Sewer:
-				SongManager.instance.PlaySong(SongManager.Songs.Sewers);
+				SongManager.instance.PlaySong(song);
 				break;
 			default:
 				break;
