@@ -53,13 +53,7 @@ public class DBInputManager : MonoBehaviour
 		{
 			if (controllers.Count > 0)
 			{
-				foreach (PlayerController p in players.Keys)
-				{
-					if (players[p] == controllers[0])
-					{
-						return p;
-					}
-				}
+				return players.Keys.FirstOrDefault(p => players[p] == controllers[0]);
 			}
 			return null;
 		}
@@ -190,14 +184,7 @@ public class DBInputManager : MonoBehaviour
 	/// <param name="input">The input to be receieved.</param>
 	public static PlayerController GetInput(PlayerInput input, InputType type, bool moveInput = false)
 	{
-		foreach (PlayerController p in players.Keys)
-		{
-			if (GetInput(p, input, type, moveInput))
-			{
-				return p;
-			}
-		}
-		return null;
+		return players.Keys.FirstOrDefault(p => GetInput(p, input, type, moveInput));
 	}
 
 	/// <summary>
@@ -217,6 +204,61 @@ public class DBInputManager : MonoBehaviour
 			}
 		}
 		return "None";
+	}
+
+
+	/// <summary>
+	/// Cycles the players on input.
+	/// </summary>
+	private static void CyclePlayers()
+	{
+		PlayerController player = GetInput(PlayerInput.Swap, InputType.Pressed);
+		if (player != null)
+		{
+			List<PlayerController> sortedPlayers = players.Keys.ToList();
+			sortedPlayers.Sort(delegate (PlayerController p1, PlayerController p2)
+			{
+				if (p1.SORT_VALUE < p2.SORT_VALUE)
+				{
+					return 1;
+				}
+				else if (p1.SORT_VALUE > p2.SORT_VALUE)
+				{
+					return -1;
+				}
+				return 0;
+			});
+			PlayerController newP = sortedPlayers.FirstOrDefault(
+				p => (p != player && players[p] == null &&
+				      ((sortedPlayers.IndexOf(p) == sortedPlayers.IndexOf(player) + 1) || 
+				       (sortedPlayers.IndexOf(p) == 0 && sortedPlayers.IndexOf(player) == sortedPlayers.Count - 1))));
+			if (newP != null)
+			{
+				UserSwappedPlayers(newP, player);
+			}
+		}
+	}
+
+
+	/// <summary>
+	/// Set individual player based on hitting their sort value number key. 
+	/// </summary>
+	private static void SelectPlayerByNumber()
+	{
+		for (int i = 0; i < Utils.keyCodes.Length; i++)
+		{
+			if (Input.GetKeyDown(Utils.keyCodes[i]))
+			{
+				PlayerController current = players.Keys.FirstOrDefault(p => (players[p] != null && players[p].Device == null));
+				if (current != null) {
+					PlayerController newP = players.Keys.FirstOrDefault(p => p.SORT_VALUE == i && current != p);
+					if (newP != null) {
+						UserSwappedPlayers(newP, current);
+						break;
+					}
+				}
+			}
+		}
 	}
 
 
@@ -270,14 +312,10 @@ public class DBInputManager : MonoBehaviour
 		}
 	}
 
-	/*
-
-	void Start()
-	{
-		StartCoroutine(GeneralTutorial());
-	}
-
-	protected IEnumerator GeneralTutorial()
+	/// <summary>
+	/// General tutorial for the game. 
+	/// </summary>
+	public IEnumerator GeneralTutorial()
 	{
 		yield return new WaitForSeconds(1.0f);
 		yield return MovementTutorial();
@@ -285,11 +323,14 @@ public class DBInputManager : MonoBehaviour
 		yield return SwapTutorial();
 	}
 
-	protected IEnumerator MovementTutorial()
+	/// <summary>
+	/// Tutorial for how to move. 
+	/// </summary>
+	public IEnumerator MovementTutorial()
 	{
 		Vector3 tipOffset = new Vector3(0.0f, 2.7f, 0.0f);
-		int t = ToolTips.instance.SetTooltipActive("Press " + KeyBindings[(int)PlayerInput.Left][0] + " and " +
-										   KeyBindings[(int)PlayerInput.Right][0] + " to move", MainPlayer.transform.position + tipOffset);
+		int t = ToolTips.instance.SetTooltipActive("Press " + GetInputName(MainPlayer, PlayerInput.Left) + " and " +
+												   GetInputName(MainPlayer, PlayerInput.Right) + " to move", MainPlayer.transform.position + tipOffset);
 		while (!GetInput(MainPlayer, PlayerInput.Left, InputType.Held) && !GetInput(MainPlayer, PlayerInput.Right, InputType.Held))
 		{
 			yield return null;
@@ -299,7 +340,7 @@ public class DBInputManager : MonoBehaviour
 
 		yield return new WaitForSeconds(0.3f);
 
-		t = ToolTips.instance.SetTooltipActive("Press " + KeyBindings[(int)PlayerInput.Jump][0] + " to jump", MainPlayer.transform.position + tipOffset);
+		t = ToolTips.instance.SetTooltipActive("Press " + GetInputName(MainPlayer, PlayerInput.Jump) + " to jump", MainPlayer.transform.position + tipOffset);
 		while (!GetInput(MainPlayer, PlayerInput.Jump, InputType.Held))
 		{
 			ToolTips.instance.SetTooltipPosition(t, MainPlayer.transform.position + tipOffset);
@@ -309,15 +350,17 @@ public class DBInputManager : MonoBehaviour
 		ToolTips.instance.SetTooltipInactive(t);
 	}
 
-
-	protected IEnumerator SwapTutorial()
+	/// <summary>
+	/// Tutorial for swapping. 
+	/// </summary>
+	public IEnumerator SwapTutorial()
 	{
 		Vector3 tipOffset = new Vector3(0.0f, 2.7f, 0.0f);
 		List<PlayerController> swappedTo = new List<PlayerController>();
 		Dictionary<PlayerController, int> tips = new Dictionary<PlayerController, int>();
 		PlayerController lastControlled = MainPlayer;
 
-		foreach (PlayerController p in players)
+		foreach (PlayerController p in players.Keys)
 		{
 			if (p != MainPlayer)
 			{
@@ -328,7 +371,6 @@ public class DBInputManager : MonoBehaviour
 				tips[p] = -1;
 			}
 		}
-
 
 		while (swappedTo.Count < players.Count)
 		{
@@ -356,7 +398,7 @@ public class DBInputManager : MonoBehaviour
 
 		yield return new WaitForSeconds(0.3f);
 
-		int tabTip = ToolTips.instance.SetTooltipActive("Press " + KeyBindings[(int)PlayerInput.Swap][0] + " to cycle characters", MainPlayer.transform.position + tipOffset);
+		int tabTip = ToolTips.instance.SetTooltipActive("Press " + GetInputName(MainPlayer, PlayerInput.Swap) + " to cycle characters", MainPlayer.transform.position + tipOffset);
 		while (MainPlayer == lastControlled)
 		{
 			ToolTips.instance.SetTooltipPosition(tabTip, MainPlayer.transform.position + tipOffset);
@@ -364,69 +406,12 @@ public class DBInputManager : MonoBehaviour
 		}
 		ToolTips.instance.SetTooltipInactive(tabTip);
 	}
-	*/
 
 
 	void Update()
 	{
-		// Cycle Players on input
-		PlayerController player = GetInput(PlayerInput.Swap, InputType.Pressed);
-		if (player != null)
-		{
-			List<PlayerController> sortedPlayers = players.Keys.ToList();
-			sortedPlayers.Sort(delegate (PlayerController p1, PlayerController p2)
-			{
-				if (p1.SORT_VALUE < p2.SORT_VALUE)
-				{
-					return 1;
-				}
-				else if (p1.SORT_VALUE > p2.SORT_VALUE)
-				{
-					return -1;
-				}
-				return 0;
-			});
-			int curr = sortedPlayers.IndexOf(player) + 1;
-			if (curr >= sortedPlayers.Count)
-			{
-				curr = 0;
-			}
-			while (sortedPlayers[curr] != player)
-			{
-				if (players[sortedPlayers[curr]] == null)
-				{
-					UserSwappedPlayers(sortedPlayers[curr], player);
-					break;
-				}
-				curr += 1;
-				if (curr >= sortedPlayers.Count)
-				{
-						curr = 0;
-				}
-			}
-		}
-		// Set individual player based on hitting their sort value number key. 
-		for (int i = 0; i < Utils.keyCodes.Length; i++)
-		{
-			if (Input.GetKeyDown(Utils.keyCodes[i]))
-			{
-				foreach (PlayerController p in players.Keys)
-				{
-					if (players[p] != null && players[p].Device == null)
-					{
-						foreach (PlayerController p2 in players.Keys)
-						{
-							if (p2.SORT_VALUE == i && p != p2)
-							{
-								UserSwappedPlayers(p2, p);
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-
+		CyclePlayers();
+		SelectPlayerByNumber();
 		CheckPause();
 	}
 

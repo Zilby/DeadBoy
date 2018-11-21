@@ -44,6 +44,7 @@ public class LevelManager : MonoBehaviour
 		{
 			case Levels.Sewer:
 				SongManager.instance.PlaySong(song);
+				StartCoroutine(DBInputManager.instance.GeneralTutorial());
 				break;
 			default:
 				break;
