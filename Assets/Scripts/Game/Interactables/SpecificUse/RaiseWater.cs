@@ -11,9 +11,9 @@ public class RaiseWater : Interactable
 	public Transform t;
 	public Vector3 movePosition;
 
-	protected override string Tip
+	protected override string Tip(PlayerController p)
 	{
-		get { return "Press " + InteractInput[0].ToString() + " To Pull"; }
+		return "Press " + DBInputManager.GetInputName(p, InteractInput) + " To Pull";
 	}
 
 	protected override void InteractAction(PlayerController p)

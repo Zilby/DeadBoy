@@ -24,6 +24,11 @@ public class LevelManager : MonoBehaviour
 	[Range(0, 10)]
 	public float timescale = 1;
 
+	/// <summary>
+	/// The number of players required to proceed to the next level. 
+	/// </summary>
+	public int requiredPlayers = 1;
+
 	private int players;
 
 	void Awake()
@@ -56,7 +61,7 @@ public class LevelManager : MonoBehaviour
 	public void OnTriggerEnter2D(Collider2D other)
 	{
 		players += 1;
-		if (players == InputManager.players.Count)
+		if (players == requiredPlayers)
 		{
 			switch (level)
 			{

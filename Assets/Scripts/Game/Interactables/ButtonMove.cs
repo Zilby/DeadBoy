@@ -11,9 +11,9 @@ public class ButtonMove : Interactable
 
 	public Transform t;
 
-	protected override string Tip
+	protected override string Tip(PlayerController p)
 	{
-		get { return "Press " + InteractInput[0].ToString() + " To Press"; }
+		return "Press " + DBInputManager.GetInputName(p, InteractInput) + " To Press";
 	}
 
 	protected override void InteractAction(PlayerController p)

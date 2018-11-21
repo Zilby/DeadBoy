@@ -15,9 +15,9 @@ public class Ledge : Interactable
 	/// <summary>
 	/// The input needed to activate this interactable. 
 	/// </summary>
-	protected override List<KeyCode> InteractInput
+	protected override PlayerInput InteractInput
 	{
-		get { return InputManager.KeyBindings[(int)PlayerInput.Jump]; }
+		get { return PlayerInput.Jump; }
 	}
 
 	/// <summary>
@@ -31,7 +31,7 @@ public class Ledge : Interactable
 	/// <summary>
 	/// Gets the tip.
 	/// </summary>
-	protected override string Tip { get { return null; }}
+	protected override string Tip(PlayerController p) { return null; }
 
 	/// <summary>
 	/// Checks for player input. 
@@ -41,13 +41,10 @@ public class Ledge : Interactable
 		for (; ; )
 		{
 			yield return null;
-			foreach (KeyCode k in InteractInput)
+			if (!activateOnExit && DBInputManager.GetInput(p, InteractInput, InputType.Pressed) && (p.rBody.velocity.y >= 0 || p.Grounded || p.Swimming))
 			{
-				if (!activateOnExit && Input.GetKey(k) && (p.rBody.velocity.y >=0 || p.Grounded || p.Swimming))
-				{
-					InteractAction(p);
-					yield break;
-				}
+				InteractAction(p);
+				yield break;
 			}
 		}
 	}
@@ -72,7 +69,8 @@ public class Ledge : Interactable
 	}
 
 
-	protected IEnumerator DelayedClimb(PlayerController p) {
+	protected IEnumerator DelayedClimb(PlayerController p)
+	{
 		while (moving)
 		{
 			yield return null;

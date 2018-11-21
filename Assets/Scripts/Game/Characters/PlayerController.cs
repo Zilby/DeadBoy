@@ -305,12 +305,12 @@ public abstract class PlayerController : MonoBehaviour
 		rBody = rBody == null ? GetComponent<Rigidbody2D>() : rBody;
 		cCollider = cCollider == null ? GetComponent<CapsuleCollider2D>() : cCollider;
 		anim = anim == null ? GetComponent<Animator>() : anim;
-		InputManager.Register(this, isMainPlayer);
+		DBInputManager.Register(this, isMainPlayer);
 	}
 
 	protected virtual void OnDestroy()
 	{
-		InputManager.Unregister(this);
+		DBInputManager.Unregister(this);
 	}
 
 	protected virtual void Start()
@@ -348,11 +348,11 @@ public abstract class PlayerController : MonoBehaviour
 	protected virtual void Move()
 	{
 		float movement = 0.0f;
-		if (InputManager.GetInput(this, PlayerInput.Left, InputType.Held))
+		if (DBInputManager.GetInput(this, PlayerInput.Left, InputType.Held))
 		{
 			movement -= speed * Time.deltaTime;
 		}
-		if (InputManager.GetInput(this, PlayerInput.Right, InputType.Held))
+		if (DBInputManager.GetInput(this, PlayerInput.Right, InputType.Held))
 		{
 			movement += speed * Time.deltaTime;
 		}
@@ -385,18 +385,18 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		if (!pulling)
 		{
-			if (InputManager.GetInput(this, PlayerInput.Jump, InputType.Pressed) && CanJump())
+			if (DBInputManager.GetInput(this, PlayerInput.Jump, InputType.Pressed) && CanJump())
 			{
 				rBody.velocity = new Vector2(rBody.velocity.x, jumpHeight);
 				jumpStart = Time.fixedTime;
 				jumpHeld = true;
 			}
-			if (!InputManager.GetInput(this, PlayerInput.Jump, InputType.Held) && !grounded)
+			if (!DBInputManager.GetInput(this, PlayerInput.Jump, InputType.Held) && !grounded)
 			{
 				jumpHeld = false;
 			}
 			// Add more force if jump held for longer. 
-			else if (InputManager.GetInput(this, PlayerInput.Jump, InputType.Held) &&
+			else if (DBInputManager.GetInput(this, PlayerInput.Jump, InputType.Held) &&
 					 (Time.fixedTime - jumpStart < jumpInterval) &&
 					 !grounded && jumpHeld)
 			{
@@ -441,8 +441,8 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetBool("PullingUp", climbing && pulling);
 		anim.SetBool("Flipped", transform.localEulerAngles.y == 180);
 
-		bool left = InputManager.GetInput(this, PlayerInput.Left, InputType.Held);
-		bool right = InputManager.GetInput(this, PlayerInput.Right, InputType.Held);
+		bool left = DBInputManager.GetInput(this, PlayerInput.Left, InputType.Held);
+		bool right = DBInputManager.GetInput(this, PlayerInput.Right, InputType.Held);
 		anim.SetBool("RightInput", right);
 		anim.SetBool("LeftInput", left);
 		anim.SetBool("AnyInput", left || right);
@@ -830,9 +830,9 @@ public abstract class PlayerController : MonoBehaviour
 	/// <returns><c>true</c>, if climb on input was canceled, <c>false</c> otherwise.</returns>
 	private bool CancelClimbOnInput()
 	{
-		if (InputManager.GetInput(this, PlayerInput.Left, InputType.Held, false) ||
-			InputManager.GetInput(this, PlayerInput.Right, InputType.Held, false) ||
-			InputManager.GetInput(this, PlayerInput.Jump, InputType.Pressed, false))
+		if (DBInputManager.GetInput(this, PlayerInput.Left, InputType.Held, false) ||
+			DBInputManager.GetInput(this, PlayerInput.Right, InputType.Held, false) ||
+			DBInputManager.GetInput(this, PlayerInput.Jump, InputType.Pressed, false))
 		{
 			CancelKinematics();
 			rBody.simulated = true;

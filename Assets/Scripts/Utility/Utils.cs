@@ -44,6 +44,7 @@ public static class Utils
 	/// </summary>
 	public static void Quit()
 	{
+		SaveManager.Save();
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPlaying = false;
 #else

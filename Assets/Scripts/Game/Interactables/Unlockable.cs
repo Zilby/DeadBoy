@@ -11,9 +11,9 @@ public class Unlockable : Interactable
 	public List<FadeableSprite> sprites;
 	public List<FadeableSpriteMesh> spriteMeshes;
 
-	protected override string Tip
+	protected override string Tip(PlayerController p)
 	{
-		get { return "Press " + InteractInput[0].ToString() + " To Unlock"; }
+		return "Press " + DBInputManager.GetInputName(p, InteractInput) + " To Unlock";
 	}
 
 
@@ -21,7 +21,7 @@ public class Unlockable : Interactable
 	{
 		base.InteractAction(p);
 		p.UsePickup();
-		foreach (FadeableSprite s in sprites) 
+		foreach (FadeableSprite s in sprites)
 		{
 			s.SelfFadeOut();
 		}
@@ -36,7 +36,8 @@ public class Unlockable : Interactable
 
 	protected override void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (InputManager.MainPlayer.CurrentPickup == requiredPickup)
+		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
+		if (p.CurrentPickup == requiredPickup)
 		{
 			base.OnTriggerEnter2D(collision);
 		}
@@ -44,7 +45,8 @@ public class Unlockable : Interactable
 
 	protected override void OnTriggerStay2D(Collider2D collision)
 	{
-		if (InputManager.MainPlayer.CurrentPickup == requiredPickup)
+		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
+		if (p.CurrentPickup == requiredPickup)
 		{
 			base.OnTriggerStay2D(collision);
 		}
@@ -52,7 +54,8 @@ public class Unlockable : Interactable
 
 	protected override void OnTriggerExit2D(Collider2D collision)
 	{
-		if (InputManager.MainPlayer.CurrentPickup == requiredPickup)
+		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
+		if (p.CurrentPickup == requiredPickup)
 		{
 			base.OnTriggerExit2D(collision);
 		}

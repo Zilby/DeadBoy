@@ -14,9 +14,9 @@ public class Pullable : Interactable
 	private DistanceJoint2D joint;
 
 
-	protected override string Tip
+	protected override string Tip(PlayerController p)
 	{
-		get { return "Press " + InteractInput[0].ToString() + " To Pull"; }
+		return "Press " + DBInputManager.GetInputName(p, InteractInput) + " To Pull";
 	}
 
 	private void Awake()
@@ -33,11 +33,11 @@ public class Pullable : Interactable
 		joint.connectedBody = p.rBody;
 		if (pulling)
 		{
-			ToolTips.instance.SetTooltipString(tooltip, "Press " + InteractInput[0].ToString() + " To Release");
+			ToolTips.instance.SetTooltipString(tooltip, "Press " + DBInputManager.GetInputName(p, InteractInput) + " To Release");
 		}
 		else
 		{
-			ToolTips.instance.SetTooltipString(tooltip, Tip);
+			ToolTips.instance.SetTooltipString(tooltip, Tip(p));
 		}
 	}
 }

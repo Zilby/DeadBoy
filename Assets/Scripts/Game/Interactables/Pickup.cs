@@ -18,9 +18,9 @@ public class Pickup : Interactable
 	public Collider2D col;
 
 
-	protected override string Tip
+	protected override string Tip(PlayerController p)
 	{
-		get { return "Press " + InteractInput[0].ToString() + " To Grab"; }
+		return "Press " + DBInputManager.GetInputName(p, InteractInput) + " To Grab";
 	}
 
 	protected override void InteractAction(PlayerController p)

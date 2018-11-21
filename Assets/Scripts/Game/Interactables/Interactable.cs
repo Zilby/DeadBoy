@@ -48,22 +48,17 @@ public abstract class Interactable : MonoBehaviour
 	}
 
 	/// <summary>
-	/// The tooltip for this interactable. 
-	/// </summary>
-	protected abstract string Tip { get; }
-
-	/// <summary>
 	/// The input needed to activate this interactable. 
 	/// </summary>
-	protected virtual List<KeyCode> InteractInput
+	protected virtual PlayerInput InteractInput
 	{
-		get { return InputManager.KeyBindings[(int)PlayerInput.Interact]; }
+		get { return PlayerInput.Interact; }
 	}
 
 	/// <summary>
 	/// Speed at which the player is repositioned. 
 	/// </summary>
-	protected virtual float REPOSITION_SPEED 
+	protected virtual float REPOSITION_SPEED
 	{
 		get { return 2f; }
 	}
@@ -71,12 +66,17 @@ public abstract class Interactable : MonoBehaviour
 	/// <summary>
 	/// The tooltip index for this interactable. 
 	/// </summary>
-	protected int tooltip = 0;
+	protected int tooltip = -1;
 
 	/// <summary>
 	/// Coroutine for checking input. 
 	/// </summary>
 	private Coroutine checkInput;
+
+	/// <summary>
+	/// The tooltip for this interactable. 
+	/// </summary>
+	protected abstract string Tip(PlayerController p);
 
 
 	protected virtual void OnTriggerEnter2D(Collider2D collision)
@@ -84,9 +84,9 @@ public abstract class Interactable : MonoBehaviour
 		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
 		if (p != null)
 		{
-			if (Tip != null)
+			if (Tip(p) != null)
 			{
-				tooltip = ToolTips.instance.SetTooltipActive(Tip, TipPos);
+				tooltip = ToolTips.instance.SetTooltipActive(Tip(p), TipPos);
 			}
 			checkInput = StartCoroutine(CheckForInput(p));
 		}
@@ -97,7 +97,7 @@ public abstract class Interactable : MonoBehaviour
 		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
 		if (p != null)
 		{
-			if (Tip != null)
+			if (tooltip >= 0)
 			{
 				ToolTips.instance.SetTooltipPosition(tooltip, TipPos);
 			}
@@ -113,8 +113,9 @@ public abstract class Interactable : MonoBehaviour
 		}
 	}
 
-	protected virtual void EndInteraction() {
-		if (Tip != null)
+	protected virtual void EndInteraction()
+	{
+		if (tooltip >= 0)
 		{
 			ToolTips.instance.SetTooltipInactive(tooltip);
 		}
@@ -129,12 +130,9 @@ public abstract class Interactable : MonoBehaviour
 		for (; ; )
 		{
 			yield return null;
-			foreach (KeyCode k in InteractInput)
+			if (DBInputManager.GetInput(p, InteractInput, InputType.Pressed))
 			{
-				if (Input.GetKeyDown(k))
-				{
-					InteractAction(p);
-				}
+				InteractAction(p);
 			}
 		}
 	}
