@@ -1,7 +1,9 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-
+/// <summary>
+/// Helps with the usage of singleton managers in our scenes. 
+/// </summary>
 internal class ManagerCreator
 {
 	[MenuItem("GameObject/Manager/Game", false, 1)]
