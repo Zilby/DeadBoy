@@ -99,8 +99,10 @@ public class SFXManager : AudioManager<SFXManager, ClipList>
 		AudioSource s = g.GetComponent<AudioSource>();
 		s.playOnAwake = false;
 		s.clip = a;
+		// Set 2D sound settings
 		s.volume = volume;
 		s.pitch = pitch;
+		// Set 3D sound settings
 		if (location != null) 
 		{
 			g.transform.position = (Vector3)location;
