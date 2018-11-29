@@ -28,11 +28,11 @@ Shader "Sprites/Glitch"
         _Color ("Tint", Color) = (1,1,1,1)
         [MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
         _GlitchInterval ("Glitch interval time [seconds]", Float) = 0.16
-        _DispProbability ("Displacement Glitch Probability", Float) = 0.022
+        _DispProbability ("Displacement Glitch Probability", Float) = 0.032
         _DispIntensity ("Displacement Glitch Intensity", Float) = 0.09
-        _ColorProbability("Color Glitch Probability", Float) = 0.02
+        _ColorProbability("Color Glitch Probability", Float) = 0.03
         _ColorIntensity("Color Glitch Intensity", Float) = 0.07
-        _RandomColorProbability("Random Color Glitch Probability", Float) = 0.02
+        _RandomColorProbability("Random Color Glitch Probability", Float) = 0.03
         [MaterialToggle] _WrapDispCoords ("Wrap disp glitch (off = clamp)", Float) = 1
         [MaterialToggle] _DispGlitchOn ("Displacement Glitch On", Float) = 1
         [MaterialToggle] _ColorGlitchOn ("Color Glitch On", Float) = 1
@@ -123,8 +123,9 @@ Shader "Sprites/Glitch"
 
                 //These values depend on time and the x/y translation of that sprite (top right and middle right value in the transformation matrix are translation)
                 //The transformation matrix values are included so sprites with differen x/y values don't glitch at the same time
-                float timePositionVal = intervalTime + UNITY_MATRIX_MV[0][3] + UNITY_MATRIX_MV[1][3];
-                float timePositionVal2 = intervalTime2 + UNITY_MATRIX_MV[0][3] + UNITY_MATRIX_MV[1][3];
+                float3 offset = UnityObjectToViewPos(float3(0.0, 0.0, 0.0));
+                float timePositionVal = intervalTime; //+ offset.x + offset.y;
+                float timePositionVal2 = intervalTime2; //+ offset.x + offset.y;
 
                 //Random chance that the displacement glich or color glitch occur
                 float dispGlitchRandom = rand(timePositionVal, -timePositionVal);
@@ -142,14 +143,18 @@ Shader "Sprites/Glitch"
 
                 //If the randomly rolled value is below the probability boundry and the displacement effect is turned on, apply the displacement effect
                 if(dispGlitchRandom < _DispProbability && _DispGlitchOn == 1){
-                    IN.texcoord.x += (rand(floor(IN.texcoord.y / (0.02 + shiftLineOffset)) - timePositionVal, floor(IN.texcoord.y / (0.02 + shiftLineOffset)) + timePositionVal) - 0.5) * _DispIntensity;
+                    IN.texcoord.x += (rand(floor(IN.texcoord.y / (0.03 + shiftLineOffset)) - timePositionVal, floor(IN.texcoord.y / (0.03 + shiftLineOffset)) + timePositionVal) - 0.5) * _DispIntensity;
+                    IN.texcoord.y += (rand(floor(IN.texcoord.x / (0.03 + shiftLineOffset)) - timePositionVal, floor(IN.texcoord.x / (0.03 + shiftLineOffset)) + timePositionVal) - 0.5) * _DispIntensity;
+
                     //Prevent the texture coordinate from going into other parts of the texture, especially when using texture atlases
                     //Instead, loop the coordinate between 0 and 1
                     if(_WrapDispCoords == 1){
                         IN.texcoord.x = fmod(IN.texcoord.x, 1);
+                        IN.texcoord.y = fmod(IN.texcoord.y, 1);
                     }
                     else{
                         IN.texcoord.x = clamp(IN.texcoord.x, 0, 1);
+                        IN.texcoord.y = clamp(IN.texcoord.y, 0, 1);
                     }
                 }
 
@@ -160,9 +165,13 @@ Shader "Sprites/Glitch"
                 fixed4 bShifted = tex2D(_MainTex, float2(IN.texcoord.x + bShiftRandom, IN.texcoord.y + bShiftRandom));
                 
                 fixed4 c = fixed4(0.0,0.0,0.0,0.0);
+                
+                //c = normalC;
+                //c *= fixed4(frac(floor(_Time.y / _GlitchInterval) * _GlitchInterval), 1, 1, 1);
 
                 //If the randomly rolled value is below the probability boundry and the color effect is turned on, apply the color glitch effect
                 //Sets the output color to the shifted r,g,b channels and averages their alpha
+                
                 if(colorGlitchRandom < _ColorProbability && _ColorGlitchOn== 1){
                     c.r = rShifted.r;
                     c.g = gShifted.g;
@@ -182,6 +191,7 @@ Shader "Sprites/Glitch"
                 c.rgb *= IN.color;
                 c.a *= IN.color.a;
                 c.rgb *= c.a;
+                
                 return c;
             }
         ENDCG
@@ -231,7 +241,7 @@ Shader "Sprites/Glitch"
             v2f vert(appdata_t IN)
             {
                 v2f OUT;
-                OUT.vertex = UnityObjectToClipPos(IN.vertex);
+                OUT.vertex = UnityObjectToClipPos(IN.vertex); 
                 OUT.texcoord = IN.texcoord;
                 
                 OUT.color = IN.color * _Color;
@@ -256,15 +266,20 @@ Shader "Sprites/Glitch"
             fixed4 frag(v2f IN) : SV_Target
             {
                 float intervalTime = floor(_Time.y / _GlitchInterval) * _GlitchInterval;
-                float timePositionVal = float(intervalTime + UNITY_MATRIX_MV[0][3] + UNITY_MATRIX_MV[1][3]);
+                float3 offset = UnityObjectToViewPos(float3(0.0, 0.0, 0.0));
+                float timePositionVal = intervalTime; //float(intervalTime + offset.x + offset.y);
                 float timeRandom = rand(timePositionVal, -timePositionVal);
                 if(timeRandom < _DispProbability && _DispGlitchOn == 1){
-                    IN.texcoord.x += (rand(floor(IN.texcoord.y / 0.2) - intervalTime, floor(IN.texcoord.y / 0.2) + intervalTime) - 0.5) * _DispIntensity;
+                    IN.texcoord.x += (rand(floor(IN.texcoord.y / 0.03) - intervalTime, floor(IN.texcoord.y / 0.03) + intervalTime) - 0.5) * _DispIntensity;
+                    IN.texcoord.y += (rand(floor(IN.texcoord.x / 0.03) - intervalTime, floor(IN.texcoord.x / 0.03) + intervalTime) - 0.5) * _DispIntensity;
+
                     if(_WrapDispCoords == 1){
                         IN.texcoord.x = fmod(IN.texcoord.x, 1);
+                        IN.texcoord.y = fmod(IN.texcoord.y, 1);
                     }
                     else{
                         IN.texcoord.x = clamp(IN.texcoord.x, 0, 1);
+                        IN.texcoord.y = clamp(IN.texcoord.y, 0, 1);
                     }
                 }
                 fixed4 c = tex2D(_MainTex, IN.texcoord) * IN.color;
