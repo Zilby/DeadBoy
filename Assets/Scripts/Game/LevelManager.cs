@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,15 +15,12 @@ public class LevelManager : MonoBehaviour
 {
 	public static LevelManager instance;
 
-	public enum Levels
-	{
-		Sewer,
-	}
-
 	[StringInList(typeof(SongManager), "GetClipList")]
 	public string song;
-
-	public Levels level;
+#if UNITY_EDITOR
+	[StringInList(typeof(LevelManager), "GetLoadedLevels")]
+#endif
+	public string nextLevel;
 
 	[Range(0, 10)]
 	public float timescale = 1;
@@ -31,6 +32,23 @@ public class LevelManager : MonoBehaviour
 
 	private int players;
 
+#if UNITY_EDITOR
+	public static string[] GetLoadedLevels() {
+		string[] temp = new string[SceneManager.sceneCountInBuildSettings];
+		for (int i = 0; i < temp.Length; ++i)
+		{
+			EditorBuildSettingsScene s = EditorBuildSettings.scenes[i];
+			if (s.enabled)
+			{
+				string name = s.path.Substring(s.path.LastIndexOf('/') + 1);
+				name = name.Substring(0, name.Length - 6);
+				temp[i] = name;
+			}
+		}
+		return temp;
+	}
+#endif
+
 	void Awake()
 	{
 		instance = this;
@@ -40,15 +58,8 @@ public class LevelManager : MonoBehaviour
 	{
 		Time.timeScale = timescale;
 		Time.fixedDeltaTime = timescale * 0.02f;
-		switch (level)
-		{
-			case Levels.Sewer:
-				SongManager.instance.PlaySong(song);
-				StartCoroutine(DBInputManager.instance.GeneralTutorial());
-				break;
-			default:
-				break;
-		}
+		SongManager.instance.PlaySong(song);
+		StartCoroutine(DBInputManager.instance.GeneralTutorial());
 	}
 
 	/// <summary>
@@ -64,14 +75,7 @@ public class LevelManager : MonoBehaviour
 		players += 1;
 		if (players == requiredPlayers)
 		{
-			switch (level)
-			{
-				case Levels.Sewer:
-					Fader.SceneEvent("DemoEnd");
-					break;
-				default:
-					break;
-			}
+			Fader.SceneEvent(nextLevel);
 		}
 	}
 

@@ -9,10 +9,10 @@ public class SessionData
 	/// <summary>
 	/// The player's current level. 
 	/// </summary>
-	public LevelManager.Levels level;
+	public string level;
 
 	/// <summary>
 	/// The player's current checkpoint within a level. 
 	/// </summary>
-	public int checkpoint;
+	//public int checkpoint;
 }
