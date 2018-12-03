@@ -182,9 +182,9 @@ Shader "Sprites/Glitch"
                     c = normalC;
                 }
                 if(colorGlitchRandom < _RandomColorProbability && _ColorGlitchOn== 1){
-                    float r = rand(timePositionVal, timePositionVal2) * 2;
-                    float g = rand(-timePositionVal, timePositionVal2) * 2;
-                    float b = rand(timePositionVal, -timePositionVal2) * 2;
+                    float r = (rand(timePositionVal, timePositionVal2) / 2.0f) + 0.65f;
+                    float g = (rand(-timePositionVal, timePositionVal2) / 2.0f) + 0.25;
+                    float b = (rand(timePositionVal, -timePositionVal2) / 2.0f) + 0.75f;
                     c *= fixed4(r, g, b, 1);
                 }
                 //Apply tint and tint color alpha
