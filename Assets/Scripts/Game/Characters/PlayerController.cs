@@ -426,6 +426,7 @@ public abstract class PlayerController : MonoBehaviour
 			}
 			transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, flip, transform.localEulerAngles.z);
 		}
+		bool flipped = transform.localEulerAngles.y == 180;
 		anim.SetFloat("OldXVel", anim.GetFloat("XVel"));
 		anim.SetFloat("OldYVel", anim.GetFloat("YVel"));
 		anim.SetFloat("XVel", rBody.velocity.x);
@@ -436,6 +437,8 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetFloat("SmoothYVel", Mathf.MoveTowards(anim.GetFloat("SmoothYVel"), rBody.velocity.y, SMOOTH_ANIM_SPEED * Time.deltaTime));
 		anim.SetFloat("SmoothXMag", Mathf.MoveTowards(anim.GetFloat("SmoothXMag"), Mathf.Abs(rBody.velocity.x), SMOOTH_ANIM_SPEED * Time.deltaTime));
 		anim.SetFloat("SmoothYMag", Mathf.MoveTowards(anim.GetFloat("SmoothYMag"), Mathf.Abs(rBody.velocity.y), SMOOTH_ANIM_SPEED * Time.deltaTime));
+		anim.SetFloat("RelativeXVel", flipped ? -rBody.velocity.x : rBody.velocity.x);
+
 
 		if (anim.GetBool("Grounded") != grounded && grounded)
 		{
@@ -452,8 +455,8 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetBool("RightInput", right);
 		anim.SetBool("LeftInput", left);
 		anim.SetBool("AnyInput", left || right);
-		anim.SetBool("BackInput", (transform.localEulerAngles.y == 180 && right) || (transform.localEulerAngles.y != 180 && left));
-		anim.SetBool("ForwardInput", (transform.localEulerAngles.y == 180 && left) || (transform.localEulerAngles.y != 180 && right));
+		anim.SetBool("BackInput", (flipped && right) || (!flipped && left));
+		anim.SetBool("ForwardInput", (flipped && left) || (!flipped && right));
 	}
 
 	/// <summary>
