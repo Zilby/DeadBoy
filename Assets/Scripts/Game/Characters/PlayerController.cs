@@ -437,7 +437,10 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetFloat("SmoothXMag", Mathf.MoveTowards(anim.GetFloat("SmoothXMag"), Mathf.Abs(rBody.velocity.x), SMOOTH_ANIM_SPEED * Time.deltaTime));
 		anim.SetFloat("SmoothYMag", Mathf.MoveTowards(anim.GetFloat("SmoothYMag"), Mathf.Abs(rBody.velocity.y), SMOOTH_ANIM_SPEED * Time.deltaTime));
 
-		anim.SetBool("Fell", anim.GetBool("Grounded") != grounded && grounded);
+		if (anim.GetBool("Grounded") != grounded && grounded)
+		{
+			anim.SetTrigger("Fell");
+		}
 		anim.SetBool("Grounded", grounded);
 		anim.SetBool("Pulling", pulling && !climbing);
 		anim.SetBool("Climbing", climbing);
@@ -493,9 +496,10 @@ public abstract class PlayerController : MonoBehaviour
 
 	bool TouchingGround(ContactPoint2D contact)
 	{
+		//print((contact.point.y < transform.position.y) + " " + (Vector2.Distance(transform.position, contact.point) / (transform.localScale.y)) + " " + Time.time.ToString());
 		return contact.point.y < transform.position.y &&
 				Vector2.Distance(transform.position, contact.point) /
-								(transform.localScale.y) > 4.5f;
+								(transform.localScale.y) > 4.2f;
 	}
 
 	void OnTriggerEnter2D(Collider2D collision)
