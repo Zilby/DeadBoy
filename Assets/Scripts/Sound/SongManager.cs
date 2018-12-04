@@ -78,6 +78,7 @@ public class SongManager : AudioManager<SongManager, LoopableClip>
 		if (song != NO_CLIP && s[currentSource].clip != l.clip)
 		{
 			s[currentSource].Stop();
+			s[1 - currentSource].Stop();
 			s[currentSource].clip = l.clip;
 			time = AudioSettings.dspTime;
 			loopTime = l.loopTime;

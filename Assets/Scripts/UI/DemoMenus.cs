@@ -22,10 +22,10 @@ public class DemoMenus : MonoBehaviour
 		}
 		
 		if (play != null) {
-			play.onClick.AddListener(delegate { Fader.SceneEvent("DemoLevel"); });
+			play.onClick.AddListener(delegate { Fader.SceneEvent("Desert1"); });
 		}
 		if (menu != null) {
-			menu.onClick.AddListener(delegate { Fader.SceneEvent("DemoSplash"); });
+			menu.onClick.AddListener(delegate { Fader.SceneEvent("DemoStart"); });
 		}
 		if (quit != null) {
 			quit.onClick.AddListener(delegate { StartCoroutine(Fader.Quit()); } );
