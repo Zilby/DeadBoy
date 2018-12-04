@@ -59,7 +59,6 @@ public class LevelManager : MonoBehaviour
 		Time.timeScale = timescale;
 		Time.fixedDeltaTime = timescale * 0.02f;
 		SongManager.instance.PlaySong(song);
-		StartCoroutine(DBInputManager.instance.GeneralTutorial());
 	}
 
 	/// <summary>
