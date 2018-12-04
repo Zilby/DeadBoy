@@ -75,40 +75,6 @@ public class DBInputManager : MonoBehaviour
 	#region Functions
 
 	/// <summary>
-	/// Sets up a new controller with the given characteristics. 
-	/// </summary>
-	public static ControllerActions SetUpController(bool keyboard, bool usesEventSystem)
-	{
-		ControllerActions c = new ControllerActions();
-
-		if (keyboard)
-		{
-			c.Device = null;
-		}
-		else
-		{
-			c.Device = InputManager.ActiveDevice;
-			c.SetControllerBindings();
-		}
-		if (usesEventSystem)
-		{
-			InControlInputModule ICIM = EventSystem.current.GetComponent<InControlInputModule>();
-			if (keyboard)
-			{
-				ICIM.SubmitAction = c.actions[PlayerInput.None];
-				ICIM.CancelAction = c.actions[PlayerInput.None];
-			}
-			else
-			{
-				ICIM.SubmitAction = c.actions[PlayerInput.Submit];
-				ICIM.CancelAction = c.actions[PlayerInput.Cancel];
-			}
-		}
-
-		return c;
-	}
-
-	/// <summary>
 	/// Adds a character to the list of playable characters.
 	/// Optionally sets the character as the controlled one.
 	/// Should be called in awake
@@ -278,6 +244,7 @@ public class DBInputManager : MonoBehaviour
 			s.sortingOrder += 1000 * newP.SORT_VALUE;
 		}
 		CameraController.movingToNewPosition = true;
+		newP.SwitchedTo();
 	}
 
 
@@ -311,6 +278,41 @@ public class DBInputManager : MonoBehaviour
 			Destroy(gameObject);
 		}
 	}
+
+	/// <summary>
+	/// Sets up a new controller with the given characteristics. 
+	/// </summary>
+	public ControllerActions SetUpController(bool keyboard, bool usesEventSystem)
+	{
+		ControllerActions c = new ControllerActions();
+
+		if (keyboard)
+		{
+			c.Device = null;
+		}
+		else
+		{
+			c.Device = InputManager.ActiveDevice;
+			c.SetControllerBindings();
+		}
+		if (usesEventSystem)
+		{
+			InControlInputModule ICIM = GetComponent<InControlInputModule>();
+			if (keyboard)
+			{
+				ICIM.SubmitAction = c.actions[PlayerInput.None];
+				ICIM.CancelAction = c.actions[PlayerInput.None];
+			}
+			else
+			{
+				ICIM.SubmitAction = c.actions[PlayerInput.Submit];
+				ICIM.CancelAction = c.actions[PlayerInput.Cancel];
+			}
+		}
+
+		return c;
+	}
+
 
 	/// <summary>
 	/// General tutorial for the game. 

@@ -17,19 +17,21 @@ public abstract class Fadeable : MonoBehaviour
     [System.NonSerialized]
     public bool useUnscaledDeltaTimeForUI = true;
 
-	public bool fadeInOnEnable = false;
-    /// <summary>
-    /// A reference to an active fade coroutine.
-    /// </summary>
-
     /// <summary>
     /// Delay after activation before fading in
     /// </summary>
-    [ConditionalHideAttribute("fadeInOnEnable", true, false)]
+	public bool fadeOnEnable = false;
+    [ConditionalHideAttribute("fadeOnEnable", true, false)]
+	public bool fadeIn = true; //false for out
+    [ConditionalHideAttribute("fadeOnEnable", true, false)]
     public float fadeDelay = 0;
-	[ConditionalHideAttribute("fadeInOnEnable", true, false)]
+	[ConditionalHideAttribute("fadeOnEnable", true, false)]
 	public float fadeDuration = FADE_IN_DUR;
+    
 
+    /// <summary>
+    /// A reference to an active fade coroutine.
+    /// </summary>
 	protected Coroutine fadeCoroutine;
     protected bool isFading = false;
 
@@ -76,9 +78,9 @@ public abstract class Fadeable : MonoBehaviour
 
 	public virtual void OnEnable() 
 	{
-		if(fadeInOnEnable) 
+		if(fadeOnEnable) 
 		{
-			StartCoroutine(DelayedFade());
+			StartCoroutine(fadeIn ? DelayedFadeIn() : DelayedFadeOut());
 		}
 	}
 
@@ -105,13 +107,19 @@ public abstract class Fadeable : MonoBehaviour
         BlocksRaycasts = false;
     }
 
-	public virtual IEnumerator DelayedFade() {
+	public virtual IEnumerator DelayedFadeIn() {
 		IsVisible = false;
 		Alpha = 0;
 		yield return new WaitForSeconds(fadeDelay);
 		SelfFadeIn(dur:fadeDuration);
 	}
 
+    public virtual IEnumerator DelayedFadeOut() {
+		IsVisible = true;
+		Alpha = 1;
+		yield return new WaitForSeconds(fadeDelay);
+		SelfFadeOut(dur:fadeDuration);
+	}
 
     /// <summary>
     /// Fades in the Canvas group over the defined time.
