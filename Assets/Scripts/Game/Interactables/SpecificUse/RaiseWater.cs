@@ -1,33 +1,23 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RaiseWater : Interactable
+public class RaiseWater : Lever
 {
+	[Header("RaiseWater Fields")]
 	public float speed = 0.01f;
 	public float height = 1;
 	public float width = 1;
 
 	public Transform t;
-	public Vector3 movePosition;
 
-	protected override string Tip(PlayerController p)
+	protected override List<Func<IEnumerator>> ToggleActions
 	{
-		return "Press " + DBInputManager.GetInputName(p, InteractInput) + " To Pull";
-	}
-
-	protected override void InteractAction(PlayerController p)
-	{
-		base.InteractAction(p);
-		p.GrabAndDrag(transform, movePosition, delegate
+		get
 		{
-			p.StartCoroutine(Raise());
-			p.StartCoroutine(Waterfall());
-			p.StartCoroutine(RedirectCamera());
-		});
-
-		EndInteraction();
-		Destroy(this);
+			return new List<Func<IEnumerator>>() { Raise, Waterfall };
+		}
 	}
 
 	private IEnumerator Raise()

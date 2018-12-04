@@ -44,6 +44,11 @@ public class DrownedGirlController : PlayerController
 	[Range(0, 1)]
 	public float waterDrag;
 
+	/// <summary>
+	/// Whether or not DG is starting underwater. 
+	/// </summary>
+	public bool startingUnder;
+
 	public override int SORT_VALUE
 	{
 		get { return 2; }
@@ -76,6 +81,12 @@ public class DrownedGirlController : PlayerController
 	private float MAX_RISE = MAX_Y_VELOCITY + 1.0f;
 
 	private float timeSinceDive;
+
+	protected override void Awake()
+	{
+		base.Awake();
+		diving = startingUnder;
+	}
 
 	protected override void Update()
 	{

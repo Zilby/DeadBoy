@@ -108,4 +108,17 @@ public class CameraController : MonoBehaviour
 	{
 		transform.position = new Vector3(Mathf.Clamp(transform.position.x, xRange.x, xRange.y), Mathf.Clamp(transform.position.y, yRange.x, yRange.y), transform.position.z);
 	}
+
+	/// <summary>
+	/// Redirects the camera to the look transform.
+	/// </summary>
+	/// <returns>The camera.</returns>
+	public static IEnumerator RedirectCamera(Transform t, float delay = 0.8f, float duration = 2f)
+	{
+		yield return new WaitForSeconds(delay);
+		movingToNewPosition = true;
+		followTransform = t;
+		yield return new WaitForSeconds(duration);
+		followTransform = null;
+	}
 }
