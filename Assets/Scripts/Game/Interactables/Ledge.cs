@@ -71,10 +71,12 @@ public class Ledge : Interactable
 
 	protected IEnumerator DelayedClimb(PlayerController p)
 	{
+		p.cCollider.isTrigger = true;
 		while (moving)
 		{
 			yield return null;
 		}
+		p.cCollider.isTrigger = false;
 		yield return p.ClimbLedge(transform);
 	}
 }

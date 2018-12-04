@@ -449,6 +449,8 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetBool("RightInput", right);
 		anim.SetBool("LeftInput", left);
 		anim.SetBool("AnyInput", left || right);
+		anim.SetBool("BackInput", (transform.localEulerAngles.y == 180 && right) || (transform.localEulerAngles.y != 180 && left));
+		anim.SetBool("ForwardInput", (transform.localEulerAngles.y == 180 && left) || (transform.localEulerAngles.y != 180 && right));
 	}
 
 	/// <summary>
