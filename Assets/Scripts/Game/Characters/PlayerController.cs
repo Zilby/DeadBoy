@@ -24,10 +24,13 @@ public abstract class PlayerController : MonoBehaviour
 
 	#region Public
 
-	[Header("References")]
+	[Header("Automatic References")]
 	public Rigidbody2D rBody;
 	public CapsuleCollider2D cCollider;
 	public Animator anim;
+
+	[Header("Other References")]
+	public Fadeable indicator;
 
 	[Header("InverseKinematics")]
 	public IkLimb2D[] iKLimbs = new IkLimb2D[IKCount];
@@ -459,6 +462,12 @@ public abstract class PlayerController : MonoBehaviour
 	public virtual void Footstep(IK ik) 
 	{
 		SFXManager.instance.PlayClip("DBFootstepsRock", 0.2f, 0.25f, location: iKLimbs[(int)ik].transform.position);
+	}
+
+	public virtual void SwitchedTo() {
+		indicator.gameObject.SetActive(false);//Incase players swap quickly and it's still there
+		indicator.Show();
+		indicator.DelayedFadeOut();
 	}
 
 	#endregion
