@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -77,12 +78,29 @@ public class SongManager : AudioManager<SongManager, LoopableClip>
 		LoopableClip l = clips[song];
 		if (song != NO_CLIP && s[currentSource].clip != l.clip)
 		{
-			s[currentSource].Stop();
-			s[1 - currentSource].Stop();
-			s[currentSource].clip = l.clip;
-			time = AudioSettings.dspTime;
-			loopTime = l.loopTime;
-			s[currentSource].loop = loopTime == 0;
+			StartCoroutine(SwapClip(l));
+		}
+	}
+
+	/// <summary>
+	/// Swaps the current audio clip for a new one.
+	/// </summary>
+	protected IEnumerator SwapClip(LoopableClip l) {
+		bool fade = s[currentSource].isPlaying || s[1 - currentSource].isPlaying;
+		if (fade) {
+			StartCoroutine(Utils.FadeOut(s[currentSource], 0.6f));
+			yield return Utils.FadeOut(s[1 - currentSource], 0.6f);
+		}
+		s[currentSource].clip = l.clip;
+		time = AudioSettings.dspTime;
+		loopTime = l.loopTime;
+		s[currentSource].loop = loopTime == 0;
+		if (fade)
+		{
+			yield return Utils.FadeIn(s[currentSource], 0.3f);
+		}
+		else
+		{
 			s[currentSource].Play();
 		}
 	}
