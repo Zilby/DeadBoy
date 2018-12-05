@@ -3,14 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonMove : PressableButton
+public class LeverMove : Lever
 {
-	[Header("ButtonMove Fields")]
-
+	[Header("LeverSlide Fields")]
 	public float speed = 0.01f;
 	public Vector2 location;
 	public Transform t;
-
 
 	protected override List<Func<IEnumerator>> ToggleActions
 	{
