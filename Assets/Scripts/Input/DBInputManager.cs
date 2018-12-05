@@ -257,6 +257,7 @@ public class DBInputManager : MonoBehaviour
 			s.sortingOrder += 1000 * newP.SORT_VALUE;
 		}
 		CameraController.movingToNewPosition = true;
+		oldP.indicator.Hide();
 		newP.SwitchedTo();
 		if (newP is DeadboyController)
 		{

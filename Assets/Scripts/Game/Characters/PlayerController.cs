@@ -471,13 +471,17 @@ public abstract class PlayerController : MonoBehaviour
 	}
 
 	public virtual void SwitchedTo() {
-		indicator.gameObject.SetActive(false);//Incase players swap quickly and it's still there
+		indicator.Hide();//Incase players swap quickly and it's still there
 		indicator.Show();
 		indicator.DelayedFadeOut();
 	}
 
 	protected void PreserveIndicatorDirection() {
 		indicator.gameObject.GetComponent<SpriteRenderer>().flipX = transform.localEulerAngles.y > 90;
+	}
+
+	protected virtual void Die() {
+		LevelManager.instance.RestartLevel();
 	}
 
 	#endregion
@@ -546,7 +550,7 @@ public abstract class PlayerController : MonoBehaviour
 	protected virtual void EnterWater(Collider2D water)
 	{
 		CameraController.Deactivate();
-		LevelManager.instance.RestartLevel();
+		Die();
 	}
 
 	protected virtual void ExitWater(Collider2D water)
