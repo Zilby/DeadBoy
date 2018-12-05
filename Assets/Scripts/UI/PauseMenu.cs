@@ -20,7 +20,7 @@ public class PauseMenu : MonoBehaviour
 		instance = this;
 		resume.onClick.AddListener(Pause);
 		restart.onClick.AddListener(delegate { LevelManager.instance.RestartLevel(); });
-		menu.onClick.AddListener(delegate { Fader.SceneEvent("DemoSplash"); });
+		menu.onClick.AddListener(delegate { Fader.SceneEvent("DemoStart"); });
 		quit.onClick.AddListener(delegate { StartCoroutine(Fader.Quit()); });
 	}
 

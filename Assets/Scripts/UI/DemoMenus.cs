@@ -14,7 +14,7 @@ public class DemoMenus : MonoBehaviour
 	public Button menu;
 	public Button quit;
 
-	private void Awake()
+	private void Start()
 	{
 		if (SongManager.instance != null) 
 		{
