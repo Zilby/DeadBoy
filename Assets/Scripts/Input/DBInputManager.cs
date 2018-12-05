@@ -60,6 +60,17 @@ public class DBInputManager : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Gets whether the main player is on keyboard. 
+	/// </summary>
+	public static bool MainIsKeyboard
+	{
+		get
+		{
+			return controllers[0].Device == null;
+		}
+	}
+
+	/// <summary>
 	/// All of the available player controllers. 
 	/// </summary>
 	public static List<ControllerActions> controllers = new List<ControllerActions>();
@@ -330,10 +341,15 @@ public class DBInputManager : MonoBehaviour
 		if (InputManager.ActiveDevice.CommandWasPressed && controllers[0].Device == null)
 		{
 			c = SetUpController(false, true);
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;
+			SetSelected.Select?.Invoke();
 		}
-		else if (Input.GetKeyDown(KeyCode.Return) && controllers[0].Device != null)
+		else if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Mouse0))&& controllers[0].Device != null)
 		{
 			c = SetUpController(true, true);
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
 		}
 		if (c != null) {
 			ReassignController(c, 0);
@@ -342,8 +358,8 @@ public class DBInputManager : MonoBehaviour
 
 	private void ReassignController(ControllerActions c, int index)
 	{
-		controllers[index] = c;
 		PlayerController player = players.Keys.FirstOrDefault(p => players[p] == controllers[index]);
+		controllers[index] = c;
 		if (player != null)
 		{
 			players[player] = c;
@@ -399,43 +415,46 @@ public class DBInputManager : MonoBehaviour
 		Dictionary<PlayerController, int> tips = new Dictionary<PlayerController, int>();
 		PlayerController lastControlled = MainPlayer;
 
-		foreach (PlayerController p in players.Keys)
+		if (MainIsKeyboard)
 		{
-			if (p != MainPlayer)
+			foreach (PlayerController p in players.Keys)
 			{
-				tips[p] = ToolTips.instance.SetTooltipActive("Press " + p.SORT_VALUE + " to control " + p.Name, p.transform.position + tipOffset);
+				if (p != MainPlayer)
+				{
+					tips[p] = ToolTips.instance.SetTooltipActive("Press " + p.SORT_VALUE + " to control " + p.Name, p.transform.position + tipOffset);
+				}
+				else
+				{
+					tips[p] = -1;
+				}
 			}
-			else
+
+			while (swappedTo.Count < players.Count)
 			{
-				tips[p] = -1;
+				yield return null;
+				if (MainPlayer != lastControlled)
+				{
+					if (tips[MainPlayer] >= 0)
+					{
+						ToolTips.instance.SetTooltipInactive(tips[MainPlayer]);
+						tips[MainPlayer] = -1;
+					}
+
+					if (swappedTo.IndexOf(lastControlled) < 0)
+					{
+						tips[lastControlled] = ToolTips.instance.SetTooltipActive("Press " + lastControlled.SORT_VALUE + " to control " + lastControlled.Name, lastControlled.transform.position + tipOffset);
+					}
+
+					if (swappedTo.IndexOf(MainPlayer) < 0)
+					{
+						swappedTo.Add(MainPlayer);
+					}
+					lastControlled = MainPlayer;
+				}
 			}
+
+			yield return new WaitForSeconds(0.3f);
 		}
-
-		while (swappedTo.Count < players.Count)
-		{
-			yield return null;
-			if (MainPlayer != lastControlled)
-			{
-				if (tips[MainPlayer] >= 0)
-				{
-					ToolTips.instance.SetTooltipInactive(tips[MainPlayer]);
-					tips[MainPlayer] = -1;
-				}
-
-				if (swappedTo.IndexOf(lastControlled) < 0)
-				{
-					tips[lastControlled] = ToolTips.instance.SetTooltipActive("Press " + lastControlled.SORT_VALUE + " to control " + lastControlled.Name, lastControlled.transform.position + tipOffset);
-				}
-
-				if (swappedTo.IndexOf(MainPlayer) < 0)
-				{
-					swappedTo.Add(MainPlayer);
-				}
-				lastControlled = MainPlayer;
-			}
-		}
-
-		yield return new WaitForSeconds(0.3f);
 
 		int tabTip = ToolTips.instance.SetTooltipActive("Press " + GetInputName(MainPlayer, PlayerInput.Swap) + " to cycle characters", MainPlayer.transform.position + tipOffset);
 		while (MainPlayer == lastControlled)
