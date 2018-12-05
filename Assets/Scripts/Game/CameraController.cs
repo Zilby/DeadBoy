@@ -115,10 +115,13 @@ public class CameraController : MonoBehaviour
 	/// <returns>The camera.</returns>
 	public static IEnumerator RedirectCamera(Transform t, float delay = 0.8f, float duration = 2f)
 	{
-		yield return new WaitForSeconds(delay);
-		movingToNewPosition = true;
-		followTransform = t;
-		yield return new WaitForSeconds(duration);
-		followTransform = null;
+		if (t != null)
+		{
+			yield return new WaitForSeconds(delay);
+			movingToNewPosition = true;
+			followTransform = t;
+			yield return new WaitForSeconds(duration);
+			followTransform = null;
+		}
 	}
 }

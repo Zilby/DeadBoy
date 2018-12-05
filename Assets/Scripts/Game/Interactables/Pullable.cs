@@ -19,8 +19,9 @@ public class Pullable : Interactable
 		return "Press " + DBInputManager.GetInputName(p, InteractInput) + " To Pull";
 	}
 
-	private void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
 		joint = GetComponentInChildren<DistanceJoint2D>();
 	}
 

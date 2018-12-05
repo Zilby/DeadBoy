@@ -196,8 +196,8 @@ public class DBInputManager : MonoBehaviour
 			});
 			PlayerController newP = sortedPlayers.FirstOrDefault(
 				p => (p != player && players[p] == null &&
-				      ((sortedPlayers.IndexOf(p) == sortedPlayers.IndexOf(player) + 1) || 
-				       (sortedPlayers.IndexOf(p) == 0 && sortedPlayers.IndexOf(player) == sortedPlayers.Count - 1))));
+					  ((sortedPlayers.IndexOf(p) == sortedPlayers.IndexOf(player) + 1) ||
+					   (sortedPlayers.IndexOf(p) == 0 && sortedPlayers.IndexOf(player) == sortedPlayers.Count - 1))));
 			if (newP != null)
 			{
 				UserSwappedPlayers(newP, player);
@@ -216,9 +216,11 @@ public class DBInputManager : MonoBehaviour
 			if (Input.GetKeyDown(Utils.keyCodes[i]))
 			{
 				PlayerController current = players.Keys.FirstOrDefault(p => (players[p] != null && players[p].Device == null));
-				if (current != null) {
+				if (current != null)
+				{
 					PlayerController newP = players.Keys.FirstOrDefault(p => p.SORT_VALUE == i && current != p);
-					if (newP != null) {
+					if (newP != null)
+					{
 						UserSwappedPlayers(newP, current);
 						break;
 					}
@@ -245,6 +247,14 @@ public class DBInputManager : MonoBehaviour
 		}
 		CameraController.movingToNewPosition = true;
 		newP.SwitchedTo();
+		if (newP is DeadboyController)
+		{
+			Interactable.TogglePhased?.Invoke(true);
+		}
+		else if (oldP is DeadboyController)
+		{
+			Interactable.TogglePhased?.Invoke(false);
+		}
 	}
 
 

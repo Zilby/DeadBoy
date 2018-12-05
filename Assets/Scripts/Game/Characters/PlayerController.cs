@@ -433,11 +433,13 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetFloat("YVel", rBody.velocity.y);
 		anim.SetFloat("XMag", Mathf.Abs(rBody.velocity.x));
 		anim.SetFloat("YMag", Mathf.Abs(rBody.velocity.y));
+		anim.SetFloat("RelativeXVel", flipped ? -rBody.velocity.x : rBody.velocity.x);
 		anim.SetFloat("SmoothXVel", Mathf.MoveTowards(anim.GetFloat("SmoothXVel"), rBody.velocity.x, SMOOTH_ANIM_SPEED * Time.deltaTime));
 		anim.SetFloat("SmoothYVel", Mathf.MoveTowards(anim.GetFloat("SmoothYVel"), rBody.velocity.y, SMOOTH_ANIM_SPEED * Time.deltaTime));
 		anim.SetFloat("SmoothXMag", Mathf.MoveTowards(anim.GetFloat("SmoothXMag"), Mathf.Abs(rBody.velocity.x), SMOOTH_ANIM_SPEED * Time.deltaTime));
 		anim.SetFloat("SmoothYMag", Mathf.MoveTowards(anim.GetFloat("SmoothYMag"), Mathf.Abs(rBody.velocity.y), SMOOTH_ANIM_SPEED * Time.deltaTime));
-		anim.SetFloat("RelativeXVel", flipped ? -rBody.velocity.x : rBody.velocity.x);
+		anim.SetFloat("SmoothRelXVel", Mathf.MoveTowards(anim.GetFloat("SmoothRelXVel"), anim.GetFloat("RelativeXVel"), SMOOTH_ANIM_SPEED * Time.deltaTime));
+
 
 
 		if (anim.GetBool("Grounded") != grounded && grounded)
@@ -717,7 +719,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Tries to pull an object. 
 	/// </summary>
-	public bool Pulling(Transform t)
+	public virtual bool Pulling(Transform t)
 	{
 		if (grounded || pulling)
 		{

@@ -172,4 +172,22 @@ public class DrownedGirlController : PlayerController
 		base.CheckGrounded(collision);
 		grounded = grounded && !swimming;
 	}
+
+	/// <summary>
+	/// Tries to pull an object. 
+	/// </summary>
+	public override bool Pulling(Transform t)
+	{
+		if (grounded || pulling || swimming)
+		{
+			pulling = !pulling;
+			if (pulling)
+			{
+				settingIK[(int)IK.RightArm] = true;
+				settingIK[(int)IK.LeftArm] = true;
+				SetUpLimbMovement(t);
+			}
+		}
+		return pulling;
+	}
 }

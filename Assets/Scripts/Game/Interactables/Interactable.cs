@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public abstract class Interactable : MonoBehaviour
 {
+	public static Action<bool> TogglePhased;
+
 	[Header("Interactable Fields")]
 	/// <summary>
 	/// The tip position.
@@ -17,6 +20,11 @@ public abstract class Interactable : MonoBehaviour
 	/// Transform to look at after interacting.
 	/// </summary>
 	public Transform look;
+
+	/// <summary>
+	/// Whether or not this interactable is phasing. 
+	/// </summary>
+	public bool phasing;
 
 	/// <summary>
 	/// Whether or not to move the player left or right when interacting. 
@@ -80,10 +88,40 @@ public abstract class Interactable : MonoBehaviour
 	protected abstract string Tip(PlayerController p);
 
 
+	protected virtual void Awake()
+	{
+		if (phasing)
+		{
+			TogglePhased += DeactivatePhased;
+		}
+	}
+
+	protected virtual void OnDestroy()
+	{
+		if (phasing)
+		{
+			TogglePhased -= DeactivatePhased;
+		}
+	}
+
+	protected void DeactivatePhased(bool b)
+	{
+		transform.parent.gameObject.SetActive(b);
+	}
+
+	/// <summary>
+	/// Checks if the given player is valid. 
+	/// </summary>
+	protected bool PlayerCheck(PlayerController p)
+	{
+		return p != null && (!phasing || p is DeadboyController);
+	}
+
+
 	protected virtual void OnTriggerEnter2D(Collider2D collision)
 	{
 		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
-		if (p != null)
+		if (PlayerCheck(p))
 		{
 			if (Tip(p) != null)
 			{
@@ -96,7 +134,7 @@ public abstract class Interactable : MonoBehaviour
 	protected virtual void OnTriggerStay2D(Collider2D collision)
 	{
 		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
-		if (p != null)
+		if (PlayerCheck(p))
 		{
 			if (tooltip >= 0)
 			{
@@ -108,7 +146,7 @@ public abstract class Interactable : MonoBehaviour
 	protected virtual void OnTriggerExit2D(Collider2D collision)
 	{
 		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
-		if (p != null)
+		if (PlayerCheck(p))
 		{
 			EndInteraction();
 		}

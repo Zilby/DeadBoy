@@ -30,5 +30,6 @@ public class DeadboyController : PlayerController
 			activate = delegate { this.enabled = true; };
 			this.enabled = false;
 		}
+		Interactable.TogglePhased?.Invoke(initialPlayer == 0);
 	}
 }
