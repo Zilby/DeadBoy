@@ -338,6 +338,7 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		Jump();
 		SetAnimationState();
+		PreserveIndicatorDirection();
 	}
 
 	protected virtual void LateUpdate()
@@ -473,6 +474,10 @@ public abstract class PlayerController : MonoBehaviour
 		indicator.gameObject.SetActive(false);//Incase players swap quickly and it's still there
 		indicator.Show();
 		indicator.DelayedFadeOut();
+	}
+
+	protected void PreserveIndicatorDirection() {
+		indicator.gameObject.GetComponent<SpriteRenderer>().flipX = transform.localEulerAngles.y > 90;
 	}
 
 	#endregion
