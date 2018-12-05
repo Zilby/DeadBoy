@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
 	public Vector2 xRange = new Vector2(-100, 100);
 	public Vector2 yRange = new Vector2(-100, 100);
 
-	private const float CAMERA_MOVE_SPEED = 2;
+	private const float CAMERA_MOVE_SPEED = 1.5f;
 
 	private const float MAX_X_DIFF = 5F;
 	private const float MAX_Y_DIFF = 2F;
@@ -55,6 +55,41 @@ public class CameraController : MonoBehaviour
 	/// </summary>
 	private void Update()
 	{
+		//MoveToPlayer(Time.smoothDeltaTime);
+		ClampCamera();
+	}
+
+	private void FixedUpdate()
+	{
+		MoveToPlayer(Time.fixedDeltaTime);
+	}
+
+	/// <summary>
+	/// Updates camera to the player position on fixed update (since that is when the player moves)
+	/// </summary>
+	void MoveToPlayer(float t)
+	{
+		float moveSpeed = movingToNewPosition ? CAMERA_MOVE_SPEED * 2: CAMERA_MOVE_SPEED;
+		if (Mathf.Abs(transform.position.x - RelativePlayerPosition.x) <= MAX_X_DIFF || movingToNewPosition || Mathf.Abs(oldDiffX) > MAX_X_DIFF)
+		{
+			transform.position = new Vector3(Mathf.Lerp(transform.position.x, RelativePlayerPosition.x, moveSpeed * t),
+											 transform.position.y, transform.position.z);
+		}
+		if (Mathf.Abs(transform.position.y - RelativePlayerPosition.y) <= MAX_Y_DIFF || movingToNewPosition || Mathf.Abs(oldDiffY) > MAX_Y_DIFF)
+		{
+
+			transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, RelativePlayerPosition.y, moveSpeed * t),
+										 transform.position.z);
+		}
+		if ((Mathf.Abs(transform.position.x - RelativePlayerPosition.x) <= MAX_X_DIFF || (transform.position.x == xRange.x || transform.position.x == xRange.y)) &&
+			(Mathf.Abs(transform.position.y - RelativePlayerPosition.y) <= MAX_Y_DIFF || (transform.position.y == yRange.x || transform.position.y == yRange.y)) &&
+		    followTransform == null)
+		{
+			movingToNewPosition = false;
+		}
+	}
+
+	void ClampCamera() {
 		if (Mathf.Abs(transform.position.x - RelativePlayerPosition.x) > MAX_X_DIFF && !movingToNewPosition && Mathf.Abs(oldDiffX) <= MAX_X_DIFF)
 		{
 			transform.position = new Vector3(RelativePlayerPosition.x - oldDiffX,
@@ -74,31 +109,6 @@ public class CameraController : MonoBehaviour
 			oldDiffY = RelativePlayerPosition.y - transform.position.y;
 		}
 		LockTransform();
-	}
-
-	/// <summary>
-	/// Updates camera to the player position on fixed update (since that is when the player moves)
-	/// </summary>
-	void FixedUpdate()
-	{
-		float moveSpeed = movingToNewPosition ? CAMERA_MOVE_SPEED * 2: CAMERA_MOVE_SPEED;
-		if (Mathf.Abs(transform.position.x - RelativePlayerPosition.x) <= MAX_X_DIFF || movingToNewPosition || Mathf.Abs(oldDiffX) > MAX_X_DIFF)
-		{
-			transform.position = new Vector3(Mathf.Lerp(transform.position.x, RelativePlayerPosition.x, moveSpeed * Time.fixedDeltaTime),
-											 transform.position.y, transform.position.z);
-		}
-		if (Mathf.Abs(transform.position.y - RelativePlayerPosition.y) <= MAX_Y_DIFF || movingToNewPosition || Mathf.Abs(oldDiffY) > MAX_Y_DIFF)
-		{
-
-			transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, RelativePlayerPosition.y, moveSpeed * Time.fixedDeltaTime),
-										 transform.position.z);
-		}
-		if ((Mathf.Abs(transform.position.x - RelativePlayerPosition.x) <= MAX_X_DIFF || (transform.position.x == xRange.x || transform.position.x == xRange.y)) &&
-			(Mathf.Abs(transform.position.y - RelativePlayerPosition.y) <= MAX_Y_DIFF || (transform.position.y == yRange.x || transform.position.y == yRange.y)) &&
-		    followTransform == null)
-		{
-			movingToNewPosition = false;
-		}
 	}
 
 	/// <summary>
