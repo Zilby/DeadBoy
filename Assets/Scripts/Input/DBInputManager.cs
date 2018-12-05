@@ -324,6 +324,33 @@ public class DBInputManager : MonoBehaviour
 	}
 
 
+	private void ToggleController()
+	{
+		ControllerActions c = null;
+		if (InputManager.ActiveDevice.CommandWasPressed && controllers[0].Device == null)
+		{
+			c = SetUpController(false, true);
+		}
+		else if (Input.GetKeyDown(KeyCode.Return) && controllers[0].Device != null)
+		{
+			c = SetUpController(true, true);
+		}
+		if (c != null) {
+			ReassignController(c, 0);
+		}
+	}
+
+	private void ReassignController(ControllerActions c, int index)
+	{
+		controllers[index] = c;
+		PlayerController player = players.Keys.FirstOrDefault(p => players[p] == controllers[index]);
+		if (player != null)
+		{
+			players[player] = c;
+		}
+	}
+
+
 	/// <summary>
 	/// General tutorial for the game. 
 	/// </summary>
@@ -425,6 +452,7 @@ public class DBInputManager : MonoBehaviour
 		CyclePlayers();
 		SelectPlayerByNumber();
 		CheckPause();
+		ToggleController();
 	}
 
 	#endregion

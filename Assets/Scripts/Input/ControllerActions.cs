@@ -24,11 +24,14 @@ public class ControllerActions : PlayerActionSet
 	{
 		foreach (PlayerInput p in Enum.GetValues(typeof(PlayerInput)))
 		{
-			InputControlType[] bindings = SaveManager.saveData.input.ControllerBindings[(int)p];
-			actions[p].AddDefaultBinding(Device.GetControl(bindings[0]).Target);
-			for (int i = 1; i < bindings.Length; ++i)
+			if (p != PlayerInput.None)
 			{
-				actions[p].AddBinding(new DeviceBindingSource(Device.GetControl(bindings[i]).Target));
+				InputControlType[] bindings = SaveManager.saveData.input.ControllerBindings[(int)p];
+				actions[p].AddDefaultBinding(Device.GetControl(bindings[0]).Target);
+				for (int i = 1; i < bindings.Length; ++i)
+				{
+					actions[p].AddBinding(new DeviceBindingSource(Device.GetControl(bindings[i]).Target));
+				}
 			}
 		}
 	}
