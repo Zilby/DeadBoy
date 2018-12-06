@@ -87,9 +87,10 @@ public class SongManager : AudioManager<SongManager, LoopableClip>
 	/// </summary>
 	protected IEnumerator SwapClip(LoopableClip l) {
 		bool fade = s[currentSource].isPlaying || s[1 - currentSource].isPlaying;
+		int nextSource = 1 - currentSource;
 		if (fade) {
-			StartCoroutine(Utils.FadeOut(s[currentSource], 0.6f));
-			yield return Utils.FadeOut(s[1 - currentSource], 0.6f);
+			StartCoroutine(Utils.FadeOut(s[nextSource], 0.6f));
+			yield return Utils.FadeOut(s[currentSource], 0.6f);
 		}
 		s[currentSource].clip = l.clip;
 		time = AudioSettings.dspTime;
@@ -104,7 +105,7 @@ public class SongManager : AudioManager<SongManager, LoopableClip>
 			s[currentSource].Play();
 		}
 	}
-
+	
 	protected override void Update()
 	{
 		base.Update();
