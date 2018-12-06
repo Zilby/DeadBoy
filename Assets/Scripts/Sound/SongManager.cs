@@ -85,10 +85,12 @@ public class SongManager : AudioManager<SongManager, LoopableClip>
 	/// <summary>
 	/// Swaps the current audio clip for a new one.
 	/// </summary>
-	protected IEnumerator SwapClip(LoopableClip l) {
+	protected IEnumerator SwapClip(LoopableClip l)
+	{
 		bool fade = s[currentSource].isPlaying || s[1 - currentSource].isPlaying;
 		int nextSource = 1 - currentSource;
-		if (fade) {
+		if (fade)
+		{
 			StartCoroutine(Utils.FadeOut(s[nextSource], 0.6f));
 			yield return Utils.FadeOut(s[currentSource], 0.6f);
 		}
@@ -105,21 +107,28 @@ public class SongManager : AudioManager<SongManager, LoopableClip>
 			s[currentSource].Play();
 		}
 	}
-	
+
 	protected override void Update()
 	{
 		base.Update();
 		int nextSource = 1 - currentSource;
 		if (loopTime != 0)
 		{
-			if (!s[nextSource].isPlaying)
+			if (!s[nextSource].isPlaying && AudioSettings.dspTime > time)
 			{
 				time = time + loopTime;
 				s[nextSource].clip = s[currentSource].clip;
 				s[nextSource].loop = false;
 				s[nextSource].PlayScheduled(time);
 				currentSource = nextSource;
+				//print("Loop time: " + time);
+			}
+			if (!s[currentSource].isPlaying)
+			{
+				s[currentSource].PlayScheduled(time);
+				//print("Not playing????");
 			}
 		}
+		//print((int)AudioSettings.dspTime);
 	}
 }
