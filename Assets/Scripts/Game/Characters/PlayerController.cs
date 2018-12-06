@@ -94,7 +94,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected bool grounded
 	{
-		get { return gCounter < 3; }
+		get { return gCounter < 6; }
 	}
 
 	/// <summary>
