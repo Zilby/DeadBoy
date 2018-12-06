@@ -177,7 +177,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// The minimum y velocity before no longer being considered grounded.
 	/// </summary>
-	protected const float MIN_Y_VELOCITY = -3;
+	protected const float MIN_Y_VELOCITY = -1;
 
 	/// <summary>
 	/// The limb move speed.
@@ -371,7 +371,7 @@ public abstract class PlayerController : MonoBehaviour
 		if (grounded)
 		{
 			acceleratedMove = movespeed == 0.0f ? rBody.velocity.x * (1 - (acceleration / 2f)) : rBody.velocity.x + (movespeed * acceleration);
-			//rBody.velocity = new Vector2(rBody.velocity.x, rBody.velocity.y + ((rBody.gravityScale * -Physics2D.gravity.y * analog) / 2f));
+			rBody.velocity = new Vector2(rBody.velocity.x, rBody.velocity.y + ((rBody.gravityScale * -Physics2D.gravity.y * Mathf.Abs(analog)) / 100f));
 		}
 		else
 		{
