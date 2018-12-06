@@ -465,6 +465,7 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetFloat("SmoothXMag", Mathf.MoveTowards(anim.GetFloat("SmoothXMag"), Mathf.Abs(rBody.velocity.x), SMOOTH_ANIM_SPEED * Time.deltaTime));
 		anim.SetFloat("SmoothYMag", Mathf.MoveTowards(anim.GetFloat("SmoothYMag"), Mathf.Abs(rBody.velocity.y), SMOOTH_ANIM_SPEED * Time.deltaTime));
 		anim.SetFloat("SmoothRelXVel", Mathf.MoveTowards(anim.GetFloat("SmoothRelXVel"), anim.GetFloat("RelativeXVel"), SMOOTH_ANIM_SPEED * Time.deltaTime));
+		anim.SetFloat("SmootherRelXVel", Mathf.Clamp(Mathf.MoveTowards(anim.GetFloat("SmootherRelXVel"), anim.GetFloat("RelativeXVel"), (SMOOTH_ANIM_SPEED / 5) * Time.deltaTime), -1, 1));
 
 
 
@@ -675,7 +676,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Whether or not the ik has reached the location it was moving towards. 
 	/// </summary>
-	protected bool ikAtLocation(IK ik)
+	protected bool IkAtLocation(IK ik)
 	{
 		int i = (int)ik;
 		return !settingIK[i] || Vector2.Distance(lastIKLocation[i], returningToPosition[i] ? iKLimbs[i].transform.position : objectLocation.position + ObjectOffsets[i]) < 0.01f;
@@ -685,12 +686,12 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Whether or not all the iks have reached the location they were moving towards. 
 	/// </summary>
-	protected bool allIKsAtLocation()
+	protected bool AllIKsAtLocation()
 	{
 		bool output = true;
 		foreach (IK ik in Enum.GetValues(typeof(IK)))
 		{
-			output &= ikAtLocation(ik);
+			output &= IkAtLocation(ik);
 		}
 		return output;
 	}
@@ -708,7 +709,7 @@ public abstract class PlayerController : MonoBehaviour
 		foreach (IK ik in Enum.GetValues(typeof(IK)))
 		{
 			int i = (int)ik;
-			if (settingIK[i] && ikAtLocation(ik))
+			if (settingIK[i] && IkAtLocation(ik))
 			{
 				if (returningToPosition[i])
 				{
@@ -727,7 +728,7 @@ public abstract class PlayerController : MonoBehaviour
 			}
 		}
 		SetAllLocations();
-		if (allIKsAtLocation())
+		if (AllIKsAtLocation())
 		{
 			interactAction?.Invoke();
 			interactAction = null;

@@ -8,6 +8,8 @@ using UnityEngine;
 public class Pullable : Interactable
 {
 
+	public Collider2D enableCollider;
+
 	/// <summary>
 	/// The distance joint for this pullable. 
 	/// </summary>
@@ -28,12 +30,13 @@ public class Pullable : Interactable
 
 	protected override void InteractAction(PlayerController p)
 	{
-		base.InteractAction(p);
 		bool pulling = p.Pulling(transform);
 		joint.enabled = pulling;
 		joint.connectedBody = p.rBody;
+		enableCollider.enabled = pulling;
 		if (pulling)
 		{
+			base.InteractAction(p);
 			ToolTips.instance.SetTooltipString(tooltip, "Press " + DBInputManager.GetInputName(p, InteractInput) + " To Release");
 		}
 		else
