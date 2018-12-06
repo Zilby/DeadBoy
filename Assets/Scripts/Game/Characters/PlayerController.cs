@@ -187,7 +187,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// The smoothed out animation speed.
 	/// </summary>
-	private const float SMOOTH_ANIM_SPEED = 8F;
+	private const float SMOOTH_ANIM_SPEED = 15F;
 
 	#endregion
 
@@ -447,7 +447,12 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			anim.SetTrigger("Fell");
 		}
+		if (!grounded)
+		{
+			anim.ResetTrigger("Fell");
+		}
 		anim.SetBool("Grounded", grounded);
+		anim.SetInteger("GCounter", (grounded ? 1 : anim.GetInteger("GCounter") - 1));
 		anim.SetBool("Pulling", pulling && !climbing);
 		anim.SetBool("Climbing", climbing);
 		anim.SetBool("PullingUp", climbing && pulling);
