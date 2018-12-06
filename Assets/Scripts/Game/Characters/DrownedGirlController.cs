@@ -99,10 +99,6 @@ public class DrownedGirlController : PlayerController
 				diving = true;
 				timeSinceDive = 0;
 			}
-			else if (diving && DBInputManager.GetInput(this, PlayerInput.Up, InputType.Pressed))
-			{
-				grounded = false;
-			}
 
 			timeSinceDive += Time.deltaTime;
 			if (diving && surfaced && timeSinceDive > 0.8f)
@@ -176,11 +172,6 @@ public class DrownedGirlController : PlayerController
 		anim.SetBool("Diving", diving);
 	}
 
-	protected override void CheckGrounded(Collision2D collision)
-	{
-		base.CheckGrounded(collision);
-		grounded = grounded && !swimming;
-	}
 
 	/// <summary>
 	/// Tries to pull an object. 

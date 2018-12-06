@@ -87,7 +87,15 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Whether or not the player is in the air. 
 	/// </summary>
-	protected bool grounded;
+	protected bool grounded
+	{
+		get { return gCounter < 3; }
+	}
+
+	/// <summary>
+	/// Number of frames since last grounded. 
+	/// </summary>
+	protected uint gCounter = 0;
 
 	/// <summary>
 	/// Whether or not the player is in water.
@@ -327,9 +335,13 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual void FixedUpdate()
 	{
-		if (rBody.velocity.y >= MAX_Y_VELOCITY || (rBody.velocity.y < MIN_Y_VELOCITY && cCollider.GetContacts(new Collider2D[0]) == 0))
+		if (rBody.velocity.y >= MAX_Y_VELOCITY)
 		{
-			grounded = false;
+			gCounter += 10;
+		}
+		else if (rBody.velocity.y < MIN_Y_VELOCITY && cCollider.GetContacts(new Collider2D[0]) == 0)
+		{
+			gCounter++;
 		}
 		Move();
 	}
@@ -460,7 +472,7 @@ public abstract class PlayerController : MonoBehaviour
 			anim.ResetTrigger("Fell");
 		}
 		anim.SetBool("Grounded", grounded);
-		anim.SetInteger("GCounter", (grounded ? 1 : anim.GetInteger("GCounter") - 1));
+		anim.SetInteger("GCounter", (int)gCounter);
 		anim.SetBool("Pulling", pulling && !climbing);
 		anim.SetBool("Climbing", climbing);
 		anim.SetBool("PullingUp", climbing && pulling);
@@ -478,22 +490,25 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Plays a footstep sound effect for the given IK
 	/// </summary>
-	public virtual void Footstep(IK ik) 
+	public virtual void Footstep(IK ik)
 	{
 		SFXManager.instance.PlayClip("DBFootstepsRock", 0.2f, 0.25f, location: iKLimbs[(int)ik].transform.position);
 	}
 
-	public virtual void SwitchedTo() {
+	public virtual void SwitchedTo()
+	{
 		indicator.Hide();//Incase players swap quickly and it's still there
 		indicator.Show();
 		indicator.DelayedFadeOut();
 	}
 
-	protected void PreserveIndicatorDirection() {
+	protected void PreserveIndicatorDirection()
+	{
 		indicator.gameObject.GetComponent<SpriteRenderer>().flipX = transform.localEulerAngles.y > 90;
 	}
 
-	protected virtual void Die() {
+	protected virtual void Die()
+	{
 		LevelManager.instance.RestartLevel();
 	}
 
@@ -515,13 +530,13 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		foreach (ContactPoint2D contact in collision.contacts)
 		{
-			grounded = rBody.velocity.y < MAX_Y_VELOCITY && (grounded || TouchingGround(contact));
+			gCounter = rBody.velocity.y < MAX_Y_VELOCITY && (grounded || TouchingGround(contact)) && !swimming ? 0 : gCounter;
 			/*
 			print(contact.collider.name + " hit " + contact.otherCollider.name + " " + 
 			      (Vector2.Distance(transform.position, contact.point) / (transform.localScale.x * cCollider.size.y)).ToString());
 			*/
+		}
 	}
-}
 
 	bool TouchingGround(ContactPoint2D contact)
 	{
@@ -724,7 +739,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Finds and sets the default IK limbs
 	/// </summary>
-	public void SetDefaultIKs() 
+	public void SetDefaultIKs()
 	{
 		iKLimbs = new IkLimb2D[IKCount];
 		foreach (IK ik in Enum.GetValues(typeof(IK)))
@@ -878,7 +893,7 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			CancelKinematics();
 			rBody.simulated = true;
-			grounded = true;
+			gCounter = 0;
 			climbing = false;
 		}
 		return !climbing;
