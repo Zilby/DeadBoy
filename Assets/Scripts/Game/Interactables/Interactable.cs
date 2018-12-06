@@ -108,6 +108,7 @@ public abstract class Interactable : MonoBehaviour
 	protected void DeactivatePhased(bool b, float delay = 0)
 	{
 		foreach(FadeableSprite s in phased) {
+			s.gameObject.SetActive(true);
 			if (b) {
 				s.SelfDelayedFadeIn(delay);
 			} else {
