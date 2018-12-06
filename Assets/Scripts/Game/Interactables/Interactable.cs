@@ -8,7 +8,8 @@ using UnityEngine;
 /// </summary>
 public abstract class Interactable : MonoBehaviour
 {
-	public static Action<bool> TogglePhased;
+	public delegate void PhaseEvent(bool b, float f = 0);
+	public static PhaseEvent TogglePhased;
 
 	[Header("Interactable Fields")]
 	/// <summary>
@@ -24,7 +25,7 @@ public abstract class Interactable : MonoBehaviour
 	/// <summary>
 	/// Whether or not this interactable is phasing. 
 	/// </summary>
-	public bool phasing;
+	public List<FadeableSprite> phased;
 
 	/// <summary>
 	/// Whether or not to move the player left or right when interacting. 
@@ -90,7 +91,7 @@ public abstract class Interactable : MonoBehaviour
 
 	protected virtual void Awake()
 	{
-		if (phasing)
+		if (phased.Count > 0)
 		{
 			TogglePhased += DeactivatePhased;
 		}
@@ -98,15 +99,26 @@ public abstract class Interactable : MonoBehaviour
 
 	protected virtual void OnDestroy()
 	{
-		if (phasing)
+		if (phased.Count > 0)
 		{
 			TogglePhased -= DeactivatePhased;
 		}
 	}
 
-	protected void DeactivatePhased(bool b)
+	protected void DeactivatePhased(bool b, float delay = 0)
 	{
-		transform.parent.gameObject.SetActive(b);
+		foreach(FadeableSprite s in phased) {
+			if (b) {
+				s.SelfDelayedFadeIn(delay);
+			} else {
+				s.SelfDelayedFadeOut(delay);
+			}
+		}
+	}
+
+	protected void SelfDestruct() {
+		DeactivatePhased(false, 1.5f);
+		Destroy(this);
 	}
 
 	/// <summary>
@@ -114,7 +126,7 @@ public abstract class Interactable : MonoBehaviour
 	/// </summary>
 	protected bool PlayerCheck(PlayerController p)
 	{
-		return p != null && (!phasing || p is DeadboyController);
+		return p != null && (!(phased.Count > 0) || p is DeadboyController);
 	}
 
 

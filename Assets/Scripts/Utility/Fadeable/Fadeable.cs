@@ -107,6 +107,17 @@ public abstract class Fadeable : MonoBehaviour
         BlocksRaycasts = false;
     }
 
+	public virtual void SelfDelayedFadeIn(float delay = 1f) {
+		fadeDelay = delay;
+		StartCoroutine(DelayedFadeIn());
+	}
+
+	public virtual void SelfDelayedFadeOut(float delay = 1f)
+	{
+		fadeDelay = delay;
+		StartCoroutine(DelayedFadeOut());
+	}
+
 	public virtual IEnumerator DelayedFadeIn() {
 		IsVisible = false;
 		Alpha = 0;

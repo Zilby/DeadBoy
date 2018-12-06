@@ -30,7 +30,7 @@ public abstract class PressableButton : Interactable
 		p.Press(transform, delegate
 		{
 			GetComponent<SpriteRenderer>().sprite = sprite;
-			Destroy(this);
+			SelfDestruct();
 		});
 		EndInteraction();
 	}

@@ -30,7 +30,7 @@ public class Unlockable : Interactable
 			s.SelfFadeOut();
 		}
 		EndInteraction();
-		Destroy(this);
+		SelfDestruct();
 	}
 
 

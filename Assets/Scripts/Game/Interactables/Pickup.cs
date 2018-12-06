@@ -34,6 +34,6 @@ public class Pickup : Interactable
 		Destroy(col);
 		p.PickUp(t, type);
 		EndInteraction();
-		Destroy(this);
+		SelfDestruct();
 	}
 }

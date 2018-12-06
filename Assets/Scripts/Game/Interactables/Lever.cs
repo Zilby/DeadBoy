@@ -30,6 +30,6 @@ public abstract class Lever : Interactable
 		});
 
 		EndInteraction();
-		Destroy(this);
+		SelfDestruct();
 	}
 }
