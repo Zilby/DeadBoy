@@ -85,6 +85,11 @@ public abstract class PlayerController : MonoBehaviour
 	#region Protected
 
 	/// <summary>
+	/// The last checkpoint reached. 
+	/// </summary>
+	protected Transform checkpoint;
+
+	/// <summary>
 	/// Whether or not the player is in the air. 
 	/// </summary>
 	protected bool grounded
@@ -507,9 +512,22 @@ public abstract class PlayerController : MonoBehaviour
 		indicator.gameObject.GetComponent<SpriteRenderer>().flipX = transform.localEulerAngles.y > 90;
 	}
 
-	protected virtual void Die()
+	protected virtual IEnumerator Die()
 	{
-		LevelManager.instance.RestartLevel();
+		CameraController.Deactivate();
+		DBInputManager.instance.enabled = false;
+		yield return Fader.FadeIn();
+		CameraController.Activate();
+		transform.position = checkpoint.transform.position;
+		rBody.velocity = Vector3.zero;
+		yield return new WaitForSeconds(0.2f);
+		DBInputManager.instance.enabled = true;
+		yield return Fader.FadeOut();
+		if (checkpoint == null)
+		{
+			LevelManager.instance.RestartLevel();
+			yield return null;
+		}
 	}
 
 	#endregion
@@ -553,6 +571,9 @@ public abstract class PlayerController : MonoBehaviour
 			swimming = true;
 			this.EnterWater(collision);
 		}
+		if (collision.tag == "Checkpoint") {
+			checkpoint = collision.gameObject.transform;
+		}
 	}
 
 	// void OnTriggerStay2D(Collider2D collision)
@@ -577,8 +598,7 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual void EnterWater(Collider2D water)
 	{
-		CameraController.Deactivate();
-		Die();
+		StartCoroutine(Die());
 	}
 
 	protected virtual void ExitWater(Collider2D water)

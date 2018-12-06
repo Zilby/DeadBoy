@@ -9,6 +9,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
 	public static Action Deactivate;
+	public static Action Activate;
 
 	public Vector2 xRange = new Vector2(-100, 100);
 	public Vector2 yRange = new Vector2(-100, 100);
@@ -29,6 +30,9 @@ public class CameraController : MonoBehaviour
 	{
 		Deactivate = delegate {
 			enabled = false;
+		};
+		Activate = delegate {
+			enabled = true;
 		};
 	}
 
