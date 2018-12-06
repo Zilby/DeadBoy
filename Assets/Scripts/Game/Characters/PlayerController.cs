@@ -351,34 +351,35 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected virtual void Move()
 	{
-		float movement = 0.0f;
-		float analog = 1;
+		float analog = 0f;
 		InControl.InputDevice device = DBInputManager.players[this]?.Device;
-		if (device != null) 
+		if (device != null)
 		{
-			analog = Mathf.Min(Mathf.Abs(device.LeftStick.X + device.DPadX), 1);
+			analog = Mathf.Clamp(device.LeftStick.X + device.DPadX, -1, 1);
+		}
+		else if (DBInputManager.GetInput(this, PlayerInput.Left, InputType.Held))
+		{
+			analog = -1f;
+		}
+		else if (DBInputManager.GetInput(this, PlayerInput.Right, InputType.Held))
+		{
+			analog = 1f;
 		}
 		float movespeed = speed * analog * Time.fixedDeltaTime;
-		if (DBInputManager.GetInput(this, PlayerInput.Left, InputType.Held))
-		{
-			movement -= movespeed;
-		}
-		if (DBInputManager.GetInput(this, PlayerInput.Right, InputType.Held))
-		{
-			movement += movespeed;
-		}
+
 		float acceleratedMove;
 		if (grounded)
 		{
-			acceleratedMove = movement == 0.0f ? rBody.velocity.x * (1 - (acceleration / 2f)) : rBody.velocity.x + (movement * acceleration);
+			acceleratedMove = movespeed == 0.0f ? rBody.velocity.x * (1 - (acceleration / 2f)) : rBody.velocity.x + (movespeed * acceleration);
+			//rBody.velocity = new Vector2(rBody.velocity.x, rBody.velocity.y + ((rBody.gravityScale * -Physics2D.gravity.y * analog) / 2f));
 		}
 		else
 		{
-			acceleratedMove = rBody.velocity.x + (movement * aerialControl);
+			acceleratedMove = rBody.velocity.x + (movespeed * aerialControl);
 		}
 		// Clamp the accelerated move to the maximum speeds. 
-		movement = Mathf.Clamp(acceleratedMove, -movespeed, movespeed);
-		rBody.velocity = new Vector2(movement, rBody.velocity.y);
+		movespeed = Mathf.Clamp(acceleratedMove, -Mathf.Abs(movespeed), Mathf.Abs(movespeed));
+		rBody.velocity = new Vector2(movespeed, rBody.velocity.y);
 	}
 
 	/// <summary>
@@ -519,8 +520,8 @@ public abstract class PlayerController : MonoBehaviour
 			print(contact.collider.name + " hit " + contact.otherCollider.name + " " + 
 			      (Vector2.Distance(transform.position, contact.point) / (transform.localScale.x * cCollider.size.y)).ToString());
 			*/
-		}
 	}
+}
 
 	bool TouchingGround(ContactPoint2D contact)
 	{
