@@ -133,13 +133,21 @@ public class DrownedGirlController : PlayerController
 			float feetHeight = this.gameObject.transform.position.y - settleDepth;
 
 			float adjustedDivingBuoyancy = divingBuoyancy;
+
+			float analog = 1;
+			InControl.InputDevice device = DBInputManager.players[this]?.Device;
+			if (device != null)
+			{
+				analog = Mathf.Min(Mathf.Abs(device.LeftStick.Y + device.DPadY), 1);
+			}
+
 			if (diving && DBInputManager.GetInput(this, PlayerInput.Down, InputType.Held))
 			{
-				adjustedDivingBuoyancy -= verticalControl;
+				adjustedDivingBuoyancy -= verticalControl * analog;
 			}
 			else if (diving && DBInputManager.GetInput(this, PlayerInput.Up, InputType.Held))
 			{
-				adjustedDivingBuoyancy += verticalControl;
+				adjustedDivingBuoyancy += verticalControl * analog;
 			}
 
 			float buoyantForce = (diving ? adjustedDivingBuoyancy : (surface - feetHeight) * surfaceBuoyancy) * Time.deltaTime;

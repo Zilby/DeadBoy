@@ -352,13 +352,20 @@ public abstract class PlayerController : MonoBehaviour
 	protected virtual void Move()
 	{
 		float movement = 0.0f;
+		float analog = 1;
+		InControl.InputDevice device = DBInputManager.players[this]?.Device;
+		if (device != null) 
+		{
+			analog = Mathf.Min(Mathf.Abs(device.LeftStick.X + device.DPadX), 1);
+		}
+		float movespeed = speed * analog * Time.fixedDeltaTime;
 		if (DBInputManager.GetInput(this, PlayerInput.Left, InputType.Held))
 		{
-			movement -= speed * Time.deltaTime;
+			movement -= movespeed;
 		}
 		if (DBInputManager.GetInput(this, PlayerInput.Right, InputType.Held))
 		{
-			movement += speed * Time.deltaTime;
+			movement += movespeed;
 		}
 		float acceleratedMove;
 		if (grounded)
@@ -370,7 +377,7 @@ public abstract class PlayerController : MonoBehaviour
 			acceleratedMove = rBody.velocity.x + (movement * aerialControl);
 		}
 		// Clamp the accelerated move to the maximum speeds. 
-		movement = Mathf.Clamp(acceleratedMove, speed * Time.fixedDeltaTime * -1, speed * Time.fixedDeltaTime);
+		movement = Mathf.Clamp(acceleratedMove, -movespeed, movespeed);
 		rBody.velocity = new Vector2(movement, rBody.velocity.y);
 	}
 
