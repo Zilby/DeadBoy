@@ -1,0 +1,645 @@
+fileFormatVersion: 2
+guid: 7b9d7e288f0824f4a802530084b0e086
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: SquishedBoySheet_0
+    21300002: SquishedBoySheet_1
+    21300004: SquishedBoySheet_2
+    21300006: SquishedBoySheet_3
+    21300008: SquishedBoySheet_4
+    21300010: SquishedBoySheet_5
+    21300012: SquishedBoySheet_6
+    21300014: SquishedBoySheet_7
+    21300016: SquishedBoySheet_8
+    21300018: SquishedBoySheet_9
+    21300020: SquishedBoySheet_10
+    21300022: SquishedBoySheet_11
+    21300024: SquishedBoySheet_14
+    21300026: SquishedBoySheet_15
+    21300028: SquishedBoySheet_16
+    21300030: SquishedBoySheet_17
+    21300032: SquishedBoySheet_18
+    21300034: SquishedBoySheet_19
+    21300036: SquishedBoySheet_20
+    21300038: SquishedBoySheet_21
+    21300040: SquishedBoySheet_22
+    21300042: SquishedBoySheet_23
+    21300044: SquishedBoySheet_24
+    21300046: SquishedBoySheet_25
+    21300048: SquishedBoySheet_26
+    21300050: SquishedBoySheet_27
+  externalObjects: {}
+  serializedVersion: 7
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SquishedBoySheet_0
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 111
+        width: 954
+        height: 2326
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b113abbf8c51fcb448505234ea1bb141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_1
+      rect:
+        serializedVersion: 2
+        x: 1020.17834
+        y: 2217.9158
+        width: 438.64502
+        height: 235.25757
+      alignment: 9
+      pivot: {x: 0.49657843, y: 0.49555993}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9653c24a61378ae4cab919a4ebb7b94f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_2
+      rect:
+        serializedVersion: 2
+        x: 1567.2673
+        y: 2169.0647
+        width: 467.07556
+        height: 285.55737
+      alignment: 9
+      pivot: {x: 0.49720603, y: 0.4987975}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebb7e43113a3f0b43b250338cc4fab21
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_3
+      rect:
+        serializedVersion: 2
+        x: 2421.8
+        y: 1618.1797
+        width: 672.6499
+        height: 814.80273
+      alignment: 9
+      pivot: {x: 0.4968412, y: 0.49928704}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93dfe94fd02d95c4588e9b3a0d67bec0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_4
+      rect:
+        serializedVersion: 2
+        x: 3303.2031
+        y: 2076.384
+        width: 561.11475
+        height: 443.0188
+      alignment: 9
+      pivot: {x: 0.4959714, y: 0.49798384}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b46603e3444f34646892b88e183683de
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_5
+      rect:
+        serializedVersion: 2
+        x: 1488.5836
+        y: 1557.4146
+        width: 248.37915
+        height: 506.44092
+      alignment: 9
+      pivot: {x: 0.4989001, y: 0.49874616}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f8bec8b4a97e9746906938c3a2c0e00
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_6
+      rect:
+        serializedVersion: 2
+        x: 1987.2258
+        y: 1552.1622
+        width: 224.32251
+        height: 506.4408
+      alignment: 9
+      pivot: {x: 0.48935866, y: 0.49924448}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b07a72d5ea9b99489e5e5ae97fa0860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_7
+      rect:
+        serializedVersion: 2
+        x: 4057.35
+        y: 2041.3759
+        width: 90.91748
+        height: 121.53528
+      alignment: 9
+      pivot: {x: 0.4911036, y: 0.48647723}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b8a93ec2dab5ce48bd3e2ef105a7ba4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_8
+      rect:
+        serializedVersion: 2
+        x: 3243.5603
+        y: 1443.1365
+        width: 517.3755
+        height: 523.9365
+      alignment: 9
+      pivot: {x: 0.49468848, y: 0.50075465}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 162f6b1c25b9e8c47b6211b24a58723f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_9
+      rect:
+        serializedVersion: 2
+        x: 3880.5454
+        y: 1844.9591
+        width: 180.58325
+        height: 58.11316
+      alignment: 9
+      pivot: {x: 0.4898272, y: 0.49973008}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 360ac366e05cf044bbbfc45f5dea408a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_10
+      rect:
+        serializedVersion: 2
+        x: 4112.759
+        y: 1850.2722
+        width: 125.90918
+        height: 53.739258
+      alignment: 9
+      pivot: {x: 0.47447857, y: 0.4880586}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e186320e33d84ed40b16599296ed17e7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_11
+      rect:
+        serializedVersion: 2
+        x: 3890.7136
+        y: 1699.6359
+        width: 156.52661
+        height: 121.53516
+      alignment: 9
+      pivot: {x: 0.49375868, y: 0.49668145}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a5a7b1f26d1a4847a0662c7696698ac
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_14
+      rect:
+        serializedVersion: 2
+        x: 4122.8047
+        y: 1701.0751
+        width: 128.09619
+        height: 119.348145
+      alignment: 9
+      pivot: {x: 0.49333882, y: 0.51467013}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7aee5c7fdbaccd04096462f60eade044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_15
+      rect:
+        serializedVersion: 2
+        x: 3908.489
+        y: 1548.1627
+        width: 182.77026
+        height: 93.104614
+      alignment: 9
+      pivot: {x: 0.48974591, y: 0.49769047}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a78cbfa5669736645925fa8bafc5e9a7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_16
+      rect:
+        serializedVersion: 2
+        x: 2486.3918
+        y: 954.8296
+        width: 278.99634
+        height: 541.43225
+      alignment: 9
+      pivot: {x: 0.4896414, y: 0.49991557}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9139fae8266c4e84ea4ade0799af1a93
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_17
+      rect:
+        serializedVersion: 2
+        x: 2903.4207
+        y: 967.1751
+        width: 265.87476
+        height: 526.1236
+      alignment: 9
+      pivot: {x: 0.49677372, y: 0.49669868}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf3b6012d68b3e34e9e9e303f4964372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_18
+      rect:
+        serializedVersion: 2
+        x: 3906
+        y: 1449
+        width: 129
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a726597aaa63d314da6adafccbda5671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_19
+      rect:
+        serializedVersion: 2
+        x: 4136
+        y: 1460
+        width: 96
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b95192eed4ae3541b6ce18116d91bfc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_20
+      rect:
+        serializedVersion: 2
+        x: 1440.1798
+        y: 776.1604
+        width: 298.67932
+        height: 674.83716
+      alignment: 9
+      pivot: {x: 0.49156505, y: 0.49914205}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 258953db2304fd74c9ba0bfff2432d67
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_21
+      rect:
+        serializedVersion: 2
+        x: 2022.2162
+        y: 754.0301
+        width: 265.87488
+        height: 692.3327
+      alignment: 9
+      pivot: {x: 0.4900202, y: 0.49971625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9019abf8489e99540bb5e4b2e9807672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_22
+      rect:
+        serializedVersion: 2
+        x: 2447.59
+        y: 284.2273
+        width: 228.69653
+        height: 655.1544
+      alignment: 9
+      pivot: {x: 0.49152324, y: 0.49953523}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ce49fbd539bf5d40bbcee34b76ed0e7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_23
+      rect:
+        serializedVersion: 2
+        x: 2902.5188
+        y: 297.10556
+        width: 226.50952
+        height: 624.53687
+      alignment: 9
+      pivot: {x: 0.49217, y: 0.50020176}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35d562f1c3067d74882b4351f2b507b3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_24
+      rect:
+        serializedVersion: 2
+        x: 1576.5038
+        y: 395.59875
+        width: 589.54553
+        height: 309.614
+      alignment: 9
+      pivot: {x: 0.49529037, y: 0.5003046}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75bd016b3c680e447a9109fd657ad911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_25
+      rect:
+        serializedVersion: 2
+        x: 3200.9543
+        y: 478.86792
+        width: 392.71875
+        height: 213.38763
+      alignment: 9
+      pivot: {x: 0.4966548, y: 0.4926812}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f293171243946746881c798ed283013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_26
+      rect:
+        serializedVersion: 2
+        x: 1610
+        y: 111
+        width: 527
+        height: 205
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e67251e0dc272947a94771555c453d9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishedBoySheet_27
+      rect:
+        serializedVersion: 2
+        x: 3200.9543
+        y: 136.75388
+        width: 392.71875
+        height: 213.38766
+      alignment: 9
+      pivot: {x: 0.4966548, y: 0.50493145}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 971dcec12cc5c41498f4ef36b293c19f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: b5174fe318b07f64a84751e5bb28d8fa
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 636806724131576384
+  assetBundleName: 
+  assetBundleVariant: 
