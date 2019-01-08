@@ -745,7 +745,7 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			float speedx = dragLocation.x * dragSpeed * Time.deltaTime;
 			float speedy = dragLocation.y * dragSpeed * Time.deltaTime;
-			objectLocation.position = objectLocation.position.XY(speedx, speedy);
+			objectLocation.position = objectLocation.position.XYAdd(speedx, speedy);
 			dragLocation.x -= speedx;
 			dragLocation.y -= speedy;
 		}
@@ -877,7 +877,7 @@ public abstract class PlayerController : MonoBehaviour
 			transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up, 3f * Time.deltaTime);
 			yield return null;
 		}
-		transform.position = transform.position.Y(t.position.y - cCollider.bounds.min.y);
+		transform.position = transform.position.YAdd(t.position.y - cCollider.bounds.min.y);
 
 		lastIKLocation[(int)IK.RightLeg] = iKLimbs[(int)IK.RightLeg].transform.position;
 		settingIK[(int)IK.RightLeg] = true;
