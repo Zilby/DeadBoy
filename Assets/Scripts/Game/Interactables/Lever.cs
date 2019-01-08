@@ -26,7 +26,7 @@ public abstract class Lever : Interactable
 			foreach(Func<IEnumerator> f in ToggleActions) {
 				p.StartCoroutine(f());
 			}
-			p.StartCoroutine(CameraController.RedirectCamera(look));
+			p.StartCoroutine(CameraController.RedirectCamera(lookAts));
 		});
 
 		EndInteraction();

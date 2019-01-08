@@ -127,15 +127,18 @@ public class CameraController : MonoBehaviour
 	/// Redirects the camera to the look transform.
 	/// </summary>
 	/// <returns>The camera.</returns>
-	public static IEnumerator RedirectCamera(Transform t, float delay = 0.8f, float duration = 2f)
+	public static IEnumerator RedirectCamera(List<Transform> looks, float delay = 0.8f, float duration = 2.3f)
 	{
-		if (t != null)
+		if (looks != null)
 		{
 			yield return new WaitForSeconds(delay);
-			movingToNewPosition = true;
-			followTransform = t;
-			yield return new WaitForSeconds(duration);
-			followTransform = null;
+			foreach (Transform t in looks)
+			{
+				movingToNewPosition = true;
+				followTransform = t;
+				yield return new WaitForSeconds(duration);
+				followTransform = null;
+			}
 		}
 	}
 }

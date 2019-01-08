@@ -25,7 +25,7 @@ public abstract class PressableButton : Interactable
 		{
 			p.StartCoroutine(f());
 		}
-		p.StartCoroutine(CameraController.RedirectCamera(look));
+		p.StartCoroutine(CameraController.RedirectCamera(lookAts));
 
 		p.Press(transform, delegate
 		{

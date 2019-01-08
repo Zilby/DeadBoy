@@ -17,10 +17,11 @@ public abstract class Interactable : MonoBehaviour
 	/// </summary>
 	[Range(-10, 10)]
 	public float tipPos = 3;
+
 	/// <summary>
 	/// Transform to look at after interacting.
 	/// </summary>
-	public Transform look;
+	public List<Transform> lookAts;
 
 	/// <summary>
 	/// Whether or not this interactable is phasing. 

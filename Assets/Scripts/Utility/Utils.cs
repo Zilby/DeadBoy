@@ -27,7 +27,8 @@ public static class Utils
 	{
 		Transform tr = t.Find(name);
 		T result = default(T);
-		if (tr != null) {
+		if (tr != null)
+		{
 			result = tr.GetComponent<T>();
 		}
 		if (result == null)
@@ -108,4 +109,116 @@ public static class Utils
         Application.Quit();
 #endif
 	}
+
+	#region Accessor Functions
+	// For changing vectors and colors
+
+	public static Vector2 X(this Vector2 v, float x)
+	{
+		v.x = x;
+		return v;
+	}
+
+	public static Vector2 Y(this Vector2 v, float y)
+	{
+		v.y = y;
+		return v;
+	}
+
+	public static Vector3 X(this Vector3 v, float x)
+	{
+		v.x = x;
+		return v;
+	}
+
+	public static Vector3 Y(this Vector3 v, float y)
+	{
+		v.y = y;
+		return v;
+	}
+
+	public static Vector3 Z(this Vector3 v, float z)
+	{
+		v.z = z;
+		return v;
+	}
+
+	public static Color R(this Color c, float r)
+	{
+		c.r = r;
+		return c;
+	}
+
+	public static Color G(this Color c, float g)
+	{
+		c.g = g;
+		return c;
+	}
+
+	public static Color B(this Color c, float b)
+	{
+		c.b = b;
+		return c;
+	}
+
+	public static Color A(this Color c, float a)
+	{
+		c.a = a;
+		return c;
+	}
+
+	public static Vector2 XAdd(this Vector2 v, float x)
+	{
+		v.x += x;
+		return v;
+	}
+
+	public static Vector2 YAdd(this Vector2 v, float y)
+	{
+		v.y += y;
+		return v;
+	}
+
+	public static Vector3 XAdd(this Vector3 v, float x)
+	{
+		v.x += x;
+		return v;
+	}
+
+	public static Vector3 YAdd(this Vector3 v, float y)
+	{
+		v.y += y;
+		return v;
+	}
+
+	public static Vector3 ZAdd(this Vector3 v, float z)
+	{
+		v.z += z;
+		return v;
+	}
+
+	public static Color RAdd(this Color c, float r)
+	{
+		c.r += r;
+		return c;
+	}
+
+	public static Color GAdd(this Color c, float g)
+	{
+		c.g += g;
+		return c;
+	}
+
+	public static Color BAdd(this Color c, float b)
+	{
+		c.b += b;
+		return c;
+	}
+
+	public static Color AAdd(this Color c, float a)
+	{
+		c.a += a;
+		return c;
+	}
+	#endregion
 }

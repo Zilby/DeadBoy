@@ -10,13 +10,14 @@ public class RaiseWater : Lever
 	public float height = 1;
 	public float width = 1;
 
-	public Transform t;
+	public Transform water;
+	public Transform wall;
 
 	protected override List<Func<IEnumerator>> ToggleActions
 	{
 		get
 		{
-			return new List<Func<IEnumerator>>() { Raise, Waterfall };
+			return new List<Func<IEnumerator>>() { Raise, Waterfall, Lower };
 		}
 	}
 
@@ -26,8 +27,8 @@ public class RaiseWater : Lever
 		{
 			float hspeed = height * speed;
 			float yspeed = width * speed;
-			t.localPosition = new Vector3(t.localPosition.x, t.localPosition.y + hspeed, t.localPosition.z);
-			t.localScale = new Vector3(t.localScale.x, t.localScale.y + yspeed, t.localScale.z);
+			water.localPosition = water.localPosition.YAdd(hspeed);
+			water.localScale = water.localScale.YAdd(yspeed);
 			height -= hspeed;
 			width -= yspeed;
 			yield return new WaitForFixedUpdate();
@@ -37,6 +38,15 @@ public class RaiseWater : Lever
 	private IEnumerator Waterfall()
 	{
 		yield return new WaitForSeconds(1.5f);
-		look.gameObject.SetActive(true);
+		lookAts[0].gameObject.SetActive(true);
+	}
+
+	private IEnumerator Lower()
+	{
+		while (wall.localPosition.y > -2f)
+		{
+			wall.localPosition = wall.localPosition.YAdd(-speed * 2);
+			yield return new WaitForFixedUpdate();
+		}
 	}
 }
