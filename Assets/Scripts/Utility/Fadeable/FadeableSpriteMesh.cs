@@ -32,7 +32,7 @@ public class FadeableSpriteMesh : Fadeable
 
         set
         {
-            rend.color = new Color(rend.color.r, rend.color.g, rend.color.b, value);
+			rend.color = rend.color.A(value);
         }
     }
 

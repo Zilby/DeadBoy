@@ -388,7 +388,7 @@ public abstract class PlayerController : MonoBehaviour
 		if (grounded)
 		{
 			acceleratedMove = movespeed == 0.0f ? rBody.velocity.x * (1 - (acceleration / 2f)) : rBody.velocity.x + (movespeed * acceleration);
-			rBody.velocity = new Vector2(rBody.velocity.x, rBody.velocity.y + ((rBody.gravityScale * -Physics2D.gravity.y * Mathf.Abs(analog)) / 100f));
+			rBody.velocity = rBody.velocity.YAdd((rBody.gravityScale * -Physics2D.gravity.y * Mathf.Abs(analog)) / 100f);
 		}
 		else
 		{
@@ -396,7 +396,7 @@ public abstract class PlayerController : MonoBehaviour
 		}
 		// Clamp the accelerated move to the maximum speeds. 
 		movespeed = Mathf.Clamp(acceleratedMove, -Mathf.Abs(movespeed), Mathf.Abs(movespeed));
-		rBody.velocity = new Vector2(movespeed, rBody.velocity.y);
+		rBody.velocity = rBody.velocity.X(movespeed); 
 	}
 
 	/// <summary>
@@ -416,7 +416,7 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			if (DBInputManager.GetInput(this, PlayerInput.Jump, InputType.Pressed) && CanJump())
 			{
-				rBody.velocity = new Vector2(rBody.velocity.x, jumpHeight);
+				rBody.velocity = rBody.velocity.Y(jumpHeight);
 				jumpStart = Time.fixedTime;
 				jumpHeld = true;
 			}
@@ -429,7 +429,7 @@ public abstract class PlayerController : MonoBehaviour
 					 (Time.fixedTime - jumpStart < jumpInterval) &&
 					 !grounded && jumpHeld)
 			{
-				rBody.velocity = new Vector2(rBody.velocity.x, jumpHeight);
+				rBody.velocity = rBody.velocity.Y(jumpHeight);
 			}
 		}
 	}
@@ -450,7 +450,7 @@ public abstract class PlayerController : MonoBehaviour
 			{
 				flip = 0 + (invertDirection ? 180 : 0);
 			}
-			transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, flip, transform.localEulerAngles.z);
+			transform.localEulerAngles = transform.localEulerAngles.Y(flip); 
 		}
 		bool flipped = transform.localEulerAngles.y == 180;
 		anim.SetFloat("OldXVel", anim.GetFloat("XVel"));
@@ -745,7 +745,7 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			float speedx = dragLocation.x * dragSpeed * Time.deltaTime;
 			float speedy = dragLocation.y * dragSpeed * Time.deltaTime;
-			objectLocation.position = new Vector3(objectLocation.position.x + speedx, objectLocation.position.y + speedy, objectLocation.position.z);
+			objectLocation.position = objectLocation.position.XY(speedx, speedy);
 			dragLocation.x -= speedx;
 			dragLocation.y -= speedy;
 		}
@@ -877,7 +877,7 @@ public abstract class PlayerController : MonoBehaviour
 			transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up, 3f * Time.deltaTime);
 			yield return null;
 		}
-		transform.position = new Vector3(transform.position.x, t.position.y + transform.position.y - cCollider.bounds.min.y, transform.position.z);
+		transform.position = transform.position.Y(t.position.y - cCollider.bounds.min.y);
 
 		lastIKLocation[(int)IK.RightLeg] = iKLimbs[(int)IK.RightLeg].transform.position;
 		settingIK[(int)IK.RightLeg] = true;

@@ -76,14 +76,12 @@ public class CameraController : MonoBehaviour
 		float moveSpeed = movingToNewPosition ? CAMERA_MOVE_SPEED * 2: CAMERA_MOVE_SPEED;
 		if (Mathf.Abs(transform.position.x - RelativePlayerPosition.x) <= MAX_X_DIFF || movingToNewPosition || Mathf.Abs(oldDiffX) > MAX_X_DIFF)
 		{
-			transform.position = new Vector3(Mathf.Lerp(transform.position.x, RelativePlayerPosition.x, moveSpeed * t),
-											 transform.position.y, transform.position.z);
+			transform.position = transform.position.X(Mathf.Lerp(transform.position.x, RelativePlayerPosition.x, moveSpeed * t));
 		}
 		if (Mathf.Abs(transform.position.y - RelativePlayerPosition.y) <= MAX_Y_DIFF || movingToNewPosition || Mathf.Abs(oldDiffY) > MAX_Y_DIFF)
 		{
 
-			transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, RelativePlayerPosition.y, moveSpeed * t),
-										 transform.position.z);
+			transform.position = transform.position.Y(Mathf.Lerp(transform.position.y, RelativePlayerPosition.y, moveSpeed * t));
 		}
 		if ((Mathf.Abs(transform.position.x - RelativePlayerPosition.x) <= MAX_X_DIFF || (transform.position.x == xRange.x || transform.position.x == xRange.y)) &&
 			(Mathf.Abs(transform.position.y - RelativePlayerPosition.y) <= MAX_Y_DIFF || (transform.position.y == yRange.x || transform.position.y == yRange.y)) &&
@@ -96,8 +94,7 @@ public class CameraController : MonoBehaviour
 	void ClampCamera() {
 		if (Mathf.Abs(transform.position.x - RelativePlayerPosition.x) > MAX_X_DIFF && !movingToNewPosition && Mathf.Abs(oldDiffX) <= MAX_X_DIFF)
 		{
-			transform.position = new Vector3(RelativePlayerPosition.x - oldDiffX,
-											  transform.position.y, transform.position.z);
+			transform.position = transform.position.X(RelativePlayerPosition.x - oldDiffX);
 		}
 		else
 		{
@@ -105,8 +102,7 @@ public class CameraController : MonoBehaviour
 		}
 		if (Mathf.Abs(transform.position.y - RelativePlayerPosition.y) > MAX_Y_DIFF && !movingToNewPosition && Mathf.Abs(oldDiffY) <= MAX_Y_DIFF)
 		{
-			transform.position = new Vector3(transform.position.x, RelativePlayerPosition.y - oldDiffY,
-											 transform.position.z);
+			transform.position = transform.position.Y(RelativePlayerPosition.y - oldDiffY); 
 		}
 		else
 		{
@@ -120,7 +116,8 @@ public class CameraController : MonoBehaviour
 	/// </summary>
 	void LockTransform()
 	{
-		transform.position = new Vector3(Mathf.Clamp(transform.position.x, xRange.x, xRange.y), Mathf.Clamp(transform.position.y, yRange.x, yRange.y), transform.position.z);
+		transform.position = transform.position.XY(Mathf.Clamp(transform.position.x, xRange.x, xRange.y), 
+		                                           Mathf.Clamp(transform.position.y, yRange.x, yRange.y));
 	}
 
 	/// <summary>

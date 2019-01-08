@@ -214,11 +214,11 @@ public abstract class Interactable : MonoBehaviour
 			flip = 0 + (p.invertDirection ? 180 : 0);
 			mPos += playerMovePosition;
 		}
-		p.transform.localEulerAngles = new Vector3(p.transform.localEulerAngles.x, flip, p.transform.localEulerAngles.z);
+		p.transform.localEulerAngles = p.transform.localEulerAngles.Y(flip);
 		float t = 0.0f;
 		while (Mathf.Abs(p.transform.position.x - mPos) > 0.01f && movePlayer)
 		{
-			p.transform.position = new Vector3(Mathf.Lerp(p.transform.position.x, mPos, t), p.transform.position.y, p.transform.position.z);
+			p.transform.position = p.transform.position.X(Mathf.Lerp(p.transform.position.x, mPos, t));
 			t += REPOSITION_SPEED * Time.deltaTime;
 			yield return new WaitForEndOfFrame();
 		}
