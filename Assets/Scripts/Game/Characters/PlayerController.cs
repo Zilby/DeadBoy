@@ -551,10 +551,16 @@ public abstract class PlayerController : MonoBehaviour
 
 	bool TouchingGround()
 	{
-		RaycastHit2D[] hits = new RaycastHit2D[1];
-		LayerMask layers = LayerMask.GetMask("Surface");
-		cCollider.Raycast(Vector2.down, hits, ((cCollider.size.y / 2.0f) * transform.localScale.y) + TOUCHING_DIST, layers);
-		return hits[0].rigidbody != null;
+		RaycastHit2D[] hits = new RaycastHit2D[10];
+		cCollider.Raycast(Vector2.down, hits, ((cCollider.size.y / 2.0f) * transform.localScale.y) + TOUCHING_DIST);
+		foreach (RaycastHit2D r in hits)
+		{
+			if (r.collider != null && !r.collider.isTrigger)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	void OnTriggerEnter2D(Collider2D collision)
@@ -569,13 +575,6 @@ public abstract class PlayerController : MonoBehaviour
 			checkpoint = collision.gameObject.transform;
 		}
 	}
-
-	// void OnTriggerStay2D(Collider2D collision)
-	// {
-	// 	if(collision.gameObject.layer == LayerMask.NameToLayer("Water")) {
-	// 		this.InWater(collision);
-	// 	}
-	// }
 
 	void OnTriggerExit2D(Collider2D collision)
 	{

@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Class for lever interactables. 
 /// </summary>
-public abstract class Lever : Interactable
+public class Lever : Interactable
 {
 	[Header("Lever Fields")]
 	public Vector3 movePosition;
@@ -15,21 +15,20 @@ public abstract class Lever : Interactable
 	{
 		return "Press " + DBInputManager.GetInputName(p, InteractInput) + " To Pull";
 	}
-
-	protected abstract List<Func<IEnumerator>> ToggleActions { get; }
-
+	
 	protected override void InteractAction(PlayerController p)
 	{
-		base.InteractAction(p);
+		p.StartCoroutine(RepositionPlayer(p));
+		SFXManager.instance.PlayClip(clip, delay: (ulong)0.2, location: transform.position);
 		p.GrabAndDrag(transform, movePosition, delegate
 		{
-			foreach(Func<IEnumerator> f in ToggleActions) {
-				p.StartCoroutine(f());
+			foreach (InteractAction a in actions)
+			{
+				p.StartCoroutine(a.Act(p));
 			}
-			p.StartCoroutine(CameraController.RedirectCamera(lookAts));
+			SelfDestruct();
 		});
 
 		EndInteraction();
-		SelfDestruct();
 	}
 }

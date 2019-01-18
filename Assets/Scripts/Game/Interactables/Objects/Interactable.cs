@@ -19,6 +19,11 @@ public abstract class Interactable : MonoBehaviour
 	public float tipPos = 3;
 
 	/// <summary>
+	/// The action to be done upon interacting. 
+	/// </summary>
+	public List<InteractAction> actions;
+
+	/// <summary>
 	/// Transform to look at after interacting.
 	/// </summary>
 	public List<Transform> lookAts;
@@ -108,17 +113,22 @@ public abstract class Interactable : MonoBehaviour
 
 	protected void DeactivatePhased(bool b, float delay = 0)
 	{
-		foreach(FadeableSprite s in phased) {
+		foreach (FadeableSprite s in phased)
+		{
 			s.gameObject.SetActive(true);
-			if (b) {
+			if (b)
+			{
 				s.SelfDelayedFadeIn(delay);
-			} else {
+			}
+			else
+			{
 				s.SelfDelayedFadeOut(delay);
 			}
 		}
 	}
 
-	protected void SelfDestruct() {
+	protected void SelfDestruct()
+	{
 		DeactivatePhased(false, 1.5f);
 		Destroy(this);
 	}
@@ -180,7 +190,7 @@ public abstract class Interactable : MonoBehaviour
 	/// </summary>
 	protected virtual IEnumerator CheckForInput(PlayerController p)
 	{
-		for (; ; )
+		for (;;)
 		{
 			yield return null;
 			if (DBInputManager.GetInput(p, InteractInput, InputType.Pressed))
@@ -197,9 +207,14 @@ public abstract class Interactable : MonoBehaviour
 	{
 		p.StartCoroutine(RepositionPlayer(p));
 		SFXManager.instance.PlayClip(clip, delay: (ulong)0.2, location: transform.position);
-	}
+		foreach (InteractAction a in actions)
+		{
+			p.StartCoroutine(a.Act(p));
+		}
 
-	private IEnumerator RepositionPlayer(PlayerController p)
+	}
+	
+	protected IEnumerator RepositionPlayer(PlayerController p)
 	{
 		moving = true;
 		float flip;
