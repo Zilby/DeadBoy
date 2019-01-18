@@ -24,11 +24,6 @@ public abstract class Interactable : MonoBehaviour
 	public List<InteractAction> actions;
 
 	/// <summary>
-	/// Transform to look at after interacting.
-	/// </summary>
-	public List<Transform> lookAts;
-
-	/// <summary>
 	/// Whether or not this interactable is phasing. 
 	/// </summary>
 	public List<FadeableSprite> phased;
