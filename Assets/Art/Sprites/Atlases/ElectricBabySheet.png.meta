@@ -1,33 +1,35 @@
 fileFormatVersion: 2
-guid: 7b9d7e288f0824f4a802530084b0e086
+guid: 4bf4cba38769ff64f86e44b3f05e5de8
 TextureImporter:
   fileIDToRecycleName:
-    21300000: SquishedBoySheet_0
-    21300002: SquishedBoySheet_1
-    21300004: SquishedBoySheet_2
-    21300006: SquishedBoySheet_3
-    21300008: SquishedBoySheet_4
-    21300010: SquishedBoySheet_5
-    21300012: SquishedBoySheet_6
-    21300014: SquishedBoySheet_7
-    21300016: SquishedBoySheet_8
-    21300018: SquishedBoySheet_9
-    21300020: SquishedBoySheet_10
-    21300022: SquishedBoySheet_11
-    21300024: SquishedBoySheet_14
-    21300026: SquishedBoySheet_15
-    21300028: SquishedBoySheet_16
-    21300030: SquishedBoySheet_17
-    21300032: SquishedBoySheet_18
-    21300034: SquishedBoySheet_19
-    21300036: SquishedBoySheet_20
-    21300038: SquishedBoySheet_21
-    21300040: SquishedBoySheet_22
-    21300042: SquishedBoySheet_23
-    21300044: SquishedBoySheet_24
-    21300046: SquishedBoySheet_25
-    21300048: SquishedBoySheet_26
-    21300050: SquishedBoySheet_27
+    21300000: ElectricBabySheet_0
+    21300002: ElectricBabySheet_1
+    21300004: ElectricBabySheet_2
+    21300006: ElectricBabySheet_3
+    21300008: ElectricBabySheet_4
+    21300010: ElectricBabySheet_5
+    21300012: ElectricBabySheet_6
+    21300014: ElectricBabySheet_7
+    21300016: ElectricBabySheet_8
+    21300018: ElectricBabySheet_9
+    21300020: ElectricBabySheet_10
+    21300022: ElectricBabySheet_11
+    21300024: ElectricBabySheet_12
+    21300026: ElectricBabySheet_13
+    21300028: ElectricBabySheet_14
+    21300030: ElectricBabySheet_15
+    21300032: ElectricBabySheet_16
+    21300034: ElectricBabySheet_17
+    21300036: ElectricBabySheet_18
+    21300038: ElectricBabySheet_19
+    21300040: ElectricBabySheet_20
+    21300042: ElectricBabySheet_21
+    21300044: ElectricBabySheet_22
+    21300046: ElectricBabySheet_23
+    21300048: ElectricBabySheet_24
+    21300050: ElectricBabySheet_25
+    21300052: ElectricBabySheet_26
+    21300054: ElectricBabySheet_27
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -110,521 +112,561 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SquishedBoySheet_0
+      name: ElectricBabySheet_0
       rect:
         serializedVersion: 2
-        x: 121
+        x: 132
         y: 111
-        width: 954
-        height: 2326
+        width: 642
+        height: 2740
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b113abbf8c51fcb448505234ea1bb141
+      spriteID: fe650ba7e872a0d46b9c548df0f1081c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_1
+      name: ElectricBabySheet_1
       rect:
         serializedVersion: 2
-        x: 1020.17834
-        y: 2217.9158
-        width: 438.64502
-        height: 235.25757
+        x: 1437.669
+        y: 2173.4678
+        width: 411.83105
+        height: 633.77246
       alignment: 9
-      pivot: {x: 0.49657843, y: 0.49555993}
+      pivot: {x: 0.4949382, y: 0.49944144}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9653c24a61378ae4cab919a4ebb7b94f
+      spriteID: df22ac595639605409a39a1db6303352
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_2
+      name: ElectricBabySheet_2
       rect:
         serializedVersion: 2
-        x: 1567.2673
-        y: 2169.0647
-        width: 467.07556
-        height: 285.55737
+        x: 2188.5554
+        y: 2166.4763
+        width: 227.26904
+        height: 643.1177
       alignment: 9
-      pivot: {x: 0.49720603, y: 0.4987975}
+      pivot: {x: 0.49916422, y: 0.4983904}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ebb7e43113a3f0b43b250338cc4fab21
+      spriteID: 2f258c096b0280a40b92ee7291a1ef33
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_3
+      name: ElectricBabySheet_3
       rect:
         serializedVersion: 2
-        x: 2421.8
-        y: 1618.1797
-        width: 672.6499
-        height: 814.80273
+        x: 2506.7415
+        y: 2563.3179
+        width: 367.44263
+        height: 245.95898
       alignment: 9
-      pivot: {x: 0.4968412, y: 0.49928704}
+      pivot: {x: 0.49874058, y: 0.49675715}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 93dfe94fd02d95c4588e9b3a0d67bec0
+      spriteID: 83841bb2270418947afe3d01607ee823
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_4
+      name: ElectricBabySheet_4
       rect:
         serializedVersion: 2
-        x: 3303.2031
-        y: 2076.384
-        width: 561.11475
-        height: 443.0188
+        x: 2992.696
+        y: 2149.5032
+        width: 201.57056
+        height: 647.79004
       alignment: 9
-      pivot: {x: 0.4959714, y: 0.49798384}
+      pivot: {x: 0.49761215, y: 0.49706972}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b46603e3444f34646892b88e183683de
+      spriteID: e6509d82f958ea641a1b09a5a45a7d01
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_5
+      name: ElectricBabySheet_5
       rect:
         serializedVersion: 2
-        x: 1488.5836
-        y: 1557.4146
-        width: 248.37915
-        height: 506.44092
+        x: 3375.4326
+        y: 2673.2695
+        width: 84.75928
+        height: 145.50098
       alignment: 9
-      pivot: {x: 0.4989001, y: 0.49874616}
+      pivot: {x: 0.46682066, y: 0.4929896}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6f8bec8b4a97e9746906938c3a2c0e00
+      spriteID: b7b3e28c05345bd41899d4cd1b00fb7d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_6
+      name: ElectricBabySheet_6
       rect:
         serializedVersion: 2
-        x: 1987.2258
-        y: 1552.1622
-        width: 224.32251
-        height: 506.4408
+        x: 3578.1638
+        y: 2680.5066
+        width: 91.76807
+        height: 131.48389
       alignment: 9
-      pivot: {x: 0.48935866, y: 0.49924448}
+      pivot: {x: 0.5049244, y: 0.49050426}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b07a72d5ea9b99489e5e5ae97fa0860
+      spriteID: ca0090fb7a634dc48b2738d0e7f8813b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_7
+      name: ElectricBabySheet_7
       rect:
         serializedVersion: 2
-        x: 4057.35
-        y: 2041.3759
-        width: 90.91748
-        height: 121.53528
+        x: 3725.7446
+        y: 2351.921
+        width: 582.3755
+        height: 540.3237
       alignment: 9
-      pivot: {x: 0.4911036, y: 0.48647723}
+      pivot: {x: 0.49324772, y: 0.49614537}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b8a93ec2dab5ce48bd3e2ef105a7ba4
+      spriteID: 5896d227e5649d3468dfb4e2ddc7a1d4
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_8
+      name: ElectricBabySheet_8
       rect:
         serializedVersion: 2
-        x: 3243.5603
-        y: 1443.1365
-        width: 517.3755
-        height: 523.9365
+        x: 4506.2856
+        y: 2536.0247
+        width: 192.22559
+        height: 238.9502
       alignment: 9
-      pivot: {x: 0.49468848, y: 0.50075465}
+      pivot: {x: 0.48491916, y: 0.48953858}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 162f6b1c25b9e8c47b6211b24a58723f
+      spriteID: 72ca97c1e9063d44c948b540f55fe213
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_9
+      name: ElectricBabySheet_9
       rect:
         serializedVersion: 2
-        x: 3880.5454
-        y: 1844.9591
-        width: 180.58325
-        height: 58.11316
+        x: 3361.3228
+        y: 2413.5085
+        width: 180.54468
+        height: 89.43164
       alignment: 9
-      pivot: {x: 0.4898272, y: 0.49973008}
+      pivot: {x: 0.4856263, y: 0.48071864}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 360ac366e05cf044bbbfc45f5dea408a
+      spriteID: c28f15872f8402643a342a259a12a658
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_10
+      name: ElectricBabySheet_10
       rect:
         serializedVersion: 2
-        x: 4112.759
-        y: 1850.2722
-        width: 125.90918
-        height: 53.739258
+        x: 1058.908
+        y: 1794.9603
+        width: 185.21704
+        height: 512.28894
       alignment: 9
-      pivot: {x: 0.47447857, y: 0.4880586}
+      pivot: {x: 0.49451193, y: 0.49784338}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e186320e33d84ed40b16599296ed17e7
+      spriteID: 054c3f3d8694a0043a00ca0aaa6c6f1c
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_11
+      name: ElectricBabySheet_11
       rect:
         serializedVersion: 2
-        x: 3890.7136
-        y: 1699.6359
-        width: 156.52661
-        height: 121.53516
+        x: 3277.334
+        y: 2228.036
+        width: 185.21704
+        height: 73.078125
       alignment: 9
-      pivot: {x: 0.49375868, y: 0.49668145}
+      pivot: {x: 0.50570816, y: 0.47844842}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a5a7b1f26d1a4847a0662c7696698ac
+      spriteID: 629fa67366707e745af01409e4e2bdc9
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_14
+      name: ElectricBabySheet_12
       rect:
         serializedVersion: 2
-        x: 4122.8047
-        y: 1701.0751
-        width: 128.09619
-        height: 119.348145
+        x: 3503.5618
+        y: 2236.8677
+        width: 98.77661
+        height: 59.06079
       alignment: 9
-      pivot: {x: 0.49333882, y: 0.51467013}
+      pivot: {x: 0.49037668, y: 0.45939657}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7aee5c7fdbaccd04096462f60eade044
+      spriteID: ffcb56f84aee2654e805270e8c48b762
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_15
+      name: ElectricBabySheet_13
       rect:
         serializedVersion: 2
-        x: 3908.489
-        y: 1548.1627
-        width: 182.77026
-        height: 93.104614
+        x: 4207.384
+        y: 1860.5222
+        width: 404.82227
+        height: 458.55566
       alignment: 9
-      pivot: {x: 0.48974591, y: 0.49769047}
+      pivot: {x: 0.49556616, y: 0.49716488}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a78cbfa5669736645925fa8bafc5e9a7
+      spriteID: 5659f7ea723e8aa4ab737f41c8e1b476
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_16
+      name: ElectricBabySheet_14
       rect:
         serializedVersion: 2
-        x: 2486.3918
-        y: 954.8296
-        width: 278.99634
-        height: 541.43225
+        x: 1898.3237
+        y: 1729.3508
+        width: 168.86353
+        height: 516.9612
       alignment: 9
-      pivot: {x: 0.4896414, y: 0.49991557}
+      pivot: {x: 0.50736994, y: 0.49839172}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9139fae8266c4e84ea4ade0799af1a93
+      spriteID: ee2d133ad5c2fce47aed192683411ffb
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_17
+      name: ElectricBabySheet_15
       rect:
         serializedVersion: 2
-        x: 2903.4207
-        y: 967.1751
-        width: 265.87476
-        height: 526.1236
+        x: 3278.28
+        y: 2108.882
+        width: 168.86353
+        height: 98.77661
       alignment: 9
-      pivot: {x: 0.49677372, y: 0.49669868}
+      pivot: {x: 0.48690048, y: 0.4820744}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf3b6012d68b3e34e9e9e303f4964372
+      spriteID: 6d5776b124f404d4e95ce39a586da96b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_18
+      name: ElectricBabySheet_16
       rect:
         serializedVersion: 2
-        x: 3906
-        y: 1449
-        width: 129
-        height: 50
+        x: 3499.4548
+        y: 2106.8818
+        width: 124.4751
+        height: 94.10425
+      alignment: 9
+      pivot: {x: 0.4743513, y: 0.5007018}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11af7d1829efd5a4e9a0078fbdd7ab00
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ElectricBabySheet_17
+      rect:
+        serializedVersion: 2
+        x: 2204.872
+        y: 1306.2083
+        width: 210.91553
+        height: 738.90283
+      alignment: 9
+      pivot: {x: 0.49369496, y: 0.49910724}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9ad64d0f69441543b6d3e6429394173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ElectricBabySheet_18
+      rect:
+        serializedVersion: 2
+        x: 2947.7676
+        y: 1304.5444
+        width: 208.57935
+        height: 741.23914
+      alignment: 9
+      pivot: {x: 0.49732953, y: 0.49842963}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44bee779a950c5843a7300d4140ed32f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ElectricBabySheet_19
+      rect:
+        serializedVersion: 2
+        x: 3295
+        y: 1943
+        width: 133
+        height: 46
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a726597aaa63d314da6adafccbda5671
+      spriteID: 3243964a58948fa418e390d0b883632d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_19
+      name: ElectricBabySheet_20
       rect:
         serializedVersion: 2
-        x: 4136
-        y: 1460
-        width: 96
-        height: 33
+        x: 3501
+        y: 1945
+        width: 100
+        height: 37
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b95192eed4ae3541b6ce18116d91bfc
+      spriteID: 028a47721e9a9f245aacd8d0bb38bc3a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_20
+      name: ElectricBabySheet_21
       rect:
         serializedVersion: 2
-        x: 1440.1798
-        y: 776.1604
-        width: 298.67932
-        height: 674.83716
+        x: 1069.3248
+        y: 1195.6743
+        width: 129.14758
+        height: 456.21936
       alignment: 9
-      pivot: {x: 0.49156505, y: 0.49914205}
+      pivot: {x: 0.5278858, y: 0.49828154}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 258953db2304fd74c9ba0bfff2432d67
+      spriteID: aa1e7c4c0d5c0804a8dae981e0b140e8
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_21
+      name: ElectricBabySheet_22
       rect:
         serializedVersion: 2
-        x: 2022.2162
-        y: 754.0301
-        width: 265.87488
-        height: 692.3327
+        x: 1869.4639
+        y: 1209.6575
+        width: 131.48376
+        height: 442.20203
       alignment: 9
-      pivot: {x: 0.4900202, y: 0.49971625}
+      pivot: {x: 0.5288572, y: 0.49828476}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9019abf8489e99540bb5e4b2e9807672
+      spriteID: e489006180ac665409ab8a183e18722f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_22
+      name: ElectricBabySheet_23
       rect:
         serializedVersion: 2
-        x: 2447.59
-        y: 284.2273
-        width: 228.69653
-        height: 655.1544
+        x: 3646.3647
+        y: 1181.0367
+        width: 610.41064
+        height: 622.09143
       alignment: 9
-      pivot: {x: 0.49152324, y: 0.49953523}
+      pivot: {x: 0.49988523, y: 0.49584877}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ce49fbd539bf5d40bbcee34b76ed0e7
+      spriteID: 8201864f77c656b4a8c9db958de7b6b4
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_23
+      name: ElectricBabySheet_24
       rect:
         serializedVersion: 2
-        x: 2902.5188
-        y: 297.10553
-        width: 226.50952
-        height: 624.5369
+        x: 2242.6392
+        y: 132.99445
+        width: 411.8313
+        height: 194.56198
       alignment: 9
-      pivot: {x: 0.49217, y: 0.50020176}
+      pivot: {x: 0.49258178, y: 0.49858433}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 35d562f1c3067d74882b4351f2b507b3
+      spriteID: 219939d9149b7ff4c9668727368ae208
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_24
+      name: ElectricBabySheet_25
       rect:
         serializedVersion: 2
-        x: 1576.5038
-        y: 395.59875
-        width: 589.54553
-        height: 309.614
+        x: 2849.901
+        y: 132.99445
+        width: 404.8225
+        height: 194.56198
       alignment: 9
-      pivot: {x: 0.49529037, y: 0.5003046}
+      pivot: {x: 0.49922895, y: 0.49858433}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75bd016b3c680e447a9109fd657ad911
+      spriteID: 57641161a5afe4a4abb02b440d93c8d8
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_25
+      name: ElectricBabySheet_26
       rect:
         serializedVersion: 2
-        x: 3200.9543
-        y: 478.86792
-        width: 392.71875
-        height: 213.38763
+        x: 1832.9198
+        y: 987.77576
+        width: 215.58801
+        height: 245.95898
       alignment: 9
-      pivot: {x: 0.4966548, y: 0.4926812}
+      pivot: {x: 0.49668902, y: 0.47863364}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f293171243946746881c798ed283013
+      spriteID: 7e9d92cfec00eae4296ea62a4d1ba30f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SquishedBoySheet_26
+      name: ElectricBabySheet_27
       rect:
         serializedVersion: 2
-        x: 1610
-        y: 111
-        width: 527
-        height: 205
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2e67251e0dc272947a94771555c453d9
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SquishedBoySheet_27
-      rect:
-        serializedVersion: 2
-        x: 3200.9543
-        y: 136.75388
-        width: 392.71875
-        height: 213.38766
+        x: 1030.2856
+        y: 985.61633
+        width: 215.58789
+        height: 229.60535
       alignment: 9
-      pivot: {x: 0.4966548, y: 0.50493145}
+      pivot: {x: 0.5042693, y: 0.47857624}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 971dcec12cc5c41498f4ef36b293c19f
+      spriteID: 3352e613febf7cf42a874bca30d40f34
       vertices: []
       indices: 
       edges: []
@@ -632,7 +674,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: b5174fe318b07f64a84751e5bb28d8fa
+    spriteID: 307a6e4c29fa1dc4ea9f1bfcdeb21048
     vertices: []
     indices: 
     edges: []
@@ -640,6 +682,6 @@ TextureImporter:
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 636806960376255115
+  userData: 636836293580487227
   assetBundleName: 
   assetBundleVariant: 
