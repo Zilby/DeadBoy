@@ -23,6 +23,7 @@ public enum PlayerInput
 	Pause = 7,
 	Submit = 8,
 	Cancel = 9,
+	Power = 10,
 }
 
 /// <summary>

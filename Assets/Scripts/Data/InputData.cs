@@ -34,6 +34,7 @@ public class InputData
 		KeyBindings[(int)PlayerInput.Pause] = new KeyCode[] { KeyCode.P, KeyCode.Escape };
 		KeyBindings[(int)PlayerInput.Submit] = new KeyCode[] { KeyCode.Return };
 		KeyBindings[(int)PlayerInput.Cancel] = new KeyCode[] { KeyCode.Escape };
+		KeyBindings[(int)PlayerInput.Power] = new KeyCode[] { KeyCode.R };
 	}
 
 
@@ -53,5 +54,6 @@ public class InputData
 		ControllerBindings[(int)PlayerInput.Pause] = new InputControlType[] { InputControlType.Command };
 		ControllerBindings[(int)PlayerInput.Submit] = new InputControlType[] { InputControlType.Action1 };
 		ControllerBindings[(int)PlayerInput.Cancel] = new InputControlType[] { InputControlType.Action2 };
+		ControllerBindings[(int)PlayerInput.Power] = new InputControlType[] { InputControlType.Action2 };
 	}
 }

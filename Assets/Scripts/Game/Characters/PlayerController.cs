@@ -267,7 +267,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Whether or not this player is currently accepting movement input. 
 	/// </summary>
-	public bool AcceptingMoveInput
+	public virtual bool AcceptingMoveInput
 	{
 		get
 		{
@@ -572,6 +572,9 @@ public abstract class PlayerController : MonoBehaviour
 			swimming = true;
 			this.EnterWater(collision);
 		}
+		if (collision.tag == "Grate") {
+			this.EnterGrate(collision);
+		}
 		if (collision.tag == "Checkpoint") {
 			checkpoint = collision.gameObject.transform;
 		}
@@ -579,8 +582,8 @@ public abstract class PlayerController : MonoBehaviour
 
 	// void OnTriggerStay2D(Collider2D collision)
 	// {
-	// 	if(collision.gameObject.layer == LayerMask.NameToLayer("Water")) {
-	// 		this.InWater(collision);
+	// 	if(collision.gameObject.tag == "Grate") {
+	// 		this.OnGrate(collision);
 	// 	}
 	// }
 
@@ -590,6 +593,9 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			swimming = false;
 			this.ExitWater(collision);
+		}
+		if (collision.tag == "Grate") {
+			this.ExitGrate(collision);
 		}
 	}
 
@@ -603,6 +609,18 @@ public abstract class PlayerController : MonoBehaviour
 	}
 
 	protected virtual void ExitWater(Collider2D water)
+	{
+	}
+
+	#endregion
+
+	#region Grates
+
+    protected virtual void EnterGrate(Collider2D trigger)
+	{
+	}
+	
+	protected virtual void ExitGrate(Collider2D trigger)
 	{
 	}
 

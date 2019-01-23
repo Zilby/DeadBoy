@@ -98,6 +98,7 @@ public class SaveManager : MonoBehaviour
 				saveData = (SaveData)bf.Deserialize(file);
 				file.Close();
 				fileFound = true;
+				Debug.Log("Loaded save file from "+SaveFile);
 			}
 			catch (Exception e)
 			{
