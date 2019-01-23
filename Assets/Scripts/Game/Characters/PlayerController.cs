@@ -193,6 +193,11 @@ public abstract class PlayerController : MonoBehaviour
 	protected const float MIN_Y_VELOCITY = -1;
 
 	/// <summary>
+	/// Distance from collider where the player is considered touching. 
+	/// </summary>
+	protected const float TOUCHING_DIST = 0.2F;
+
+	/// <summary>
 	/// The limb move speed.
 	/// </summary>
 	protected const float LIMB_MOVE_SPEED = 3f;
@@ -340,14 +345,7 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual void FixedUpdate()
 	{
-		if (rBody.velocity.y >= MAX_Y_VELOCITY)
-		{
-			gCounter += 10;
-		}
-		else if (rBody.velocity.y < MIN_Y_VELOCITY && cCollider.GetContacts(new Collider2D[0]) == 0)
-		{
-			gCounter++;
-		}
+		CheckGrounded();
 		Move();
 	}
 
@@ -396,7 +394,7 @@ public abstract class PlayerController : MonoBehaviour
 		}
 		// Clamp the accelerated move to the maximum speeds. 
 		movespeed = Mathf.Clamp(acceleratedMove, -Mathf.Abs(movespeed), Mathf.Abs(movespeed));
-		rBody.velocity = rBody.velocity.X(movespeed); 
+		rBody.velocity = rBody.velocity.X(movespeed);
 	}
 
 	/// <summary>
@@ -450,7 +448,7 @@ public abstract class PlayerController : MonoBehaviour
 			{
 				flip = 0 + (invertDirection ? 180 : 0);
 			}
-			transform.localEulerAngles = transform.localEulerAngles.Y(flip); 
+			transform.localEulerAngles = transform.localEulerAngles.Y(flip);
 		}
 		bool flipped = transform.localEulerAngles.y == 180;
 		anim.SetFloat("OldXVel", anim.GetFloat("XVel"));
@@ -535,34 +533,34 @@ public abstract class PlayerController : MonoBehaviour
 
 	#region CollisionDetection
 
-	void OnCollisionStay2D(Collision2D collision)
+	protected virtual void CheckGrounded()
 	{
-		CheckGrounded(collision);
-	}
-
-	void OnCollisionEnter2D(Collision2D collision)
-	{
-		CheckGrounded(collision);
-	}
-
-	protected virtual void CheckGrounded(Collision2D collision)
-	{
-		foreach (ContactPoint2D contact in collision.contacts)
+		if (rBody.velocity.y >= MAX_Y_VELOCITY)
 		{
-			gCounter = rBody.velocity.y < MAX_Y_VELOCITY && (grounded || TouchingGround(contact)) && !swimming ? 0 : gCounter;
-			/*
-			print(contact.collider.name + " hit " + contact.otherCollider.name + " " + 
-			      (Vector2.Distance(transform.position, contact.point) / (transform.localScale.x * cCollider.size.y)).ToString());
-			*/
+			gCounter += 10;
+		}
+		else if (rBody.velocity.y < MIN_Y_VELOCITY && !TouchingGround())
+		{
+			gCounter++;
+		}
+		else if (rBody.velocity.y < MAX_Y_VELOCITY && TouchingGround() && !swimming)
+		{
+			gCounter = 0;
 		}
 	}
 
-	bool TouchingGround(ContactPoint2D contact)
+	bool TouchingGround()
 	{
-		//print((contact.point.y < transform.position.y) + " " + (Vector2.Distance(transform.position, contact.point) / (transform.localScale.y)) + " " + Time.time.ToString());
-		return contact.point.y < transform.position.y &&
-				Vector2.Distance(transform.position, contact.point) /
-								(transform.localScale.y) > 4.2f;
+		RaycastHit2D[] hits = new RaycastHit2D[10];
+		cCollider.Raycast(Vector2.down, hits, ((cCollider.size.y / 2.0f) * transform.localScale.y) + TOUCHING_DIST);
+		foreach (RaycastHit2D r in hits)
+		{
+			if (r.collider != null && !r.collider.isTrigger)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	void OnTriggerEnter2D(Collider2D collision)
@@ -575,17 +573,11 @@ public abstract class PlayerController : MonoBehaviour
 		if (collision.tag == "Grate") {
 			this.EnterGrate(collision);
 		}
-		if (collision.tag == "Checkpoint") {
+		if (collision.tag == "Checkpoint")
+		{
 			checkpoint = collision.gameObject.transform;
 		}
 	}
-
-	// void OnTriggerStay2D(Collider2D collision)
-	// {
-	// 	if(collision.gameObject.tag == "Grate") {
-	// 		this.OnGrate(collision);
-	// 	}
-	// }
 
 	void OnTriggerExit2D(Collider2D collision)
 	{
