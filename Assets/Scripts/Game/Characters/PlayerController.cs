@@ -570,7 +570,8 @@ public abstract class PlayerController : MonoBehaviour
 			swimming = true;
 			this.EnterWater(collision);
 		}
-		if (collision.tag == "Grate") {
+		if (collision.tag == "Grate")
+		{
 			this.EnterGrate(collision);
 		}
 		if (collision.tag == "Checkpoint")
@@ -586,7 +587,8 @@ public abstract class PlayerController : MonoBehaviour
 			swimming = false;
 			this.ExitWater(collision);
 		}
-		if (collision.tag == "Grate") {
+		if (collision.tag == "Grate")
+		{
 			this.ExitGrate(collision);
 		}
 	}
@@ -608,10 +610,10 @@ public abstract class PlayerController : MonoBehaviour
 
 	#region Grates
 
-    protected virtual void EnterGrate(Collider2D trigger)
+	protected virtual void EnterGrate(Collider2D trigger)
 	{
 	}
-	
+
 	protected virtual void ExitGrate(Collider2D trigger)
 	{
 	}
@@ -660,7 +662,7 @@ public abstract class PlayerController : MonoBehaviour
 	protected void SetLocation(IK ik)
 	{
 		int i = (int)ik;
-		float s = LimbMoveSpeed / (returningToPosition[i] && (i == (int)IK.LeftLeg || i == (int)IK.RightLeg) ? 3f : 1f);
+		float s = LimbMoveSpeed / (climbing && !returningToPosition[i] ? 0.5f : (returningToPosition[i] && (i == (int)IK.LeftLeg || i == (int)IK.RightLeg) ? 3f : 1f));
 		lastIKLocation[i] = Vector3.MoveTowards(lastIKLocation[i], returningToPosition[i] ? iKLimbs[i].transform.position :
 												objectLocation.position + ObjectOffsets[i], s);
 		iKLimbs[i].transform.position = lastIKLocation[i];
@@ -830,10 +832,13 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Grabs the given object and drags it to the given location..
 	/// </summary>
-	public void GrabAndDrag(Transform t, Vector3 position, Action a, float speed = 2)
+	public void GrabAndDrag(Transform t, Vector3 position, Action a, float speed = 2, bool bothArms = false)
 	{
 		settingIK[(int)IK.RightArm] = true;
-		//settingLA = true;
+		if (bothArms)
+		{
+			settingIK[(int)IK.LeftArm] = true;
+		}
 		SetUpLimbMovement(t);
 		dragLocation = position;
 		dragSpeed = speed;
@@ -861,17 +866,19 @@ public abstract class PlayerController : MonoBehaviour
 		rBody.velocity = Vector3.zero;
 		settingIK[(int)IK.RightArm] = true;
 		settingIK[(int)IK.LeftArm] = true;
+		ObjectOffsets[(int)IK.RightArm] = ObjectOffsets[(int)IK.LeftArm] = new Vector3(side ? -0.3f : 0.3f, 0, 0);
 		// for initialization
 		SetUpLimbMovement(t);
 		while (transform.position.y < t.position.y)
 		{
-			transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up, 3f * Time.deltaTime);
+			transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.up, 5f * Time.deltaTime);
 			yield return null;
 			if (pulling && transform.position.y > t.position.y - 1.5f)
 			{
 				pulling = false;
 			}
 		}
+		pulling = false;
 		while (cCollider.bounds.min.y < t.position.y)
 		{
 			if ((!returningToPosition[(int)IK.RightArm] || !returningToPosition[(int)IK.LeftArm]) && cCollider.bounds.min.y > t.position.y - 1f)
@@ -898,17 +905,10 @@ public abstract class PlayerController : MonoBehaviour
 			yield return null;
 		}
 		rBody.simulated = true;
-		returningToPosition[(int)IK.RightLeg] = true;
-		returningToPosition[(int)IK.LeftLeg] = true;
-		while (!grounded)
-		{
-			if (CancelClimbOnInput())
-			{
-				yield break;
-			}
-			yield return null;
-		}
-		yield return null;
+
+		//returningToPosition[(int)IK.RightLeg] = true;
+		//returningToPosition[(int)IK.LeftLeg] = true;
+		CancelKinematics();
 		climbing = false;
 	}
 

@@ -25,7 +25,7 @@ public class Ledge : Interactable
 	/// </summary>
 	protected override float REPOSITION_SPEED
 	{
-		get { return 8f; }
+		get { return 16f; }
 	}
 
 	/// <summary>
@@ -41,7 +41,7 @@ public class Ledge : Interactable
 		for (; ; )
 		{
 			yield return null;
-			if (!activateOnExit && DBInputManager.GetInput(p, InteractInput, InputType.Pressed) && (p.rBody.velocity.y >= 0 || p.Grounded || p.Swimming))
+			if (!activateOnExit && DBInputManager.GetInput(p, InteractInput, InputType.Held) && (p.rBody.velocity.y >= -10 || p.Grounded || p.Swimming))
 			{
 				InteractAction(p);
 				yield break;
@@ -52,7 +52,7 @@ public class Ledge : Interactable
 	protected override void OnTriggerExit2D(Collider2D collision)
 	{
 		base.OnTriggerExit2D(collision);
-		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
+		PlayerController p = collision.attachedRigidbody?.GetComponent<PlayerController>();
 		if (p == null)
 		{
 			activateOnExit = false;
@@ -64,6 +64,7 @@ public class Ledge : Interactable
 	{
 		base.InteractAction(p);
 		p.rBody.velocity = Vector2.zero;
+		p.rBody.simulated = false;
 		p.Climbing = true;
 		StartCoroutine(DelayedClimb(p));
 	}

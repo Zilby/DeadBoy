@@ -139,7 +139,7 @@ public abstract class Interactable : MonoBehaviour
 
 	protected virtual void OnTriggerEnter2D(Collider2D collision)
 	{
-		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
+		PlayerController p = collision.attachedRigidbody?.GetComponent<PlayerController>();
 		if (PlayerCheck(p))
 		{
 			if (Tip(p) != null)
@@ -152,7 +152,7 @@ public abstract class Interactable : MonoBehaviour
 
 	protected virtual void OnTriggerStay2D(Collider2D collision)
 	{
-		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
+		PlayerController p = collision.attachedRigidbody?.GetComponent<PlayerController>();
 		if (PlayerCheck(p))
 		{
 			if (tooltip >= 0)
@@ -164,7 +164,7 @@ public abstract class Interactable : MonoBehaviour
 
 	protected virtual void OnTriggerExit2D(Collider2D collision)
 	{
-		PlayerController p = collision.attachedRigidbody.GetComponent<PlayerController>();
+		PlayerController p = collision.attachedRigidbody?.GetComponent<PlayerController>();
 		if (PlayerCheck(p))
 		{
 			EndInteraction();
