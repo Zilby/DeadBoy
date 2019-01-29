@@ -216,6 +216,10 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public abstract string Name { get; }
 
+	public virtual float GetJumpHeight {
+		get { return jumpHeight; }
+	}
+
 	/// <summary>
 	/// Whether or not the player is currently grounded
 	/// </summary>
@@ -414,7 +418,7 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			if (DBInputManager.GetInput(this, PlayerInput.Jump, InputType.Pressed) && CanJump())
 			{
-				rBody.velocity = rBody.velocity.Y(jumpHeight);
+				rBody.velocity = rBody.velocity.Y(GetJumpHeight);
 				jumpStart = Time.fixedTime;
 				jumpHeld = true;
 			}
@@ -427,7 +431,7 @@ public abstract class PlayerController : MonoBehaviour
 					 (Time.fixedTime - jumpStart < jumpInterval) &&
 					 !grounded && jumpHeld)
 			{
-				rBody.velocity = rBody.velocity.Y(jumpHeight);
+				rBody.velocity = rBody.velocity.Y(GetJumpHeight);
 			}
 		}
 	}
