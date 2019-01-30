@@ -34,6 +34,11 @@ public class Ledge : Interactable
 	protected override string Tip(PlayerController p) { return null; }
 
 	/// <summary>
+	/// The main object this ledge is attached to. 
+	/// </summary>
+	public Rigidbody2D mainObject;
+
+	/// <summary>
 	/// Checks for player input. 
 	/// </summary>
 	protected override IEnumerator CheckForInput(PlayerController p)
@@ -73,11 +78,19 @@ public class Ledge : Interactable
 	protected IEnumerator DelayedClimb(PlayerController p)
 	{
 		p.cCollider.isTrigger = true;
+		if (mainObject != null)
+		{
+			mainObject.mass += p.rBody.mass * p.rBody.gravityScale;
+		}
 		while (moving)
 		{
 			yield return null;
 		}
 		p.cCollider.isTrigger = false;
 		yield return p.ClimbLedge(transform);
+		if (mainObject != null)
+		{
+			mainObject.mass -= p.rBody.mass * p.rBody.gravityScale;
+		}
 	}
 }

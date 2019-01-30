@@ -879,10 +879,10 @@ public abstract class PlayerController : MonoBehaviour
 		pulling = true;
 		rBody.simulated = false;
 		rBody.velocity = Vector3.zero;
+		// Pull up character
 		settingIK[(int)IK.RightArm] = true;
 		settingIK[(int)IK.LeftArm] = true;
-		ObjectOffsets[(int)IK.RightArm] = ObjectOffsets[(int)IK.LeftArm] = new Vector3(side ? -0.3f : 0.3f, 0, 0);
-		// for initialization
+		ObjectOffsets[(int)IK.RightArm] = ObjectOffsets[(int)IK.LeftArm] = new Vector3(side ? -0.3f : 0.3f, -0.1f, 0);
 		SetUpLimbMovement(t);
 		while (transform.position.y < t.position.y)
 		{
@@ -894,6 +894,7 @@ public abstract class PlayerController : MonoBehaviour
 			}
 		}
 		pulling = false;
+		// Climb onto ledge
 		while (cCollider.bounds.min.y < t.position.y)
 		{
 			if ((!returningToPosition[(int)IK.RightArm] || !returningToPosition[(int)IK.LeftArm]) && cCollider.bounds.min.y > t.position.y - 1f)
@@ -903,6 +904,7 @@ public abstract class PlayerController : MonoBehaviour
 			}
 			if (!settingIK[(int)IK.LeftLeg] && cCollider.bounds.min.y > t.position.y - 2f)
 			{
+				ObjectOffsets[(int)IK.LeftLeg] = new Vector3(side ? -0.2f : 0.2f, 0, 0);
 				lastIKLocation[(int)IK.LeftLeg] = iKLimbs[(int)IK.LeftLeg].transform.position;
 				settingIK[(int)IK.LeftLeg] = true;
 			}
