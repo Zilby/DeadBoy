@@ -17,6 +17,11 @@ public class SquishController : PlayerController
 	[Range(0, 2)]
     public float grateSpeed; 
 
+    /// <summary>
+    /// Multiplier for jump height when in blob mode
+    /// <summary>
+    [Range(1,2)]
+    public float blobJumpMultiplier;
 
     /// <summary>
 	/// Time before coming up through a grate before falling again.
@@ -52,6 +57,16 @@ public class SquishController : PlayerController
 	{
 		get { return "Squish"; }
 	}
+
+    public override float GetJumpHeight {
+        get {
+            if (blobMode) {
+                return jumpHeight * blobJumpMultiplier;
+            } else {
+                return jumpHeight;
+            }
+        }
+    }
 
 	protected override void Update()
 	{
