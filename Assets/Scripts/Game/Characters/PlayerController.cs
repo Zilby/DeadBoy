@@ -567,7 +567,7 @@ public abstract class PlayerController : MonoBehaviour
 	bool TouchingGround()
 	{
 		RaycastHit2D[] hits = new RaycastHit2D[10];
-		cCollider.Raycast(Vector2.down, hits, ((cCollider.size.y / 2.0f) * transform.localScale.y) + TOUCHING_DIST);
+		cCollider.Raycast(Vector2.down, hits, ((cCollider.size.y / 2.0f) * transform.localScale.y) + TOUCHING_DIST, Physics2D.GetLayerCollisionMask(gameObject.layer));
 		foreach (RaycastHit2D r in hits)
 		{
 			if (r.collider != null && !r.collider.isTrigger)
