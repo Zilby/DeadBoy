@@ -49,16 +49,19 @@ namespace RavingBots.Water2D
 		public void OnTriggerEnter2D(Collider2D other)
 		{
 			var rigidbody = other.transform.GetComponent<Rigidbody2D>();
-			var power = SplashFXPowerScale * Vector2.Dot(rigidbody.velocity, Vector2.down) * rigidbody.mass;
+			if (rigidbody != null)
+			{
+				var power = SplashFXPowerScale * Vector2.Dot(rigidbody.velocity, Vector2.down) * rigidbody.mass;
 
-			if (power < SplashFXPowerThreshold)
-				return;
+				if (power < SplashFXPowerThreshold)
+					return;
 
-			var splash = _splashCache[_splash];
-			splash.transform.position = new Vector2(other.bounds.center.x, other.bounds.min.y - SplashFXOffset);
-			splash.Play(power, SplashFXSounds[Random.Range(0, SplashFXSounds.Length)], power * SplashFXPowerToVolume, SplashFXPowerToPitch / power);
+				var splash = _splashCache[_splash];
+				splash.transform.position = new Vector2(other.bounds.center.x, other.bounds.min.y - SplashFXOffset);
+				splash.Play(power, SplashFXSounds[Random.Range(0, SplashFXSounds.Length)], power * SplashFXPowerToVolume, SplashFXPowerToPitch / power);
 
-			_splash = (_splash + 1) % _splashCache.Length;
+				_splash = (_splash + 1) % _splashCache.Length;
+			}
         }
 	}
 }

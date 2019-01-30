@@ -94,7 +94,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	protected bool grounded
 	{
-		get { return gCounter < 6; }
+		get { return gCounter < 5; }
 	}
 
 	/// <summary>
@@ -195,7 +195,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Distance from collider where the player is considered touching. 
 	/// </summary>
-	protected const float TOUCHING_DIST = 0.2F;
+	protected const float TOUCHING_DIST = 0.1F;
 
 	/// <summary>
 	/// The limb move speed.
@@ -386,15 +386,23 @@ public abstract class PlayerController : MonoBehaviour
 		if (grounded)
 		{
 			acceleratedMove = movespeed == 0.0f ? rBody.velocity.x * (1 - (acceleration / 2f)) : rBody.velocity.x + (movespeed * acceleration);
-			rBody.velocity = rBody.velocity.YAdd((rBody.gravityScale * -Physics2D.gravity.y * Mathf.Abs(analog)) / 100f);
+			//rBody.velocity = rBody.velocity.YAdd((rBody.gravityScale * -Physics2D.gravity.y * Mathf.Abs(analog)) / 100f);
 		}
 		else
 		{
 			acceleratedMove = rBody.velocity.x + (movespeed * aerialControl);
 		}
-		// Clamp the accelerated move to the maximum speeds. 
-		movespeed = Mathf.Clamp(acceleratedMove, -Mathf.Abs(movespeed), Mathf.Abs(movespeed));
-		rBody.velocity = rBody.velocity.X(movespeed);
+		if (analog == 0f && grounded)
+		{
+			rBody.constraints = (RigidbodyConstraints2D)5;
+		}
+		else
+		{
+			rBody.constraints = RigidbodyConstraints2D.FreezeRotation;
+			// Clamp the accelerated move to the maximum speeds. 
+			movespeed = Mathf.Clamp(acceleratedMove, -Mathf.Abs(movespeed), Mathf.Abs(movespeed));
+			rBody.velocity = rBody.velocity.X(movespeed);
+		}
 	}
 
 	/// <summary>
