@@ -473,7 +473,10 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetFloat("SmoothRelXVel", Mathf.MoveTowards(anim.GetFloat("SmoothRelXVel"), anim.GetFloat("RelativeXVel"), SMOOTH_ANIM_SPEED * Time.deltaTime));
 		anim.SetFloat("SmootherRelXVel", Mathf.Clamp(Mathf.MoveTowards(anim.GetFloat("SmootherRelXVel"), anim.GetFloat("RelativeXVel"), (SMOOTH_ANIM_SPEED / 5) * Time.deltaTime), -1, 1));
 
-
+		if (rBody.velocity.y < -1)
+		{
+			anim.SetFloat("FallingYVelocity", rBody.velocity.y);
+		}
 
 		if (anim.GetBool("Grounded") != grounded && grounded)
 		{
