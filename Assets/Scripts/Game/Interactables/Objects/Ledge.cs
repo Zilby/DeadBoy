@@ -71,6 +71,9 @@ public class Ledge : Interactable
 		p.rBody.velocity = Vector2.zero;
 		p.rBody.simulated = false;
 		p.Climbing = true;
+		if (p.transform.position.y < transform.position.y) {
+			p.IsPulling = true;
+		}
 		StartCoroutine(DelayedClimb(p));
 	}
 

@@ -245,6 +245,12 @@ public abstract class PlayerController : MonoBehaviour
 		set { climbing = value; }
 	}
 
+	public bool IsPulling 
+	{
+		get { return pulling; }
+		set { pulling = value; }
+	}
+
 	/// <summary>
 	/// Gets the current pickup.
 	/// </summary>
