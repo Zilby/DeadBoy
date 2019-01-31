@@ -97,6 +97,10 @@ public class DBInputManager : MonoBehaviour
 		if (initial >= 0 && initial < controllers.Count)
 		{
 			players[pc] = controllers[initial];
+			foreach (SpriteMeshInstance s in pc.Sprites)
+			{
+				s.sortingOrder += 1000 * pc.SORT_VALUE;
+			}
 		}
 	}
 
@@ -198,11 +202,11 @@ public class DBInputManager : MonoBehaviour
 			{
 				if (p1.SORT_VALUE < p2.SORT_VALUE)
 				{
-					return 1;
+					return -1;
 				}
 				else if (p1.SORT_VALUE > p2.SORT_VALUE)
 				{
-					return -1;
+					return 1;
 				}
 				return 0;
 			});
