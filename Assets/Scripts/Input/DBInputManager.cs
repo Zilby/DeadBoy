@@ -268,6 +268,10 @@ public class DBInputManager : MonoBehaviour
 		{
 			Interactable.TogglePhased?.Invoke(false);
 		}
+		if (newP.Underground != oldP.Underground)
+		{
+			UndergroundSwapper.SwapEvent?.Invoke(newP.Underground);
+		}
 	}
 
 
@@ -347,13 +351,14 @@ public class DBInputManager : MonoBehaviour
 			Cursor.visible = false;
 			SetSelected.Select?.Invoke();
 		}
-		else if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Mouse0))&& controllers[0].Device != null)
+		else if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Mouse0)) && controllers[0].Device != null)
 		{
 			c = SetUpController(true, true);
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
 		}
-		if (c != null) {
+		if (c != null)
+		{
 			ReassignController(c, 0);
 		}
 	}

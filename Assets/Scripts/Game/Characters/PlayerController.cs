@@ -143,6 +143,11 @@ public abstract class PlayerController : MonoBehaviour
 	protected bool climbing;
 
 	/// <summary>
+	/// Whether or not the current player is underground. 
+	/// </summary>
+	protected bool underground;
+
+	/// <summary>
 	/// The current pickup held.
 	/// </summary>
 	protected Pickup.Type currentPickup = Pickup.Type.none;
@@ -245,10 +250,28 @@ public abstract class PlayerController : MonoBehaviour
 		set { climbing = value; }
 	}
 
+	/// <summary>
+	/// Whether or not the player is currently pulling.
+	/// </summary>
 	public bool IsPulling 
 	{
 		get { return pulling; }
 		set { pulling = value; }
+	}
+
+	/// <summary>
+	/// Whether or not the player is currently underground. 
+	/// </summary>
+	public bool Underground {
+		get { return underground; }
+		set
+		{
+			if (underground != value)
+			{
+				UndergroundSwapper.SwapEvent?.Invoke(value);
+				underground = value;
+			}
+		}
 	}
 
 	/// <summary>
@@ -534,6 +557,7 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual IEnumerator Die()
 	{
+		Underground = false;
 		CameraController.Deactivate();
 		DBInputManager.instance.enabled = false;
 		yield return Fader.FadeIn();

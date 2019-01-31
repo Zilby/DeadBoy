@@ -126,7 +126,8 @@ public class SquishController : PlayerController
 	}
 
     protected IEnumerator GrateCoroutine(bool down) {
-        passingGrate = true;
+		Underground = down;
+		passingGrate = true;
         passingGrateDown = down;
         rBody.isKinematic = true;
         rBody.velocity = Vector3.zero; 
