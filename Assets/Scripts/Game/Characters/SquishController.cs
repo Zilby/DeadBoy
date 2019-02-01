@@ -92,7 +92,7 @@ public class SquishController : PlayerController
             //Loop over time
             {
                 speed = speed * (blobMode ? squishSpeedMultipler : 1/squishSpeedMultipler);
-                transform.localScale = transform.localScale.YMul(blobMode ? 0.5f : 2);
+                //transform.localScale = transform.localScale.YMul(blobMode ? 0.5f : 2);
             //    yield return null;
             }
             transitioning = false;
@@ -102,9 +102,10 @@ public class SquishController : PlayerController
     protected override void SetAnimationState()
 	{
         base.SetAnimationState();
-//TODO
-        anim.SetBool("BlobMode", blobMode);
-        anim.SetBool("PassingGrate", passingGrate);
+		//TODO
+		anim.SetBool("WasBlobMode", anim.GetBool("BlobMode"));
+		anim.SetBool("BlobMode", blobMode);
+		anim.SetBool("PassingGrate", passingGrate);
         anim.SetBool("PassingGrateDown", passingGrateDown);
 		
     }

@@ -10,6 +10,7 @@ TextureImporter:
     21300010: SquishBlobSheet_6
     21300012: SquishBlobSheet_7
     21300014: SquishBlobSheet_8
+    21300016: SquishBlobSheet_1
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -100,7 +101,7 @@ TextureImporter:
         width: 794
         height: 789
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -120,7 +121,7 @@ TextureImporter:
         width: 296
         height: 239
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -140,7 +141,7 @@ TextureImporter:
         width: 418
         height: 484
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -180,7 +181,7 @@ TextureImporter:
         width: 773
         height: 615
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -200,7 +201,7 @@ TextureImporter:
         width: 633
         height: 571
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -220,7 +221,7 @@ TextureImporter:
         width: 763
         height: 846
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -240,13 +241,33 @@ TextureImporter:
         width: 1587
         height: 469
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: f8fab72f982bc9846b3b40fae5489020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SquishBlobSheet_1
+      rect:
+        serializedVersion: 2
+        x: 1196
+        y: 1513
+        width: 898
+        height: 1025
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4a09d4d4f14d4bdf8d4a3b239489125
       vertices: []
       indices: 
       edges: []
