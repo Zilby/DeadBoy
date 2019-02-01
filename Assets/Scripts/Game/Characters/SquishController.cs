@@ -5,48 +5,48 @@ using UnityEngine;
 
 public class SquishController : PlayerController
 {
-    /// <summary>
+	/// <summary>
 	/// Percentage of max speed when squished.
 	/// </summary>
 	[Range(0, 1)]
-    public float squishSpeedMultipler; 
+	public float squishSpeedMultipler;
 
-    /// <summary>
+	/// <summary>
 	/// Speed of passing through a grate (dist/sec).
 	/// </summary>
 	[Range(0, 2)]
-    public float grateSpeed; 
+	public float grateSpeed;
 
-    /// <summary>
-    /// Multiplier for jump height when in blob mode
-    /// <summary>
-    [Range(1,2)]
-    public float blobJumpMultiplier;
+	/// <summary>
+	/// Multiplier for jump height when in blob mode
+	/// <summary>
+	[Range(1, 2)]
+	public float blobJumpMultiplier;
 
-    /// <summary>
+	/// <summary>
 	/// Time before coming up through a grate before falling again.
 	/// </summary>
 	[Range(0, 9)]
-    public float grateProtectionTime;
+	public float grateProtectionTime;
 
-    public override bool AcceptingMoveInput
+	public override bool AcceptingMoveInput
 	{
 		get
 		{
-            return !passingGrate && base.AcceptingMoveInput;
-        }
-    }
+			return !passingGrate && base.AcceptingMoveInput;
+		}
+	}
 
-    // high level state
-    private bool blobMode;
-    private bool transitioning; //to from squish mode
-    private bool passingGrate;
+	// high level state
+	private bool blobMode;
+	private bool transitioning; //to from squish mode
+	private bool passingGrate;
 
-    // low level state
-    private Collider2D lastGrate;
-    private bool onGrate;
-    private float grateProt;
-    private bool passingGrateDown; // only used for animation
+	// low level state
+	private Collider2D lastGrate;
+	private bool onGrate;
+	private float grateProt;
+	private bool passingGrateDown; // only used for animation
 
 	public override int SORT_VALUE
 	{
@@ -58,87 +58,97 @@ public class SquishController : PlayerController
 		get { return "Squish"; }
 	}
 
-    public override float GetJumpHeight {
-        get {
-            if (blobMode) {
-                return jumpHeight * blobJumpMultiplier;
-            } else {
-                return jumpHeight;
-            }
-        }
-    }
+	public override float GetJumpHeight
+	{
+		get
+		{
+			if (blobMode)
+			{
+				return jumpHeight * blobJumpMultiplier;
+			}
+			else
+			{
+				return jumpHeight;
+			}
+		}
+	}
 
 	protected override void Update()
 	{
 		base.Update();
-        grateProt -= Time.deltaTime;
+		grateProt -= Time.deltaTime;
 
-        if (DBInputManager.GetInput(this, PlayerInput.Power, InputType.Pressed) && !transitioning) 
-        {
-            StartCoroutine(ToggleSquish());
-        }
-        if (blobMode && onGrate && !passingGrate 
-            && (grateProt < 0 || DBInputManager.GetInput(this, PlayerInput.Down, InputType.Pressed)) 
-            && transform.position.x - lastGrate.transform.position.x < 0.5)
-        {
-            c = StartCoroutine(GrateCoroutine(transform.position.y > lastGrate.transform.position.y));
-        }
+		if (DBInputManager.GetInput(this, PlayerInput.Power, InputType.Pressed) && !transitioning)
+		{
+			StartCoroutine(ToggleSquish());
+		}
+		if (blobMode && onGrate && !passingGrate
+			&& (grateProt < 0 || DBInputManager.GetInput(this, PlayerInput.Down, InputType.Pressed))
+			&& transform.position.x - lastGrate.transform.position.x < 0.5)
+		{
+			c = StartCoroutine(GrateCoroutine(transform.position.y > lastGrate.transform.position.y));
+		}
 	}
 
-    public IEnumerator ToggleSquish() 
-    {
-            transitioning = true;
-            blobMode = !blobMode;
-            //Loop over time
-            {
-                speed = speed * (blobMode ? squishSpeedMultipler : 1/squishSpeedMultipler);
-                //transform.localScale = transform.localScale.YMul(blobMode ? 0.5f : 2);
-            //    yield return null;
-            }
-            transitioning = false;
-            yield return null;
-    }
-
-    protected override void SetAnimationState()
+	public IEnumerator ToggleSquish()
 	{
-        base.SetAnimationState();
+		transitioning = true;
+		blobMode = !blobMode;
+		//Loop over time
+		{
+			speed = speed * (blobMode ? squishSpeedMultipler : 1 / squishSpeedMultipler);
+			//transform.localScale = transform.localScale.YMul(blobMode ? 0.5f : 2);
+			//    yield return null;
+			int dir = blobMode ? -1 : 1;
+			cCollider.offset = cCollider.offset.YAdd(3.2f * dir);
+			cCollider.size = cCollider.size.YAdd(6.3f * dir);
+		}
+		transitioning = false;
+		yield return null;
+	}
+
+	protected override void SetAnimationState()
+	{
+		base.SetAnimationState();
 		//TODO
 		anim.SetBool("WasBlobMode", anim.GetBool("BlobMode"));
 		anim.SetBool("BlobMode", blobMode);
 		anim.SetBool("PassingGrate", passingGrate);
-        anim.SetBool("PassingGrateDown", passingGrateDown);
-		
-    }
+		anim.SetBool("PassingGrateDown", passingGrateDown);
 
-    #region GrateTriggers
+	}
 
-    private Coroutine c;
+	#region GrateTriggers
 
-    protected override void EnterGrate(Collider2D trigger)
+	private Coroutine c;
+
+	protected override void EnterGrate(Collider2D trigger)
 	{
-        onGrate = true;
-        lastGrate = trigger;
+		onGrate = true;
+		lastGrate = trigger;
 	}
 
 	protected override void ExitGrate(Collider2D trigger)
 	{
-        onGrate = false;
-        grateProt = 0;
+		onGrate = false;
+		grateProt = 0;
 	}
 
-    protected IEnumerator GrateCoroutine(bool down) {
+	protected IEnumerator GrateCoroutine(bool down)
+	{
 		Underground = down;
 		passingGrate = true;
-        passingGrateDown = down;
-        rBody.isKinematic = true;
-        rBody.velocity = Vector3.zero; 
-        float direction = down ? -1 : 1;
-        while (onGrate) {
-            transform.Translate(Vector3.zero.Y(grateSpeed*direction*Time.deltaTime));
-            yield return null;
-        }
-        
-        /*if (!down) 
+		passingGrateDown = down;
+		rBody.isKinematic = true;
+		rBody.velocity = Vector3.zero;
+		float direction = down ? -1 : 1;
+		while (onGrate)
+		{
+			transform.Translate(Vector3.zero.Y(grateSpeed * direction * Time.deltaTime));
+			yield return null;
+		}
+
+		/*if (!down) 
         {
             if (DBInputManager.GetInput(this, PlayerInput.Left, InputType.Held, false)) {
                 direction = -1;
@@ -158,13 +168,14 @@ public class SquishController : PlayerController
             } 
         }*/
 
-        if (!down) {
-            grateProt = grateProtectionTime;
-        }
-        passingGrate = false;
-        rBody.isKinematic = false;
-        yield return null;
-    }
+		if (!down)
+		{
+			grateProt = grateProtectionTime;
+		}
+		passingGrate = false;
+		rBody.isKinematic = false;
+		yield return null;
+	}
 
-    #endregion
+	#endregion
 }
