@@ -255,12 +255,12 @@ TextureImporter:
       name: ElectricBabySheet_7
       rect:
         serializedVersion: 2
-        x: 3725.7446
-        y: 2351.921
-        width: 582.3755
-        height: 540.3237
+        x: 3727.5427
+        y: 2357.1013
+        width: 575.36694
+        height: 530.97876
       alignment: 9
-      pivot: {x: 0.49324772, y: 0.49614537}
+      pivot: {x: 0.49613082, y: 0.49512088}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -682,6 +682,6 @@ TextureImporter:
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 636837905302952816
+  userData: 636849064270000000
   assetBundleName: 
   assetBundleVariant: 
