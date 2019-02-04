@@ -86,7 +86,7 @@ public class SquishController : PlayerController
 			&& (grateProt < 0 || DBInputManager.GetInput(this, PlayerInput.Down, InputType.Pressed))
 			&& transform.position.x - lastGrate.transform.position.x < 0.5)
 		{
-			c = StartCoroutine(GrateCoroutine(transform.position.y > lastGrate.transform.position.y));
+			c = StartCoroutine(GrateCoroutine(transform.position.y + cCollider.offset.y * transform.lossyScale.y > lastGrate.transform.position.y));
 		}
 	}
 
