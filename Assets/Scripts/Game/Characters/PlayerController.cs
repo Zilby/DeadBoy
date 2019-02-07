@@ -31,6 +31,7 @@ public abstract class PlayerController : MonoBehaviour
 
 	[Header("Other References")]
 	public Fadeable indicator;
+	public ParticleSystem electricPS;
 
 	[Header("InverseKinematics")]
 	public IkLimb2D[] iKLimbs = new IkLimb2D[IKCount];
@@ -262,7 +263,8 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Whether or not the player is currently underground. 
 	/// </summary>
-	public bool Underground {
+	public bool Underground 
+	{
 		get { return underground; }
 		set
 		{
@@ -272,6 +274,14 @@ public abstract class PlayerController : MonoBehaviour
 				underground = value;
 			}
 		}
+	}
+
+	/// <summary>
+	/// Whether the player is holding an electrical charge.
+	/// </summary>
+	public virtual bool HoldingCharge 
+	{
+		get { return false; }
 	}
 
 	/// <summary>
@@ -665,6 +675,16 @@ public abstract class PlayerController : MonoBehaviour
 
 	#endregion
 
+	#region Charge
+
+	public virtual void TouchedCharged(bool charged) {
+		if (charged) {
+			StartCoroutine(Die());
+		}
+	}
+
+	#endregion
+
 	#region KinematicMovements
 
 	/// <summary>
@@ -872,6 +892,14 @@ public abstract class PlayerController : MonoBehaviour
 		settingIK[(int)IK.RightArm] = true;
 		SetUpLimbMovement(t);
 		interactAction = a;
+	}
+
+	/// <summary>
+	/// Touches the given location
+	/// </summary>
+	public void Touch(Transform t, Action a)
+	{
+		Press(t, a); //same for now, might be different hands later.
 	}
 
 	/// <summary>

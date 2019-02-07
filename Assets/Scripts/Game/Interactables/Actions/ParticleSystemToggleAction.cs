@@ -13,7 +13,7 @@ public class ParticleSystemToggleAction : InteractAction
 	public override IEnumerator Act(PlayerController p)
 	{
 		yield return base.Act(p);
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(delay);
 		foreach (ParticleSystem ps in toggled)
 		{
 			var e = ps.emission;
