@@ -95,7 +95,7 @@ public class DialogueNode
 		{
 			GUIContent content = new GUIContent(dialogue);
 			float height = textfieldStyle.CalcHeight(content, rect.width - 20);
-			rect.height = defaultRect.height + height;
+			rect.height = defaultRect.height + Mathf.Max(height, 40) - 20;
 			inPoint.Draw();
 			outPoint.Draw();
 			GUI.Box(rect, title, style);
