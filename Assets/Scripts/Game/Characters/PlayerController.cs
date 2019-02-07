@@ -221,7 +221,8 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public abstract string Name { get; }
 
-	public virtual float GetJumpHeight {
+	public virtual float GetJumpHeight
+	{
 		get { return jumpHeight; }
 	}
 
@@ -253,7 +254,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Whether or not the player is currently pulling.
 	/// </summary>
-	public bool IsPulling 
+	public bool IsPulling
 	{
 		get { return pulling; }
 		set { pulling = value; }
@@ -262,7 +263,8 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Whether or not the player is currently underground. 
 	/// </summary>
-	public bool Underground {
+	public bool Underground
+	{
 		get { return underground; }
 		set
 		{
@@ -299,6 +301,29 @@ public abstract class PlayerController : MonoBehaviour
 		get
 		{
 			return LIMB_MOVE_SPEED * (rBody.velocity.magnitude + 1) * Time.deltaTime;
+		}
+	}
+
+	/// <summary>
+	/// Height of the collider
+	/// </summary>
+	/// <value>The height of the collider.</value>
+	protected float ColliderHeight
+	{
+		get
+		{
+			return (cCollider.size.y / 2.0f) * transform.localScale.y;
+		}
+	}
+
+	/// <summary>
+	/// Gets the collider offset.
+	/// </summary>
+	protected float ColliderOffset
+	{
+		get
+		{
+			return cCollider.offset.y * transform.localScale.y;
 		}
 	}
 
@@ -597,12 +622,11 @@ public abstract class PlayerController : MonoBehaviour
 	bool TouchingGround()
 	{
 		RaycastHit2D[] hits = new RaycastHit2D[10];
-		float cHeight = (cCollider.size.y / 2.0f) * transform.localScale.y;
-		cCollider.Raycast(Vector2.down, hits, cHeight + TOUCHING_DIST, Physics2D.GetLayerCollisionMask(gameObject.layer));
+		cCollider.Raycast(Vector2.down, hits, ColliderHeight + TOUCHING_DIST, Physics2D.GetLayerCollisionMask(gameObject.layer));
 		foreach (RaycastHit2D r in hits)
 		{
 			if (r.collider != null && !r.collider.isTrigger &&
-				(anim.GetFloat("OldYVel") < -5 || r.point.y <= transform.position.y - ((cHeight - (cCollider.offset.y * transform.localScale.y)) * 7f / 8f)))
+				(anim.GetFloat("OldYVel") < -5 || r.point.y <= transform.position.y - ((ColliderHeight - ColliderOffset) * 7f / 8f)))
 			{
 				return true;
 			}
@@ -614,7 +638,6 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		if (collision.gameObject.layer == LayerMask.NameToLayer("Water"))
 		{
-			swimming = true;
 			this.EnterWater(collision);
 		}
 		if (collision.tag == "Grate")
@@ -627,11 +650,18 @@ public abstract class PlayerController : MonoBehaviour
 		}
 	}
 
+	private void OnTriggerStay2D(Collider2D collision)
+	{
+		if (collision.gameObject.layer == LayerMask.NameToLayer("Water"))
+		{
+			this.StayWater(collision);
+		}
+	}
+
 	void OnTriggerExit2D(Collider2D collision)
 	{
 		if (collision.gameObject.layer == LayerMask.NameToLayer("Water"))
 		{
-			swimming = false;
 			this.ExitWater(collision);
 		}
 		if (collision.tag == "Grate")
@@ -646,7 +676,14 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual void EnterWater(Collider2D water)
 	{
-		StartCoroutine(Die());
+	}
+
+	protected virtual void StayWater(Collider2D water)
+	{
+		if (water.OverlapPoint(transform.position.YAdd(ColliderHeight + ColliderOffset).YMul(7f / 8f)))
+		{
+			StartCoroutine(Die());
+		}
 	}
 
 	protected virtual void ExitWater(Collider2D water)
