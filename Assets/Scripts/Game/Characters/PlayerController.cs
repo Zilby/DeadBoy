@@ -597,10 +597,12 @@ public abstract class PlayerController : MonoBehaviour
 	bool TouchingGround()
 	{
 		RaycastHit2D[] hits = new RaycastHit2D[10];
-		cCollider.Raycast(Vector2.down, hits, ((cCollider.size.y / 2.0f) * transform.localScale.y) + TOUCHING_DIST, Physics2D.GetLayerCollisionMask(gameObject.layer));
+		float cHeight = (cCollider.size.y / 2.0f) * transform.localScale.y;
+		cCollider.Raycast(Vector2.down, hits, cHeight + TOUCHING_DIST, Physics2D.GetLayerCollisionMask(gameObject.layer));
 		foreach (RaycastHit2D r in hits)
 		{
-			if (r.collider != null && !r.collider.isTrigger)
+			if (r.collider != null && !r.collider.isTrigger &&
+				(anim.GetFloat("OldYVel") < -5 || r.point.y <= transform.position.y - ((cHeight - (cCollider.offset.y * transform.localScale.y)) * 7f / 8f)))
 			{
 				return true;
 			}
