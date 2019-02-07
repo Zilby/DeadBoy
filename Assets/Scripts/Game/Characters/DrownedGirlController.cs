@@ -110,11 +110,17 @@ public class DrownedGirlController : PlayerController
 
 	protected override void EnterWater(Collider2D water)
 	{
+		swimming = true;
 		this.waterCollider = water.GetComponent<BoxCollider2D>();
+	}
+
+	protected override void StayWater(Collider2D water)
+	{
 	}
 
 	protected override void ExitWater(Collider2D water)
 	{
+		swimming = false;
 		this.waterCollider = null;
 		this.diving = false;
 	}
