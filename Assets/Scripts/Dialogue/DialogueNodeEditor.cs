@@ -27,11 +27,11 @@ public class DialogueNodeEditor : EditorWindow
 
 	private bool needsConnectionFuse = false;
 
-	private const float kZoomMin = 0.1f;
-	private const float kZoomMax = 10.0f;
+	private const float kZoomMin = 0.2f;
+	private const float kZoomMax = 3.0f;
 
 	private static DialogueNodeEditor instance;
-
+	
 	public static Rect _zoomArea
 	{
 		get
@@ -139,6 +139,8 @@ public class DialogueNodeEditor : EditorWindow
 				tree.Nodes = d.Nodes;
 				tree.Connections = d.Connections;
 				needsConnectionFuse = true;
+				tree.warmTint = d.warmTint;
+				tree.coldTint = d.coldTint;
 			}
 		}
 		content = new GUIContent("Save Dialogue");
@@ -277,7 +279,12 @@ public class DialogueNodeEditor : EditorWindow
 				_zoom += zoomDelta;
 				_zoom = Mathf.Clamp(_zoom, kZoomMin, kZoomMax);
 				_zoomCoordsOrigin = zoomCoordsMousePos - (oldZoom / _zoom) * (zoomCoordsMousePos - _zoomCoordsOrigin);
-				//OnDrag(new Vector2(zoomDelta, zoomDelta));
+				if (oldZoom != _zoom)
+				{
+					float change = (oldZoom - _zoom);
+					Vector2 dragDelta = (new Vector2(change * position.width, change * position.height)) /* + (new Vector2(position.width, position.height).XYDiv(2) - e.mousePosition) / 100.0f) */ / (_zoom + oldZoom);
+					OnDrag(dragDelta);
+				}
 
 				Event.current.Use();
 				break;

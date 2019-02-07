@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DialogueTree>
+  <warmTint>true</warmTint>
+  <coldTint>false</coldTint>
   <Nodes>
     <DialogueNode>
       <id>1</id>
@@ -68,8 +70,6 @@
       <character>Deadboy</character>
       <expression>neutral</expression>
       <rightSide>false</rightSide>
-      <warmTint>false</warmTint>
-      <coldTint>false</coldTint>
       <isDragged>false</isDragged>
       <isSelected>false</isSelected>
       <inPoint type="In">
@@ -268,8 +268,6 @@
       <character>DrownedGirl</character>
       <expression>neutral</expression>
       <rightSide>true</rightSide>
-      <warmTint>false</warmTint>
-      <coldTint>false</coldTint>
       <isDragged>false</isDragged>
       <isSelected>true</isSelected>
       <inPoint type="In">
