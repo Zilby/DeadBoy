@@ -27,6 +27,19 @@ public class DialogueParser
 	}
 
 	/// <summary>
+	/// The tree for this scene. 
+	/// </summary>
+	private DialogueTree tree;
+
+	/// <summary>
+	/// The tree for this scene. 
+	/// </summary>
+	public DialogueTree Tree
+	{
+		get { return tree; }
+	}
+
+	/// <summary>
 	/// The starting line of dialogue for this scene. 
 	/// </summary>
 	private DialogueLine head;
@@ -59,7 +72,7 @@ public class DialogueParser
 	public IEnumerator LoadDialogue(string path)
 	{
 		lines = new DialogueLine[1000];
-		DialogueTree tree = DialogueWriter.LoadTree(path);
+		tree = DialogueWriter.LoadTree(path);
 		yield return new WaitForSecondsRealtime(0.2f);
 		foreach (DialogueNode n in tree.Nodes)
 		{

@@ -36,6 +36,7 @@ public class DialogueWriter
 	{
 		Debug.LogFormat("Writing out {0}", fileName);
 		XMLUtility.WriteXML<DialogueTree>(d, fileName, "Assets/Resources/" + path);
+		AssetDatabase.Refresh();
 		Debug.LogFormat("Finished writing {0}", fileName);
 	}
 #endif

@@ -30,6 +30,14 @@ public class MoveableText : MonoBehaviour
 		set { letterDelay = value; }
 	}
 
+	/// <summary>
+	/// Gets the tmpro text. 
+	/// </summary>
+	public TextMeshProUGUI Text
+	{
+		get { return text; }
+	}
+
 	// Use this for initialization
 	void Awake()
 	{
@@ -51,7 +59,7 @@ public class MoveableText : MonoBehaviour
 	/// </summary>
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (DBInputManager.GetInput(DBInputManager.controllers[0], PlayerInput.Submit, InputType.Pressed))
 		{
 			skip = true;
 		}

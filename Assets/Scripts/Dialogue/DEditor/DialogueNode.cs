@@ -19,7 +19,7 @@ public class DialogueNode
 	public string title;
 	public string dialogue = "";
 	public DialogueManager.Character character = DialogueManager.Character.Deadboy;
-	public DialogueManager.Expression expression = DialogueManager.Expression.neutral;
+	public DialogueManager.Expression expression = DialogueManager.Expression.Neutral;
 	public bool rightSide = false;
 	public bool isDragged;
 	public bool isSelected;

@@ -126,12 +126,28 @@ public class DialogueNodeEditor : EditorWindow
 		GUIContent content = new GUIContent("Dialogue Scene");
 		EditorGUI.LabelField(new Rect(5, 5, 110, 20), content);
 		tree.scene = EditorGUI.IntField(new Rect(110, 5, 60, 15), tree.scene);
+		content = new GUIContent("Left Initial Character");
+		EditorGUI.LabelField(new Rect(5, 25, 140, 20), content);
+		tree.leftCharEnabled = EditorGUI.Toggle(new Rect(150, 25, 20, 20), tree.leftCharEnabled);
+		tree.leftChar = (DialogueManager.Character)EditorGUI.EnumPopup(
+				new Rect(5, 45, 80, 15), tree.leftChar);
+		tree.leftExpr = (DialogueManager.Expression)EditorGUI.EnumPopup(
+			new Rect(90, 45, 80, 15), tree.leftExpr);
+		content = new GUIContent("Right Initial Character");
+		EditorGUI.LabelField(new Rect(5, 65, 140, 20), content);
+		tree.rightCharEnabled = EditorGUI.Toggle(new Rect(150, 65, 20, 20), tree.rightCharEnabled);
+		tree.rightChar = (DialogueManager.Character)EditorGUI.EnumPopup(
+				new Rect(5, 85, 80, 15), tree.rightChar);
+		tree.rightExpr = (DialogueManager.Expression)EditorGUI.EnumPopup(
+			new Rect(90, 85, 80, 15), tree.rightExpr);
 		content = new GUIContent("Warm Tint");
-		tree.warmTint = EditorGUI.Toggle(new Rect(5, 25, 200, 15), content, tree.warmTint);
+		EditorGUI.LabelField(new Rect(5, 105, 80, 15), content);
+		tree.warmTint = EditorGUI.Toggle(new Rect(70, 105, 20, 15), tree.warmTint);
 		content = new GUIContent("Cold Tint");
-		tree.coldTint = EditorGUI.Toggle(new Rect(5, 45, 200, 15), content, tree.coldTint);
+		EditorGUI.LabelField(new Rect(90, 105, 80, 15), content);
+		tree.coldTint = EditorGUI.Toggle(new Rect(155, 105, 20, 15), tree.coldTint);
 		content = new GUIContent("Load Dialogue");
-		if (GUI.Button(new Rect(5, 65, 160, 20), content))
+		if (GUI.Button(new Rect(5, 125, 160, 20), content))
 		{
 			DialogueTree d = DialogueWriter.LoadTree(Path.Combine(tree.GetDirectory(), tree.GetFileName()));
 			if (d != null)
@@ -141,10 +157,16 @@ public class DialogueNodeEditor : EditorWindow
 				needsConnectionFuse = true;
 				tree.warmTint = d.warmTint;
 				tree.coldTint = d.coldTint;
+				tree.leftCharEnabled = d.leftCharEnabled;
+				tree.rightCharEnabled = d.rightCharEnabled;
+				tree.leftChar = d.leftChar;
+				tree.rightChar = d.rightChar;
+				tree.leftExpr = d.leftExpr;
+				tree.rightExpr = d.rightExpr;
 			}
 		}
 		content = new GUIContent("Save Dialogue");
-		if (GUI.Button(new Rect(5, 90, 160, 20), content))
+		if (GUI.Button(new Rect(5, 150, 160, 20), content))
 		{
 			DialogueWriter.WriteTree(tree, tree.GetFileName(), tree.GetDirectory());
 		}

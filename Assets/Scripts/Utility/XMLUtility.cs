@@ -5,7 +5,6 @@ using System;
 using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 
 /// <summary>
 /// XMLUtility can only write objects with this interface.
@@ -152,7 +151,6 @@ public static class XMLUtility
 		}
 
 		file.Close();
-		AssetDatabase.Refresh();
 	}
 
 	/// <summary>

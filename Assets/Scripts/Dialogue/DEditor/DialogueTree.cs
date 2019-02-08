@@ -11,6 +11,24 @@ public class DialogueTree : IWriteable, IReadable
 	public int scene = -1;
 
 	[XmlElement]
+	public bool leftCharEnabled;
+
+	[XmlElement]
+	public bool rightCharEnabled;
+
+	[XmlElement]
+	public DialogueManager.Character leftChar;
+
+	[XmlElement]
+	public DialogueManager.Character rightChar;
+
+	[XmlElement]
+	public DialogueManager.Expression leftExpr;
+
+	[XmlElement]
+	public DialogueManager.Expression rightExpr;
+
+	[XmlElement]
 	public bool warmTint = false;
 
 	[XmlElement]
