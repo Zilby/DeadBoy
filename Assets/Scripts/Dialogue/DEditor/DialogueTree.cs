@@ -34,6 +34,7 @@ public class DialogueTree : IWriteable, IReadable
 	[XmlElement]
 	public bool coldTint = false;
 
+	public const string DIRECTORY = "Dialogues";
 
 	public const string PREFIX = "Dialogue";
 
@@ -58,7 +59,7 @@ public class DialogueTree : IWriteable, IReadable
 
 	public string GetDirectory()
 	{
-		return "Dialogues";
+		return DIRECTORY;
 	}
 
 	public string GetFileName()

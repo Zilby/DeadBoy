@@ -11,6 +11,8 @@ using System.IO;
 /// </summary>
 public class DialogueManager : FadeableUI
 {
+	public static DialogueManager instance;
+
 	/// <summary>
 	/// The expressions assignable to each character.
 	/// </summary>
@@ -22,6 +24,8 @@ public class DialogueManager : FadeableUI
 		Anxious = 3,
 		Excited = 4,
 		Angry = 5,
+		Shocked = 6,
+		Determined = 7,
 	}
 
 
@@ -57,14 +61,14 @@ public class DialogueManager : FadeableUI
 	void Awake()
 	{
 		mText = GetComponentInChildren<MoveableText>();
-		StartCoroutine(BeginDialogue(0));
+		instance = this;
 	}
 
 
 	/// <summary>
 	/// Begins the dialogue scene.
 	/// </summary>
-	public IEnumerator BeginDialogue(int scene)
+	public IEnumerator BeginDialogue(string scene)
 	{
 		SelfFadeIn();
 		yield return dParser.LoadDialogue(Path.Combine("Dialogues", "Dialogue" + scene));
@@ -79,11 +83,13 @@ public class DialogueManager : FadeableUI
 		{
 			leftSprite.SelfFadeIn();
 			leftSprite.DisplayTalkSprite(dParser.Tree.leftChar, dParser.Tree.leftExpr, warm, cold);
+			leftSprite.StopTalking();
 		}
 		if (dParser.Tree.rightCharEnabled)
 		{
 			rightSprite.SelfFadeIn();
 			rightSprite.DisplayTalkSprite(dParser.Tree.rightChar, dParser.Tree.rightExpr, warm, cold);
+			rightSprite.StopTalking();
 		}
 
 		TalkSprite disabled = current.node.rightSide ? leftSprite : rightSprite;
@@ -125,20 +131,6 @@ public class DialogueManager : FadeableUI
 		yield return FadeOut();
 	}
 
-
-	/// <summary>
-	/// Waits for the given key to be pressed.
-	/// </summary>
-	/// <param name="k">The key to be pressed.</param>
-	public static IEnumerator WaitForKeypress()
-	{
-		while (!DBInputManager.GetInput(DBInputManager.controllers[0], PlayerInput.Submit, InputType.Pressed))
-		{
-			yield return null;
-		}
-	}
-
-
 	/// <summary>
 	/// Displays the dialogue for a given character. 
 	/// </summary>
@@ -160,6 +152,21 @@ public class DialogueManager : FadeableUI
 		mText.Text.color = textColors[c];
 		yield return mText.TypeText(s);
 		yield return new WaitForSecondsRealtime(0.1f);
-		yield return WaitForKeypress();
+		yield return DBInputManager.WaitForKeypress(PlayerInput.Submit);
+	}
+
+	/// <summary>
+	/// Gets the list of all dialogue scenes. 
+	/// </summary>
+	public static string[] GetDialogueList()
+	{
+		DirectoryInfo levelDirectoryPath = new DirectoryInfo(Application.dataPath + Path.DirectorySeparatorChar + "Resources" + Path.DirectorySeparatorChar + DialogueTree.DIRECTORY);
+		FileInfo[] fileInfo = levelDirectoryPath.GetFiles("*.xml", SearchOption.AllDirectories);
+		string[] scene_names = new string[fileInfo.Length];
+		for (int i = 0; i < fileInfo.Length; ++i)
+		{
+			scene_names[i] = fileInfo[i].Name.Substring(DialogueTree.PREFIX.Length, fileInfo[i].Name.Length - (DialogueTree.PREFIX.Length + fileInfo[i].Extension.Length));
+		}
+		return scene_names;
 	}
 }

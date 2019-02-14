@@ -35,6 +35,9 @@ public class TalkSprite : FadeableUI
 	/// </summary>
 	private Coroutine talkRoutine;
 
+	/// <summary>
+	/// End alpha value for the partial fade function. 
+	/// </summary>
 	public const float PARTIAL_FADE = 0.6f;
 
 	/// <summary>
@@ -74,13 +77,25 @@ public class TalkSprite : FadeableUI
 			image.color = Color.white;
 		}
 		character = c;
-		talkRoutine = StartCoroutine(Talk());
+		float delay = 0.2f;
+		switch(e) {
+			case DialogueManager.Expression.Excited:
+			case DialogueManager.Expression.Anxious:
+				delay /= 1.3f;
+				break;
+			case DialogueManager.Expression.Sad:
+				delay *= 1.3f;
+				break;
+			default:
+				break;
+		}
+		talkRoutine = StartCoroutine(Talk(delay));
 	}
 
 	/// <summary>
 	/// Talks after a delay. 
 	/// </summary>
-	private IEnumerator Talk(float delay = 0.8f)
+	private IEnumerator Talk(float delay)
 	{
 		if (sprites.Length > 1)
 		{
@@ -105,6 +120,7 @@ public class TalkSprite : FadeableUI
 		{
 			StopCoroutine(talkRoutine);
 			talkRoutine = null;
+			image.sprite = sprites[0];
 		}
 	}
 

@@ -127,13 +127,7 @@ public class DialogueNodeEditor : EditorWindow
 	{
 		GUIContent content = new GUIContent("Scene");
 		EditorGUI.LabelField(new Rect(5, 5, 40, 20), content);
-		DirectoryInfo levelDirectoryPath = new DirectoryInfo(Application.dataPath + Path.DirectorySeparatorChar + "Resources" + Path.DirectorySeparatorChar + tree.GetDirectory());
-		FileInfo[] fileInfo = levelDirectoryPath.GetFiles("*.xml", SearchOption.AllDirectories);
-		string[] scene_names = new string[fileInfo.Length];
-		for (int i = 0; i < fileInfo.Length; ++i)
-		{
-			scene_names[i] = fileInfo[i].Name.Substring(DialogueTree.PREFIX.Length, fileInfo[i].Name.Length - (DialogueTree.PREFIX.Length + fileInfo[i].Extension.Length));
-		}
+		string[] scene_names = DialogueManager.GetDialogueList();
 		int old_scene = scene;
 		scene = EditorGUI.Popup(new Rect(45, 5, 120, 15), scene, scene_names);
 		if (scene != old_scene) {

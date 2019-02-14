@@ -290,6 +290,18 @@ public class DBInputManager : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// Waits for the given key to be pressed.
+	/// </summary>
+	/// <param name="k">The key to be pressed.</param>
+	public static IEnumerator WaitForKeypress(PlayerInput p)
+	{
+		while (!GetInput(controllers[0], p, InputType.Pressed))
+		{
+			yield return null;
+		}
+	}
+
 	#endregion
 
 	#endregion
