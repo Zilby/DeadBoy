@@ -8,7 +8,7 @@ public class DialogueTree : IWriteable, IReadable
 {
 
 	[XmlIgnore]
-	public int scene = -1;
+	public string scene = "Test";
 
 	[XmlElement]
 	public bool leftCharEnabled;
@@ -33,6 +33,9 @@ public class DialogueTree : IWriteable, IReadable
 
 	[XmlElement]
 	public bool coldTint = false;
+
+
+	public const string PREFIX = "Dialogue";
 
 
 	[XmlArray]
@@ -60,6 +63,6 @@ public class DialogueTree : IWriteable, IReadable
 
 	public string GetFileName()
 	{
-		return "Dialogue" + scene;
+		return PREFIX + scene;
 	}
 }

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DialogueTree>
+  <leftCharEnabled>true</leftCharEnabled>
+  <rightCharEnabled>false</rightCharEnabled>
+  <leftChar>Deadboy</leftChar>
+  <rightChar>Deadboy</rightChar>
+  <leftExpr>Neutral</leftExpr>
+  <rightExpr>Neutral</rightExpr>
+  <warmTint>true</warmTint>
+  <coldTint>false</coldTint>
+  <Nodes />
+  <Connections />
+</DialogueTree>

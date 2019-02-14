@@ -31,6 +31,8 @@ public class DialogueNodeEditor : EditorWindow
 	private const float kZoomMax = 3.0f;
 
 	private static DialogueNodeEditor instance;
+
+	private int scene;
 	
 	public static Rect _zoomArea
 	{
@@ -123,31 +125,43 @@ public class DialogueNodeEditor : EditorWindow
 
 	private void DrawControls()
 	{
-		GUIContent content = new GUIContent("Dialogue Scene");
-		EditorGUI.LabelField(new Rect(5, 5, 110, 20), content);
-		tree.scene = EditorGUI.IntField(new Rect(110, 5, 60, 15), tree.scene);
+		GUIContent content = new GUIContent("Scene");
+		EditorGUI.LabelField(new Rect(5, 5, 40, 20), content);
+		DirectoryInfo levelDirectoryPath = new DirectoryInfo(Application.dataPath + Path.DirectorySeparatorChar + "Resources" + Path.DirectorySeparatorChar + tree.GetDirectory());
+		FileInfo[] fileInfo = levelDirectoryPath.GetFiles("*.xml", SearchOption.AllDirectories);
+		string[] scene_names = new string[fileInfo.Length];
+		for (int i = 0; i < fileInfo.Length; ++i)
+		{
+			scene_names[i] = fileInfo[i].Name.Substring(DialogueTree.PREFIX.Length, fileInfo[i].Name.Length - (DialogueTree.PREFIX.Length + fileInfo[i].Extension.Length));
+		}
+		int old_scene = scene;
+		scene = EditorGUI.Popup(new Rect(45, 5, 120, 15), scene, scene_names);
+		if (scene != old_scene) {
+			tree.scene = scene_names[scene];
+		}
+		tree.scene = EditorGUI.TextField(new Rect(5, 25, 160, 15), tree.scene);
 		content = new GUIContent("Left Initial Character");
-		EditorGUI.LabelField(new Rect(5, 25, 140, 20), content);
-		tree.leftCharEnabled = EditorGUI.Toggle(new Rect(150, 25, 20, 20), tree.leftCharEnabled);
+		EditorGUI.LabelField(new Rect(5, 45, 140, 20), content);
+		tree.leftCharEnabled = EditorGUI.Toggle(new Rect(150, 45, 20, 20), tree.leftCharEnabled);
 		tree.leftChar = (DialogueManager.Character)EditorGUI.EnumPopup(
-				new Rect(5, 45, 80, 15), tree.leftChar);
+				new Rect(5, 65, 80, 15), tree.leftChar);
 		tree.leftExpr = (DialogueManager.Expression)EditorGUI.EnumPopup(
-			new Rect(90, 45, 80, 15), tree.leftExpr);
+			new Rect(90, 65, 80, 15), tree.leftExpr);
 		content = new GUIContent("Right Initial Character");
-		EditorGUI.LabelField(new Rect(5, 65, 140, 20), content);
-		tree.rightCharEnabled = EditorGUI.Toggle(new Rect(150, 65, 20, 20), tree.rightCharEnabled);
+		EditorGUI.LabelField(new Rect(5, 85, 140, 20), content);
+		tree.rightCharEnabled = EditorGUI.Toggle(new Rect(150, 85, 20, 20), tree.rightCharEnabled);
 		tree.rightChar = (DialogueManager.Character)EditorGUI.EnumPopup(
-				new Rect(5, 85, 80, 15), tree.rightChar);
+				new Rect(5, 105, 80, 15), tree.rightChar);
 		tree.rightExpr = (DialogueManager.Expression)EditorGUI.EnumPopup(
-			new Rect(90, 85, 80, 15), tree.rightExpr);
+			new Rect(90, 105, 80, 15), tree.rightExpr);
 		content = new GUIContent("Warm Tint");
-		EditorGUI.LabelField(new Rect(5, 105, 80, 15), content);
-		tree.warmTint = EditorGUI.Toggle(new Rect(70, 105, 20, 15), tree.warmTint);
+		EditorGUI.LabelField(new Rect(5, 125, 80, 15), content);
+		tree.warmTint = EditorGUI.Toggle(new Rect(70, 125, 20, 15), tree.warmTint);
 		content = new GUIContent("Cold Tint");
-		EditorGUI.LabelField(new Rect(90, 105, 80, 15), content);
-		tree.coldTint = EditorGUI.Toggle(new Rect(155, 105, 20, 15), tree.coldTint);
+		EditorGUI.LabelField(new Rect(90, 125, 80, 15), content);
+		tree.coldTint = EditorGUI.Toggle(new Rect(155, 125, 20, 15), tree.coldTint);
 		content = new GUIContent("Load Dialogue");
-		if (GUI.Button(new Rect(5, 125, 160, 20), content))
+		if (GUI.Button(new Rect(5, 145, 160, 20), content))
 		{
 			DialogueTree d = DialogueWriter.LoadTree(Path.Combine(tree.GetDirectory(), tree.GetFileName()));
 			if (d != null)
@@ -166,7 +180,7 @@ public class DialogueNodeEditor : EditorWindow
 			}
 		}
 		content = new GUIContent("Save Dialogue");
-		if (GUI.Button(new Rect(5, 150, 160, 20), content))
+		if (GUI.Button(new Rect(5, 170, 160, 20), content))
 		{
 			DialogueWriter.WriteTree(tree, tree.GetFileName(), tree.GetDirectory());
 		}

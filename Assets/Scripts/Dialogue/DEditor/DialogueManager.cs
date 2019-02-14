@@ -57,6 +57,7 @@ public class DialogueManager : FadeableUI
 	void Awake()
 	{
 		mText = GetComponentInChildren<MoveableText>();
+		StartCoroutine(BeginDialogue(0));
 	}
 
 
