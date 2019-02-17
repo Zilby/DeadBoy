@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -50,6 +51,11 @@ public class Cutscene : MonoBehaviour
 	/// </summary>
 	public List<Scene> scenes;
 
+	public bool loadSceneOnFinish = false;
+
+	[StringInList(typeof(LevelManager), "GetLoadedLevels")]
+	public string loadedScene;
+
 	private FadeableUI fadeable;
 	private Image image;
 
@@ -82,6 +88,10 @@ public class Cutscene : MonoBehaviour
 			}
 		}
 		yield return fadeable.FadeOut();
+		if (loadSceneOnFinish)
+		{
+			Fader.SceneEvent(loadedScene);
+		}
 	}
 
 	public IEnumerator DisplayImage(Scene s)
