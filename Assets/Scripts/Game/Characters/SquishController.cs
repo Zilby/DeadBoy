@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SquishController : PlayerController
 {
+	[Header("Squish Fields")]
 	/// <summary>
 	/// Percentage of max speed when squished.
 	/// </summary>
@@ -28,6 +29,8 @@ public class SquishController : PlayerController
 	/// </summary>
 	[Range(0, 9)]
 	public float grateProtectionTime;
+
+	public Collider2D headHitbox;
 
 	public override bool AcceptingMoveInput
 	{
@@ -84,7 +87,7 @@ public class SquishController : PlayerController
 		}
 		if (blobMode && onGrate && !passingGrate
 			&& (grateProt < 0 || DBInputManager.GetInput(this, PlayerInput.Down, InputType.Pressed))
-			&& transform.position.x - lastGrate.transform.position.x < 0.5)
+			/*&& transform.position.x - lastGrate.transform.position.x < 0.5*/)
 		{
 			c = StartCoroutine(GrateCoroutine(transform.position.y + cCollider.offset.y * transform.lossyScale.y > lastGrate.transform.position.y));
 		}
