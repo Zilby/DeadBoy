@@ -149,6 +149,11 @@ public abstract class PlayerController : MonoBehaviour
 	protected bool underground;
 
 	/// <summary>
+	/// Whether or not the player is dying. 
+	/// </summary>
+	protected bool dying;
+
+	/// <summary>
 	/// The current pickup held.
 	/// </summary>
 	protected Pickup.Type currentPickup = Pickup.Type.none;
@@ -591,20 +596,25 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual IEnumerator Die()
 	{
-		Underground = false;
-		CameraController.Deactivate();
-		DBInputManager.instance.enabled = false;
-		yield return Fader.FadeIn();
-		CameraController.Activate();
-		transform.position = checkpoint.transform.position;
-		rBody.velocity = Vector3.zero;
-		yield return new WaitForSeconds(0.2f);
-		DBInputManager.instance.enabled = true;
-		yield return Fader.FadeOut();
-		if (checkpoint == null)
+		if (!dying)
 		{
-			LevelManager.instance.RestartLevel();
-			yield return null;
+			dying = true;
+			Underground = false;
+			CameraController.Deactivate();
+			DBInputManager.instance.enabled = false;
+			yield return Fader.FadeIn();
+			CameraController.Activate();
+			transform.position = checkpoint.transform.position;
+			rBody.velocity = Vector3.zero;
+			yield return new WaitForSeconds(0.2f);
+			DBInputManager.instance.enabled = true;
+			yield return Fader.FadeOut();
+			dying = false;
+			if (checkpoint == null)
+			{
+				LevelManager.instance.RestartLevel();
+				yield return null;
+			}
 		}
 	}
 
