@@ -131,7 +131,7 @@ public abstract class Interactable : MonoBehaviour
 	/// <summary>
 	/// Checks if the given player is valid. 
 	/// </summary>
-	protected bool PlayerCheck(PlayerController p)
+	protected virtual bool PlayerCheck(PlayerController p)
 	{
 		return p != null && (!(phased.Count > 0) || p is DeadboyController);
 	}

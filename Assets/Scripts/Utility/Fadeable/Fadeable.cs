@@ -28,7 +28,11 @@ public abstract class Fadeable : MonoBehaviour
 	[ConditionalHideAttribute("fadeOnEnable", true, false)]
 	public float fadeDuration = FADE_IN_DUR;
     
-
+    /// <summary>
+    /// Disable game object after fading out
+    /// </summary>
+    public bool disableOnFadeOut = false;
+	
     /// <summary>
     /// A reference to an active fade coroutine.
     /// </summary>
@@ -141,7 +145,7 @@ public abstract class Fadeable : MonoBehaviour
         IsVisible = true;
         isFading = true;
         Active = true;
-        BlocksRaycasts = false;
+       // BlocksRaycasts = false;
         Alpha = startAlpha;
         float duration = dur;
         float timeElapsed = duration * Alpha;
@@ -180,6 +184,9 @@ public abstract class Fadeable : MonoBehaviour
         Alpha = endAlpha;
         Active = Alpha != 0;
         isFading = false;
+        if (disableOnFadeOut) {
+            gameObject.SetActive(false);
+        }
         yield break;
     }
 
