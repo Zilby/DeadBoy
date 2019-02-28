@@ -17,22 +17,29 @@ public abstract class Fadeable : MonoBehaviour
     [System.NonSerialized]
     public bool useUnscaledDeltaTimeForUI = true;
 
+    [Header("Fade On Enable")]
     /// <summary>
     /// Delay after activation before fading in
     /// </summary>
 	public bool fadeOnEnable = false;
     [ConditionalHideAttribute("fadeOnEnable", true, false)]
 	public bool fadeIn = true; //false for out
-    [ConditionalHideAttribute("fadeOnEnable", true, false)]
+    
+    [Header("Delayed Fade")]
     public float fadeDelay = 0;
-	[ConditionalHideAttribute("fadeOnEnable", true, false)]
 	public float fadeDuration = FADE_IN_DUR;
     
+    [Header("Other Options")]
     /// <summary>
     /// Disable game object after fading out
     /// </summary>
     public bool disableOnFadeOut = false;
-	
+    /// <summary>
+    /// Whether the object blocks raycasts during the fade
+    /// </summary>
+    public bool hitboxDuringFade = false;
+
+
     /// <summary>
     /// A reference to an active fade coroutine.
     /// </summary>
@@ -125,6 +132,7 @@ public abstract class Fadeable : MonoBehaviour
 	public virtual IEnumerator DelayedFadeIn() {
 		IsVisible = false;
 		Alpha = 0;
+        BlocksRaycasts = false;
 		yield return new WaitForSeconds(fadeDelay);
 		SelfFadeIn(dur:fadeDuration);
 	}
@@ -145,7 +153,7 @@ public abstract class Fadeable : MonoBehaviour
         IsVisible = true;
         isFading = true;
         Active = true;
-       // BlocksRaycasts = false;
+        BlocksRaycasts = hitboxDuringFade;
         Alpha = startAlpha;
         float duration = dur;
         float timeElapsed = duration * Alpha;
@@ -173,7 +181,7 @@ public abstract class Fadeable : MonoBehaviour
         isFading = true;
         float duration = dur;
         float timeElapsed = duration * (1f - Alpha);
-        BlocksRaycasts = false;
+        BlocksRaycasts = hitboxDuringFade;
 
         while (timeElapsed < duration)
         {
