@@ -15,6 +15,8 @@ public class LevelManager : MonoBehaviour
 {
 	public static LevelManager instance;
 
+	public GameObject pitGlow;
+
 	[StringInList(typeof(SongManager), "GetClipList")]
 	public string song;
 #if UNITY_EDITOR
@@ -32,8 +34,12 @@ public class LevelManager : MonoBehaviour
 
 	private int players;
 
+	[SerializeField]
+	private bool canFinish;
+
 #if UNITY_EDITOR
-	public static string[] GetLoadedLevels() {
+	public static string[] GetLoadedLevels()
+	{
 		string[] temp = new string[SceneManager.sceneCountInBuildSettings];
 		for (int i = 0; i < temp.Length; ++i)
 		{
@@ -62,6 +68,15 @@ public class LevelManager : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Whether or not the player can now finish the level. 
+	/// </summary>
+	public void CanNowFinish()
+	{
+		canFinish = true;
+		pitGlow?.SetActive(true);
+	}
+
+	/// <summary>
 	/// Restarts the level.
 	/// </summary>
 	public void RestartLevel()
@@ -71,16 +86,30 @@ public class LevelManager : MonoBehaviour
 
 	public void OnTriggerEnter2D(Collider2D other)
 	{
-		players += 1;
-		if (players == requiredPlayers)
+		if (canFinish)
 		{
-			Fader.SceneEvent(nextLevel);
+			players += 1;
+			if (players == requiredPlayers)
+			{
+				Fader.SceneEvent(nextLevel);
+			}
+		}
+		else
+		{
+			PlayerController p = other.GetComponent<PlayerController>();
+			if (p)
+			{
+				p.StartCoroutine(p.Die());
+			}
 		}
 	}
 
 	public void OnTriggerExit2D(Collider2D collision)
 	{
-		players -= 1;
+		if (canFinish)
+		{
+			players -= 1;
+		}
 	}
 
 	public void Update()

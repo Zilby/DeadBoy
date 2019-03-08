@@ -631,7 +631,7 @@ public abstract class PlayerController : MonoBehaviour
 		indicator.gameObject.GetComponent<SpriteRenderer>().flipX = transform.localEulerAngles.y > 90;
 	}
 
-	protected virtual IEnumerator Die()
+	public virtual IEnumerator Die()
 	{
 		if (!dying)
 		{
