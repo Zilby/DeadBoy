@@ -57,6 +57,11 @@ public abstract class PlayerController : MonoBehaviour
 	[Range(0, 1)]
 	public float acceleration;
 	/// <summary>
+	/// How fast the player decelerates on the ground. 
+	/// </summary>
+	[Range(0, 1)]
+	public float decceleration;
+	/// <summary>
 	/// The strength of deadboy's jump.
 	/// </summary>
 	[Range(0, 100)]
@@ -102,6 +107,16 @@ public abstract class PlayerController : MonoBehaviour
 	/// Number of frames since last grounded. 
 	/// </summary>
 	protected uint gCounter = 0;
+
+	/// <summary>
+	/// The surface normal.
+	/// </summary>
+	protected Vector2 surfaceNormal = Vector2.up;
+
+	/// <summary>
+	/// The original physics material.
+	/// </summary>
+	protected PhysicsMaterial2D originalMat;
 
 	/// <summary>
 	/// Whether or not the player is in water.
@@ -285,7 +300,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Whether the player is holding an electrical charge.
 	/// </summary>
-	public virtual bool HoldingCharge 
+	public virtual bool HoldingCharge
 	{
 		get { return false; }
 	}
@@ -398,6 +413,7 @@ public abstract class PlayerController : MonoBehaviour
 		rBody = rBody == null ? GetComponent<Rigidbody2D>() : rBody;
 		cCollider = cCollider == null ? GetComponent<CapsuleCollider2D>() : cCollider;
 		anim = anim == null ? GetComponent<Animator>() : anim;
+		originalMat = cCollider.sharedMaterial;
 	}
 
 	protected virtual void OnDestroy()
@@ -457,23 +473,43 @@ public abstract class PlayerController : MonoBehaviour
 		float acceleratedMove;
 		if (grounded)
 		{
-			acceleratedMove = movespeed == 0.0f ? rBody.velocity.x * (1 - (acceleration / 2f)) : rBody.velocity.x + (movespeed * acceleration);
-			//rBody.velocity = rBody.velocity.YAdd((rBody.gravityScale * -Physics2D.gravity.y * Mathf.Abs(analog)) / 100f);
+			acceleratedMove = Mathf.Abs(movespeed) <= 0.01f ? rBody.velocity.x * (1 - decceleration) : rBody.velocity.x + (movespeed * acceleration);
 		}
 		else
 		{
 			acceleratedMove = rBody.velocity.x + (movespeed * aerialControl);
 		}
-		if (analog == 0f && grounded)
+		if (analog == 0f && grounded && Mathf.Abs(acceleratedMove) < 1f)
 		{
-			rBody.constraints = (RigidbodyConstraints2D)5;
+			if (Mathf.Abs(surfaceNormal.x) > 0.1f)
+			{
+				rBody.constraints = (RigidbodyConstraints2D)5;
+			}
+			else
+			{
+				PhysicsMaterial2D m = new PhysicsMaterial2D();
+				m.bounciness = originalMat.bounciness;
+				m.friction = 1f;
+				cCollider.sharedMaterial = m;
+			}
 		}
 		else
 		{
+			cCollider.sharedMaterial = originalMat;
 			rBody.constraints = RigidbodyConstraints2D.FreezeRotation;
 			// Clamp the accelerated move to the maximum speeds. 
-			movespeed = Mathf.Clamp(acceleratedMove, -Mathf.Abs(movespeed), Mathf.Abs(movespeed));
-			rBody.velocity = rBody.velocity.X(movespeed);
+			float maxSpeed = speed * Time.fixedDeltaTime;
+			movespeed = Mathf.Clamp(acceleratedMove, -Mathf.Abs(maxSpeed), Mathf.Abs(maxSpeed));
+			if (Mathf.Abs(surfaceNormal.x) < 0.2f)
+			{
+				rBody.velocity = rBody.velocity.X(movespeed);
+			}
+			else
+			{
+				bool down = surfaceNormal.x * movespeed > 0;
+				rBody.velocity = new Vector2(movespeed * (1 - Mathf.Abs(surfaceNormal.x / 3f)), 
+				                             rBody.velocity.y + (Mathf.Abs(movespeed) * (1 - Mathf.Abs(surfaceNormal.y))) * (down ? -1 : 1));
+			}
 		}
 	}
 
@@ -648,9 +684,11 @@ public abstract class PlayerController : MonoBehaviour
 			if (r.collider != null && !r.collider.isTrigger &&
 				(anim.GetFloat("OldYVel") < -5 || r.point.y <= transform.position.y - ((ColliderHeight - ColliderOffset) * 7f / 8f)))
 			{
+				surfaceNormal = r.normal;
 				return true;
 			}
 		}
+		surfaceNormal = Vector2.zero;
 		return false;
 	}
 
@@ -726,8 +764,10 @@ public abstract class PlayerController : MonoBehaviour
 
 	#region Charge
 
-	public virtual void TouchedCharged(bool charged) {
-		if (charged) {
+	public virtual void TouchedCharged(bool charged)
+	{
+		if (charged)
+		{
 			StartCoroutine(Die());
 		}
 	}
