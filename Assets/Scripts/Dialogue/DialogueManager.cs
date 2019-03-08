@@ -71,7 +71,7 @@ public class DialogueManager : FadeableUI
 	public IEnumerator BeginDialogue(string scene)
 	{
 		SelfFadeIn();
-		yield return dParser.LoadDialogue(Path.Combine("Dialogues", "Dialogue" + scene));
+		yield return StartCoroutine(dParser.LoadDialogue(Path.Combine("Dialogues", "Dialogue" + scene)));
 		bool warm = dParser.Tree.warmTint;
 		bool cold = dParser.Tree.coldTint;
 

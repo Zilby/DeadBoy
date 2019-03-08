@@ -51,8 +51,10 @@ public class Cutscene : MonoBehaviour
 	/// </summary>
 	public List<Scene> scenes;
 
+	public bool playOnLoad = false;
 	public bool loadSceneOnFinish = false;
 
+	[ConditionalHide("loadSceneOnFinish", true)]
 	[StringInList(typeof(LevelManager), "GetLoadedLevels")]
 	public string loadedScene;
 
@@ -67,7 +69,9 @@ public class Cutscene : MonoBehaviour
 
 	public void Start()
 	{
-		StartCoroutine(ExecuteCutscene());
+		if (playOnLoad) {
+			StartCoroutine(ExecuteCutscene());
+		}
 	}
 
 	public IEnumerator ExecuteCutscene()
@@ -77,7 +81,7 @@ public class Cutscene : MonoBehaviour
 			switch (s.sceneType)
 			{
 				case SceneType.Dialogue:
-					yield return DialogueManager.instance.BeginDialogue(s.name);
+					yield return StartCoroutine(DialogueManager.instance.BeginDialogue(s.name));
 					break;
 				case SceneType.Image:
 					yield return DisplayImage(s);
