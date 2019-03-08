@@ -60,7 +60,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// How fast the player decelerates on the ground. 
 	/// </summary>
 	[Range(0, 1)]
-	public float decceleration;
+	public float deceleration;
 	/// <summary>
 	/// The strength of deadboy's jump.
 	/// </summary>
@@ -473,7 +473,7 @@ public abstract class PlayerController : MonoBehaviour
 		float acceleratedMove;
 		if (grounded)
 		{
-			acceleratedMove = Mathf.Abs(movespeed) <= 0.01f ? rBody.velocity.x * (1 - decceleration) : rBody.velocity.x + (movespeed * acceleration);
+			acceleratedMove = Mathf.Abs(movespeed) <= 0.01f ? rBody.velocity.x * (1 - deceleration) : rBody.velocity.x + (movespeed * acceleration);
 		}
 		else
 		{
