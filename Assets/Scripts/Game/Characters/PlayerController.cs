@@ -579,7 +579,8 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public virtual void Footstep(IK ik)
 	{
-		SFXManager.instance.PlayClip("DBFootstepsRock", 0.2f, 0.25f, location: iKLimbs[(int)ik].transform.position);
+		string key = "Footstep" + this.Name + SFXManager.instance.GetFootstepTypeString();
+		SFXManager.instance.PlayClip(key, 0.2f, location: iKLimbs[(int)ik].transform.position);
 	}
 
 	public virtual void SwitchedTo()

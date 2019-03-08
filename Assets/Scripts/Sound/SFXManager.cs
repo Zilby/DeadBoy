@@ -13,6 +13,9 @@ using UnityEngine.Audio;
 /// </summary>
 public class SFXManager : AudioManager<SFXManager, ClipList>
 {
+	public enum FootstepType { HARD, SOFT };
+	public FootstepType footstepType = FootstepType.HARD;
+
 	[Serializable] public class ClipDict : SerializableDictionary<string, ClipList> { }
 	public ClipDict clips;
 
@@ -122,5 +125,16 @@ public class SFXManager : AudioManager<SFXManager, ClipList>
 			yield return null;
 		}
 		Destroy(g);
+	}
+
+	public string GetFootstepTypeString(){
+		switch(footstepType) {
+			case FootstepType.HARD:
+				return "Hard";
+			case FootstepType.SOFT:
+				return "Soft";
+			default:
+				return "";
+		}
 	}
 }
