@@ -46,7 +46,9 @@ public class Ledge : Interactable
 		for (; ; )
 		{
 			yield return null;
-			if (!activateOnExit && DBInputManager.GetInput(p, InteractInput, InputType.Held) && (p.rBody.velocity.y >= -20 || p.Grounded || p.Swimming))
+			if (!activateOnExit && DBInputManager.GetInput(p, InteractInput, InputType.Held) 
+			    && (p.rBody.velocity.y >= -20 || p.Grounded || p.Swimming)
+			    && !((p as SquishController)?.BlobMode ?? false))
 			{
 				InteractAction(p);
 				yield break;

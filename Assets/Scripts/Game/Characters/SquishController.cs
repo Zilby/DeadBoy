@@ -40,6 +40,14 @@ public class SquishController : PlayerController
 		}
 	}
 
+	/// <summary>
+	/// Whether or not squish is currently in blob mode. 
+	/// </summary>
+	public bool BlobMode 
+	{
+		get { return blobMode; }
+	}
+
 	// high level state
 	private bool blobMode;
 	private bool transitioning; //to from squish mode
@@ -181,16 +189,4 @@ public class SquishController : PlayerController
 	}
 
 	#endregion
-
-	public override IEnumerator ClimbLedge(Transform t)
-	{
-		if (!blobMode)
-		{
-			yield return base.ClimbLedge(t);
-		}
-		else
-		{
-			yield return null;
-		}
-	}
 }

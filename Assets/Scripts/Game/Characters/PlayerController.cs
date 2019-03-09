@@ -479,23 +479,25 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			acceleratedMove = rBody.velocity.x + (movespeed * aerialControl);
 		}
-		if (analog == 0f && grounded && Mathf.Abs(acceleratedMove) < 1f)
+
+		if (analog == 0f && grounded && (Mathf.Abs(acceleratedMove) < 1f || Mathf.Abs(surfaceNormal.x) > 0.1f))
 		{
-			if (Mathf.Abs(surfaceNormal.x) > 0.1f)
-			{
-				rBody.constraints = (RigidbodyConstraints2D)5;
-			}
-			else
-			{
-				PhysicsMaterial2D m = new PhysicsMaterial2D();
-				m.bounciness = originalMat.bounciness;
-				m.friction = 1f;
-				cCollider.sharedMaterial = m;
-			}
+			PhysicsMaterial2D m = new PhysicsMaterial2D();
+			m.bounciness = originalMat.bounciness;
+			m.friction = 1f;
+			cCollider.sharedMaterial = m;
 		}
 		else
 		{
 			cCollider.sharedMaterial = originalMat;
+		}
+
+		if (analog == 0f && grounded && Mathf.Abs(acceleratedMove) < 1f && Mathf.Abs(surfaceNormal.x) > 0.1f)
+		{
+			rBody.constraints = (RigidbodyConstraints2D)5;
+		}
+		else
+		{
 			rBody.constraints = RigidbodyConstraints2D.FreezeRotation;
 			// Clamp the accelerated move to the maximum speeds. 
 			float maxSpeed = speed * Time.fixedDeltaTime;
