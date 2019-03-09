@@ -1021,7 +1021,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Climbs a ledge
 	/// </summary>
-	public IEnumerator ClimbLedge(Transform t)
+	public virtual IEnumerator ClimbLedge(Transform t)
 	{
 		bool side = transform.position.x > t.position.x;
 		climbing = true;

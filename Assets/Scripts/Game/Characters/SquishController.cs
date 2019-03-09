@@ -181,4 +181,16 @@ public class SquishController : PlayerController
 	}
 
 	#endregion
+
+	public override IEnumerator ClimbLedge(Transform t)
+	{
+		if (!blobMode)
+		{
+			yield return base.ClimbLedge(t);
+		}
+		else
+		{
+			yield return null;
+		}
+	}
 }
