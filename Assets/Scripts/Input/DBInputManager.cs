@@ -125,7 +125,7 @@ public class DBInputManager : MonoBehaviour
 	/// <param name="moveInput">Whether or not the player must be accepting move input.</param>
 	public static bool GetInput(PlayerController pc, PlayerInput input, InputType type, bool moveInput = true)
 	{
-		if (players[pc] != null && (!moveInput || pc.AcceptingMoveInput))
+		if (IsControlled(pc) && (!moveInput || pc.AcceptingMoveInput))
 		{
 			if (!instance.restrictInput || input == PlayerInput.Left || input == PlayerInput.Right)
 			{
@@ -181,7 +181,7 @@ public class DBInputManager : MonoBehaviour
 	/// </summary>
 	public static string GetInputName(PlayerController pc, PlayerInput input)
 	{
-		if (players[pc] != null)
+		if (IsControlled(pc))
 		{
 			if (players[pc].Device == null)
 			{
@@ -199,32 +199,41 @@ public class DBInputManager : MonoBehaviour
 	/// <summary>
 	/// Cycles the players on input.
 	/// </summary>
-	private static void CyclePlayers()
+	public static void CyclePlayers()
 	{
 		PlayerController player = GetInput(PlayerInput.Swap, InputType.Pressed);
 		if (player != null)
 		{
-			List<PlayerController> sortedPlayers = players.Keys.ToList();
-			sortedPlayers.Sort(delegate (PlayerController p1, PlayerController p2)
+			CyclePlayers(player);
+		}
+	}
+
+
+	/// <summary>
+	/// Cycles the players on input.
+	/// </summary>
+	public static void CyclePlayers(PlayerController player)
+	{
+		List<PlayerController> sortedPlayers = players.Keys.ToList();
+		sortedPlayers.Sort(delegate (PlayerController p1, PlayerController p2)
+		{
+			if (p1.SORT_VALUE < p2.SORT_VALUE)
 			{
-				if (p1.SORT_VALUE < p2.SORT_VALUE)
-				{
-					return -1;
-				}
-				else if (p1.SORT_VALUE > p2.SORT_VALUE)
-				{
-					return 1;
-				}
-				return 0;
-			});
-			PlayerController newP = sortedPlayers.FirstOrDefault(
-				p => (p != player && players[p] == null &&
-					  ((sortedPlayers.IndexOf(p) == sortedPlayers.IndexOf(player) + 1) ||
-					   (sortedPlayers.IndexOf(p) == 0 && sortedPlayers.IndexOf(player) == sortedPlayers.Count - 1))));
-			if (newP != null)
-			{
-				UserSwappedPlayers(newP, player);
+				return -1;
 			}
+			else if (p1.SORT_VALUE > p2.SORT_VALUE)
+			{
+				return 1;
+			}
+			return 0;
+		});
+		PlayerController newP = sortedPlayers.FirstOrDefault(
+			p => (p != player && players[p] == null &&
+				  ((sortedPlayers.IndexOf(p) == sortedPlayers.IndexOf(player) + 1) ||
+				   (sortedPlayers.IndexOf(p) == 0 && sortedPlayers.IndexOf(player) == sortedPlayers.Count - 1))));
+		if (newP != null)
+		{
+			UserSwappedPlayers(newP, player);
 		}
 	}
 
@@ -307,6 +316,13 @@ public class DBInputManager : MonoBehaviour
 		{
 			yield return null;
 		}
+	}
+
+	/// <summary>
+	/// Whether or not the given player is being controlled. 
+	/// </summary>
+	public static bool IsControlled(PlayerController p) {
+		return players[p] != null;
 	}
 
 	#endregion

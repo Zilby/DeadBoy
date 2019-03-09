@@ -86,18 +86,25 @@ public class LevelManager : MonoBehaviour
 
 	public void OnTriggerEnter2D(Collider2D other)
 	{
-		if (canFinish)
+		PlayerController p = other.GetComponent<PlayerController>();
+		if (p)
 		{
-			players += 1;
-			if (players == requiredPlayers)
+			if (canFinish)
 			{
-				Fader.SceneEvent(nextLevel);
+				players += 1;
+				if (players == requiredPlayers)
+				{
+					Fader.SceneEvent(nextLevel);
+				} 
+				else 
+				{
+					if (DBInputManager.IsControlled(p))
+					{
+						DBInputManager.CyclePlayers(p);
+					}
+				}
 			}
-		}
-		else
-		{
-			PlayerController p = other.GetComponent<PlayerController>();
-			if (p)
+			else
 			{
 				p.StartCoroutine(p.Die());
 			}
