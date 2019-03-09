@@ -22,16 +22,33 @@ public class CameraController : MonoBehaviour
 	private float oldDiffX;
 	private float oldDiffY;
 
-	public static bool movingToNewPosition;
+	private static bool movingToNewPosition;
 
-	public static Transform followTransform; 
+	public static bool MovingToNewPosition
+	{
+		get
+		{
+			return movingToNewPosition;
+		}
+		set
+		{
+			movingToNewPosition = value;
+			newMoveSpeed = 2f;
+		}
+	}
+
+	private static float newMoveSpeed = 2f;
+
+	public static Transform followTransform;
 
 	private void Awake()
 	{
-		Deactivate = delegate {
+		Deactivate = delegate
+		{
 			enabled = false;
 		};
-		Activate = delegate {
+		Activate = delegate
+		{
 			enabled = true;
 		};
 	}
@@ -44,7 +61,7 @@ public class CameraController : MonoBehaviour
 		get
 		{
 			Transform t = DBInputManager.MainPlayer.transform;
-			if (followTransform != null) 
+			if (followTransform != null)
 			{
 				t = followTransform;
 			}
@@ -73,7 +90,7 @@ public class CameraController : MonoBehaviour
 	/// </summary>
 	void MoveToPlayer(float t)
 	{
-		float moveSpeed = movingToNewPosition ? CAMERA_MOVE_SPEED * 2: CAMERA_MOVE_SPEED;
+		float moveSpeed = movingToNewPosition ? CAMERA_MOVE_SPEED * newMoveSpeed : CAMERA_MOVE_SPEED;
 		if (Mathf.Abs(transform.position.x - RelativePlayerPosition.x) <= MAX_X_DIFF || movingToNewPosition || Mathf.Abs(oldDiffX) > MAX_X_DIFF)
 		{
 			transform.position = transform.position.X(Mathf.Lerp(transform.position.x, RelativePlayerPosition.x, moveSpeed * t));
@@ -85,13 +102,14 @@ public class CameraController : MonoBehaviour
 		}
 		if ((Mathf.Abs(transform.position.x - RelativePlayerPosition.x) <= MAX_X_DIFF || (transform.position.x == xRange.x || transform.position.x == xRange.y)) &&
 			(Mathf.Abs(transform.position.y - RelativePlayerPosition.y) <= MAX_Y_DIFF || (transform.position.y == yRange.x || transform.position.y == yRange.y)) &&
-		    followTransform == null)
+			followTransform == null)
 		{
 			movingToNewPosition = false;
 		}
 	}
 
-	void ClampCamera() {
+	void ClampCamera()
+	{
 		if (Mathf.Abs(transform.position.x - RelativePlayerPosition.x) > MAX_X_DIFF && !movingToNewPosition && Mathf.Abs(oldDiffX) <= MAX_X_DIFF)
 		{
 			transform.position = transform.position.X(RelativePlayerPosition.x - oldDiffX);
@@ -102,7 +120,7 @@ public class CameraController : MonoBehaviour
 		}
 		if (Mathf.Abs(transform.position.y - RelativePlayerPosition.y) > MAX_Y_DIFF && !movingToNewPosition && Mathf.Abs(oldDiffY) <= MAX_Y_DIFF)
 		{
-			transform.position = transform.position.Y(RelativePlayerPosition.y - oldDiffY); 
+			transform.position = transform.position.Y(RelativePlayerPosition.y - oldDiffY);
 		}
 		else
 		{
@@ -116,19 +134,20 @@ public class CameraController : MonoBehaviour
 	/// </summary>
 	void LockTransform()
 	{
-		transform.position = transform.position.XY(Mathf.Clamp(transform.position.x, xRange.x, xRange.y), 
-		                                           Mathf.Clamp(transform.position.y, yRange.x, yRange.y));
+		transform.position = transform.position.XY(Mathf.Clamp(transform.position.x, xRange.x, xRange.y),
+												   Mathf.Clamp(transform.position.y, yRange.x, yRange.y));
 	}
 
 	/// <summary>
 	/// Redirects the camera to the look transform.
 	/// </summary>
 	/// <returns>The camera.</returns>
-	public static IEnumerator RedirectCamera(List<Transform> looks, float delay = 0.8f, float duration = 2.3f)
+	public static IEnumerator RedirectCamera(List<Transform> looks, float delay = 0.8f, float duration = 2.3f, float speed = 2f)
 	{
 		DBInputManager.instance.restrictInput = true;
 		if (looks != null)
 		{
+			newMoveSpeed = speed;
 			yield return new WaitForSeconds(delay);
 			foreach (Transform t in looks)
 			{
