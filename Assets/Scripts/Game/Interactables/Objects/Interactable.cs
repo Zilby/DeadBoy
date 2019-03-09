@@ -206,9 +206,8 @@ public abstract class Interactable : MonoBehaviour
 		{
 			p.StartCoroutine(a.Act(p));
 		}
-
 	}
-	
+
 	protected IEnumerator RepositionPlayer(PlayerController p)
 	{
 		moving = true;

@@ -100,6 +100,7 @@ public class Cutscene : MonoBehaviour
 
 	public IEnumerator DisplayImage(Scene s)
 	{
+		DBInputManager.instance.restrictInput = true;
 		image.sprite = s.sprites[0];
 		if (s.fadeIn)
 		{
@@ -111,10 +112,12 @@ public class Cutscene : MonoBehaviour
 		{
 			yield return fadeable.FadeOut();
 		}
+		DBInputManager.instance.restrictInput = false;
 	}
 
 	public IEnumerator DisplayAnimation(Scene s)
 	{
+		DBInputManager.instance.restrictInput = true;
 		Coroutine swapping = StartCoroutine(SwapImages(s));
 		if (s.fadeIn)
 		{
@@ -127,6 +130,7 @@ public class Cutscene : MonoBehaviour
 		{
 			yield return fadeable.FadeOut();
 		}
+		DBInputManager.instance.restrictInput = false;
 	}
 
 	public IEnumerator SwapImages(Scene s)

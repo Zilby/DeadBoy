@@ -71,6 +71,7 @@ public class DialogueManager : FadeableUI
 	public IEnumerator BeginDialogue(string scene)
 	{
 		SelfFadeIn();
+		DBInputManager.instance.restrictInput = true;
 		yield return StartCoroutine(dParser.LoadDialogue(Path.Combine("Dialogues", "Dialogue" + scene)));
 		bool warm = dParser.Tree.warmTint;
 		bool cold = dParser.Tree.coldTint;
@@ -128,6 +129,7 @@ public class DialogueManager : FadeableUI
 		}
 		leftSprite.Hide();
 		rightSprite.Hide();
+		DBInputManager.instance.restrictInput = false;
 		yield return FadeOut();
 	}
 

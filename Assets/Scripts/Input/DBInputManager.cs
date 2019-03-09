@@ -81,6 +81,10 @@ public class DBInputManager : MonoBehaviour
 	/// </summary>
 	public static Dictionary<PlayerController, ControllerActions> players = new Dictionary<PlayerController, ControllerActions>();
 
+	/// <summary>
+	/// Whether or not input has been restricted. 
+	/// </summary>
+	public bool restrictInput = false;
 
 	#endregion
 
@@ -123,7 +127,10 @@ public class DBInputManager : MonoBehaviour
 	{
 		if (players[pc] != null && (!moveInput || pc.AcceptingMoveInput))
 		{
-			return GetInput(players[pc], input, type);
+			if (!instance.restrictInput || input == PlayerInput.Left || input == PlayerInput.Right)
+			{
+				return GetInput(players[pc], input, type);
+			}
 		}
 		return false;
 	}

@@ -126,6 +126,7 @@ public class CameraController : MonoBehaviour
 	/// <returns>The camera.</returns>
 	public static IEnumerator RedirectCamera(List<Transform> looks, float delay = 0.8f, float duration = 2.3f)
 	{
+		DBInputManager.instance.restrictInput = true;
 		if (looks != null)
 		{
 			yield return new WaitForSeconds(delay);
@@ -137,5 +138,6 @@ public class CameraController : MonoBehaviour
 				followTransform = null;
 			}
 		}
+		DBInputManager.instance.restrictInput = false;
 	}
 }

@@ -468,6 +468,12 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			analog = 1f;
 		}
+
+		if (DBInputManager.instance.restrictInput) 
+		{
+			analog = Mathf.Clamp(analog, -0.3f, 0.3f);
+		}
+
 		float movespeed = speed * analog * Time.fixedDeltaTime;
 
 		float acceleratedMove;
@@ -501,6 +507,10 @@ public abstract class PlayerController : MonoBehaviour
 			rBody.constraints = RigidbodyConstraints2D.FreezeRotation;
 			// Clamp the accelerated move to the maximum speeds. 
 			float maxSpeed = speed * Time.fixedDeltaTime;
+			if (Mathf.Abs(movespeed) > 0.01f) 
+			{
+				maxSpeed *= analog;
+			}
 			movespeed = Mathf.Clamp(acceleratedMove, -Mathf.Abs(maxSpeed), Mathf.Abs(maxSpeed));
 			if (Mathf.Abs(surfaceNormal.x) < 0.2f)
 			{
