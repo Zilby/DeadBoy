@@ -608,6 +608,8 @@ public abstract class PlayerController : MonoBehaviour
 		anim.SetBool("AnyInput", left || right);
 		anim.SetBool("BackInput", (flipped && right) || (!flipped && left));
 		anim.SetBool("ForwardInput", (flipped && left) || (!flipped && right));
+
+		anim.SetBool("Controlled", DBInputManager.players[this] == null);
 	}
 
 	/// <summary>
