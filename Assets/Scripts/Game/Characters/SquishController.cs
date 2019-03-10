@@ -43,7 +43,7 @@ public class SquishController : PlayerController
 	/// <summary>
 	/// Whether or not squish is currently in blob mode. 
 	/// </summary>
-	public bool BlobMode 
+	public bool BlobMode
 	{
 		get { return blobMode; }
 	}
@@ -126,8 +126,16 @@ public class SquishController : PlayerController
 		anim.SetBool("BlobMode", blobMode);
 		anim.SetBool("PassingGrate", passingGrate);
 		anim.SetBool("PassingGrateDown", passingGrateDown);
-
 	}
+
+	public override void Footstep(IK ik)
+	{
+		if (!blobMode)
+		{
+			base.Footstep(ik);
+		}
+	}
+
 
 	#region GrateTriggers
 
