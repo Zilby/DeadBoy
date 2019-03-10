@@ -83,14 +83,12 @@ public class DialogueManager : FadeableUI
 		if (dParser.Tree.leftCharEnabled)
 		{
 			leftSprite.SelfFadeIn();
-			leftSprite.DisplayTalkSprite(dParser.Tree.leftChar, dParser.Tree.leftExpr, warm, cold);
-			leftSprite.StopTalking();
+			leftSprite.DisplayTalkSprite(dParser.Tree.leftChar, dParser.Tree.leftExpr, false, warm, cold);
 		}
 		if (dParser.Tree.rightCharEnabled)
 		{
 			rightSprite.SelfFadeIn();
-			rightSprite.DisplayTalkSprite(dParser.Tree.rightChar, dParser.Tree.rightExpr, warm, cold);
-			rightSprite.StopTalking();
+			rightSprite.DisplayTalkSprite(dParser.Tree.rightChar, dParser.Tree.rightExpr, false, warm, cold);
 		}
 
 		TalkSprite disabled = current.node.rightSide ? leftSprite : rightSprite;
@@ -112,7 +110,7 @@ public class DialogueManager : FadeableUI
 				}
 				t.SelfFadeIn(startAlpha: t.Alpha);
 			}
-			t.DisplayTalkSprite(current.node.character, current.node.expression, warm, cold);
+			t.DisplayTalkSprite(current.node.character, current.node.expression, current.node.animated, warm, cold);
 			yield return CharacterDialogue(current.node.character, current.node.dialogue);
 			t.StopTalking();
 			bottom = current.connections.Count <= 0;
