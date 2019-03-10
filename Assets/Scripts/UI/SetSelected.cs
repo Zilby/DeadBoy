@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 /// <summary>
 /// Sets the current selected gameobject to this. 
@@ -10,15 +11,15 @@ using UnityEngine.EventSystems;
 public class SetSelected : MonoBehaviour
 {
 	public static Action Select;
-    // Start is called before the first frame update
-    void Awake()
-    {
-		Select += SelectThis;
-    }
-
-	void Start() 
+	// Start is called before the first frame update
+	void Start()
 	{
-		if(!DBInputManager.MainIsKeyboard) 
+		Select += SelectThis;
+	}
+
+	void OnEnable()
+	{
+		if (!DBInputManager.MainIsKeyboard)
 		{
 			SelectThis();
 		}
@@ -29,7 +30,9 @@ public class SetSelected : MonoBehaviour
 		Select -= SelectThis;
 	}
 
-	void SelectThis() {
+	void SelectThis()
+	{
 		EventSystem.current.SetSelectedGameObject(gameObject);
+		gameObject.GetComponent<Selectable>()?.OnSelect(null);
 	}
 }
