@@ -32,6 +32,8 @@ public class LevelManager : MonoBehaviour
 	/// </summary>
 	public int requiredPlayers = 1;
 
+	public SFXManager.FootstepType footstepType = SFXManager.FootstepType.Hard;
+
 	private int players;
 
 	[SerializeField]
@@ -65,6 +67,7 @@ public class LevelManager : MonoBehaviour
 		Time.timeScale = timescale;
 		Time.fixedDeltaTime = timescale * 0.02f;
 		SongManager.instance.PlaySong(song);
+		PlayerController.SetFootstepType(footstepType);
 	}
 
 	/// <summary>

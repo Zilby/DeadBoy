@@ -20,6 +20,8 @@ public abstract class PlayerController : MonoBehaviour
 		LeftFoot = 5
 	}
 
+	public static Action<SFXManager.FootstepType> SetFootstepType;
+
 	#region Fields
 
 	#region Public
@@ -94,6 +96,20 @@ public abstract class PlayerController : MonoBehaviour
 	/// The last checkpoint reached. 
 	/// </summary>
 	protected Transform checkpoint;
+
+	/// <summary>
+	/// The current footstep type. 
+	/// </summary>
+	protected SFXManager.FootstepType footstepType;
+
+	/// <summary>
+	/// The current footstep type. 
+	/// </summary>
+	public SFXManager.FootstepType FootstepType
+	{
+		get { return footstepType; }
+		set { footstepType = value; }
+	}
 
 	/// <summary>
 	/// Whether or not the player is in the air. 
@@ -414,11 +430,13 @@ public abstract class PlayerController : MonoBehaviour
 		cCollider = cCollider == null ? GetComponent<CapsuleCollider2D>() : cCollider;
 		anim = anim == null ? GetComponent<Animator>() : anim;
 		originalMat = cCollider.sharedMaterial;
+		SetFootstepType += delegate (SFXManager.FootstepType f) { footstepType = f; };
 	}
 
 	protected virtual void OnDestroy()
 	{
 		DBInputManager.Unregister(this);
+		SetFootstepType -= delegate (SFXManager.FootstepType f) { footstepType = f; };
 	}
 
 	protected virtual void Start()
@@ -629,7 +647,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// </summary>
 	public virtual void Footstep(IK ik)
 	{
-		string key = "Footstep" + this.Name + SFXManager.instance.GetFootstepTypeString();
+		string key = "Footstep" + this.Name + footstepType.ToString();
 		SFXManager.instance.PlayClip(key, 0.2f, location: iKLimbs[(int)ik].transform.position);
 	}
 
