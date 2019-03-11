@@ -819,6 +819,7 @@ public abstract class PlayerController : MonoBehaviour
 				settingIK[i] = false;
 				returningToPosition[i] = false;
 			}
+			ObjectOffsets[i] = Vector3.zero;
 		}
 		objectLocation = null;
 	}
