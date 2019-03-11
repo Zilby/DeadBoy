@@ -86,6 +86,11 @@ public class DBInputManager : MonoBehaviour
 	/// </summary>
 	public bool restrictInput = false;
 
+	/// <summary>
+	/// Whether or not the game was paused the previous frame. 
+	/// </summary>
+	private bool wasPaused = false;
+
 	#endregion
 
 	#region Functions
@@ -125,12 +130,11 @@ public class DBInputManager : MonoBehaviour
 	/// <param name="moveInput">Whether or not the player must be accepting move input.</param>
 	public static bool GetInput(PlayerController pc, PlayerInput input, InputType type, bool moveInput = true)
 	{
-		if (IsControlled(pc) && (!moveInput || pc.AcceptingMoveInput))
+		if (IsControlled(pc) && (!moveInput || pc.AcceptingMoveInput) 
+			&& (!instance.restrictInput || input == PlayerInput.Left || input == PlayerInput.Right)
+			&& (!instance.wasPaused && !PauseMenu.instance.Paused))
 		{
-			if (!instance.restrictInput || input == PlayerInput.Left || input == PlayerInput.Right)
-			{
 				return GetInput(players[pc], input, type);
-			}
 		}
 		return false;
 	}
@@ -304,6 +308,7 @@ public class DBInputManager : MonoBehaviour
 		{
 			PauseMenu.instance.Pause();
 		}
+		instance.wasPaused = PauseMenu.instance.Paused;
 	}
 
 	/// <summary>

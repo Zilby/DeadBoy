@@ -21,6 +21,7 @@ public class DialogueNode
 	public DialogueManager.Character character = DialogueManager.Character.Deadboy;
 	public DialogueManager.Expression expression = DialogueManager.Expression.Neutral;
 	public bool rightSide = false;
+	public bool animated = true;
 	public bool isDragged;
 	public bool isSelected;
 
@@ -105,7 +106,11 @@ public class DialogueNode
 			expression = (DialogueManager.Expression)EditorGUI.EnumPopup(
 				new Rect(rect.x + 10, rect.y + 45, rect.width - 20, 15), expression);
 			content = new GUIContent("<color=white>Right Side</color>");
-			rightSide = EditorGUI.Toggle(new Rect(rect.x + 15, rect.y + 65, rect.width - 20, 15), content, rightSide);
+			EditorGUI.LabelField(new Rect(rect.x + 15, rect.y + 65, 80, 15), content);
+			rightSide = EditorGUI.Toggle(new Rect(rect.x + 80, rect.y + 65, 20, 15), rightSide);
+			content = new GUIContent("<color=white>Animated</color>");
+			EditorGUI.LabelField(new Rect(rect.x + 100, rect.y + 65, 80, 15), content);
+			animated = EditorGUI.Toggle(new Rect(rect.x + 165, rect.y + 65, 20, 15), animated);
 			inPoint.nodeRect = rect;
 			outPoint.nodeRect = rect;
 		}
