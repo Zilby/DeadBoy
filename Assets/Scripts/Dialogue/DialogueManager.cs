@@ -26,6 +26,8 @@ public class DialogueManager : FadeableUI
 		Angry = 5,
 		Shocked = 6,
 		Determined = 7,
+		Crying = 8,
+		Smirking = 9,
 	}
 
 
