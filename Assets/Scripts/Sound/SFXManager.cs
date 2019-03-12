@@ -6,7 +6,12 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 
-[Serializable] public class ClipList : ListWrapper<AudioClip> { }
+[Serializable]
+public class ClipList : ListWrapper<AudioClip>
+{
+	[Range(0f, 1f)]
+	public float volume = 0.5f;
+}
 
 /// <summary>
 /// Manages in-game SFX
@@ -32,6 +37,7 @@ public class SFXManager : AudioManager<SFXManager, ClipList>
 	/// </summary>
 	protected override void LoadClips()
 	{
+		ClipDict oldClips = clips;
 		clips = new ClipDict();
 		clips[NO_CLIP] = null;
 		AudioClip[] loaded = Resources.LoadAll<AudioClip>("Audio/SFX/Loose");
@@ -54,6 +60,13 @@ public class SFXManager : AudioManager<SFXManager, ClipList>
 			}
 			clips[d.Name] = l;
 		}
+		foreach (string s in clips.Keys)
+		{
+			if (oldClips.ContainsKey(s) && clips[s] != null)
+			{
+				clips[s].volume = oldClips[s].volume;
+			}
+		}
 	}
 
 	protected override void Initialize()
@@ -66,8 +79,8 @@ public class SFXManager : AudioManager<SFXManager, ClipList>
 	/// <summary>
 	/// Plays the clip at the given index. 
 	/// </summary>
-	public void PlayClip(string clip, float volume = 1, float pitch = 1, ulong delay = 0, Vector3? location = null,
-	                     float spread = 360, float doppler = 1, AudioRolloffMode rm = AudioRolloffMode.Linear, float maxD = 20, float minD = 1)
+	public void PlayClip(string clip, float? volume = null, float pitch = 1, ulong delay = 0, Vector3? location = null,
+						 float spread = 360, float doppler = 1, AudioRolloffMode rm = AudioRolloffMode.Linear, float maxD = 20, float minD = 1)
 	{
 		if (clip != NO_CLIP && clip != null)
 		{
@@ -85,7 +98,7 @@ public class SFXManager : AudioManager<SFXManager, ClipList>
 				}
 			}
 			lastPlayedClips[clip] = a;
-			StartCoroutine(PlayClip(a, volume, pitch, delay, location, spread, doppler, rm, maxD, minD));
+			StartCoroutine(PlayClip(a, volume ?? clipList.volume, pitch, delay, location, spread, doppler, rm, maxD, minD));
 		}
 	}
 
@@ -105,7 +118,7 @@ public class SFXManager : AudioManager<SFXManager, ClipList>
 		s.volume = volume;
 		s.pitch = pitch;
 		// Set 3D sound settings
-		if (location != null) 
+		if (location != null)
 		{
 			g.transform.position = (Vector3)location;
 			s.spatialBlend = 1;
