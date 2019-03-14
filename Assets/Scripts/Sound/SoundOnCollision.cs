@@ -10,7 +10,9 @@ public class SoundOnCollision : MonoBehaviour
 	[StringInList(typeof(SFXManager), "GetClipList")]
 	public string clip;
 
-	[Range(0.01f, 10f)]
+	public bool useCustomVolume = false;
+
+	[ConditionalHide("useCustomVolume", min:0f, max:1f)]
 	public float volume = 1;
 
 	void Reset()
@@ -24,7 +26,7 @@ public class SoundOnCollision : MonoBehaviour
 		part.GetCollisionEvents(other, collisionEvents);
 		for (int i = 0; i < collisionEvents.Count; ++i)
 		{
-			SFXManager.instance.PlayClip(clip, volume, location: collisionEvents[i].intersection);
+			SFXManager.instance.PlayClip(clip, useCustomVolume ? (float?)volume : null, location: collisionEvents[i].intersection);
 		}
 	}
 }
