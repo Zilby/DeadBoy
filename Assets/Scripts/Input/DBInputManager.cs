@@ -131,10 +131,10 @@ public class DBInputManager : MonoBehaviour
 	public static bool GetInput(PlayerController pc, PlayerInput input, InputType type, bool moveInput = true)
 	{
 		if (IsControlled(pc) && (!moveInput || pc.AcceptingMoveInput) 
-			&& (!instance.restrictInput || input == PlayerInput.Left || input == PlayerInput.Right)
-			&& (!instance.wasPaused && !PauseMenu.instance.Paused))
+		    && (!instance.restrictInput || input == PlayerInput.Left || input == PlayerInput.Right)
+		    && !(instance.wasPaused && input == PlayerInput.Jump))
 		{
-				return GetInput(players[pc], input, type);
+			return GetInput(players[pc], input, type);
 		}
 		return false;
 	}
