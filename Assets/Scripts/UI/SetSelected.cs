@@ -19,7 +19,7 @@ public class SetSelected : MonoBehaviour
 
 	void OnEnable()
 	{
-		if (!DBInputManager.MainIsKeyboard)
+		if (DBInputManager.instance != null && !DBInputManager.MainIsKeyboard)
 		{
 			SelectThis();
 		}
