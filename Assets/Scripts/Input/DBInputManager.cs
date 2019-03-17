@@ -308,7 +308,7 @@ public class DBInputManager : MonoBehaviour
 		{
 			PauseMenu.instance.Pause();
 		}
-		instance.wasPaused = PauseMenu.instance.Paused;
+		instance.wasPaused = PauseMenu.instance?.Paused ?? false;
 	}
 
 	/// <summary>
