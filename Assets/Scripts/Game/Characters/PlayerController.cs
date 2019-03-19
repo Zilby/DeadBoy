@@ -5,6 +5,14 @@ using Anima2D;
 using UnityEngine;
 using UnityEngine.Sprites;
 
+public enum Character {
+	Deadboy = 0,
+	DrownedGirl = 1,
+	Squish = 2,
+	ElectricBaby = 3,
+	Firekid = 4
+}
+
 /// <summary>
 /// This class controls the player's movement and abilities. 
 /// </summary>
@@ -389,11 +397,13 @@ public abstract class PlayerController : MonoBehaviour
 		}
 	}
 
+	public abstract Character CharID { get; }
+
 	/// <summary>
 	/// The sort value that determines which player gets selected next when toggling between players. 
 	/// It also determines their corresponding number key. 
 	/// </summary>
-	public abstract int SORT_VALUE { get; }
+	public int SORT_VALUE { get{ return ((int) CharID) + 1;} }
 
 	/// <summary>
 	/// Gets all of the connected sprite mesh instances

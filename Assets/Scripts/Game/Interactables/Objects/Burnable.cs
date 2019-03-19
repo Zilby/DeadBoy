@@ -9,9 +9,7 @@ public class Burnable : Interactable
 	/// </summary>
 	protected override bool PlayerCheck(PlayerController p)
 	{
-        Debug.Log((p is FirekidController));
-        Debug.Log(base.PlayerCheck(p));
-        return (p is FirekidController) && base.PlayerCheck(p);
+        return p.CharID == Character.Firekid && base.PlayerCheck(p);
     }
 
     protected override string Tip(PlayerController p)

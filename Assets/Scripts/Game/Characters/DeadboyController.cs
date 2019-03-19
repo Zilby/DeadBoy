@@ -10,11 +10,11 @@ public class DeadboyController : PlayerController
 	[Header("Animator")]
 	public bool getUp = false;
 
-	public override int SORT_VALUE
-	{
-		get { return 1; }
-	}
 
+	public override Character CharID
+	{
+		get { return Character.Deadboy; }
+	}
 
 	public override string Name
 	{

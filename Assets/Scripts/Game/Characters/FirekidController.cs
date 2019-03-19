@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class FirekidController : PlayerController
 {
-    
-	public override int SORT_VALUE
-	{
-		get { return 5; }
-	}
 
+	public override Character CharID 
+	{ 
+		get { return Character.Firekid; } 
+	}
 
 	public override string Name
 	{
