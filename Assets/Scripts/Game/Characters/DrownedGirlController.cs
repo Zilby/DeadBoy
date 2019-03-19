@@ -49,13 +49,15 @@ public class DrownedGirlController : PlayerController
 	/// </summary>
 	public bool startingUnder;
 
-	public override int SORT_VALUE
-	{
-		get { return 2; }
+
+	public override Character CharID 
+	{ 
+		get { return Character.DrownedGirl; } 
 	}
-
-
-	public override string Name { get { return "Drowned Girl"; } }
+	public override string Name 
+	{ 
+		get { return "Drowned Girl"; } 
+	}
 
 	/// <summary>
 	/// The collider for the body of water currently in

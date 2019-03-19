@@ -6,10 +6,12 @@ public class DialogueTrigger : MonoBehaviour
 {
     [StringInList(typeof(DialogueManager), "GetDialogueList")]
 	public string name;
+	public Character triggerer;
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+		PlayerController pc = other.gameObject.GetComponent<PlayerController>();
+		if (pc != null && pc.CharID == triggerer)
 		{
 			DialogueManager.instance.StartCoroutine(DialogueManager.instance.BeginDialogue(name));
 			Destroy(gameObject);

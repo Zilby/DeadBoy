@@ -133,7 +133,7 @@ public abstract class Interactable : MonoBehaviour
 	/// </summary>
 	protected virtual bool PlayerCheck(PlayerController p)
 	{
-		return p != null && (!(phased.Count > 0) || p is DeadboyController);
+		return p != null && (!(phased.Count > 0) || p.CharID == Character.Deadboy);
 	}
 
 

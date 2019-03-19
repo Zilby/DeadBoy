@@ -10,12 +10,11 @@ public class ElectricBabyController : PlayerController
     private bool charged;
 
 
-
-	public override int SORT_VALUE
-	{
-		get { return 4; }
+	public override Character CharID 
+	{ 
+		get { return Character.ElectricBaby; } 
 	}
-
+	
 	public override string Name
 	{
 		get { return "Electric Baby"; }

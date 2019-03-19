@@ -58,10 +58,10 @@ public class SquishController : PlayerController
 	private bool onGrate;
 	private float grateProt;
 	private bool passingGrateDown; // only used for animation
-
-	public override int SORT_VALUE
-	{
-		get { return 3; }
+	
+	public override Character CharID 
+	{ 
+		get { return Character.Squish; } 
 	}
 
 	public override string Name

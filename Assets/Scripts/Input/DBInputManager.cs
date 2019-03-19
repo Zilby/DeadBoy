@@ -284,11 +284,11 @@ public class DBInputManager : MonoBehaviour
 		CameraController.MovingToNewPosition = true;
 		oldP.indicator.Hide();
 		newP.SwitchedTo();
-		if (newP is DeadboyController)
+		if (newP.CharID == Character.Deadboy)
 		{
 			Interactable.TogglePhased?.Invoke(true);
 		}
-		else if (oldP is DeadboyController)
+		else if (oldP.CharID == Character.Deadboy)
 		{
 			Interactable.TogglePhased?.Invoke(false);
 		}

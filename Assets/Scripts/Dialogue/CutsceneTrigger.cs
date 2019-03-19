@@ -5,10 +5,12 @@ using UnityEngine;
 public class CutsceneTrigger : MonoBehaviour
 {
 	public Cutscene cutscene;
+	public Character triggerer;
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+		PlayerController pc = other.gameObject.GetComponent<PlayerController>();
+		if (pc != null && pc.CharID == triggerer)
 		{
 			DialogueManager.instance.StartCoroutine(cutscene.ExecuteCutscene());
 			Destroy(gameObject);
