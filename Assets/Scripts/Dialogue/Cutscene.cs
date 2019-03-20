@@ -52,11 +52,18 @@ public class Cutscene : MonoBehaviour
 	public List<Scene> scenes;
 
 	public bool playOnLoad = false;
+	
+	[ConditionalHide("runTutorialOnFinish", true, true)]
 	public bool loadSceneOnFinish = false;
-
-	[ConditionalHide("loadSceneOnFinish", true)]
 	[StringInList(typeof(LevelManager), "GetLoadedLevels")]
+	[ConditionalHide("loadSceneOnFinish", true)]
 	public string loadedScene;
+
+	[ConditionalHide("loadSceneOnFinish", true, true)]
+	public bool runTutorialOnFinish = false;
+	[StringInList(typeof(TutorialManager), "TutorialList")]
+	[ConditionalHide("runTutorialOnFinish", true)]
+	public string tutorial;
 
 	private FadeableUI fadeable;
 	private Image image;
@@ -95,6 +102,10 @@ public class Cutscene : MonoBehaviour
 		if (loadSceneOnFinish)
 		{
 			Fader.SceneEvent(loadedScene);
+		}
+		if (runTutorialOnFinish)
+		{
+			TutorialManager.instance.RunTutorial(tutorial);
 		}
 	}
 

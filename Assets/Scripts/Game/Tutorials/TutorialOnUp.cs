@@ -24,7 +24,7 @@ public class TutorialOnUp : StateMachineBehaviour
     {
 		if(stateInfo.IsName("GetUp")) 
 		{
-			DBInputManager.instance.StartCoroutine(DBInputManager.instance.MovementTutorial());
+			TutorialManager.instance.RunTutorial();
 			DeadboyController.activate();
 		}
 		base.OnStateExit(animator, stateInfo, layerIndex);

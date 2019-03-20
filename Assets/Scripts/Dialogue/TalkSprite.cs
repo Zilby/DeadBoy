@@ -47,8 +47,9 @@ public class TalkSprite : FadeableUI
 		get { return character; }
 	}
 
-	private void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
 		image = GetComponent<Image>();
 		Hide();
 	}

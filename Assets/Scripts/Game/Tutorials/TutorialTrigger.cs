@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueTrigger : MonoBehaviour
+public class TutorialTrigger : MonoBehaviour
 {
-    [StringInList(typeof(DialogueManager), "GetDialogueList")]
-	public string dialogueName;
+    [StringInList(typeof(TutorialManager), "TutorialList")]
+	public string tutorial;
 	public Character triggerer;
 
 	void OnTriggerEnter2D(Collider2D other)
@@ -13,7 +13,7 @@ public class DialogueTrigger : MonoBehaviour
 		PlayerController pc = other.gameObject.GetComponent<PlayerController>();
 		if (pc != null && pc.CharID == triggerer)
 		{
-			DialogueManager.instance.StartCoroutine(DialogueManager.instance.BeginDialogue(dialogueName));
+			TutorialManager.instance.RunTutorial(tutorial);
 			Destroy(gameObject);
 		}
 	}

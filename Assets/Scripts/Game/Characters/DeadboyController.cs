@@ -32,4 +32,15 @@ public class DeadboyController : PlayerController
 		}
 		Interactable.TogglePhased?.Invoke(initialPlayer == 0);
 	}
+
+	public override void SwitchedFrom() {
+		base.SwitchedFrom();
+		Interactable.TogglePhased?.Invoke(false);
+	}
+
+	public override void SwitchedTo()
+	{
+		base.SwitchedTo();
+		Interactable.TogglePhased?.Invoke(true);
+	}
 }

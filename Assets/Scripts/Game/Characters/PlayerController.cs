@@ -6,11 +6,11 @@ using UnityEngine;
 using UnityEngine.Sprites;
 
 public enum Character {
-	Deadboy = 0,
-	DrownedGirl = 1,
-	Squish = 2,
-	ElectricBaby = 3,
-	Firekid = 4
+	Deadboy = 1,
+	DrownedGirl = 2,
+	Squish = 3,
+	ElectricBaby = 4,
+	Firekid = 5
 }
 
 /// <summary>
@@ -400,10 +400,11 @@ public abstract class PlayerController : MonoBehaviour
 	public abstract Character CharID { get; }
 
 	/// <summary>
-	/// The sort value that determines which player gets selected next when toggling between players. 
-	/// It also determines their corresponding number key. 
+	/// Determines which characters gets selected next when toggling between players. 
+	/// Determines their corresponding number key. 
+	/// Determines sprite sorting order.
 	/// </summary>
-	public int SORT_VALUE { get{ return ((int) CharID) + 1;} }
+	public int CharIDInt { get{ return ((int) CharID);} }
 
 	/// <summary>
 	/// Gets all of the connected sprite mesh instances
@@ -455,7 +456,7 @@ public abstract class PlayerController : MonoBehaviour
 		jumpStart = Time.fixedTime - 100f;
 		foreach (SpriteMeshInstance s in Sprites)
 		{
-			s.sortingOrder += 100 * SORT_VALUE;
+			s.sortingOrder += 100 * CharIDInt;
 		}
 	}
 
@@ -665,9 +666,12 @@ public abstract class PlayerController : MonoBehaviour
 		SFXManager.instance.PlayClip(key, 0.2f, location: iKLimbs[(int)ik].transform.position);
 	}
 
+	public virtual void SwitchedFrom() {
+		indicator.Hide();
+	}
+
 	public virtual void SwitchedTo()
 	{
-		indicator.Hide();//Incase players swap quickly and it's still there
 		indicator.Show();
 		indicator.DelayedFadeOut();
 	}

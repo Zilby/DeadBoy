@@ -60,8 +60,9 @@ public class DialogueManager : FadeableUI
 	private DialogueParser dParser = new DialogueParser();
 
 	// Use this for initialization
-	void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
 		mText = GetComponentInChildren<MoveableText>();
 		instance = this;
 	}
@@ -130,7 +131,8 @@ public class DialogueManager : FadeableUI
 		leftSprite.Hide();
 		rightSprite.Hide();
 		DBInputManager.instance.restrictInput = false;
-		yield return FadeOut();
+		SelfFadeOut();
+		yield return null;
 	}
 
 	/// <summary>

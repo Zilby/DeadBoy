@@ -108,7 +108,7 @@ public class DBInputManager : MonoBehaviour
 			players[pc] = controllers[initial];
 			foreach (SpriteMeshInstance s in pc.Sprites)
 			{
-				s.sortingOrder += 1000 * pc.SORT_VALUE;
+				s.sortingOrder += 1000 * pc.CharIDInt;
 			}
 		}
 	}
@@ -119,6 +119,10 @@ public class DBInputManager : MonoBehaviour
 	public static void Unregister(PlayerController pc)
 	{
 		players.Remove(pc);
+	}
+
+	public PlayerController GetPlayerController(Character c) {
+		return players.Keys.FirstOrDefault(p => p.CharID == c);
 	}
 
 	/// <summary>
@@ -221,11 +225,11 @@ public class DBInputManager : MonoBehaviour
 		List<PlayerController> sortedPlayers = players.Keys.ToList();
 		sortedPlayers.Sort(delegate (PlayerController p1, PlayerController p2)
 		{
-			if (p1.SORT_VALUE < p2.SORT_VALUE)
+			if (p1.CharIDInt < p2.CharIDInt)
 			{
 				return -1;
 			}
-			else if (p1.SORT_VALUE > p2.SORT_VALUE)
+			else if (p1.CharIDInt > p2.CharIDInt)
 			{
 				return 1;
 			}
@@ -254,7 +258,7 @@ public class DBInputManager : MonoBehaviour
 				PlayerController current = players.Keys.FirstOrDefault(p => (players[p] != null && players[p].Device == null));
 				if (current != null)
 				{
-					PlayerController newP = players.Keys.FirstOrDefault(p => p.SORT_VALUE == i && current != p);
+					PlayerController newP = players.Keys.FirstOrDefault(p => p.CharIDInt == i && current != p);
 					if (newP != null)
 					{
 						UserSwappedPlayers(newP, current);
@@ -275,23 +279,15 @@ public class DBInputManager : MonoBehaviour
 		players[oldP] = null;
 		foreach (SpriteMeshInstance s in oldP.Sprites)
 		{
-			s.sortingOrder -= 1000 * oldP.SORT_VALUE;
+			s.sortingOrder -= 1000 * oldP.CharIDInt;
 		}
 		foreach (SpriteMeshInstance s in newP.Sprites)
 		{
-			s.sortingOrder += 1000 * newP.SORT_VALUE;
+			s.sortingOrder += 1000 * newP.CharIDInt;
 		}
 		CameraController.MovingToNewPosition = true;
-		oldP.indicator.Hide();
+		oldP.SwitchedFrom();
 		newP.SwitchedTo();
-		if (newP.CharID == Character.Deadboy)
-		{
-			Interactable.TogglePhased?.Invoke(true);
-		}
-		else if (oldP.CharID == Character.Deadboy)
-		{
-			Interactable.TogglePhased?.Invoke(false);
-		}
 		if (newP.Underground != oldP.Underground)
 		{
 			UndergroundSwapper.SwapEvent?.Invoke(newP.Underground);
@@ -416,106 +412,6 @@ public class DBInputManager : MonoBehaviour
 			players[player] = c;
 		}
 	}
-
-
-	/// <summary>
-	/// General tutorial for the game. 
-	/// </summary>
-	public IEnumerator GeneralTutorial()
-	{
-		yield return new WaitForSeconds(1.0f);
-		yield return MovementTutorial();
-		yield return new WaitForSeconds(0.3f);
-		yield return SwapTutorial();
-	}
-
-	/// <summary>
-	/// Tutorial for how to move. 
-	/// </summary>
-	public IEnumerator MovementTutorial()
-	{
-		Vector3 tipOffset = new Vector3(0.0f, 2.7f, 0.0f);
-		int t = ToolTips.instance.SetTooltipActive("Press " + GetInputName(MainPlayer, PlayerInput.Left) + " and " +
-												   GetInputName(MainPlayer, PlayerInput.Right) + " to move", MainPlayer.transform.position + tipOffset);
-		while (!GetInput(MainPlayer, PlayerInput.Left, InputType.Held) && !GetInput(MainPlayer, PlayerInput.Right, InputType.Held))
-		{
-			yield return null;
-		}
-
-		ToolTips.instance.SetTooltipInactive(t);
-
-		yield return new WaitForSeconds(0.3f);
-
-		t = ToolTips.instance.SetTooltipActive("Press " + GetInputName(MainPlayer, PlayerInput.Jump) + " to jump", MainPlayer.transform.position + tipOffset);
-		while (!GetInput(MainPlayer, PlayerInput.Jump, InputType.Held))
-		{
-			ToolTips.instance.SetTooltipPosition(t, MainPlayer.transform.position + tipOffset);
-			yield return null;
-		}
-
-		ToolTips.instance.SetTooltipInactive(t);
-	}
-
-	/// <summary>
-	/// Tutorial for swapping. 
-	/// </summary>
-	public IEnumerator SwapTutorial()
-	{
-		Vector3 tipOffset = new Vector3(0.0f, 2.7f, 0.0f);
-		List<PlayerController> swappedTo = new List<PlayerController>();
-		Dictionary<PlayerController, int> tips = new Dictionary<PlayerController, int>();
-		PlayerController lastControlled = MainPlayer;
-
-		if (MainIsKeyboard)
-		{
-			foreach (PlayerController p in players.Keys)
-			{
-				if (p != MainPlayer)
-				{
-					tips[p] = ToolTips.instance.SetTooltipActive("Press " + p.SORT_VALUE + " to control " + p.Name, p.transform.position + tipOffset);
-				}
-				else
-				{
-					tips[p] = -1;
-				}
-			}
-
-			while (swappedTo.Count < players.Count)
-			{
-				yield return null;
-				if (MainPlayer != lastControlled)
-				{
-					if (tips[MainPlayer] >= 0)
-					{
-						ToolTips.instance.SetTooltipInactive(tips[MainPlayer]);
-						tips[MainPlayer] = -1;
-					}
-
-					if (swappedTo.IndexOf(lastControlled) < 0)
-					{
-						tips[lastControlled] = ToolTips.instance.SetTooltipActive("Press " + lastControlled.SORT_VALUE + " to control " + lastControlled.Name, lastControlled.transform.position + tipOffset);
-					}
-
-					if (swappedTo.IndexOf(MainPlayer) < 0)
-					{
-						swappedTo.Add(MainPlayer);
-					}
-					lastControlled = MainPlayer;
-				}
-			}
-
-			yield return new WaitForSeconds(0.3f);
-		}
-
-		int tabTip = ToolTips.instance.SetTooltipActive("Press " + GetInputName(MainPlayer, PlayerInput.Swap) + " to cycle characters", MainPlayer.transform.position + tipOffset);
-		while (MainPlayer == lastControlled)
-		{
-			ToolTips.instance.SetTooltipPosition(tabTip, MainPlayer.transform.position + tipOffset);
-			yield return null;
-		}
-		ToolTips.instance.SetTooltipInactive(tabTip);
-	}
-
 
 	void Update()
 	{
