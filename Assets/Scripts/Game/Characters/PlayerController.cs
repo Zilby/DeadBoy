@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using Anima2D;
 using UnityEngine;
 using UnityEngine.Sprites;
+using System.Text.RegularExpressions;
 
-public enum Character {
+public enum Character
+{
 	Deadboy = 1,
 	DrownedGirl = 2,
 	Squish = 3,
@@ -264,7 +266,14 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// The character's name 
 	/// </summary>
-	public abstract string Name { get; }
+	public string Name
+	{
+		get
+		{
+			// Add space after letters that occur before capital letters.
+			return Regex.Replace(CharID.ToString(), "\\w(?=[A-Z])", delegate (Match m) { return m.Value + " "; });
+		}
+	}
 
 	public virtual float GetJumpHeight
 	{
@@ -404,7 +413,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// Determines their corresponding number key. 
 	/// Determines sprite sorting order.
 	/// </summary>
-	public int CharIDInt { get{ return ((int) CharID);} }
+	public int CharIDInt { get { return ((int)CharID); } }
 
 	/// <summary>
 	/// Gets all of the connected sprite mesh instances
@@ -498,7 +507,7 @@ public abstract class PlayerController : MonoBehaviour
 			analog = 1f;
 		}
 
-		if (DBInputManager.instance.restrictInput) 
+		if (DBInputManager.instance.restrictInput)
 		{
 			analog = Mathf.Clamp(analog, -0.3f, 0.3f);
 		}
@@ -536,7 +545,7 @@ public abstract class PlayerController : MonoBehaviour
 			rBody.constraints = RigidbodyConstraints2D.FreezeRotation;
 			// Clamp the accelerated move to the maximum speeds. 
 			float maxSpeed = speed * Time.fixedDeltaTime;
-			if (Mathf.Abs(movespeed) > 0.01f) 
+			if (Mathf.Abs(movespeed) > 0.01f)
 			{
 				maxSpeed *= analog;
 			}
@@ -548,8 +557,8 @@ public abstract class PlayerController : MonoBehaviour
 			else
 			{
 				bool down = surfaceNormal.x * movespeed > 0;
-				rBody.velocity = new Vector2(movespeed * (1 - Mathf.Abs(surfaceNormal.x / 3f)), 
-				                             rBody.velocity.y + (Mathf.Abs(movespeed) * (1 - Mathf.Abs(surfaceNormal.y))) * (down ? -1 : 1));
+				rBody.velocity = new Vector2(movespeed * (1 - Mathf.Abs(surfaceNormal.x / 3f)),
+											 rBody.velocity.y + (Mathf.Abs(movespeed) * (1 - Mathf.Abs(surfaceNormal.y))) * (down ? -1 : 1));
 			}
 		}
 	}
@@ -666,7 +675,8 @@ public abstract class PlayerController : MonoBehaviour
 		SFXManager.instance.PlayClip(key, 0.2f, location: iKLimbs[(int)ik].transform.position);
 	}
 
-	public virtual void SwitchedFrom() {
+	public virtual void SwitchedFrom()
+	{
 		indicator.Hide();
 	}
 

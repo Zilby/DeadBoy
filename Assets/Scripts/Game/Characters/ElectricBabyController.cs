@@ -15,11 +15,6 @@ public class ElectricBabyController : PlayerController
 		get { return Character.ElectricBaby; } 
 	}
 	
-	public override string Name
-	{
-		get { return "Electric Baby"; }
-	}
-
     /// <summary>
 	/// Whether the player is holding an electrical charge.
 	/// </summary>

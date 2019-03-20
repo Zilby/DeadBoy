@@ -16,11 +16,6 @@ public class DeadboyController : PlayerController
 		get { return Character.Deadboy; }
 	}
 
-	public override string Name
-	{
-		get { return "Deadboy"; }
-	}
-
 	protected override void Start()
 	{
 		base.Start();

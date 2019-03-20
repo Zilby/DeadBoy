@@ -17,10 +17,10 @@ public class DialogueTree : IWriteable, IReadable
 	public bool rightCharEnabled;
 
 	[XmlElement]
-	public DialogueManager.Character leftChar;
+	public Character leftChar;
 
 	[XmlElement]
-	public DialogueManager.Character rightChar;
+	public Character rightChar;
 
 	[XmlElement]
 	public DialogueManager.Expression leftExpr;

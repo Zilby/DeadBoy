@@ -63,12 +63,7 @@ public class SquishController : PlayerController
 	{ 
 		get { return Character.Squish; } 
 	}
-
-	public override string Name
-	{
-		get { return "Squish"; }
-	}
-
+	
 	public override float GetJumpHeight
 	{
 		get

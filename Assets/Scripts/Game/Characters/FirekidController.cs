@@ -10,9 +10,4 @@ public class FirekidController : PlayerController
 		get { return Character.Firekid; } 
 	}
 
-	public override string Name
-	{
-		get { return "Firekid"; }
-	}
-
 }

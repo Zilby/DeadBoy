@@ -18,7 +18,7 @@ public class DialogueNode
 	public Rect defaultRect;
 	public string title;
 	public string dialogue = "";
-	public DialogueManager.Character character = DialogueManager.Character.Deadboy;
+	public Character character = Character.Deadboy;
 	public DialogueManager.Expression expression = DialogueManager.Expression.Neutral;
 	public bool rightSide = false;
 	public bool animated = true;
@@ -101,7 +101,7 @@ public class DialogueNode
 			outPoint.Draw();
 			GUI.Box(rect, title, style);
 			dialogue = EditorGUI.TextField(new Rect(rect.x + 10, rect.y + 85, rect.width - 20, Mathf.Max(height, 40)), dialogue, textfieldStyle);
-			character = (DialogueManager.Character)EditorGUI.EnumPopup(
+			character = (Character)EditorGUI.EnumPopup(
 				new Rect(rect.x + 10, rect.y + 25, rect.width - 20, 15), character);
 			expression = (DialogueManager.Expression)EditorGUI.EnumPopup(
 				new Rect(rect.x + 10, rect.y + 45, rect.width - 20, 15), expression);

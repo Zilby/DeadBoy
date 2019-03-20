@@ -30,19 +30,6 @@ public class DialogueManager : FadeableUI
 		Smirking = 9,
 	}
 
-
-	/// <summary>
-	/// The characters that have in-game portraits. 
-	/// </summary>
-	public enum Character
-	{
-		Deadboy = 0,
-		DrownedGirl = 1,
-		Squish = 2,
-		ElectricBaby = 3,
-		FireKid = 4,
-	}
-
 	public List<Color> textColors;
 
 	public TalkSprite leftSprite;
@@ -142,7 +129,7 @@ public class DialogueManager : FadeableUI
 	/// <param name="s">The dialogue string. </param>
 	private IEnumerator CharacterDialogue(Character c, string s)
 	{
-		yield return CharacterDialogue((int)c, s);
+		yield return CharacterDialogue((int)c - 1, s);
 	}
 
 

@@ -137,14 +137,14 @@ public class DialogueNodeEditor : EditorWindow
 		content = new GUIContent("Left Initial Character");
 		EditorGUI.LabelField(new Rect(5, 45, 140, 20), content);
 		tree.leftCharEnabled = EditorGUI.Toggle(new Rect(150, 45, 20, 20), tree.leftCharEnabled);
-		tree.leftChar = (DialogueManager.Character)EditorGUI.EnumPopup(
+		tree.leftChar = (Character)EditorGUI.EnumPopup(
 				new Rect(5, 65, 80, 15), tree.leftChar);
 		tree.leftExpr = (DialogueManager.Expression)EditorGUI.EnumPopup(
 			new Rect(90, 65, 80, 15), tree.leftExpr);
 		content = new GUIContent("Right Initial Character");
 		EditorGUI.LabelField(new Rect(5, 85, 140, 20), content);
 		tree.rightCharEnabled = EditorGUI.Toggle(new Rect(150, 85, 20, 20), tree.rightCharEnabled);
-		tree.rightChar = (DialogueManager.Character)EditorGUI.EnumPopup(
+		tree.rightChar = (Character)EditorGUI.EnumPopup(
 				new Rect(5, 105, 80, 15), tree.rightChar);
 		tree.rightExpr = (DialogueManager.Expression)EditorGUI.EnumPopup(
 			new Rect(90, 105, 80, 15), tree.rightExpr);

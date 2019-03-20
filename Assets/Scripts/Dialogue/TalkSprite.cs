@@ -29,7 +29,7 @@ public class TalkSprite : FadeableUI
 	/// <summary>
 	/// Last character used. 
 	/// </summary>
-	private DialogueManager.Character? character = null;
+	private Character? character = null;
 	/// <summary>
 	/// The talk routine.
 	/// </summary>
@@ -43,7 +43,7 @@ public class TalkSprite : FadeableUI
 	/// <summary>
 	/// Last character used. 
 	/// </summary>
-	public DialogueManager.Character? Character {
+	public Character? Character {
 		get { return character; }
 	}
 
@@ -57,7 +57,7 @@ public class TalkSprite : FadeableUI
 	/// <summary>
 	/// Displays the talk sprite with the given conditions. 
 	/// </summary>
-	public void DisplayTalkSprite(DialogueManager.Character c, DialogueManager.Expression e, bool talking, bool warm = false, bool cold = false)
+	public void DisplayTalkSprite(Character c, DialogueManager.Expression e, bool talking, bool warm = false, bool cold = false)
 	{
 		sprites = Resources.LoadAll<Sprite>(Path.Combine("DialogueSprites", c.ToString(), e.ToString()));
 		if (sprites.Length == 0)
