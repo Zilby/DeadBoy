@@ -30,11 +30,34 @@ public class DialogueManager : FadeableUI
 		Smirking = 9,
 	}
 
-	public List<Color> textColors;
+	[Serializable]
+	public struct TextCharacteristics
+	{
+		public Color color;
+		[StringInList(typeof(SFXManager), "GetClipList")]
+		public string sound;
+	}
+
+	[Serializable] public class TextDict : SerializableDictionary<Character, TextCharacteristics> { }
+
+	[InspectorButton("NewTextAttributes")]
+	public bool AddNewTextAttributes;
+
+	public TextDict textAttributes;
+
+	public void NewTextAttributes()
+	{
+		foreach(Character c in Enum.GetValues(typeof(Character)))
+		{
+			if (!textAttributes.ContainsKey(c))
+			{
+				textAttributes[c] = new TextCharacteristics();
+			}
+		}
+	}
 
 	public TalkSprite leftSprite;
 	public TalkSprite rightSprite;
-
 
 	/// <summary>
 	/// The moving dialogue text.
@@ -45,6 +68,7 @@ public class DialogueManager : FadeableUI
 	/// The dialogue parser for parsing text files. 
 	/// </summary>
 	private DialogueParser dParser = new DialogueParser();
+
 
 	// Use this for initialization
 	protected override void Awake()
@@ -129,18 +153,8 @@ public class DialogueManager : FadeableUI
 	/// <param name="s">The dialogue string. </param>
 	private IEnumerator CharacterDialogue(Character c, string s)
 	{
-		yield return CharacterDialogue((int)c - 1, s);
-	}
-
-
-	/// <summary>
-	/// Displays the dialogue for a given character. 
-	/// </summary>
-	/// <param name="c">The character index given.</param>
-	/// <param name="s">The dialogue string. </param>
-	private IEnumerator CharacterDialogue(int c, string s)
-	{
-		mText.Text.color = textColors[c];
+		mText.Text.color =  textAttributes[c].color;
+		mText.Sound = textAttributes[c].sound;
 		yield return mText.TypeText(s);
 		yield return new WaitForSecondsRealtime(0.1f);
 		yield return DBInputManager.WaitForKeypress(PlayerInput.Submit);

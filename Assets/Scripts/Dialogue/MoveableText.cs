@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Text.RegularExpressions;
 
 /// <summary>
 /// Moves text across screen. 
@@ -16,9 +17,22 @@ public class MoveableText : MonoBehaviour
 	private bool skip;
 
 	/// <summary>
+	/// The name of the sound played when playing the text. 
+	/// </summary>
+	private string sound;
+
+	/// <summary>
 	/// The amount of delay between letters being typed. 
 	/// </summary>
 	private float letterDelay = 0.005f;
+
+	/// <summary>
+	/// The name of the sound played when playing the text. 
+	/// </summary>
+	public string Sound
+	{
+		set { sound = value; }
+	}
 
 	/// <summary>
 	/// Gets or sets the letter delay.
@@ -86,6 +100,10 @@ public class MoveableText : MonoBehaviour
 				break;
 			}
 			current += m[i];
+			if (Regex.IsMatch("" + m[i], "[A-Z]|[a-z]") && sound != "")
+			{
+				SFXManager.instance.PlayClip(sound);
+			}
 			text.text = current;
 			text.text += "<color=#00000000>";
 			for (int j = i + 1; j < message.Length; j++)
