@@ -118,7 +118,7 @@ public class Cutscene : MonoBehaviour
 			yield return fadeable.FadeIn();
 		}
 		yield return new WaitForSeconds(0.5f);
-		yield return DBInputManager.WaitForKeypress(PlayerInput.Submit);
+		yield return DBInputManager.WaitForKeypress(PlayerInput.Submit, PlayerInput.Jump);
 		if (s.fadeOut)
 		{
 			yield return fadeable.FadeOut();
@@ -135,7 +135,7 @@ public class Cutscene : MonoBehaviour
 			yield return fadeable.FadeIn();
 		}
 		yield return new WaitForSeconds(0.5f);
-		yield return DBInputManager.WaitForKeypress(PlayerInput.Submit);
+		yield return DBInputManager.WaitForKeypress(PlayerInput.Submit, PlayerInput.Jump);
 		StopCoroutine(swapping);
 		if (s.fadeOut)
 		{

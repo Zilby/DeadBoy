@@ -121,7 +121,8 @@ public class DBInputManager : MonoBehaviour
 		players.Remove(pc);
 	}
 
-	public PlayerController GetPlayerController(Character c) {
+	public PlayerController GetPlayerController(Character c)
+	{
 		return players.Keys.FirstOrDefault(p => p.CharID == c);
 	}
 
@@ -134,9 +135,9 @@ public class DBInputManager : MonoBehaviour
 	/// <param name="moveInput">Whether or not the player must be accepting move input.</param>
 	public static bool GetInput(PlayerController pc, PlayerInput input, InputType type, bool moveInput = true)
 	{
-		if (IsControlled(pc) && (!moveInput || pc.AcceptingMoveInput) 
-		    && (!instance.restrictInput || input == PlayerInput.Left || input == PlayerInput.Right)
-		    && !(instance.wasPaused && input == PlayerInput.Jump))
+		if (IsControlled(pc) && (!moveInput || pc.AcceptingMoveInput)
+			&& (!instance.restrictInput || input == PlayerInput.Left || input == PlayerInput.Right)
+			&& !(instance.wasPaused && input == PlayerInput.Jump))
 		{
 			return GetInput(players[pc], input, type);
 		}
@@ -311,18 +312,26 @@ public class DBInputManager : MonoBehaviour
 	/// Waits for the given key to be pressed.
 	/// </summary>
 	/// <param name="k">The key to be pressed.</param>
-	public static IEnumerator WaitForKeypress(PlayerInput p)
+	public static IEnumerator WaitForKeypress(PlayerInput p, params PlayerInput[] ps)
 	{
 		while (!GetInput(controllers[0], p, InputType.Pressed))
 		{
-			yield return null;
+			foreach (PlayerInput pi in ps)
+			{
+				if (GetInput(controllers[0], pi, InputType.Pressed))
+				{
+					yield break;
+				}
+				yield return null;
+			}
 		}
 	}
 
 	/// <summary>
 	/// Whether or not the given player is being controlled. 
 	/// </summary>
-	public static bool IsControlled(PlayerController p) {
+	public static bool IsControlled(PlayerController p)
+	{
 		return players[p] != null;
 	}
 

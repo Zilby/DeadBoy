@@ -157,7 +157,7 @@ public class DialogueManager : FadeableUI
 		mText.Sound = textAttributes[c].sound;
 		yield return mText.TypeText(s);
 		yield return new WaitForSecondsRealtime(0.1f);
-		yield return DBInputManager.WaitForKeypress(PlayerInput.Submit);
+		yield return DBInputManager.WaitForKeypress(PlayerInput.Submit, PlayerInput.Jump);
 	}
 
 	/// <summary>
