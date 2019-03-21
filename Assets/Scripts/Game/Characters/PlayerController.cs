@@ -182,7 +182,7 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Whether or not the player is currently climbing. 
 	/// </summary>
-	protected bool climbing;
+	public bool climbing { get; protected set; }
 
 	/// <summary>
 	/// Whether or not the current player is underground. 
