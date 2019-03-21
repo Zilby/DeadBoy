@@ -152,30 +152,38 @@ public class TutorialManager : MonoBehaviour
 	}
   */
 
+	///<summary>
+	/// Should evaluate to true while the tip should still be shown
+	///</summary>
+	public delegate bool PendingFunc();
 
-	
-	
-	/// <summary>
-	/// Show a prompt to press one of a list of buttons. Succeeds when any of the given keys is pressed. 
-	/// </summary>
-	public IEnumerator ShowInputTip(PlayerController pc, List<PlayerInput> keys, string str, float delay = 0.3f, Vector3? offset = null)
+	public IEnumerator ShowTip(PendingFunc pending, PlayerController pc, string str, float delay = 0.3f, Vector3? offset = null) 
 	{
 		Vector3 tipOffset = offset ?? DEFAULT_OFFSET;
 
 		yield return new WaitForSeconds(delay);
 
 		int t = ToolTips.instance.SetTooltipActive(str, pc.transform.position + tipOffset);
-		while (keys.TrueForAll(k => !DBInputManager.GetInput(pc, k, InputType.Held)))
+		while (pending())
 		{
 			ToolTips.instance.SetTooltipPosition(t, pc.transform.position + tipOffset);
 			yield return null;
 		}
 
-		ToolTips.instance.SetTooltipInactive(t);	
+		ToolTips.instance.SetTooltipInactive(t);
+	}
+	
+	/// <summary>
+	/// Show a prompt to press one of a list of buttons. Succeeds when any of the given keys is pressed. 
+	/// </summary>
+	public IEnumerator ShowInputTip(PlayerController pc, List<PlayerInput> keys, string str, float delay = 0.3f, Vector3? offset = null)
+	{
+		yield return ShowTip(() => keys.TrueForAll(k => !DBInputManager.GetInput(pc, k, InputType.Held)), pc, str, delay, offset);
 	}
 	// one button version
-	public IEnumerator ShowInputTip(PlayerController pc, PlayerInput key, string str, float delay = 0.3f, Vector3? offset = null) {
-		yield return ShowInputTip(pc, new List<PlayerInput>{key}, str, delay, offset); // StartCoroutine?
+	public IEnumerator ShowInputTip(PlayerController pc, PlayerInput key, string str, float delay = 0.3f, Vector3? offset = null) 
+	{
+		yield return ShowInputTip(pc, new List<PlayerInput>{key}, str, delay, offset);
 	}
 
 
@@ -183,19 +191,8 @@ public class TutorialManager : MonoBehaviour
 	/// Show a prompt to swap to a character. Succeeds when swapped to. 
 	/// </summary>
 	public IEnumerator ShowSwapTip(PlayerController pc, string str, float delay = 0.3f, Vector3? offset = null)
-	{
-		Vector3 tipOffset = offset ?? DEFAULT_OFFSET;
-
-		yield return new WaitForSeconds(delay);
-
-		int t = ToolTips.instance.SetTooltipActive(str, pc.transform.position + tipOffset);
-		while (DBInputManager.MainPlayer != pc)
-		{
-			ToolTips.instance.SetTooltipPosition(t, pc.transform.position + tipOffset);
-			yield return null;
-		}
-
-		ToolTips.instance.SetTooltipInactive(t);	
+	{	
+		yield return ShowTip(() => DBInputManager.MainPlayer != pc, pc, str, delay, offset);
 	}
 
 
@@ -228,12 +225,14 @@ public class TutorialManager : MonoBehaviour
 			yield return StartCoroutine(ShowSwapTip(DB,	"Press " + DB.CharIDInt + " to control " + DB.Name, offset: new Vector3(3.0f, 0.0f, 0.0f)));
 		}
 
-//Swap tip
 		yield return StartCoroutine(ShowSwapTip(DG, "Press " + DBInputManager.GetInputName(DB, PlayerInput.Swap) + " to cycle characters"));
 
 		yield return StartCoroutine(ShowInputTip(DG, new  List<PlayerInput>{PlayerInput.Up, PlayerInput.Down, PlayerInput.Right, PlayerInput.Left}, 
 			"Use " + DBInputManager.GetInputName(DG, PlayerInput.Up) + ", " + DBInputManager.GetInputName(DG, PlayerInput.Down) + ", " + 
 				DBInputManager.GetInputName(DG, PlayerInput.Left) + ", and " + DBInputManager.GetInputName(DG, PlayerInput.Right) + " to swim"));
+
+		yield return StartCoroutine(ShowTip(() => !DG.climbing, DG, 
+			"Hold " + DBInputManager.GetInputName(DG, PlayerInput.Jump) + " near a ledge to climb up"));
 
 	}
 
