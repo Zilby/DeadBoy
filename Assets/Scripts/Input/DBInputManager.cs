@@ -252,18 +252,21 @@ public class DBInputManager : MonoBehaviour
 	/// </summary>
 	private static void SelectPlayerByNumber()
 	{
-		for (int i = 0; i < Utils.keyCodes.Length; i++)
+		if (!instance.restrictInput)
 		{
-			if (Input.GetKeyDown(Utils.keyCodes[i]))
+			for (int i = 0; i < Utils.keyCodes.Length; i++)
 			{
-				PlayerController current = players.Keys.FirstOrDefault(p => (players[p] != null && players[p].Device == null));
-				if (current != null)
+				if (Input.GetKeyDown(Utils.keyCodes[i]))
 				{
-					PlayerController newP = players.Keys.FirstOrDefault(p => p.CharIDInt == i && current != p);
-					if (newP != null)
+					PlayerController current = players.Keys.FirstOrDefault(p => (players[p] != null && players[p].Device == null));
+					if (current != null)
 					{
-						UserSwappedPlayers(newP, current);
-						break;
+						PlayerController newP = players.Keys.FirstOrDefault(p => p.CharIDInt == i && current != p);
+						if (newP != null)
+						{
+							UserSwappedPlayers(newP, current);
+							break;
+						}
 					}
 				}
 			}
