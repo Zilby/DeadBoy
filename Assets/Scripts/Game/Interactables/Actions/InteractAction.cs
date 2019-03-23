@@ -8,8 +8,9 @@ using UnityEngine;
 public abstract class InteractAction : MonoBehaviour
 {
 	public List<Transform> lookAts;
+	public float delay = 0f;
 
-	public void Reset()
+	public virtual void Reset()
 	{
 		GetComponent<Interactable>().actions.Add(this);
 	}
@@ -17,6 +18,6 @@ public abstract class InteractAction : MonoBehaviour
 	public virtual IEnumerator Act(PlayerController p)
 	{
 		p.StartCoroutine(CameraController.RedirectCamera(lookAts));
-		yield return null;
+		yield return new WaitForSeconds(delay);
 	}
 }
