@@ -59,6 +59,8 @@ public class DialogueManager : FadeableUI
 	public TalkSprite leftSprite;
 	public TalkSprite rightSprite;
 
+	public FadeableUI continuePrompt;
+
 	/// <summary>
 	/// The moving dialogue text.
 	/// </summary>
@@ -157,7 +159,23 @@ public class DialogueManager : FadeableUI
 		mText.Sound = textAttributes[c].sound;
 		yield return mText.TypeText(s);
 		yield return new WaitForSecondsRealtime(0.1f);
+		Coroutine cont = StartCoroutine(ContinueCoroutine());
 		yield return DBInputManager.WaitForKeypress(PlayerInput.Submit, PlayerInput.Jump);
+		StopCoroutine(cont);
+		continuePrompt.Hide();
+	}
+
+	private IEnumerator ContinueCoroutine()
+	{
+		yield return new WaitForSecondsRealtime(10);
+		continuePrompt.GetComponent<TextMeshProUGUI>().text = "Press " + DBInputManager.GetInputName(DBInputManager.MainPlayer, PlayerInput.Submit) + " To Continue";
+		for(;;)
+		{
+			yield return continuePrompt.FadeIn(dur:1);
+			yield return new WaitForSecondsRealtime(1);
+			yield return continuePrompt.FadeOut(dur: 1);
+			yield return new WaitForSecondsRealtime(0.2f);
+		}
 	}
 
 	/// <summary>
