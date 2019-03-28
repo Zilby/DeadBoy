@@ -106,6 +106,10 @@ public abstract class PlayerController : MonoBehaviour
 	/// The last checkpoint reached. 
 	/// </summary>
 	protected Transform checkpoint;
+	/// <summary>
+	/// Whether the last checkpoint reached is underground. 
+	/// </summary>
+	protected bool checkpointUnderground;
 
 	/// <summary>
 	/// The current footstep type. 
@@ -696,7 +700,7 @@ public abstract class PlayerController : MonoBehaviour
 		if (!dying)
 		{
 			dying = true;
-			Underground = false;
+			Underground = checkpointUnderground;
 			CameraController.Deactivate();
 			DBInputManager.instance.enabled = false;
 			yield return Fader.FadeIn();
@@ -765,6 +769,11 @@ public abstract class PlayerController : MonoBehaviour
 		if (collision.tag == "Checkpoint")
 		{
 			checkpoint = collision.gameObject.transform;
+			checkpointUnderground = false;
+		}
+		if (collision.tag == "UndergroundCheckpoint") {
+			checkpoint = collision.gameObject.transform;
+			checkpointUnderground = true;
 		}
 	}
 
