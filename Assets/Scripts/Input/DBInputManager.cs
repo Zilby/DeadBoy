@@ -198,7 +198,8 @@ public class DBInputManager : MonoBehaviour
 			}
 			else
 			{
-				return SaveManager.saveData.input.ControllerBindings[(int)input][0].ToString();
+				return players[pc].Device.GetControl(SaveManager.saveData.input.ControllerBindings[(int)input][0]).Handle;
+				//return SaveManager.saveData.input.ControllerBindings[(int)input][0].ToString();
 			}
 		}
 		return "None";
