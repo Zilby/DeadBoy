@@ -61,7 +61,7 @@ public class OptionsData
 				resolutionIndex = i;
 			}
 		}
-		AudioMixer mix = Resources.Load<AudioMixer>("AudioMixer");
+		AudioMixer mix = Resources.Load<AudioMixer>("Audio/Mixer");
 		if (mix != null)
 		{
 			mix.GetFloat("MasterVolume", out master);
