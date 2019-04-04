@@ -701,10 +701,10 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			dying = true;
 			Underground = checkpointUnderground;
-			CameraController.Deactivate();
+			CameraController.DeactivateEvent();
 			DBInputManager.instance.enabled = false;
 			yield return Fader.FadeIn();
-			CameraController.Activate();
+			CameraController.ActivateEvent();
 			transform.position = checkpoint.transform.position;
 			rBody.velocity = Vector3.zero;
 			yield return new WaitForSeconds(0.2f);

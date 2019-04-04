@@ -73,8 +73,8 @@ public class MoveableText : MonoBehaviour
 	/// </summary>
 	private void Update()
 	{
-		if (DBInputManager.GetInput(DBInputManager.controllers[0], PlayerInput.Submit, InputType.Pressed) ||
-		    DBInputManager.GetInput(DBInputManager.controllers[0], PlayerInput.Jump, InputType.Pressed))
+		if (DBInputManager.GetInput(DBInputManager.MainController, PlayerInput.Submit, InputType.Pressed) ||
+		    DBInputManager.GetInput(DBInputManager.MainController, PlayerInput.Jump, InputType.Pressed))
 		{
 			skip = true;
 		}

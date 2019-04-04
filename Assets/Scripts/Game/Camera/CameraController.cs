@@ -8,8 +8,9 @@ using UnityEngine;
 /// </summary>
 public class CameraController : MonoBehaviour
 {
-	public static Action Deactivate;
-	public static Action Activate;
+	public static Action DeactivateEvent;
+	public static Action ActivateEvent;
+	public static Action<PlayerController> NewPositionEvent;
 
 	public Vector2 xRange = new Vector2(-100, 100);
 	public Vector2 yRange = new Vector2(-100, 100);
@@ -22,9 +23,9 @@ public class CameraController : MonoBehaviour
 	private float oldDiffX;
 	private float oldDiffY;
 
-	private static bool movingToNewPosition;
+	private bool movingToNewPosition;
 
-	public static bool MovingToNewPosition
+	public bool MovingToNewPosition
 	{
 		get
 		{
@@ -39,18 +40,48 @@ public class CameraController : MonoBehaviour
 
 	private static float newMoveSpeed = 2f;
 
+	private static bool p2Added = false;
+
 	public static Transform followTransform;
 
-	private void Awake()
+	protected virtual void Awake()
 	{
-		Deactivate = delegate
+		if (!p2Added)
 		{
-			enabled = false;
-		};
-		Activate = delegate
+			AddPlayer2Cam();
+		}
+		Initialize();
+	}
+
+	protected void Initialize()
+	{
+		DeactivateEvent += Deactivate;
+		ActivateEvent += Activate;
+		NewPositionEvent += NewPosition;
+	}
+
+	private void Deactivate() {
+		enabled = false;
+	}
+
+	private void Activate()
+	{
+		enabled = true;
+	}
+
+	private void NewPosition(PlayerController p) {
+		if (p == null || p.transform == PlayerTransform)
 		{
-			enabled = true;
-		};
+			MovingToNewPosition = true;
+		}
+	}
+
+	/// <summary>
+	/// Gets the player transform for this camera controller. 
+	/// </summary>
+	protected virtual Transform PlayerTransform
+	{
+		get { return DBInputManager.MainPlayer.transform; }
 	}
 
 	/// <summary>
@@ -60,7 +91,7 @@ public class CameraController : MonoBehaviour
 	{
 		get
 		{
-			Transform t = DBInputManager.MainPlayer.transform;
+			Transform t = PlayerTransform;
 			if (followTransform != null)
 			{
 				t = followTransform;
@@ -74,13 +105,12 @@ public class CameraController : MonoBehaviour
 	/// <summary>
 	/// Sets transform to the player if they are moving extremely fast
 	/// </summary>
-	private void Update()
+	protected virtual void Update()
 	{
-		//MoveToPlayer(Time.smoothDeltaTime);
 		ClampCamera();
 	}
 
-	private void FixedUpdate()
+	protected virtual void FixedUpdate()
 	{
 		MoveToPlayer(Time.fixedDeltaTime);
 	}
@@ -151,12 +181,40 @@ public class CameraController : MonoBehaviour
 			yield return new WaitForSeconds(delay);
 			foreach (Transform t in looks)
 			{
-				movingToNewPosition = true;
+				NewPositionEvent(null);
 				followTransform = t;
 				yield return new WaitForSeconds(duration);
 				followTransform = null;
 			}
 		}
 		DBInputManager.instance.restrictInput = false;
+	}
+
+	/// <summary>
+	/// Adds the player2 cam.
+	/// </summary>
+	protected void AddPlayer2Cam()
+	{
+		p2Added = true;
+		GameObject g = Instantiate(gameObject);
+		Destroy(g.GetComponent<CameraController>());
+		Destroy(g.GetComponent<AudioListener>());
+		g.tag = "Untagged";
+
+		Player2Camera c = g.AddComponent<Player2Camera>();
+		// Not sure why this number works out, but it does. 
+		float extraDist = transform.position.z / -2f;
+		c.xRange = new Vector2(xRange.x - extraDist, xRange.y + extraDist);
+		c.oldXrange = xRange;
+		c.yRange = yRange;
+		c.player1 = this;
+	}
+
+	private void OnDestroy()
+	{
+		DeactivateEvent -= Deactivate;
+		ActivateEvent -= Activate;
+		NewPositionEvent -= NewPosition;
+		p2Added = false;
 	}
 }

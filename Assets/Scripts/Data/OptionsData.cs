@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -68,5 +69,21 @@ public class OptionsData
 			mix.GetFloat("MusicVolume", out music);
 			mix.GetFloat("SFXVolume", out soundfx);
 		}
+	}
+
+	public void SetOptions()
+	{
+		QualitySettings.SetQualityLevel(QualitySettings.names.ToList().IndexOf(presetString));
+		Screen.fullScreen = fullscreen;
+		List<Resolution> resolutions = new List<Resolution>(Screen.resolutions);
+		Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height,
+			Screen.fullScreen);
+		QualitySettings.masterTextureLimit = texture;
+		QualitySettings.antiAliasing = antialias;
+		QualitySettings.vSyncCount = vsync;
+		AudioMixer mix = Resources.Load<AudioMixer>("Audio/Mixer");
+		mix.SetFloat("MasterVolume", master);
+		mix.SetFloat("MusicVolume", master);
+		mix.SetFloat("SFXVolume", master);
 	}
 }
