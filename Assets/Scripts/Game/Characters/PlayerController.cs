@@ -513,7 +513,8 @@ public abstract class PlayerController : MonoBehaviour
 
 		if (DBInputManager.instance.restrictInput)
 		{
-			analog = Mathf.Clamp(analog, -0.3f, 0.3f);
+			//analog = Mathf.Clamp(analog, -0.3f, 0.3f);
+			analog = 0;
 		}
 
 		float movespeed = speed * analog * Time.fixedDeltaTime;

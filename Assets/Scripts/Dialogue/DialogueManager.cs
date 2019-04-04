@@ -167,7 +167,7 @@ public class DialogueManager : FadeableUI
 
 	private IEnumerator ContinueCoroutine()
 	{
-		yield return new WaitForSecondsRealtime(10);
+		yield return new WaitForSecondsRealtime(6.5f);
 		continuePrompt.GetComponent<TextMeshProUGUI>().text = "Press " + DBInputManager.GetInputName(DBInputManager.MainPlayer, PlayerInput.Submit) + " To Continue";
 		for(;;)
 		{
