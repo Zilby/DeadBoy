@@ -360,6 +360,11 @@ public class SettingsManager : MonoBehaviour
 		else
 		{
 			DBInputManager.controllers.Add(c);
+			PlayerController player = DBInputManager.players.Keys.FirstOrDefault(p => DBInputManager.players[p] == null);
+			if (player)
+			{
+				DBInputManager.players[player] = c;
+			}
 		}
 	}
 
