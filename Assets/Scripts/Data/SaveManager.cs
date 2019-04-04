@@ -3,6 +3,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 /// <summary>
 /// Keeps track of and loads all permanent data.
@@ -109,7 +110,6 @@ public class SaveManager : MonoBehaviour
 		{
 			Debug.LogWarning("No file found at: " + SaveFile);
 		}
-		saveData.options.SetOptions();
 		loaded = true;
 	}
 
@@ -125,5 +125,10 @@ public class SaveManager : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
+	}
+
+	protected void Start()
+	{
+		saveData.options.SetOptions();
 	}
 }

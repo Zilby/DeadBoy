@@ -83,7 +83,7 @@ public class OptionsData
 		QualitySettings.vSyncCount = vsync;
 		AudioMixer mix = Resources.Load<AudioMixer>("Audio/Mixer");
 		mix.SetFloat("MasterVolume", master);
-		mix.SetFloat("MusicVolume", master);
-		mix.SetFloat("SFXVolume", master);
+		mix.SetFloat("MusicVolume", music);
+		mix.SetFloat("SFXVolume", soundfx);
 	}
 }

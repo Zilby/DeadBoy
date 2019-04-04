@@ -112,6 +112,7 @@ public class SFXManager : AudioManager<SFXManager, ClipList>
 		GameObject g = new GameObject(a.ToString(), typeof(AudioSource));
 		g.transform.parent = transform;
 		AudioSource s = g.GetComponent<AudioSource>();
+		s.outputAudioMixerGroup = sfxGroup;
 		s.playOnAwake = false;
 		s.clip = a;
 		// Set 2D sound settings

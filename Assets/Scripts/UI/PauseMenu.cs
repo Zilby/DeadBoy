@@ -7,12 +7,17 @@ public class PauseMenu : MonoBehaviour
 {
 	public static PauseMenu instance;
 
-	public FadeableUI fadeable;
+	public Fadeable fadeable;
 
 	public Button resume;
     public Button restart;
 	public Button menu;
 	public Button quit;
+	public Button settings;
+	public Button returnB;
+
+	public Fadeable mainMenu;
+	public Fadeable settingsMenu;
 
 
 	void Awake()
@@ -22,6 +27,8 @@ public class PauseMenu : MonoBehaviour
 		restart.onClick.AddListener(delegate { LevelManager.instance.RestartLevel(); });
 		menu.onClick.AddListener(delegate { Fader.SceneEvent("DemoStart"); });
 		quit.onClick.AddListener(delegate { StartCoroutine(Fader.Quit()); });
+		settings.onClick.AddListener(delegate { StartCoroutine(SwapMenues()); });
+		returnB.onClick.AddListener(delegate { StartCoroutine(SwapBack()); });
 	}
 
 	public bool Paused 
@@ -46,5 +53,16 @@ public class PauseMenu : MonoBehaviour
 			Time.timeScale = oldTimeScale;
 			fadeable.SelfFadeOut();
 		}
+	}
+
+	private IEnumerator SwapMenues() {
+		yield return mainMenu.FadeOut();
+		yield return settingsMenu.FadeIn();
+	}
+
+	private IEnumerator SwapBack()
+	{
+		yield return settingsMenu.FadeOut();
+		yield return mainMenu.FadeIn();
 	}
 }
