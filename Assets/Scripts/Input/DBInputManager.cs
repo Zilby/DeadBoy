@@ -54,7 +54,22 @@ public class DBInputManager : MonoBehaviour
 		{
 			if (controllers.Count > 0)
 			{
-				return players.Keys.FirstOrDefault(p => players[p] == controllers[0]);
+				return players.Keys.FirstOrDefault(p => players[p] == MainController);
+			}
+			return null;
+		}
+	}
+
+	/// <summary>
+	/// Gets the main controller.
+	/// </summary>
+	public static ControllerActions MainController
+	{
+		get
+		{
+			if (controllers.Count > 0)
+			{
+				return controllers[0];
 			}
 			return null;
 		}
@@ -67,7 +82,7 @@ public class DBInputManager : MonoBehaviour
 	{
 		get
 		{
-			return controllers[0].Device == null;
+			return MainController.Device == null;
 		}
 	}
 
@@ -237,10 +252,24 @@ public class DBInputManager : MonoBehaviour
 			}
 			return 0;
 		});
-		PlayerController newP = sortedPlayers.FirstOrDefault(
-			p => (p != player && players[p] == null &&
-				  ((sortedPlayers.IndexOf(p) == sortedPlayers.IndexOf(player) + 1) ||
-				   (sortedPlayers.IndexOf(p) == 0 && sortedPlayers.IndexOf(player) == sortedPlayers.Count - 1))));
+		int newIndex = sortedPlayers.IndexOf(player) + 1;
+		if (newIndex == sortedPlayers.Count) {
+			newIndex = 0;
+		}
+		PlayerController newP = null;
+		while (newIndex != sortedPlayers.IndexOf(player))
+		{
+			newP = sortedPlayers.FirstOrDefault(p => p != player && players[p] == null && sortedPlayers.IndexOf(p) == newIndex);
+			if (newP != null)
+			{
+				break;
+			}
+				newIndex++;
+			if (newIndex == sortedPlayers.Count)
+			{
+				newIndex = 0;
+			}
+		}
 		if (newP != null)
 		{
 			UserSwappedPlayers(newP, player);
@@ -262,7 +291,7 @@ public class DBInputManager : MonoBehaviour
 					PlayerController current = players.Keys.FirstOrDefault(p => (players[p] != null && players[p].Device == null));
 					if (current != null)
 					{
-						PlayerController newP = players.Keys.FirstOrDefault(p => p.CharIDInt == i && current != p);
+						PlayerController newP = players.Keys.FirstOrDefault(p => p.CharIDInt == i && players[p] == null);
 						if (newP != null)
 						{
 							UserSwappedPlayers(newP, current);
@@ -290,7 +319,7 @@ public class DBInputManager : MonoBehaviour
 		{
 			s.sortingOrder += 1000 * newP.CharIDInt;
 		}
-		CameraController.MovingToNewPosition = true;
+		CameraController.NewPositionEvent(newP);
 		oldP.SwitchedFrom();
 		newP.SwitchedTo();
 		if (newP.Underground != oldP.Underground)
@@ -318,11 +347,11 @@ public class DBInputManager : MonoBehaviour
 	/// <param name="k">The key to be pressed.</param>
 	public static IEnumerator WaitForKeypress(PlayerInput p, params PlayerInput[] ps)
 	{
-		while (!GetInput(controllers[0], p, InputType.Pressed))
+		while (!GetInput(MainController, p, InputType.Pressed))
 		{
 			foreach (PlayerInput pi in ps)
 			{
-				if (GetInput(controllers[0], pi, InputType.Pressed))
+				if (GetInput(MainController, pi, InputType.Pressed))
 				{
 					yield break;
 				}
@@ -350,7 +379,7 @@ public class DBInputManager : MonoBehaviour
 		if (instance == null)
 		{
 			instance = this;
-			controllers.Add(SetUpController(true, true));
+			controllers.Add(SetUpController(null, true));
 			DontDestroyOnLoad(gameObject);
 		}
 		else
@@ -362,23 +391,19 @@ public class DBInputManager : MonoBehaviour
 	/// <summary>
 	/// Sets up a new controller with the given characteristics. 
 	/// </summary>
-	public ControllerActions SetUpController(bool keyboard, bool usesEventSystem)
+	public ControllerActions SetUpController(InputDevice device, bool usesEventSystem)
 	{
 		ControllerActions c = new ControllerActions();
 
-		if (keyboard)
+		c.Device = device;
+		if (device != null)
 		{
-			c.Device = null;
-		}
-		else
-		{
-			c.Device = InputManager.ActiveDevice;
 			c.SetControllerBindings();
 		}
 		if (usesEventSystem)
 		{
 			InControlInputModule ICIM = GetComponent<InControlInputModule>();
-			if (keyboard)
+			if (device == null)
 			{
 				ICIM.SubmitAction = c.actions[PlayerInput.None];
 				ICIM.CancelAction = c.actions[PlayerInput.None];
@@ -393,22 +418,36 @@ public class DBInputManager : MonoBehaviour
 		return c;
 	}
 
+	public void SetupControllerUI()
+	{
+		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = false;
+		SetSelected.Select?.Invoke();
+	}
+
+	public void SetupKeyboardUI()
+	{
+		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
+	}
 
 	private void ToggleController()
 	{
 		ControllerActions c = null;
-		if (InputManager.ActiveDevice.CommandWasPressed && controllers[0].Device == null)
+		if (InputManager.ActiveDevice.CommandWasPressed && MainController.Device == null && (controllers.Count < 2 || controllers[1].Device != InputManager.ActiveDevice))
 		{
-			c = SetUpController(false, true);
-			Cursor.lockState = CursorLockMode.Locked;
-			Cursor.visible = false;
-			SetSelected.Select?.Invoke();
+			c = SetUpController(InputManager.ActiveDevice, true);
+			SetupControllerUI();
 		}
-		else if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Mouse0)) && controllers[0].Device != null)
+		else if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Mouse0)) && MainController.Device != null && (controllers.Count < 2 || controllers[1].Device != null))
 		{
-			c = SetUpController(true, true);
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
+			c = SetUpController(null, true);
+			SetupKeyboardUI();
+		}
+		// If using controller for menues and player2 clicks, make sure it doesn't deselect all options. 
+		else if (Input.GetKeyDown(KeyCode.Mouse0) && MainController.Device != null)
+		{
+			SetSelected.Select?.Invoke();
 		}
 		if (c != null)
 		{
@@ -416,7 +455,7 @@ public class DBInputManager : MonoBehaviour
 		}
 	}
 
-	private void ReassignController(ControllerActions c, int index)
+	public void ReassignController(ControllerActions c, int index)
 	{
 		PlayerController player = players.Keys.FirstOrDefault(p => players[p] == controllers[index]);
 		controllers[index] = c;
@@ -424,6 +463,16 @@ public class DBInputManager : MonoBehaviour
 		{
 			players[player] = c;
 		}
+	}
+
+	public void RemoveController(int index)
+	{
+		PlayerController player = players.Keys.FirstOrDefault(p => players[p] == controllers[index]);
+		if (player != null)
+		{
+			players[player] = null;
+		}
+		controllers.RemoveAt(index);
 	}
 
 	void Update()

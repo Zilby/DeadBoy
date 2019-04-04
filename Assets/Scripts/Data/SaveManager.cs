@@ -109,6 +109,7 @@ public class SaveManager : MonoBehaviour
 		{
 			Debug.LogWarning("No file found at: " + SaveFile);
 		}
+		saveData.options.SetOptions();
 		loaded = true;
 	}
 

@@ -5,6 +5,7 @@ using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using System.Linq;
 using TMPro;
+using InControl;
 
 /// <summary>
 /// Manages our settings in the options menu.
@@ -37,6 +38,14 @@ public class SettingsManager : MonoBehaviour
 	/// The vsync dropdown.
 	/// </summary>
 	public TMP_Dropdown vsync;
+	/// <summary>
+	/// The player 1 dropdown.
+	/// </summary>
+	public TMP_Dropdown player1;
+	/// <summary>
+	/// The player 2 dropdown.
+	/// </summary>
+	public TMP_Dropdown player2;
 	/// <summary>
 	/// The master volume slider. 
 	/// </summary>
@@ -119,6 +128,8 @@ public class SettingsManager : MonoBehaviour
 			vsync.options.Add(new TMP_Dropdown.OptionData(s));
 		}
 
+		InitializeControllerLists();
+
 		fullscreen.onValueChanged.AddListener(delegate
 		{
 			FullToggle();
@@ -149,6 +160,16 @@ public class SettingsManager : MonoBehaviour
 			VsyncChange();
 		});
 
+		player1.onValueChanged.AddListener(delegate
+		{
+			PlayerChange(0, player1);
+		});
+
+		player2.onValueChanged.AddListener(delegate
+		{
+			PlayerChange(1, player2);
+		});
+
 		master.onValueChanged.AddListener(delegate
 		{
 			MasterChange();
@@ -177,6 +198,11 @@ public class SettingsManager : MonoBehaviour
 		texture.RefreshShownValue();
 		antialias.RefreshShownValue();
 		vsync.RefreshShownValue();
+	}
+
+	private void Update()
+	{
+		InitializeControllerLists();
 	}
 
 	/// <summary>
@@ -304,6 +330,78 @@ public class SettingsManager : MonoBehaviour
 		mix.SetFloat("SFXVolume", SaveManager.saveData.options.soundfx);
 	}
 
+
+	/// <summary>
+	/// Changes the player's controller. 
+	/// </summary>
+	public void PlayerChange(int playerIndex, TMP_Dropdown dropdown)
+	{
+		InputDevice device = InputManager.Devices.FirstOrDefault(d => d.Name == dropdown.options[dropdown.value].text);
+		ControllerActions c = DBInputManager.instance.SetUpController(device, playerIndex == 0);
+		if (playerIndex == 0)
+		{
+			if (device == null)
+			{
+				DBInputManager.instance.SetupKeyboardUI();
+			}
+			else
+			{
+				DBInputManager.instance.SetupControllerUI();
+			}
+		}
+		if (dropdown.options[dropdown.value].text == "None")
+		{
+			DBInputManager.instance.RemoveController(playerIndex);
+		}
+		else if (DBInputManager.controllers.Count > playerIndex)
+		{
+			DBInputManager.instance.ReassignController(c, playerIndex);
+		}
+		else
+		{
+			DBInputManager.controllers.Add(c);
+		}
+	}
+
+	/// <summary>
+	/// Initializes the controller lists to the current controllers. 
+	/// </summary>
+	private void InitializeControllerLists()
+	{
+		player1.ClearOptions();
+		player2.ClearOptions();
+		// Add all devices to lists not currently used by other players. 
+		foreach (InputDevice d in InputManager.Devices)
+		{
+			if (!(DBInputManager.controllers.Count > 1 && DBInputManager.controllers[1].Device == d))
+			{
+				player1.options.Add(new TMP_Dropdown.OptionData(d.Name));
+			}
+			if (!(DBInputManager.controllers.Count > 0 && DBInputManager.MainController.Device == d))
+			{
+				player2.options.Add(new TMP_Dropdown.OptionData(d.Name));
+			}
+		}
+		string keyboard = "Keyboard";
+		string none = "None";
+		// Add keyboards if no other player is currently using. 
+		if (DBInputManager.controllers.Count < 2 || DBInputManager.controllers[1].Device != null)
+		{
+			player1.options.Add(new TMP_Dropdown.OptionData(keyboard));
+		}
+		if (DBInputManager.MainController.Device != null)
+		{
+			player2.options.Add(new TMP_Dropdown.OptionData(keyboard));
+		}
+		player2.options.Add(new TMP_Dropdown.OptionData(none));
+
+		player1.value = player1.options.FindIndex(o => o.text == (DBInputManager.MainController.Device != null ? DBInputManager.MainController.Device.Name : keyboard));
+		player2.value = player2.options.FindIndex(o => o.text == (DBInputManager.controllers.Count < 2 ? none
+																  : (DBInputManager.controllers[1].Device != null ? DBInputManager.controllers[1].Device.Name : keyboard)));
+
+		player1.RefreshShownValue();
+		player2.RefreshShownValue();
+	}
 
 	/// <summary>
 	/// Makes sure to immediately apply any given changes.
