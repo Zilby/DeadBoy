@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class Fader : MonoBehaviour
 {
+	public bool showLoadingDuringSceneActivation;
+
 	public delegate void SelfFade(float f = 0.3f);
 	/// <summary>
 	/// Self fades in the fader.
@@ -42,6 +44,8 @@ public class Fader : MonoBehaviour
 
 	private Animator loading;
 
+	private FadeableUI loadingFade;
+
 	void Awake()
 	{
 		if (instance == null)
@@ -50,6 +54,7 @@ public class Fader : MonoBehaviour
 			DontDestroyOnLoad(gameObject);
 			fadeable = GetComponent<FadeableUI>();
 			loading = GetComponentInChildren<Animator>();
+			loadingFade = loading.GetComponent<FadeableUI>();
 			FadeIn = delegate (float f)
 			{
 				fadeable.Hide();
@@ -94,15 +99,26 @@ public class Fader : MonoBehaviour
 	private IEnumerator FadeInScene(string scene, float wait)
 	{
 		yield return fadeable.FadeIn();
-		loading.enabled = true;
-		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene);
-		while (!asyncLoad.isDone)
+		loading.Play("Loading");
+		AsyncOperation ao = SceneManager.LoadSceneAsync(scene);
+		if (!showLoadingDuringSceneActivation)
+		{
+			ao.allowSceneActivation = false;
+			while (ao.progress < 0.9f)
+			{
+				yield return null;
+			}
+			yield return loadingFade.FadeOut();
+			ao.allowSceneActivation = true;
+		}
+		while(!ao.isDone) 
 		{
 			yield return null;
 		}
 		yield return new WaitForSecondsRealtime(wait);
 		yield return fadeable.FadeOut(dur: 0.5f);
-		loading.enabled = false;
+		loadingFade.Show();
+		loading.Play("NotLoading");
 	}
 
 	private IEnumerator QuitGame() 

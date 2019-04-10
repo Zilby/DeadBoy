@@ -190,11 +190,10 @@ public abstract class Fadeable : MonoBehaviour
             timeElapsed += useUnscaledDeltaTimeForUI ? Time.unscaledDeltaTime : Time.deltaTime;
         }
         Alpha = endAlpha;
-        Active = Alpha != 0;
         isFading = false;
         if (disableOnFadeOut) {
-            gameObject.SetActive(false);
-        }
+			Active = Alpha != 0;
+		}
         yield break;
     }
 
