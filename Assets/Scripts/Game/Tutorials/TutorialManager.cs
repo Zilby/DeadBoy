@@ -29,7 +29,7 @@ public class TutorialManager : MonoBehaviour
 
 	public static string[] TutorialList()
 	{
-		return new string[]{"BasicMovement", "DGSwimming", "Squish"};
+		return new string[]{"BasicMovement", "DGSwimming", "DGClimb", "Squish"};
 	}
 
 	public void RunTutorial()
@@ -46,6 +46,9 @@ public class TutorialManager : MonoBehaviour
 			case "DGSwimming":
 				StartCoroutine(DGTutorial());
 				return;
+			case "DGClimb":
+				StartCoroutine(ClimbTutorial());
+				return;
 			case "Squish":
 				StartCoroutine(SquishTutorial());
 				return;
@@ -53,104 +56,6 @@ public class TutorialManager : MonoBehaviour
 				return;
 		}
 	}
-
-  /*
-	/// <summary>
-	/// General tutorial for the game. 
-	/// </summary>
-	public IEnumerator GeneralTutorial()
-	{
-		yield return new WaitForSeconds(1.0f);
-		yield return MovementTutorial();
-		yield return new WaitForSeconds(0.3f);
-		yield return SwapTutorial();
-	}
-
-	/// <summary>
-	/// Tutorial for how to move. 
-	/// </summary>
-	public IEnumerator MovementTutorial()
-	{
-		int t = ToolTips.instance.SetTooltipActive("Press " + GetInputName(MainPlayer, PlayerInput.Left) + " and " +
-												   GetInputName(MainPlayer, PlayerInput.Right) + " to move", MainPlayer.transform.position + tipOffset);
-		while (!GetInput(MainPlayer, PlayerInput.Left, InputType.Held) && !GetInput(MainPlayer, PlayerInput.Right, InputType.Held))
-		{
-			yield return null;
-		}
-
-		ToolTips.instance.SetTooltipInactive(t);
-
-		yield return new WaitForSeconds(0.3f);
-
-		t = ToolTips.instance.SetTooltipActive("Press " + GetInputName(MainPlayer, PlayerInput.Jump) + " to jump", MainPlayer.transform.position + tipOffset);
-		while (!GetInput(MainPlayer, PlayerInput.Jump, InputType.Held))
-		{
-			ToolTips.instance.SetTooltipPosition(t, MainPlayer.transform.position + tipOffset);
-			yield return null;
-		}
-
-		ToolTips.instance.SetTooltipInactive(t);
-	}
-
-	/// <summary>
-	/// Tutorial for swapping. 
-	/// </summary>
-	public IEnumerator SwapTutorial()
-	{
-		List<PlayerController> swappedTo = new List<PlayerController>();
-		Dictionary<PlayerController, int> tips = new Dictionary<PlayerController, int>();
-		PlayerController lastControlled = MainPlayer;
-
-		if (MainIsKeyboard)
-		{
-			foreach (PlayerController p in players.Keys)
-			{
-				if (p != MainPlayer)
-				{
-					tips[p] = ToolTips.instance.SetTooltipActive("Press " + p.CharIDInt + " to control " + p.Name, p.transform.position + tipOffset);
-				}
-				else
-				{
-					tips[p] = -1;
-				}
-			}
-
-			while (swappedTo.Count < players.Count)
-			{
-				yield return null;
-				if (MainPlayer != lastControlled)
-				{
-					if (tips[MainPlayer] >= 0)
-					{
-						ToolTips.instance.SetTooltipInactive(tips[MainPlayer]);
-						tips[MainPlayer] = -1;
-					}
-
-					if (swappedTo.IndexOf(lastControlled) < 0)
-					{
-						tips[lastControlled] = ToolTips.instance.SetTooltipActive("Press " + lastControlled.CharIDInt + " to control " + lastControlled.Name, lastControlled.transform.position + tipOffset);
-					}
-
-					if (swappedTo.IndexOf(MainPlayer) < 0)
-					{
-						swappedTo.Add(MainPlayer);
-					}
-					lastControlled = MainPlayer;
-				}
-			}
-
-			yield return new WaitForSeconds(0.3f);
-		}
-
-		int tabTip = ToolTips.instance.SetTooltipActive("Press " + GetInputName(MainPlayer, PlayerInput.Swap) + " to cycle characters", MainPlayer.transform.position + tipOffset);
-		while (MainPlayer == lastControlled)
-		{
-			ToolTips.instance.SetTooltipPosition(tabTip, MainPlayer.transform.position + tipOffset);
-			yield return null;
-		}
-		ToolTips.instance.SetTooltipInactive(tabTip);
-	}
-  */
 
 	///<summary>
 	/// Should evaluate to true while the tip should still be shown
@@ -230,9 +135,16 @@ public class TutorialManager : MonoBehaviour
 		yield return StartCoroutine(ShowInputTip(DG, new  List<PlayerInput>{PlayerInput.Up, PlayerInput.Down, PlayerInput.Right, PlayerInput.Left}, 
 			"Use " + DBInputManager.GetInputName(DG, PlayerInput.Up) + ", " + DBInputManager.GetInputName(DG, PlayerInput.Down) + ", " + 
 				DBInputManager.GetInputName(DG, PlayerInput.Left) + ", and " + DBInputManager.GetInputName(DG, PlayerInput.Right) + " to swim"));
+	}
 
+	public IEnumerator ClimbTutorial() 
+	{
+		// Hack to get actually the button prompt, This absolutely doesn't work for coop
+		PlayerController DB = DBInputManager.instance.GetPlayerController(Character.Deadboy);
+		PlayerController DG = DBInputManager.instance.GetPlayerController(Character.DrownedGirl);
+		
 		yield return StartCoroutine(ShowTip(() => !DG.climbing, DG, 
-			"Hold " + DBInputManager.GetInputName(DG, PlayerInput.Jump) + " near a ledge to climb up"));
+			"Hold " + DBInputManager.GetInputName(DB, PlayerInput.Jump) + " near a ledge to climb up"));
 
 	}
 
