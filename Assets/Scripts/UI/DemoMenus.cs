@@ -7,6 +7,8 @@ public class DemoMenus : MonoBehaviour
 {
 	[StringInList(typeof(SongManager), "GetClipList")]
 	public string song;
+	[StringInList(typeof(LevelManager), "GetLoadedLevels")]
+	public string firstLevel;
 
 	public Button play;
 	public Button menu;
@@ -26,7 +28,7 @@ public class DemoMenus : MonoBehaviour
 			SongManager.instance.PlaySong(song);
 		}
 
-		play?.onClick.AddListener(delegate { Fader.SceneEvent("Desert1"); });
+		play?.onClick.AddListener(delegate { Fader.SceneEvent(firstLevel); });
 		menu?.onClick.AddListener(delegate { Fader.SceneEvent("DemoStart"); });
 		quit?.onClick.AddListener(delegate { StartCoroutine(Fader.Quit()); });
 		settings?.onClick.AddListener(delegate { mainf.SelfFadeOut(); settingsf.SelfFadeIn(); });

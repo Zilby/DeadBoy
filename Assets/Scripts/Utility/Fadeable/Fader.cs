@@ -40,6 +40,8 @@ public class Fader : MonoBehaviour
 
 	private FadeableUI fadeable;
 
+	private Animator loading;
+
 	void Awake()
 	{
 		if (instance == null)
@@ -47,6 +49,7 @@ public class Fader : MonoBehaviour
 			instance = this;
 			DontDestroyOnLoad(gameObject);
 			fadeable = GetComponent<FadeableUI>();
+			loading = GetComponentInChildren<Animator>();
 			FadeIn = delegate (float f)
 			{
 				fadeable.Hide();
@@ -91,9 +94,15 @@ public class Fader : MonoBehaviour
 	private IEnumerator FadeInScene(string scene, float wait)
 	{
 		yield return fadeable.FadeIn();
-		SceneManager.LoadScene(scene);
+		loading.enabled = true;
+		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene);
+		while (!asyncLoad.isDone)
+		{
+			yield return null;
+		}
 		yield return new WaitForSecondsRealtime(wait);
 		yield return fadeable.FadeOut(dur: 0.5f);
+		loading.enabled = false;
 	}
 
 	private IEnumerator QuitGame() 
