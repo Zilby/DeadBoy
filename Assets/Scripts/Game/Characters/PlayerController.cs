@@ -834,7 +834,7 @@ public abstract class PlayerController : MonoBehaviour
 
 	#region Charge
 
-	public virtual void TouchedCharged(bool charged)
+	public virtual void TouchedCharged(bool charged, bool transfer)
 	{
 		if (charged)
 		{

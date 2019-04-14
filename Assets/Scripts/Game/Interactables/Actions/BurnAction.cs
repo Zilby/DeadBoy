@@ -5,7 +5,7 @@ using UnityEngine;
 public class BurnAction : InteractAction
 {
     public Fadeable preBurnFader;
-    public Fadeable postBurnFader;
+    public GameObject postBurn;
     public ParticleSystem ps;
 
     public void Start() {
@@ -15,9 +15,12 @@ public class BurnAction : InteractAction
 
     public override IEnumerator Act(PlayerController p)
 	{
+        yield return new WaitForSeconds(delay);
         StartCoroutine(preBurnFader.DelayedFadeOut());//disable on fade
-        postBurnFader.gameObject.SetActive(true);//fade on enable
+        postBurn.SetActive(true);//fade on enable
 		yield return base.Act(p);
 	}
+
+    
 
 }

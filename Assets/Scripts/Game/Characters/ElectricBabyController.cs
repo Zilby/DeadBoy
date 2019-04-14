@@ -28,17 +28,17 @@ public class ElectricBabyController : PlayerController
     {
         base.Start();
         charged = startsCharged;
-        
+
         var e = electricPS.emission;
         e.enabled = charged;
     }
 
-    
-	public override void TouchedCharged(bool c) {
-		charged = c;
-        
-        
-        var e = electricPS.emission;
-        e.enabled = !e.enabled;
-	}
+	public override void TouchedCharged(bool c, bool transfer) {
+        if (transfer) {
+            charged = c;
+
+            var e = electricPS.emission;
+            e.enabled = charged;
+        }
+    }
 }

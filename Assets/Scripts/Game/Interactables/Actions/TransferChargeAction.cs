@@ -8,7 +8,7 @@ public class TransferChargeAction : InteractAction
     
 	public override IEnumerator Act(PlayerController p) {
 		yield return base.Act(p);
-        p.TouchedCharged(chargableObj.charged);
+        p.TouchedCharged(chargableObj.charged, true);
         chargableObj.charged = !chargableObj.charged;
     }
 }
