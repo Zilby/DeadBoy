@@ -29,8 +29,10 @@ public class ElectricBabyController : PlayerController
         base.Start();
         charged = startsCharged;
 
+        electricPS.Play();
         var e = electricPS.emission;
         e.enabled = charged;
+        
     }
 
 	public override void TouchedCharged(bool c, bool transfer) {

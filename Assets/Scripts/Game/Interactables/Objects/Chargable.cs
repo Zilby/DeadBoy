@@ -22,8 +22,10 @@ public class Chargable : Interactable
             setPS();
 
             foreach (Chargable c in connected) {
-                c._charged = value;
-                c.setPS();
+                if (c.charged != value) {
+                    c.charged = value;
+                    c.setPS();
+                }
             }
         } 
     }
@@ -79,12 +81,27 @@ public class Chargable : Interactable
         if (pc != null) {
             pc.TouchedCharged(charged, false);
         }
+        CollisionStart(other.gameObject);
     }
-
+    void OnCollisionExit2D(Collision2D other)
+    {
+        CollisionStop(other.gameObject);
+    }
     void OnTriggerEnter2D(Collider2D other)
     {
         base.OnTriggerEnter2D(other);
-        Chargable c = other.gameObject.GetComponent<Chargable>();
+        CollisionStart(other.gameObject);
+    }
+    void OnTriggerExit2D(Collider2D other)
+    {
+        base.OnTriggerExit2D(other);
+        CollisionStop(other.gameObject);
+    }
+
+
+    void CollisionStart(GameObject other) 
+    {
+        Chargable c = other.GetComponent<Chargable>();
         if (c != null) { 
             connected.Add(c);
             if (charged) {
@@ -92,12 +109,9 @@ public class Chargable : Interactable
             }    
         }
     }
-
-
-    void OnTriggerExit2D(Collider2D other)
+    void CollisionStop(GameObject other)
     {
-        base.OnTriggerExit2D(other);
-        Chargable c = other.gameObject.GetComponent<Chargable>();
+        Chargable c = other.GetComponent<Chargable>();
         if (c != null) { connected.Remove(c); }
     }
 }

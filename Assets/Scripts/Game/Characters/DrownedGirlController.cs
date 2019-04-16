@@ -108,6 +108,7 @@ public class DrownedGirlController : PlayerController
 
 	protected override void EnterWater(Collider2D water)
 	{
+		base.EnterWater(water);
 		swimming = true;
 		this.waterCollider = water.GetComponent<BoxCollider2D>();
 	}

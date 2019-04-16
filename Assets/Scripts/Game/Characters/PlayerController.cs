@@ -400,7 +400,7 @@ public abstract class PlayerController : MonoBehaviour
 	{
 		get
 		{
-			bool output = !climbing;
+			bool output = !climbing && !dying;
 			for (int i = 0; i < IKCount; ++i)
 			{
 				// Allow move input when pulling with arms
@@ -804,6 +804,11 @@ public abstract class PlayerController : MonoBehaviour
 
 	protected virtual void EnterWater(Collider2D water)
 	{
+		Chargable ch = water.gameObject.GetComponent<Chargable>(); 
+		if (ch != null && ch.charged)
+		{
+			StartCoroutine(Die());
+		}
 	}
 
 	protected virtual void StayWater(Collider2D water)
