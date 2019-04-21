@@ -805,9 +805,9 @@ public abstract class PlayerController : MonoBehaviour
 	protected virtual void EnterWater(Collider2D water)
 	{
 		Chargable ch = water.gameObject.GetComponent<Chargable>(); 
-		if (ch != null && ch.charged)
+		if (ch != null)
 		{
-			StartCoroutine(Die());
+			TouchedCharged(ch.charged, false);
 		}
 	}
 

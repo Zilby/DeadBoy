@@ -49,7 +49,7 @@ public class Chargable : Interactable
 	/// </summary>
 	protected override bool PlayerCheck(PlayerController p)
 	{
-		return interactable && base.PlayerCheck(p);
+		return interactable && p.CharID == Character.ElectricBaby && base.PlayerCheck(p);
 	}
 
 	protected override string Tip(PlayerController p)
