@@ -433,12 +433,12 @@ TextureImporter:
       name: SquishedBoySheet_18
       rect:
         serializedVersion: 2
-        x: 3906
-        y: 1449
-        width: 129
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 3899.9739
+        y: 1443.9865
+        width: 141.21777
+        height: 62.487183
+      alignment: 9
+      pivot: {x: 0.49941394, y: 0.48031533}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -453,12 +453,12 @@ TextureImporter:
       name: SquishedBoySheet_19
       rect:
         serializedVersion: 2
-        x: 4136
-        y: 1460
-        width: 96
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 4132.3174
+        y: 1452.4866
+        width: 110.6001
+        height: 49.365356
+      alignment: 9
+      pivot: {x: 0.4672927, y: 0.48644292}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -640,6 +640,6 @@ TextureImporter:
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
-  userData: 636806960376255115
+  userData: 636914227483247781
   assetBundleName: 
   assetBundleVariant: 
