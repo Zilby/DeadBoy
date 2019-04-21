@@ -9,6 +9,9 @@ public class DemoMenus : MonoBehaviour
 	public string song;
 	[StringInList(typeof(LevelManager), "GetLoadedLevels")]
 	public string firstLevel;
+	[StringInList(typeof(LevelManager), "GetLoadedLevels")]
+	public string menuScene;
+
 
 	public Button play;
 	public Button menu;
@@ -29,7 +32,7 @@ public class DemoMenus : MonoBehaviour
 		}
 
 		play?.onClick.AddListener(delegate { Fader.SceneEvent(firstLevel); });
-		menu?.onClick.AddListener(delegate { Fader.SceneEvent("DemoStart"); });
+		menu?.onClick.AddListener(delegate { Fader.SceneEvent(menuScene); });
 		quit?.onClick.AddListener(delegate { StartCoroutine(Fader.Quit()); });
 		settings?.onClick.AddListener(delegate { mainf.SelfFadeOut(); settingsf.SelfFadeIn(); });
 		levelSelect?.onClick.AddListener(delegate { mainf.SelfFadeOut(); levelSelectf.SelfFadeIn(); });
