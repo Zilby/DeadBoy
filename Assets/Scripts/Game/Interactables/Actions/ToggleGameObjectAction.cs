@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Action for toggling an object's enabled state. 
 /// </summary>
-public class ToggleEnableAction : InteractAction
+public class ToggleGameObjectAction : InteractAction
 {
 	public GameObject toggled;
 

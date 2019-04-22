@@ -14,6 +14,7 @@ public class Cutscene : MonoBehaviour
 		Dialogue = 0,
 		Image = 1,
 		Animation = 2,
+		Action = 3,
 	}
 
 	[System.Serializable]
@@ -35,6 +36,9 @@ public class Cutscene : MonoBehaviour
 		[ConditionalHide("IsAnimation", true)]
 		public float delay;
 
+		[ConditionalHide("IsAction", true)]
+		public InteractAction action;
+
 		public bool IsImage
 		{
 			get { return sceneType == SceneType.Image || sceneType == SceneType.Animation; }
@@ -43,6 +47,11 @@ public class Cutscene : MonoBehaviour
 		public bool IsAnimation
 		{
 			get { return sceneType == SceneType.Animation; }
+		}
+
+		public bool IsAction
+		{
+			get { return sceneType == SceneType.Action; }
 		}
 	}
 
@@ -56,13 +65,11 @@ public class Cutscene : MonoBehaviour
 	[ConditionalHide("runTutorialOnFinish", true, true)]
 	public bool loadSceneOnFinish = false;
 	[StringInList(typeof(LevelManager), "GetLoadedLevels")]
-	[ConditionalHide("loadSceneOnFinish", true)]
 	public string loadedScene;
 
 	[ConditionalHide("loadSceneOnFinish", true, true)]
 	public bool runTutorialOnFinish = false;
 	[StringInList(typeof(TutorialManager), "TutorialList")]
-	[ConditionalHide("runTutorialOnFinish", true)]
 	public string tutorial;
 
 	private FadeableUI fadeable;
@@ -95,6 +102,9 @@ public class Cutscene : MonoBehaviour
 					break;
 				case SceneType.Animation:
 					yield return DisplayAnimation(s);
+					break;
+				case SceneType.Action:
+					yield return StartCoroutine(s.action.Act(DBInputManager.MainPlayer));
 					break;
 			}
 		}
