@@ -734,13 +734,13 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			gCounter++;
 		}
-		else if (rBody.velocity.y < MAX_Y_VELOCITY && TouchingGround() && !swimming)
+		else if (rBody.velocity.y < MAX_Y_VELOCITY && TouchingGround())
 		{
 			gCounter = 0;
 		}
 	}
 
-	bool TouchingGround()
+	protected bool TouchingGround()
 	{
 		RaycastHit2D[] hits = new RaycastHit2D[10];
 		cCollider.Raycast(Vector2.down, hits, ColliderHeight + TOUCHING_DIST, Physics2D.GetLayerCollisionMask(gameObject.layer));

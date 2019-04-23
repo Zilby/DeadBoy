@@ -173,7 +173,7 @@ public class DrownedGirlController : PlayerController
 		base.SetAnimationState();
 
 		anim.SetBool("WasSwimming", anim.GetBool("Swimming"));
-		anim.SetBool("Swimming", swimming);
+		anim.SetBool("Swimming", swimming && !TouchingGround());
 		anim.SetBool("Diving", diving);
 	}
 
