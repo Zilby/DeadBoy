@@ -14,6 +14,8 @@ public class TutorialManager : MonoBehaviour
 
 	private Vector3 DEFAULT_OFFSET = new Vector3(0.0f, 2.7f, 0.0f);
 
+	private bool DGClimbed = false;
+
 	void Awake()
 	{
 		instance = this;
@@ -26,6 +28,12 @@ public class TutorialManager : MonoBehaviour
 		}
 	}
 
+	void Update()
+	{
+		if (DBInputManager.instance.GetPlayerController(Character.DrownedGirl).climbing) {
+			DGClimbed = true;
+		}
+	}
 
 	public static string[] TutorialList()
 	{
@@ -143,13 +151,14 @@ public class TutorialManager : MonoBehaviour
 
 	public IEnumerator ClimbTutorial() 
 	{
-		// Hack to get actually the button prompt, This absolutely doesn't work for coop
-		PlayerController DB = DBInputManager.instance.GetPlayerController(Character.Deadboy);
-		PlayerController DG = DBInputManager.instance.GetPlayerController(Character.DrownedGirl);
-		
-		yield return StartCoroutine(ShowTip(() => !DG.climbing, DG, 
-			"Hold " + DBInputManager.GetInputName(DB, PlayerInput.Jump) + " near a ledge to climb up"));
-
+		if (!DGClimbed) {
+			// Hack to get actually the button prompt, This absolutely doesn't work for coop
+			PlayerController DB = DBInputManager.instance.GetPlayerController(Character.Deadboy);
+			PlayerController DG = DBInputManager.instance.GetPlayerController(Character.DrownedGirl);
+			
+			yield return StartCoroutine(ShowTip(() => !DG.climbing, DG, 
+				"Hold " + DBInputManager.GetInputName(DB, PlayerInput.Jump) + " near a ledge to climb up"));
+		}
 	}
 
 	/// <summary>
