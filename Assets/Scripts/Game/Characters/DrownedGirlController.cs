@@ -149,6 +149,11 @@ public class DrownedGirlController : PlayerController
 			{
 				analog = 1;
 			}
+
+			if (DBInputManager.instance.restrictInput) {
+				analog = 0;
+			}
+
 			float movespeed = verticalControl * analog;
 			adjustedDivingBuoyancy += movespeed;
 
