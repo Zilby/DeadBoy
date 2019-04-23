@@ -730,7 +730,7 @@ public abstract class PlayerController : MonoBehaviour
 		{
 			gCounter += 10;
 		}
-		else if (rBody.velocity.y < MIN_Y_VELOCITY && !TouchingGround())
+		else if ((rBody.velocity.y < MIN_Y_VELOCITY || swimming)  && !TouchingGround())
 		{
 			gCounter++;
 		}
