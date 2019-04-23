@@ -53,4 +53,27 @@ public class DemoMenus : MonoBehaviour
 			});
 		}
 	}
+
+	private void Update()
+	{
+		if (DBInputManager.GetInput(DBInputManager.MainController, PlayerInput.Cancel, InputType.Pressed))
+		{
+			if (mainf != null && mainf.IsVisible)
+			{
+				quit.onClick.Invoke();
+			}
+			else if (levelSelectf != null && levelSelectf.IsVisible)
+			{
+				mainMenu[0].onClick.Invoke();
+			}
+			else if (settingsf != null && settingsf.IsVisible)
+			{
+				mainMenu[1].onClick.Invoke();
+			}
+			else
+			{
+				menu.onClick.Invoke();
+			}
+		}
+	}
 }
