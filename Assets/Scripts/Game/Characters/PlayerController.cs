@@ -1144,7 +1144,9 @@ public abstract class PlayerController : MonoBehaviour
 			transform.position = Vector3.MoveTowards(transform.position, transform.position + (side ? Vector3.left : Vector3.right), 3f * Time.deltaTime);
 			yield return null;
 		}
+		print(transform.position.y + " " + Time.time);
 		rBody.simulated = true;
+		print(rBody.velocity + " " + Time.time);
 
 		//returningToPosition[(int)IK.RightLeg] = true;
 		//returningToPosition[(int)IK.LeftLeg] = true;
