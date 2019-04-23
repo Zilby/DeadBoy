@@ -109,7 +109,9 @@ public class TutorialManager : MonoBehaviour
 		PlayerController pc = DBInputManager.instance.GetPlayerController(c);
 
 		yield return StartCoroutine(ShowInputTip(pc, new List<PlayerInput>{PlayerInput.Left, PlayerInput.Right},
-			"Press " + DBInputManager.GetInputName(pc, PlayerInput.Left) + " and " + DBInputManager.GetInputName(pc, PlayerInput.Right) + " to move"));
+			DBInputManager.MainIsKeyboard ?
+				"Press " + DBInputManager.GetInputName(pc, PlayerInput.Left) + " and " + DBInputManager.GetInputName(pc, PlayerInput.Right) + " to move" :
+				"Use Left Stick to move"));
 
 
 		yield return StartCoroutine(ShowInputTip(pc, PlayerInput.Jump,
@@ -133,8 +135,10 @@ public class TutorialManager : MonoBehaviour
 		yield return StartCoroutine(ShowSwapTip(DG, "Press " + DBInputManager.GetInputName(DB, PlayerInput.Swap) + " to cycle characters"));
 
 		yield return StartCoroutine(ShowInputTip(DG, new  List<PlayerInput>{PlayerInput.Up, PlayerInput.Down, PlayerInput.Right, PlayerInput.Left}, 
-			"Use " + DBInputManager.GetInputName(DG, PlayerInput.Up) + ", " + DBInputManager.GetInputName(DG, PlayerInput.Down) + ", " + 
-				DBInputManager.GetInputName(DG, PlayerInput.Left) + ", and " + DBInputManager.GetInputName(DG, PlayerInput.Right) + " to swim"));
+			DBInputManager.MainIsKeyboard ?
+				"Use " + DBInputManager.GetInputName(DG, PlayerInput.Up) + ", " + DBInputManager.GetInputName(DG, PlayerInput.Down) + ", " + 
+					DBInputManager.GetInputName(DG, PlayerInput.Left) + ", and " + DBInputManager.GetInputName(DG, PlayerInput.Right) + " to swim" :
+				"Use Left Stick to swim"));
 	}
 
 	public IEnumerator ClimbTutorial() 
