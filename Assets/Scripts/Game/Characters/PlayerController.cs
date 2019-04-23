@@ -1145,6 +1145,7 @@ public abstract class PlayerController : MonoBehaviour
 			yield return null;
 		}
 		print(transform.position.y + " " + Time.time);
+		rBody.velocity = Vector3.zero;
 		rBody.simulated = true;
 		print(rBody.velocity + " " + Time.time);
 
