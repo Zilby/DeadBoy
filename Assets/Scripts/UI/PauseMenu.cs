@@ -7,6 +7,9 @@ public class PauseMenu : MonoBehaviour
 {
 	public static PauseMenu instance;
 
+	[StringInList(typeof(LevelManager), "GetLoadedLevels")]
+	public string mainMenuName;
+
 	public Fadeable fadeable;
 
 	public Button resume;
@@ -25,7 +28,7 @@ public class PauseMenu : MonoBehaviour
 		instance = this;
 		resume.onClick.AddListener(Pause);
 		restart.onClick.AddListener(delegate { LevelManager.instance.RestartLevel(); });
-		menu.onClick.AddListener(delegate { Fader.SceneEvent("DemoStart"); });
+		menu.onClick.AddListener(delegate { Fader.SceneEvent(mainMenuName); });
 		quit.onClick.AddListener(delegate { StartCoroutine(Fader.Quit()); });
 		settings.onClick.AddListener(delegate { StartCoroutine(SwapMenues()); });
 		returnB.onClick.AddListener(delegate { StartCoroutine(SwapBack()); });

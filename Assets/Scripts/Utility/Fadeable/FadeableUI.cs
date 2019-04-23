@@ -49,6 +49,7 @@ public class FadeableUI : Fadeable
         set
         {
             canvasGroup.blocksRaycasts = value;
+			canvasGroup.interactable = value;
         }
     }
 

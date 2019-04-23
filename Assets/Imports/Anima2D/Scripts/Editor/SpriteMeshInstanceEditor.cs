@@ -259,7 +259,7 @@ namespace Anima2D
 				
 				if(m_SpriteMeshInstance.spriteMesh.sharedMesh.bindposes.Length != m_SpriteMeshInstance.bones.Count)
 				{
-					EditorGUILayout.HelpBox("Warning:\nNumber of SpriteMesh Bind Poses and number of Bones does not match.", MessageType.Warning);
+					EditorGUILayout.HelpBox("Warning:\nNumber of SpriteMesh Bind Poses and number of Bones does not match: " + m_SpriteMeshInstance.spriteMesh.sharedMesh.bindposes.Length.ToString(), MessageType.Warning);
 				}
 			}
 
