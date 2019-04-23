@@ -511,7 +511,7 @@ public abstract class PlayerController : MonoBehaviour
 			analog = 1f;
 		}
 
-		if (DBInputManager.instance.restrictInput)
+		if (DBInputManager.instance.restrictInput || !AcceptingMoveInput)
 		{
 			//analog = Mathf.Clamp(analog, -0.3f, 0.3f);
 			analog = 0;
