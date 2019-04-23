@@ -11,10 +11,11 @@ public class PoleTop : MonoBehaviour
     [Range(0,3)]
     public float bouyancy;
 
-    [Range(0,10)]
-    public float rightingForce = 4.0f ;
+    [Range(0,50)]
+    public float rightingForce = 21.6f ;
 
     private BoxCollider2D waterCollider;
+    private List<PlayerController> pcs = new List<PlayerController>();
 
     // Start is called before the first frame update
     void Start()
@@ -27,16 +28,25 @@ public class PoleTop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (waterCollider != null) {
+        if (waterCollider != null && pcs.Count > 0) {
             // float surface = waterCollider.transform.position.y + waterCollider.size.y * waterCollider.transform.lossyScale.y / 2;
             // float height = this.gameObject.transform.position.y - settleDepth;
             // rb.AddForce(new Vector3(0, (surface - height ) * bouyancy, 0), ForceMode2D.Impulse);
-            Debug.Log(transform.eulerAngles);
-            Debug.Log((450 - transform.eulerAngles.z) % 180);
-            transform.eulerAngles = transform.eulerAngles.ZAdd((((450 - transform.eulerAngles.z) % 180) - 90)/rightingForce);
-            Debug.Log(transform.eulerAngles);
-            Debug.Log("====================");
+            float f = (((450 - transform.eulerAngles.z) % 180) - 90)/rightingForce;
+//            transform.eulerAngles = transform.eulerAngles.ZAdd(f);
+            rb.AddTorque(f,  ForceMode2D.Impulse);
         }
+    }
+    
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        PlayerController p = collision.gameObject.GetComponent<PlayerController>();
+        if (p!=null) {pcs.Add(p);}    
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        pcs.Remove(collision.gameObject.GetComponent<PlayerController>());
     }
 
     void OnTriggerEnter2D(Collider2D collision)
