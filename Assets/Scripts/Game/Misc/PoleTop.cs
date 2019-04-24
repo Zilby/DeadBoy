@@ -62,12 +62,15 @@ public class PoleTop : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
 	{
+        Debug.Log("OUT");
 		if (collision.gameObject.layer == LayerMask.NameToLayer("Water"))
 		{
+        Debug.Log("OUTWATER");
 			waterCollider = null;
             foreach(GameObject l in ledges) {
                 l.SetActive(false);
             } 
 		}
+        
     }
 }
