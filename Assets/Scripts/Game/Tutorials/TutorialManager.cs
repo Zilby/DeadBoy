@@ -30,7 +30,8 @@ public class TutorialManager : MonoBehaviour
 
 	void Update()
 	{
-		if (DBInputManager.instance.GetPlayerController(Character.DrownedGirl).climbing) {
+		PlayerController dg = DBInputManager.instance.GetPlayerController(Character.DrownedGirl);
+		if (dg != null && dg.climbing) {
 			DGClimbed = true;
 		}
 	}
