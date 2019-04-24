@@ -143,6 +143,7 @@ public class DialogueManager : FadeableUI
 		}
 		leftSprite.Hide();
 		rightSprite.Hide();
+		mText.ClearText();
 		DBInputManager.instance.restrictInput = false;
 		SelfFadeOut();
 		yield return null;
