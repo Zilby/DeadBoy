@@ -176,6 +176,7 @@ public abstract class Interactable : MonoBehaviour
 		if (tooltip >= 0)
 		{
 			ToolTips.instance.SetTooltipInactive(tooltip);
+			tooltip = -1;
 		}
 		StopCoroutine(checkInput);
 	}
