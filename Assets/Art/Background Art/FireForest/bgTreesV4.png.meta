@@ -1,7 +1,13 @@
 fileFormatVersion: 2
 guid: d61eb0b161cc34903ad16753b7ca5406
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: bgTreesDuplicate_0
+    21300002: bgTreesDuplicate_1
+    21300004: bgTreesDuplicate_2
+    21300006: bgTreesV4_0
+    21300008: bgTreesV4_1
+    21300010: bgTreesV4_2
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -40,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -104,7 +110,67 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: bgTreesV4_0
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 1
+        width: 324
+        height: 718
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f18da6e1f255f4ee48889513f7a49e9e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bgTreesV4_1
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 88
+        width: 311
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 976a1269ff70547ccaf67546c3b23732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bgTreesV4_2
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 115
+        width: 210
+        height: 489
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db7c25d6b056f4950bea5327e684a628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
