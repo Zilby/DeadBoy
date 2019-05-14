@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PoleTop : MonoBehaviour
 {
-    public List<GameObject> ledges;
+    public List<GameObject> activateInWater;
     public Rigidbody2D rb;
     [Range(-1,1)]
     public float settleDepth;
@@ -54,7 +54,7 @@ public class PoleTop : MonoBehaviour
 		if (collision.gameObject.layer == LayerMask.NameToLayer("Water"))
 		{
 			waterCollider = collision.gameObject.GetComponent<BoxCollider2D>();
-            foreach(GameObject l in ledges) {
+            foreach(GameObject l in activateInWater) {
                 l.SetActive(true);
             } 
 		}
@@ -67,7 +67,7 @@ public class PoleTop : MonoBehaviour
 		{
         Debug.Log("OUTWATER");
 			waterCollider = null;
-            foreach(GameObject l in ledges) {
+            foreach(GameObject l in activateInWater) {
                 l.SetActive(false);
             } 
 		}

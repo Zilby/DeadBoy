@@ -404,7 +404,7 @@ public abstract class PlayerController : MonoBehaviour
 			for (int i = 0; i < IKCount; ++i)
 			{
 				// Allow move input when pulling with arms
-				output &= !settingIK[i] || (pulling && i < 2);
+				output &= !settingIK[i] || i < 2;
 			}
 			return output;
 		}
@@ -1019,9 +1019,9 @@ public abstract class PlayerController : MonoBehaviour
 	/// <summary>
 	/// Tries to pull an object. 
 	/// </summary>
-	public virtual bool Pulling(Transform t)
+	public virtual bool Pulling(Transform t, bool conditional = false)
 	{
-		if (grounded || pulling)
+		if (grounded || pulling || conditional)
 		{
 			pulling = !pulling;
 			if (pulling)

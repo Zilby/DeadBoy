@@ -186,18 +186,8 @@ public class DrownedGirlController : PlayerController
 	/// <summary>
 	/// Tries to pull an object. 
 	/// </summary>
-	public override bool Pulling(Transform t)
+	public override bool Pulling(Transform t, bool conditional = false)
 	{
-		if (grounded || pulling || swimming)
-		{
-			pulling = !pulling;
-			if (pulling)
-			{
-				settingIK[(int)IK.RightArm] = true;
-				settingIK[(int)IK.LeftArm] = true;
-				SetUpLimbMovement(t);
-			}
-		}
-		return pulling;
+		return base.Pulling(t, swimming);
 	}
 }
