@@ -15,32 +15,32 @@ public class Chargable : Interactable
     public bool interactable = true;
 
     [HideInInspector]
-    public bool charged { 
-        get { return _charged; } 
+    public bool Charged { 
+        get { return charged; } 
         set {
-            _charged = value;
+            charged = value;
             setPS();
 
             foreach (Chargable c in connected) {
-                if (c.charged != value) {
-                    c.charged = value;
+                if (c.Charged != value) {
+                    c.Charged = value;
                     c.setPS();
                 }
             }
         } 
     }
-    private bool _charged;
+    private bool charged;
 
     private List<Chargable> connected = new List<Chargable>();
 
     protected void Start() {
-        charged = startsCharged;
+        Charged = startsCharged;
     }
 
     private void setPS() {
         if (ps != null) {
             var e = ps.emission;
-            e.enabled = charged;
+            e.enabled = Charged;
         }
     }
 	
@@ -63,7 +63,7 @@ public class Chargable : Interactable
 		SFXManager.instance.PlayClip(clip, delay: (ulong)0.2, location: transform.position);
 		p.Touch(transform, delegate
 		{
-            if (p.HoldingCharge != charged) {
+            if (p.HoldingCharge != Charged) {
                 foreach (InteractAction a in actions)
                 {
                     p.StartCoroutine(a.Act(p));
@@ -79,7 +79,7 @@ public class Chargable : Interactable
     {
         PlayerController pc = other.gameObject.GetComponent<PlayerController>();
         if (pc != null) {
-            pc.TouchedCharged(charged, false);
+            pc.TouchedCharged(Charged, false);
         }
         CollisionStart(other.gameObject);
     }
@@ -104,8 +104,8 @@ public class Chargable : Interactable
         Chargable c = other.GetComponent<Chargable>();
         if (c != null) { 
             connected.Add(c);
-            if (charged) {
-                c.charged = true;
+            if (Charged) {
+                c.Charged = true;
             }    
         }
     }

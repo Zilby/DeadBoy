@@ -4,27 +4,34 @@ using UnityEngine;
 
 public class Car : MonoBehaviour
 {
-    public Chargable ch;
-    public Rigidbody2D rbody;
-    [Range(0, 10)]
-    public float speed;
+	[Range(0, 10)]
+	public float speed;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (ch == null) {
-            ch = gameObject.GetComponent<Chargable>();
-        }
-        if (rbody == null) {
-            rbody = gameObject.GetComponent<Rigidbody2D>();
-        }
-    }
+	private Chargable ch;
+	private Rigidbody2D rbody;
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (ch != null && ch.charged) {
-            rbody.AddForce(new Vector2(speed * 1000, 0));// mostly controlled by drag
-        }
-    }
+	// Start is called before the first frame update
+	void Start()
+	{
+		ch = gameObject.GetComponent<Chargable>();
+		rbody = gameObject.GetComponent<Rigidbody2D>();
+	}
+
+	// Update is called once per frame
+	void FixedUpdate()
+	{
+		if (ch.Charged)
+		{
+			rbody.AddForce(new Vector2(speed * 1000, 0));// mostly controlled by drag
+		}
+	}
+
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.gameObject.layer == LayerMask.NameToLayer("NotPlayer"))
+		{
+			ch.Charged = false;
+			Destroy(ch);
+		}
+	}
 }

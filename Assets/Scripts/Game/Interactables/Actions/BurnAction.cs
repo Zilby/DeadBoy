@@ -17,6 +17,7 @@ public class BurnAction : InteractAction
 	{
         yield return new WaitForSeconds(delay);
         StartCoroutine(preBurnFader.DelayedFadeOut());//disable on fade
+		yield return null;
         postBurn.SetActive(true);//fade on enable
 		yield return base.Act(p);
 	}

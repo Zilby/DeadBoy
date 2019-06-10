@@ -555,7 +555,7 @@ public abstract class PlayerController : MonoBehaviour
 				maxSpeed *= analog;
 			}
 			movespeed = Mathf.Clamp(acceleratedMove, -Mathf.Abs(maxSpeed), Mathf.Abs(maxSpeed));
-			if (Mathf.Abs(surfaceNormal.x) < 0.2f)
+			if (Mathf.Abs(surfaceNormal.x) < 0.2f || !grounded)
 			{
 				rBody.velocity = rBody.velocity.X(movespeed);
 			}
@@ -807,7 +807,7 @@ public abstract class PlayerController : MonoBehaviour
 		Chargable ch = water.gameObject.GetComponent<Chargable>(); 
 		if (ch != null)
 		{
-			TouchedCharged(ch.charged, false);
+			TouchedCharged(ch.Charged, false);
 		}
 	}
 
