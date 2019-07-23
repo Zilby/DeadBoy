@@ -39,6 +39,15 @@ public abstract class Interactable : MonoBehaviour
 	[ConditionalHide("movePlayer", true, false, 0, 10)]
 	public float playerMovePosition = 1;
 
+	[ConditionalHide("movePlayer", true, false)]
+	public bool moveVertical = false;
+
+	/// <summary>
+	/// The relative vertical position that the player is moved to. 
+	/// </summary>
+	[ConditionalHide("moveVertical", true, false, -5, 5)]
+	public float playerMovePositionY = 0; 
+
 	[StringInList(typeof(SFXManager), "GetClipList")]
 	public string clip;
 
@@ -133,7 +142,7 @@ public abstract class Interactable : MonoBehaviour
 	/// </summary>
 	protected virtual bool PlayerCheck(PlayerController p)
 	{
-		return p != null && (!(phased.Count > 0) || p.CharID == Character.Deadboy);
+		return p != null && DBInputManager.IsControlled(p) && (!(phased.Count > 0) || p.CharID == Character.Deadboy);
 	}
 
 
@@ -214,6 +223,7 @@ public abstract class Interactable : MonoBehaviour
 		moving = true;
 		float flip;
 		float mPos = transform.position.x;
+		float mPosY = transform.position.y + playerMovePositionY;
 		if (transform.position.x > p.transform.position.x)
 		{
 			flip = 180 + (p.invertDirection ? 180 : 0);
@@ -226,9 +236,10 @@ public abstract class Interactable : MonoBehaviour
 		}
 		p.transform.localEulerAngles = p.transform.localEulerAngles.Y(flip);
 		float t = 0.0f;
-		while (Mathf.Abs(p.transform.position.x - mPos) > 0.01f && movePlayer)
+		while (Mathf.Abs(p.transform.position.x - mPos) > 0.01f && movePlayer /*&& t<=1*/)
 		{
 			p.transform.position = p.transform.position.X(Mathf.Lerp(p.transform.position.x, mPos, t));
+			if (moveVertical) { p.transform.position = p.transform.position.Y(Mathf.Lerp(p.transform.position.y, mPosY, t)); }
 			t += REPOSITION_SPEED * Time.deltaTime;
 			yield return new WaitForEndOfFrame();
 		}

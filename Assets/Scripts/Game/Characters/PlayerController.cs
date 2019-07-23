@@ -1068,6 +1068,16 @@ public abstract class PlayerController : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Kicks the given location
+	/// </summary>
+	public void Kick(Transform t, Action a)
+	{
+		settingIK[(int)IK.RightLeg] = true;
+		SetUpLimbMovement(t);
+		interactAction = a;
+	}
+
+	/// <summary>
 	/// Grabs the given object and drags it to the given location..
 	/// </summary>
 	public void GrabAndDrag(Transform t, Vector3 position, Action a, float speed = 2, bool bothArms = false)
